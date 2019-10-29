@@ -255,6 +255,71 @@ namespace Gloson.Text {
     public static IEnumerable<string> SplitToLines(this string source) =>
       SplitToLines(source, NewLine.Smart, 0, StringSplitOptions.None);
 
+    /// <summary>
+    /// Split Csv
+    /// </summary>
+    /// <param name="source">CSV String to split</param>
+    /// <param name="delimiter">Delimiter</param>
+    /// <param name="quotation">Quotation</param>
+    public static IEnumerable<string> SplitCsv(this string source, char delimiter, char quotation) {
+      if (string.IsNullOrEmpty(source))
+        yield break;
+
+      StringBuilder sb = new StringBuilder();
+      bool inQuotation = false;
+
+      for (int i = 0; i < source.Length; ++i) {
+        char ch = source[i];
+
+        if (inQuotation) {
+          if (ch == quotation) {
+            i += 1;
+
+            if (i >= source.Length || source[i] != quotation) {
+              i -= 1;
+              inQuotation = false;
+            }
+            else
+              sb.Append(ch);
+          }
+          else
+            sb.Append(ch);
+        }
+        else if (ch == quotation) {
+          inQuotation = true;
+        }
+        else if (ch == delimiter) {
+          yield return sb.ToString();
+
+          sb.Clear();
+        }
+        else
+          sb.Append(ch);
+      }
+
+      if (inQuotation)
+        throw new FormatException($"Dangling {quotation} quotation");
+
+      yield return sb.ToString();
+    }
+
+    /// <summary>
+    /// Split Csv
+    /// </summary>
+    /// <param name="source">CSV String to split</param>
+    /// <param name="delimiter">Delimiter</param>
+    /// <returns></returns>
+    public static IEnumerable<string> SplitCsv(this string source, char delimiter) =>
+      SplitCsv(source, delimiter, '"');
+
+    /// <summary>
+    /// Split Csv
+    /// </summary>
+    /// <param name="source">CSV String to split</param>
+    /// <returns></returns>
+    public static IEnumerable<string> SplitCsv(this string source) =>
+      SplitCsv(source, ',', '"');
+
     #endregion Public
   }
 
