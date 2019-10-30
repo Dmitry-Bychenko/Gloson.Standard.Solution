@@ -8,12 +8,14 @@ namespace Gloson.Collections.Generic {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// 
+  /// Suffix Array
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class SuffixArray<T> {
+  public sealed class SuffixArray<T> 
+    : IEnumerable<IEnumerable<T>> {
+
     #region Private Data
 
     private List<T> m_Items;
@@ -114,6 +116,32 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public IComparer<T> Comparer { get; }
 
+    /// <summary>
+    /// Count
+    /// </summary>
+    public int Count {
+      get {
+        return m_Indexes.Length;
+      }
+    }
+
     #endregion Public
+
+    #region IEnumerable<IEnumerable<T>>
+
+    /// <summary>
+    /// Suffixes
+    /// </summary>
+    public IEnumerator<IEnumerable<T>> GetEnumerator() {
+      foreach (int index in m_Indexes)
+        yield return m_Items.Skip(m_Indexes[index]);
+    }
+
+    /// <summary>
+    /// Enumerator (suffixes)
+    /// </summary>
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+    #endregion IEnumerable<IEnumerable<T>>
   }
 }
