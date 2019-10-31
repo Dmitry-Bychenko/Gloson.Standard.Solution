@@ -112,6 +112,11 @@ namespace Gloson.Collections.Generic {
     }
 
     /// <summary>
+    /// Suffix
+    /// </summary>
+    public IEnumerable<T> this[int index] => Suffix(index);
+
+    /// <summary>
     /// Comparer
     /// </summary>
     public IComparer<T> Comparer { get; }
