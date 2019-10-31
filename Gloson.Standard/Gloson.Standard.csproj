@@ -17,7 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Oracle\" />
     <Folder Include="Numerics\Statistics\" />
   </ItemGroup>
 
