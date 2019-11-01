@@ -60,10 +60,10 @@ namespace Gloson.Numerics.Calculus {
     /// <summary>
     /// Inversed function
     /// </summary>
-    public static Double InverseAt(Func<Double, Double> function,
-                                   Double toFind,
-                                   Double from,
-                                   Double to) {
+    public static Double InverseAt(this Func<Double, Double> function,
+                                        Double toFind,
+                                        Double from,
+                                        Double to) {
       if (double.IsNaN(toFind))
         throw new ArgumentException("Argument must not be NaN", nameof(toFind));
       else if (double.IsNaN(from))
@@ -124,7 +124,7 @@ namespace Gloson.Numerics.Calculus {
     /// <param name="function"></param>
     /// <param name="toFind"></param>
     /// <returns></returns>
-    public static Double InverseAt(Func<Double, Double> function, Double toFind) {
+    public static Double InverseAt(this Func<Double, Double> function, Double toFind) {
       return InverseAt(function, toFind, Double.MinValue, Double.MaxValue);
     }
 
