@@ -181,15 +181,15 @@ namespace Gloson.Text.Parsing {
     /// Parse
     /// </summary>
     /// <param name="source">Lines to parse</param>
-    /// <param name="rule">Rule to use</param>
-    public static IEnumerable<Token> Parse(IEnumerable<string> source,
-                                           ITokenDescriptionRules rule) {
+    /// <param name="rules">Rules to use</param>
+    public static IEnumerable<Token> Parse(this IEnumerable<string> source,
+                                                ITokenDescriptionRules rules) {
       if (object.ReferenceEquals(null, source))
         throw new ArgumentNullException("source");
-      else if (object.ReferenceEquals(null, rule))
+      else if (object.ReferenceEquals(null, rules))
         throw new ArgumentNullException("rule");
 
-      return CoreParse(source, rule);
+      return CoreParse(source, rules);
     }
 
     #endregion Public
