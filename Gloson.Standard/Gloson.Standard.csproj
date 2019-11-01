@@ -20,4 +20,8 @@
     <Folder Include="Numerics\Statistics\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Json" Version="4.6.0" />
+  </ItemGroup>
+
 </Project>

@@ -7,9 +7,7 @@
 //
 // HttpClient
 //
-// 1. Parsing (Tokens)
 // 2. Trie<T>
-// 3. Combinatorics generators
 // 6. Git
 // 7. Stash
 // 8. Uri ReadLines etc. like File
