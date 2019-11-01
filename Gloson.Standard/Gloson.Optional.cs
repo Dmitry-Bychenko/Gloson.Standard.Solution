@@ -12,7 +12,7 @@ namespace Gloson {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Optional<T>
+  public sealed class Optional<T> 
     : IEquatable<Optional<T>>,
       IEquatable<T> {
 
