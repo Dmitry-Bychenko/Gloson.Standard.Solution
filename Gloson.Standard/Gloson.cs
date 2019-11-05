@@ -8,6 +8,7 @@
 // HttpClient
 //
 // 2. Trie<T>
+// 3. Graph
 // 6. Git
 // 7. Stash
 // 8. Uri ReadLines etc. like File
