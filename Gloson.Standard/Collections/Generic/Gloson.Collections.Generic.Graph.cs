@@ -129,9 +129,19 @@ namespace Gloson.Collections.Generic {
       public IEnumerable<Edge> InEdges => m_InEdges;
 
       /// <summary>
+      /// In Count
+      /// </summary>
+      public int InCount => m_InEdges.Count;
+
+      /// <summary>
       /// Out Edges
       /// </summary>
       public IEnumerable<Edge> OutEdges => m_OutEdges;
+
+      /// <summary>
+      /// Out Count
+      /// </summary>
+      public int OutCount => m_OutEdges.Count;
 
       #endregion Public
     }
@@ -269,9 +279,31 @@ namespace Gloson.Collections.Generic {
             to.InEdges.Any(edge => edge.From == from))
           return false;
 
-      //TODO: Implement me! Acyclic test
+      //TODO: Implement me! Acyclic test (for both directed and undirected cases)
       if (Options.HasFlag(GraphOptions.Acyclic)) {
+        if (ReferenceEquals(to, from))
+          return false;
 
+        HashSet<Vertex> used = new HashSet<Vertex>();
+        HashSet<Vertex> agenda = new HashSet<Vertex>() { from, to};
+
+        while (agenda.Any()) {
+          List<Vertex> nodes = agenda.ToList();
+          agenda.Clear();
+
+          foreach (var node in nodes) {
+            if (used.Contains(node))
+              continue;
+
+            if (ReferenceEquals(from, node))
+              return false;
+
+            foreach (var edge in node.OutEdges)
+              agenda.Add(edge.To);
+
+            used.Add(node);
+          }
+        }
       }
 
       return true;
@@ -314,6 +346,19 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public IEnumerable<Edge> Edges => m_Vertexes
       .SelectMany(vertex => vertex.OutEdges);
+
+    /// <summary>
+    /// Add Vertex
+    /// </summary>
+    /// <param name="value">Associated value</param>
+    /// <returns>Vertex</returns>
+    public Vertex Add(V value) => new Vertex(this, value);
+
+    /// <summary>
+    /// Add Vertex
+    /// </summary>
+    /// <returns>Vertex with default associated value</returns>
+    public Vertex Add() => new Vertex(this);
 
     #endregion Public
   }
