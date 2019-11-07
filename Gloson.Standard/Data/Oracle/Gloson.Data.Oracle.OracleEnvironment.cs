@@ -12,6 +12,7 @@ namespace Gloson.Data.Oracle {
   /// <summary>
   /// Oracle Environment
   /// </summary>
+  /// <seealso cref="https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions165.htm#i1038176"/>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
@@ -20,6 +21,8 @@ namespace Gloson.Data.Oracle {
 
     private Dictionary<string, string> m_Cached = 
       new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    private Version m_Version = null;
 
     #endregion Private Data
 
@@ -50,8 +53,8 @@ namespace Gloson.Data.Oracle {
         return result;
 
       using (IDbCommand q = Connection.CreateCommand()) {
-        q.CommandText = 
-          @"select UserEnv(:prm_Name)
+        q.CommandText =
+          @"select SYS_CONTEXT('USERENV', :prm_Name)
               from Dual";
 
         var prm = q.CreateParameter();
@@ -101,9 +104,9 @@ namespace Gloson.Data.Oracle {
     public IDbConnection Connection { get; }
 
     /// <summary>
-    /// Session Id
+    /// SID (Session Id)
     /// </summary>
-    public long SessionId => long.Parse(Query("SESSIONID"));
+    public long SID => long.Parse(Query("SID"));
 
     /// <summary>
     /// Audit Entry Id
@@ -124,6 +127,28 @@ namespace Gloson.Data.Oracle {
     /// Region
     /// </summary>
     public RegionInfo Region => new RegionInfo(Query("LANG"));
+
+    /// <summary>
+    /// Version
+    /// </summary>
+    public Version Version {
+      get {
+        if (null != m_Version)
+          return m_Version;
+
+        using (IDbCommand q = Connection.CreateCommand()) {
+          q.CommandText =
+            @"SELECT Banner
+              FROM v$version
+             WHERE Banner LIKE 'Oracle%'";
+
+          if (!Version.TryParse(q.ExecuteScalar()?.ToString(), out m_Version))
+            m_Version = new Version(0, 0);
+
+          return m_Version;
+        }
+      }
+    }
 
     #endregion Public
   }
