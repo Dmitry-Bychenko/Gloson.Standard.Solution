@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gloson {
+namespace Gloson.Consoles {
 
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// Console Extensions
+  /// Console Reader
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public static partial class ConsoleExtensions {
+  public static class ConsoleReader {
     #region Public
 
     /// <summary>
     /// Read string as password (masked)
     /// </summary>
     /// <param name="mask">mask to use</param>
-    public static string ReadPassword(char mask) {
+    public static string ReadPasswordLine(char mask) {
+      if (mask == '\0')
+        return Console.ReadLine();
+
       StringBuilder sb = new StringBuilder();
 
       int position = Console.CursorLeft;
@@ -57,10 +60,8 @@ namespace Gloson {
     /// <summary>
     /// Read string as password (masked)
     /// </summary>
-    public static string ReadPassword() {
-      return ReadPassword('*');
-    }
-
+    public static string ReadPasswordLine() => ReadPasswordLine('*');
+    
     #endregion Public
   }
 
