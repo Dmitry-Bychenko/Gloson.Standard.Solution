@@ -139,8 +139,8 @@ namespace Gloson.Data.Oracle {
         using (IDbCommand q = Connection.CreateCommand()) {
           q.CommandText =
             @"SELECT Banner
-              FROM v$version
-             WHERE Banner LIKE 'Oracle%'";
+                FROM v$version
+               WHERE Banner LIKE 'Oracle%'";
 
           if (!Version.TryParse(q.ExecuteScalar()?.ToString(), out m_Version))
             m_Version = new Version(0, 0);
