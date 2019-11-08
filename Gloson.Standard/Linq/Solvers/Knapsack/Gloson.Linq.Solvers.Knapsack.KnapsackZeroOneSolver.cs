@@ -141,13 +141,15 @@ namespace Gloson.Linq.Solvers.Knapsack {
         throw new ArgumentNullException(nameof(value));
 
       var data = source
-        .Select((item, index) => (
+        .Select((item, idx) => (
            item   : item, 
            weight : weight(item), 
            value  : value(item),
-           index  : index))
+           index  : idx))
         .Where(item => item.weight <= capacity)
         .Where(item => item.value > 0 || item.weight < 0)
+        .OrderBy(item => item.weight >= 0)
+        .ThenByDescending(item => item.weight)
         .ToList();
 
       if (data.Count <= 0)
