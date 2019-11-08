@@ -152,8 +152,36 @@ namespace Gloson.Linq.Solvers.Knapsack {
         .ThenByDescending(item => item.weight)
         .ToList();
 
+      // Specal Cases :
+
+      // Empty :
       if (data.Count <= 0)
         return new KnapsackZeroOneSolution<T>(capacity);
+
+      if (capacity < data.Min(item => item.weight))
+        return new KnapsackZeroOneSolution<T>(capacity);
+
+      // All :
+
+      double maxCapacity = data
+        .Where(item => item.value > 0)
+        .Sum(item => item.weight);
+
+      if (capacity >= maxCapacity) {
+        var positives = data
+          .Where(item => item.value > 0)
+          .ToArray();
+
+        return new KnapsackZeroOneSolution<T>(
+          capacity,
+          positives.Sum(item => item.value),
+          positives.Sum(item => item.weight),
+          positives.Select(item => item.index),
+          positives.Select(item => item.item)
+        );
+      }
+
+      // General case :
 
       Dictionary<Tuple<int, double>,
                  Tuple<double, bool>> cache =
