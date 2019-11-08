@@ -141,7 +141,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
         throw new ArgumentNullException(nameof(value));
 
       var data = source
-        .Select(item => (item: item, weight: weight(item), value: value(item)))
+        .Select((item, index) => (
+           item   : item, 
+           weight : weight(item), 
+           value  : value(item),
+           index  : index))
         .Where(item => item.weight <= capacity)
         .Where(item => item.value > 0 || item.weight < 0)
         .ToList();
@@ -211,7 +215,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
         capacity,
         solution,
         sequence.Sum(i => data[i].weight),
-        sequence,
+        sequence.Select(i => data[i].index),
         sequence.Select(i => data[i].item)
       );
     }
