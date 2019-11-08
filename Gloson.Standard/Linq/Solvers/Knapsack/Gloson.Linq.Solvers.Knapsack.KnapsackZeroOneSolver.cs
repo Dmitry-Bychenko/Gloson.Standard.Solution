@@ -158,11 +158,13 @@ namespace Gloson.Linq.Solvers.Knapsack {
       if (data.Count <= 0)
         return new KnapsackZeroOneSolution<T>(capacity);
 
+      /*
       if (capacity < data.Min(item => item.weight))
         return new KnapsackZeroOneSolution<T>(capacity);
-
+      */ 
       // All :
-
+      
+      /*
       double maxCapacity = data
         .Where(item => item.value > 0)
         .Sum(item => item.weight);
@@ -180,6 +182,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
           positives.Select(item => item.item)
         );
       }
+      */
 
       // General case :
 
