@@ -164,7 +164,6 @@ namespace Gloson.Linq.Solvers.Knapsack {
       */ 
       // All :
       
-      /*
       double maxCapacity = data
         .Where(item => item.value > 0)
         .Sum(item => item.weight);
@@ -182,9 +181,18 @@ namespace Gloson.Linq.Solvers.Knapsack {
           positives.Select(item => item.item)
         );
       }
-      */
 
       // General case :
+
+      double[] takeAll = new double[data.Count];
+
+      for (int i = data.Count - 1; i >= 0; --i) {
+        double prior = i >= data.Count - 1 
+          ? 0.0 
+          : takeAll[i + 1];
+
+        takeAll[i] = data[i].weight + prior;
+      }
 
       Dictionary<Tuple<int, double>,
                  Tuple<double, bool>> cache =
@@ -196,15 +204,26 @@ namespace Gloson.Linq.Solvers.Knapsack {
         if (i < 0 || w < 0)
           return 0.0;
 
+        double result;
+
         if (cache.TryGetValue(Tuple.Create(i, w), out var cachedResult))
           return cachedResult.Item1;
 
-        if (data[i].weight > w)  // Skip
+        if (data[i].weight > w) {
+          // Skip
           return solver(i - 1, w);
+        }
+        else if (data[i].weight <= takeAll[i]) {
+          // Take
+          result = solver(i - 1, w - data[i].weight) + data[i].value;
+
+          cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
+
+          return result;
+        }
 
         var skip = solver(i - 1, w);
         var take = solver(i - 1, w - data[i].weight) + data[i].value;
-        double result;
 
         if (skip > take) {
           result = skip;
