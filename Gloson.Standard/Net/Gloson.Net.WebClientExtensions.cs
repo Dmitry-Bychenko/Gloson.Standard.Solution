@@ -65,6 +65,6 @@ namespace Gloson.Net {
     }
 
     #endregion Public
-
   }
+
 }
