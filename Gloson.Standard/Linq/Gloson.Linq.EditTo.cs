@@ -360,11 +360,11 @@ namespace Gloson.Linq {
 
         if (op == EditOperationKind.Insert) {
           x -= 1;
-          m_Sequence.Add(new EditOperation<T>(op, default(T), target[x], D[y][x + 1] - D[y][x]));
+          m_Sequence.Add(new EditOperation<T>(op, default, target[x], D[y][x + 1] - D[y][x]));
         }
         else if (op == EditOperationKind.Delete) {
           y -= 1;
-          m_Sequence.Add(new EditOperation<T>(op, source[y], default(T), D[y + 1][x] - D[y][x]));
+          m_Sequence.Add(new EditOperation<T>(op, source[y], default, D[y + 1][x] - D[y][x]));
         }
         else if (op == EditOperationKind.Edit || op == EditOperationKind.None) {
           x -= 1;

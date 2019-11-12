@@ -123,7 +123,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Items.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -647,7 +647,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }

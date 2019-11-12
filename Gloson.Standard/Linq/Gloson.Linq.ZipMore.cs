@@ -44,10 +44,10 @@ namespace Gloson.Linq {
             if (enSecond.MoveNext())
               yield return map(enFirst.Current, true, enSecond.Current, true);
             else
-              yield return map(enFirst.Current, true, default(TRight), false);
+              yield return map(enFirst.Current, true, default, false);
 
           while (enSecond.MoveNext())
-            yield return map(default(TLeft), false, enSecond.Current, true);
+            yield return map(default, false, enSecond.Current, true);
         }
       }
     }

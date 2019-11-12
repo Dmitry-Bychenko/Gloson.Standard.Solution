@@ -22,10 +22,10 @@ namespace Gloson.Consoles {
   public sealed class ConsoleAppearance : IDisposable {
     #region Private Data
 
-    private ConsoleColor m_SavedBackgroundColor;
-    private ConsoleColor m_SavedForegroundColor;
-    private int m_SavedCursorSize;
-    private bool m_SavedCursorVisible;
+    readonly private ConsoleColor m_SavedBackgroundColor;
+    readonly private ConsoleColor m_SavedForegroundColor;
+    readonly private int m_SavedCursorSize;
+    readonly private bool m_SavedCursorVisible;
 
     #endregion Private Data
 

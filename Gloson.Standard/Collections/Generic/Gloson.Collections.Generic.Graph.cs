@@ -56,9 +56,9 @@ namespace Gloson.Collections.Generic {
     public sealed class Vertex {
       #region Private Data
 
-      private HashSet<Edge> m_InEdges = new HashSet<Edge>();
+      private readonly HashSet<Edge> m_InEdges = new HashSet<Edge>();
 
-      private HashSet<Edge> m_OutEdges = new HashSet<Edge>();
+      private readonly HashSet<Edge> m_OutEdges = new HashSet<Edge>();
 
       #endregion Private Data
 

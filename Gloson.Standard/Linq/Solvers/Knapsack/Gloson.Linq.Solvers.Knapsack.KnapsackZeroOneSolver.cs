@@ -213,7 +213,15 @@ namespace Gloson.Linq.Solvers.Knapsack {
           // Skip
           return solver(i - 1, w);
         }
-        else if (data[i].weight <= takeAll[i]) {
+        else if (data[i].weight <= 0 && data[i].value > 0) {
+          // Take
+          result = solver(i - 1, w - data[i].weight) + data[i].value;
+
+          cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
+
+          return result;
+        }
+        else if (data[i].weight <= takeAll[i] && data[i].value > 0) {
           // Take
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 

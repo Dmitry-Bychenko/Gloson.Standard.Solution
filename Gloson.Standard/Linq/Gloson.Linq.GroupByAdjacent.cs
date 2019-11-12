@@ -51,7 +51,7 @@ namespace Gloson.Linq {
           $"No default equality comparer found for {typeof(K).Name}");
 
       List<V> group = new List<V>();
-      K expectedKey = default(K);
+      K expectedKey = default;
 
       foreach (S s in source) {
         if (group.Count <= 0) {

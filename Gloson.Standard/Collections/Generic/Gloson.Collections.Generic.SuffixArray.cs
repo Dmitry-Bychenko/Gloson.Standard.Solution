@@ -18,9 +18,9 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private List<T> m_Items;
+    readonly private List<T> m_Items;
 
-    private int[] m_Indexes;
+    readonly private int[] m_Indexes;
 
     #endregion Private Data
 
