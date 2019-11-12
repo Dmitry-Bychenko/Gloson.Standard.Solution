@@ -22,7 +22,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private
 
-    private List<V> m_Items;
+    private readonly List<V> m_Items;
 
     #endregion Private
 

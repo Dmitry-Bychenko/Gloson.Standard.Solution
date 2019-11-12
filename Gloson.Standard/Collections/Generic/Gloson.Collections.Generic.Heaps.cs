@@ -588,7 +588,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private MaxHeap<QueueItem> m_Heap;
+    private readonly MaxHeap<QueueItem> m_Heap;
 
     #endregion Private Data
 
@@ -662,7 +662,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryDequeue(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }

@@ -249,7 +249,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private HashSet<Vertex> m_Vertexes = new HashSet<Vertex>();
+    private readonly HashSet<Vertex> m_Vertexes = new HashSet<Vertex>();
 
     #endregion Private Data
 

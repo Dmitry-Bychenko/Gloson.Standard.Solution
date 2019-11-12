@@ -18,7 +18,7 @@ namespace Gloson.Numerics {
     #region Private Data
 
     // Random generator
-    private static ThreadLocal<Random> s_Gen = new ThreadLocal<Random>(() => {
+    private static readonly ThreadLocal<Random> s_Gen = new ThreadLocal<Random>(() => {
       return new Random();
     }
     );

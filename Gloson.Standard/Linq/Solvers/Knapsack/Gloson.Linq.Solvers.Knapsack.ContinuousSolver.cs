@@ -26,11 +26,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       #region Private Data
 
-      private List<T> m_Items = new List<T>();
+      private readonly List<T> m_Items = new List<T>();
 
-      private List<int> m_Indexes = new List<int>();
+      private readonly List<int> m_Indexes = new List<int>();
 
-      private List<double> m_Parts = new List<double>();
+      private readonly List<double> m_Parts = new List<double>();
 
       #endregion Private Data
 

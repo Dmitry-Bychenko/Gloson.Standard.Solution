@@ -19,7 +19,7 @@ namespace Gloson.Data.Oracle {
   public sealed class OracleEnvironment {
     #region Private Data
 
-    private Dictionary<string, string> m_Cached = 
+    private readonly Dictionary<string, string> m_Cached = 
       new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     private Version m_Version = null;
@@ -42,7 +42,7 @@ namespace Gloson.Data.Oracle {
       String.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
 
     private string Query(string name) {
-      string result = null;
+      string result;
 
       if (string.IsNullOrWhiteSpace(name))
         return "";

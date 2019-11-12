@@ -22,10 +22,9 @@ namespace Gloson.Resources {
   public static class ResourceManagerExtensions {
     #region Private Data
 
-    private static Lazy<FieldInfo> s_MainAssembly = new Lazy<FieldInfo>(() => 
+    private static readonly Lazy<FieldInfo> s_MainAssembly = new Lazy<FieldInfo>(() => 
       typeof(ResourceManager).GetField("MainAssembly", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
-
-
+    
     #endregion Private Data
 
     #region Public

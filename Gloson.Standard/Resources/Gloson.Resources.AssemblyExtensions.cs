@@ -21,7 +21,7 @@ namespace Gloson.Resources {
   public static partial class AssemblyExtensions {
     #region Private Data
 
-    private static Lazy<MethodInfo> s_GetNeutralResourcesLanguage = new Lazy<MethodInfo>(() => 
+    private static readonly Lazy<MethodInfo> s_GetNeutralResourcesLanguage = new Lazy<MethodInfo>(() => 
       typeof(ResourceManager).GetMethod("GetNeutralResourcesLanguage", 
         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static));
 
