@@ -14,7 +14,7 @@ namespace Gloson {
   //-------------------------------------------------------------------------------------------------------------------
  
   [Flags]
-  public enum LoginPasswordServerCases {
+  public enum LoginPasswordServerPolicy {
     /// <summary>
     /// All case sensitive
     /// </summary>
@@ -31,6 +31,7 @@ namespace Gloson {
     /// Server case insensitive 
     /// </summary>
     ServerCaseInsensitive = 4,
+
     /// <summary>
     /// Standard : Login and Server are case insensitive
     /// </summary>
@@ -91,8 +92,8 @@ namespace Gloson {
 
     #region Algorithm
 
-    private static StringComparison ComparisonFor(LoginPasswordServerCases left, LoginPasswordServerCases right) =>
-      ((left & right) == LoginPasswordServerCases.None)
+    private static StringComparison ComparisonFor(LoginPasswordServerPolicy left, LoginPasswordServerPolicy right) =>
+      ((left & right) == LoginPasswordServerPolicy.None)
         ? StringComparison.Ordinal
         : StringComparison.OrdinalIgnoreCase;
 
@@ -107,7 +108,7 @@ namespace Gloson {
     /// <param name="password">Password</param>
     /// <param name="server">Server</param>
     /// <param name="policy">Policy</param>
-    public LoginPasswordServer(string login, string password, string server, LoginPasswordServerCases policy) {
+    public LoginPasswordServer(string login, string password, string server, LoginPasswordServerPolicy policy) {
       Login = login ?? "";
       Password = password ?? "";
       Server = server ?? "";
@@ -122,7 +123,7 @@ namespace Gloson {
     /// <param name="password">Password</param>
     /// <param name="server">Server</param>
     public LoginPasswordServer(string login, string password, string server)
-      : this(login, password, server, LoginPasswordServerCases.Standard) { }
+      : this(login, password, server, LoginPasswordServerPolicy.Standard) { }
 
     /// <summary>
     /// Standard constructor
@@ -130,7 +131,69 @@ namespace Gloson {
     /// <param name="login">Login</param>
     /// <param name="server">Server</param>
     public LoginPasswordServer(string login, string server)
-      : this(login, null, server, LoginPasswordServerCases.Standard) { }
+      : this(login, null, server, LoginPasswordServerPolicy.Standard) { }
+
+    /// <summary>
+    /// Try Parse
+    /// </summary>
+    public static bool TryParse(string value, out LoginPasswordServer result, LoginPasswordServerPolicy policy) {
+      result = null;
+      
+      if (string.IsNullOrWhiteSpace(value))
+        return false;
+
+      int p = value.LastIndexOf('@');
+
+      string server = "";
+
+      if (p >= 0) {
+        server = value.Substring(p + 1);
+        value = value.Substring(0, p);
+      }
+
+      string login = value;
+      string password = "";
+
+      p = value.IndexOfAny(new char[] { '\\', '/' });
+
+      if (p >= 0) {
+        login = value.Substring(0, p);
+        password = value.Substring(p + 1);
+      }
+
+      login = login.TrimStart();
+
+      if (string.IsNullOrEmpty(login))
+        return false;
+
+      result = new LoginPasswordServer(login, password, server, policy);
+
+      return true;
+    }
+
+    /// <summary>
+    /// Try Parse
+    /// </summary>
+    public static bool TryParse(string value, out LoginPasswordServer result) =>
+      TryParse(value, out result, LoginPasswordServerPolicy.Standard);
+
+    /// <summary>
+    /// Parse
+    /// </summary>
+    public static LoginPasswordServer Parse(string value, LoginPasswordServerPolicy policy) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      if (TryParse(value, out var result, policy))
+        return result;
+
+      throw new FormatException($"Invalid format: string provided can't be parsed as {typeof(LoginPasswordServer).Name}");
+    }
+
+    /// <summary>
+    /// Parse
+    /// </summary>
+    public static LoginPasswordServer Parse(string value) => Parse(value, LoginPasswordServerPolicy.Standard);
 
     #endregion Create
 
@@ -164,7 +227,7 @@ namespace Gloson {
     /// <summary>
     /// Policy
     /// </summary>
-    public LoginPasswordServerCases Policy { get; }
+    public LoginPasswordServerPolicy Policy { get; }
 
     /// <summary>
     /// To String
@@ -172,6 +235,8 @@ namespace Gloson {
     public override string ToString() {
       if (string.IsNullOrEmpty(Password))
         return $"{Login}@{Server}";
+      else if (string.IsNullOrEmpty(Server))
+        return $"{Login}/{Password}";
       else
         return $"{Login}/{Password}@{Server}";
     }
@@ -218,9 +283,9 @@ namespace Gloson {
         return false;
 
       return 
-        string.Equals(Login, other.Login, ComparisonFor(Policy & LoginPasswordServerCases.LoginCaseInsensitive, other.Policy)) &&
-        string.Equals(Password, other.Password, ComparisonFor(Policy & LoginPasswordServerCases.PasswordCaseInsensitive, other.Policy)) &&
-        string.Equals(Server, other.Server, ComparisonFor(Policy & LoginPasswordServerCases.ServerCaseInsensitive, other.Policy));
+        string.Equals(Login, other.Login, ComparisonFor(Policy & LoginPasswordServerPolicy.LoginCaseInsensitive, other.Policy)) &&
+        string.Equals(Password, other.Password, ComparisonFor(Policy & LoginPasswordServerPolicy.PasswordCaseInsensitive, other.Policy)) &&
+        string.Equals(Server, other.Server, ComparisonFor(Policy & LoginPasswordServerPolicy.ServerCaseInsensitive, other.Policy));
     }
 
     /// <summary>
@@ -234,12 +299,12 @@ namespace Gloson {
     public override int GetHashCode() {
       int result = 0;
 
-      if (Policy.HasFlag(LoginPasswordServerCases.LoginCaseInsensitive))
+      if (Policy.HasFlag(LoginPasswordServerPolicy.LoginCaseInsensitive))
         result ^= Login.ToUpperInvariant().GetHashCode();
       else
         result ^= Login.GetHashCode();
 
-      if (Policy.HasFlag(LoginPasswordServerCases.ServerCaseInsensitive))
+      if (Policy.HasFlag(LoginPasswordServerPolicy.ServerCaseInsensitive))
         result ^= Server.ToUpperInvariant().GetHashCode();
       else
         result ^= Server.GetHashCode();
