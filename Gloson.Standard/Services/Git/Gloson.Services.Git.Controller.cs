@@ -21,7 +21,8 @@ namespace Gloson.Services.Git {
   public sealed class GitController {
     #region Private Data
 
-    private static Lazy<GitController> s_Default = new Lazy<GitController>(() => new GitController());
+    private static readonly Lazy<GitController> s_Default = new Lazy<GitController>(
+      () => new GitController());
 
     #endregion Private Data
 

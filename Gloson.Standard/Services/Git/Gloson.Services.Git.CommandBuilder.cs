@@ -32,7 +32,7 @@ namespace Gloson.Services.Git {
     }
 
     /// <summary>
-    /// Build Command
+    /// Build Command (same as Build)
     /// </summary>
     /// <param name="items"></param>
     /// <returns></returns>
@@ -74,6 +74,30 @@ namespace Gloson.Services.Git {
        $"-C \"{targetPath}\"",
        $"--no-pager show -s",
        $"--format=\"{format}\"");
+    }
+
+    /// <summary>
+    /// With directory mentioned
+    /// </summary>
+    /// <param name="command">Command</param>
+    /// <param name="directory">Directory to add</param>
+    /// <returns>Command with directory mentioned</returns>
+    public static string WithDirectory(string command, string directory) {
+      string dir = $"-C \"{directory}\"";
+
+      if (string.IsNullOrWhiteSpace(directory))
+        return command;
+      else if (string.IsNullOrWhiteSpace(command))
+        return dir;
+
+      StringComparison comparison = Environment.OSVersion.Platform == PlatformID.Win32NT
+        ? StringComparison.OrdinalIgnoreCase
+        : StringComparison.Ordinal;
+
+      if (command.IndexOf(dir, comparison) >= 0)
+        return command;
+
+      return string.Join(" ", command.TrimEnd(), $"-C \"{directory}\"");
     }
 
     #endregion Public
