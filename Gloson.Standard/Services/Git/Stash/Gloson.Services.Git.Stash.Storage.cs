@@ -19,7 +19,7 @@ namespace Gloson.Services.Git.Stash {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class StashController {
+  public sealed class StashStorage {
     #region Private Data
 
     private List<StashProject> m_Items = null;
@@ -105,7 +105,7 @@ namespace Gloson.Services.Git.Stash {
     /// Standard constructor
     /// </summary>
     /// <param name="connection">Connection</param>
-    public StashController(LoginPasswordServer connection) {
+    public StashStorage(LoginPasswordServer connection) {
       if (null == connection)
         throw new ArgumentNullException(nameof(connection));
 
@@ -122,14 +122,14 @@ namespace Gloson.Services.Git.Stash {
     /// <summary>
     /// Nexign
     /// </summary>
-    public static StashController Nexign(string password) {
+    public static StashStorage Nexign(string password) {
       LoginPasswordServer connection = new LoginPasswordServer(
           Environment.UserName,
           password,
         $@"https://{Environment.UserName}@stash.billing.ru"
       );
 
-      return new StashController(connection);
+      return new StashStorage(connection);
     }
 
     #endregion Create

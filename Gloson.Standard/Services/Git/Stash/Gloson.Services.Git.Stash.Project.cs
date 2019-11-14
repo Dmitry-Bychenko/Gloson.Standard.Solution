@@ -34,7 +34,7 @@ namespace Gloson.Services.Git.Stash {
 
       m_Items = new List<StashRepository>();
 
-      foreach (var json in Controller.Query($"projects/{Key}/repos"))
+      foreach (var json in Storage.Query($"projects/{Key}/repos"))
         m_Items.Add(new StashRepository(this, json));
     }
 
@@ -42,8 +42,8 @@ namespace Gloson.Services.Git.Stash {
 
     #region Create
 
-    internal StashProject(StashController controller, JsonValue json) {
-      Controller = controller;
+    internal StashProject(StashStorage controller, JsonValue json) {
+      Storage = controller;
 
       Id          = json.Value("id");
       Key         = json.Value("key");
@@ -58,9 +58,9 @@ namespace Gloson.Services.Git.Stash {
     #region Public
 
     /// <summary>
-    /// Controller
+    /// Storage
     /// </summary>
-    public StashController Controller { get; }
+    public StashStorage Storage { get; }
 
     /// <summary>
     /// Id
@@ -97,6 +97,8 @@ namespace Gloson.Services.Git.Stash {
         return m_Items;
       }
     }
+
+
 
     #endregion Public
   }

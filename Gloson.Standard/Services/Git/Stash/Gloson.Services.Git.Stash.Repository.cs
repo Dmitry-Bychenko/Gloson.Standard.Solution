@@ -21,9 +21,23 @@ namespace Gloson.Services.Git.Stash {
 
   public sealed class StashRepository {
     #region Private Data
+
+    private List<StashBranch> m_Branches;
+
     #endregion Private Data
 
     #region Algorithm
+
+    private void CoreCreateBranches() {
+      if (null != m_Branches)
+        return;
+
+      m_Branches = new List<StashBranch>();
+
+      foreach (var json in Storage.Query($"projects/{Project.Key}/repos/{Slug}/branches"))
+        m_Branches.Add(new StashBranch(this, json));
+    }
+
     #endregion Algorithm
 
     #region Create
@@ -61,9 +75,9 @@ namespace Gloson.Services.Git.Stash {
     public StashProject Project { get; }
 
     /// <summary>
-    /// Controller
+    /// Storage
     /// </summary>
-    public StashController Controller => Project?.Controller;
+    public StashStorage Storage => Project?.Storage;
 
     /// <summary>
     /// Id
@@ -89,6 +103,22 @@ namespace Gloson.Services.Git.Stash {
     /// SSH
     /// </summary>
     public Uri Ssh { get; }
+
+    /// <summary>
+    /// Branches
+    /// </summary>
+    public IReadOnlyList<StashBranch> Branches {
+      get {
+        CoreCreateBranches();
+
+        return m_Branches;
+      }
+    }
+
+    /// <summary>
+    /// To String
+    /// </summary>
+    public override string ToString() => $"{Project?.Key}.{Id} ({Ssh})";
 
     #endregion Public
   }
