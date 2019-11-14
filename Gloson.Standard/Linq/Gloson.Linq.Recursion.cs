@@ -18,6 +18,17 @@ namespace Gloson.Linq {
     /// <summary>
     /// Generate
     /// </summary>
+    public static IEnumerable<T> Generate<T>(Func<T> next) {
+      if (null == next)
+        throw new ArgumentNullException(nameof(next));
+
+      while (true) 
+        yield return next();
+    }
+
+    /// <summary>
+    /// Generate
+    /// </summary>
     public static IEnumerable<T> Generate<T>(T first, Func<T, T> next) {
       if (null == next)
         throw new ArgumentNullException(nameof(next));
