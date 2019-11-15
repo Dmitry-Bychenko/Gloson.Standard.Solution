@@ -22,7 +22,7 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashProject {
     #region Private Data
 
-    private Lazy<List<StashRepository>> m_Items = null;
+    private readonly Lazy<List<StashRepository>> m_Items = null;
 
     #endregion Private Data
 
@@ -51,7 +51,7 @@ namespace Gloson.Services.Git.Stash {
 
       Description = json.Value("description") ?? "";
 
-      m_Items = new Lazy<List<StashRepository>>(CoreLoadRepositories));
+      m_Items = new Lazy<List<StashRepository>>(CoreLoadRepositories);
     }
 
     #endregion Create

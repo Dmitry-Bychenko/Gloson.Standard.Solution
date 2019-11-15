@@ -22,7 +22,7 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashStorage {
     #region Private Data
 
-    private Lazy<List<StashProject>> m_Items = null;
+    private readonly Lazy<List<StashProject>> m_Items = null;
 
     #endregion Private Data
 
@@ -62,13 +62,11 @@ namespace Gloson.Services.Git.Stash {
 
         JsonValue root = null;
 
-        using (WebResponse response = request.GetResponse()) {
-          using (Stream stream = response.GetResponseStream()) {
+        using (WebResponse response = request.GetResponse()) 
+          using (Stream stream = response.GetResponseStream()) 
             using (StreamReader reader = new StreamReader(stream)) {
               root = JsonValue.Parse(reader.ReadToEnd());
             }
-          }
-        }
 
         var array = root?.Value("values") as JsonArray;
 
@@ -87,11 +85,9 @@ namespace Gloson.Services.Git.Stash {
       }
     }
 
-    private new List<StashProject> CoreLoadProjects() {
+    private List<StashProject> CoreLoadProjects() {
       List<StashProject> result = new List<StashProject>();
-      
-      result = new List<StashProject>();
-
+  
       foreach (var json in CoreQuery("projects")) 
         result.Add(new StashProject(this, json));
 

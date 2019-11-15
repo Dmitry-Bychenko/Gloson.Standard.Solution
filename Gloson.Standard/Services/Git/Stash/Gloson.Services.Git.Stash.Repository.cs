@@ -22,7 +22,7 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashRepository {
     #region Private Data
 
-    private Lazy<List<StashBranch>> m_Branches;
+    private readonly Lazy<List<StashBranch>> m_Branches;
 
     #endregion Private Data
 
@@ -51,7 +51,7 @@ namespace Gloson.Services.Git.Stash {
 
       JsonArray array = json.Value("links")?.Value("clone") as JsonArray;
 
-      m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches());
+      m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches);
 
       if (array != null) {
         foreach (JsonValue item in array) {
