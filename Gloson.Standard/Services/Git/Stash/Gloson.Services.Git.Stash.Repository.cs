@@ -49,11 +49,9 @@ namespace Gloson.Services.Git.Stash {
       Key        = json.Value("name");
       IsForkable = json.Value("forkable");
 
-      JsonArray array = json.Value("links")?.Value("clone") as JsonArray;
-
       m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches);
 
-      if (array != null) {
+      if (json.Value("links")?.Value("clone") is JsonArray array && array != null) 
         foreach (JsonValue item in array) {
           string hRef = item.Value("href");
 
@@ -63,7 +61,7 @@ namespace Gloson.Services.Git.Stash {
             break;
           }
         }
-      }
+
     }
 
     #endregion Create

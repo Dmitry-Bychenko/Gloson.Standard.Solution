@@ -68,20 +68,17 @@ namespace Gloson.Services.Git.Stash {
               root = JsonValue.Parse(reader.ReadToEnd());
             }
 
-        var array = root?.Value("values") as JsonArray;
+        if (root?.Value("values") is JsonArray array && array != null) {
+          foreach (JsonValue item in array)
+            yield return item;
 
-        if (null == array) {
-          yield return root;
-          yield break;
+          if (root.Value("isLastPage") == true)
+            break;
+
+          start = root.Value("nextPageStart");
         }
-
-        foreach (JsonValue item in array)
-          yield return item;
-
-        if (root.Value("isLastPage") == true)
-          break;
-
-        start = root.Value("nextPageStart");
+        else
+          yield return root;
       }
     }
 
