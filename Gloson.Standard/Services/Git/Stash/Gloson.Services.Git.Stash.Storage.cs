@@ -22,7 +22,7 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashStorage {
     #region Private Data
 
-    private List<StashProject> m_Items = null;
+    private Lazy<List<StashProject>> m_Items = null;
 
     #endregion Private Data
 
@@ -87,14 +87,15 @@ namespace Gloson.Services.Git.Stash {
       }
     }
 
-    private void CoreLoadProjects() {
-      if (null != m_Items)
-        return;
-
-      m_Items = new List<StashProject>();
+    private new List<StashProject> CoreLoadProjects() {
+      List<StashProject> result = new List<StashProject>();
+      
+      result = new List<StashProject>();
 
       foreach (var json in CoreQuery("projects")) 
-        m_Items.Add(new StashProject(this, json));
+        result.Add(new StashProject(this, json));
+
+      return result;
     }
 
     #endregion Algorithm 
@@ -114,6 +115,8 @@ namespace Gloson.Services.Git.Stash {
           "Connection is not a valid URL",
           nameof(connection));
       }
+
+      m_Items = new Lazy<List<StashProject>>(CoreLoadProjects);
 
       Location = address;
       Connection = connection;
@@ -175,13 +178,7 @@ namespace Gloson.Services.Git.Stash {
     /// <summary>
     /// Projects
     /// </summary>
-    public IReadOnlyList<StashProject> Projects {
-      get {
-        CoreLoadProjects();
-
-        return m_Items;
-      }
-    }
+    public IReadOnlyList<StashProject> Projects => m_Items.Value;
 
     /// <summary>
     /// To String

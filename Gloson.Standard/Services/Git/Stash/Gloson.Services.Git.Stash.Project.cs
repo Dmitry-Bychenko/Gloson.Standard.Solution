@@ -22,20 +22,19 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashProject {
     #region Private Data
 
-    private List<StashRepository> m_Items;
+    private Lazy<List<StashRepository>> m_Items = null;
 
     #endregion Private Data
 
     #region Algorithm
 
-    private void CoreLoadRepositories() {
-      if (null != m_Items)
-        return;
-
-      m_Items = new List<StashRepository>();
+    private List<StashRepository> CoreLoadRepositories() {
+      List<StashRepository> result  = new List<StashRepository>();
 
       foreach (var json in Storage.Query($"projects/{Key}/repos"))
-        m_Items.Add(new StashRepository(this, json));
+        result.Add(new StashRepository(this, json));
+
+      return result;
     }
 
     #endregion Algorithm
@@ -51,6 +50,8 @@ namespace Gloson.Services.Git.Stash {
       IsPublic    = json.Value("public");
 
       Description = json.Value("description") ?? "";
+
+      m_Items = new Lazy<List<StashRepository>>(CoreLoadRepositories));
     }
 
     #endregion Create
@@ -90,15 +91,7 @@ namespace Gloson.Services.Git.Stash {
     /// <summary>
     /// Repositories
     /// </summary>
-    public IReadOnlyList<StashRepository> Repositories {
-      get {
-        CoreLoadRepositories();
-
-        return m_Items;
-      }
-    }
-
-
+    public IReadOnlyList<StashRepository> Repositories => m_Items.Value;
 
     #endregion Public
   }

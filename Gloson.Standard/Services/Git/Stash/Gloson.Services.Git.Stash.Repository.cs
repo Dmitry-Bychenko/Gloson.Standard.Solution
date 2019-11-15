@@ -22,20 +22,19 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashRepository {
     #region Private Data
 
-    private List<StashBranch> m_Branches;
+    private Lazy<List<StashBranch>> m_Branches;
 
     #endregion Private Data
 
     #region Algorithm
 
-    private void CoreCreateBranches() {
-      if (null != m_Branches)
-        return;
-
-      m_Branches = new List<StashBranch>();
+    private List<StashBranch> CoreCreateBranches() {
+      List<StashBranch> result = new List<StashBranch>();
 
       foreach (var json in Storage.Query($"projects/{Project.Key}/repos/{Slug}/branches"))
-        m_Branches.Add(new StashBranch(this, json));
+        result.Add(new StashBranch(this, json));
+
+      return result;
     }
 
     #endregion Algorithm
@@ -51,6 +50,8 @@ namespace Gloson.Services.Git.Stash {
       IsForkable = json.Value("forkable");
 
       JsonArray array = json.Value("links")?.Value("clone") as JsonArray;
+
+      m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches());
 
       if (array != null) {
         foreach (JsonValue item in array) {
@@ -107,13 +108,7 @@ namespace Gloson.Services.Git.Stash {
     /// <summary>
     /// Branches
     /// </summary>
-    public IReadOnlyList<StashBranch> Branches {
-      get {
-        CoreCreateBranches();
-
-        return m_Branches;
-      }
-    }
+    public IReadOnlyList<StashBranch> Branches => m_Branches.Value;
 
     /// <summary>
     /// To String
