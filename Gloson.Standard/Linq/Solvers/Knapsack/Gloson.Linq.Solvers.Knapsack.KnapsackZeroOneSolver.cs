@@ -155,13 +155,10 @@ namespace Gloson.Linq.Solvers.Knapsack {
       // Specal Cases :
 
       // Empty :
+
       if (data.Count <= 0)
         return new KnapsackZeroOneSolution<T>(capacity);
 
-      /*
-      if (capacity < data.Min(item => item.weight))
-        return new KnapsackZeroOneSolution<T>(capacity);
-      */ 
       // All :
       
       double maxCapacity = data
@@ -194,6 +191,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
         takeAll[i] = data[i].weight + prior;
       }
 
+      // Cache (memoization) :
+
       Dictionary<Tuple<int, double>,
                  Tuple<double, bool>> cache =
         new Dictionary<Tuple<int, double>, Tuple<double, bool>>();
@@ -210,11 +209,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
           return cachedResult.Item1;
 
         if (data[i].weight > w) {
-          // Skip
+          // Skip :
           return solver(i - 1, w);
         }
         else if (data[i].weight <= 0 && data[i].value > 0) {
-          // Take
+          // Take :
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 
           cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
@@ -222,13 +221,15 @@ namespace Gloson.Linq.Solvers.Knapsack {
           return result;
         }
         else if (data[i].weight <= takeAll[i] && data[i].value > 0) {
-          // Take
+          // Take :
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 
           cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
 
           return result;
         }
+
+        // General Case : 
 
         var skip = solver(i - 1, w);
         var take = solver(i - 1, w - data[i].weight) + data[i].value;
@@ -247,7 +248,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
         return result;
       };
 
+      // Entire task solving :
+
       double solution = solver(data.Count - 1, capacity);
+
+      // Solved, backtrack : 
 
       int index = data.Count - 1;
       double bestWeight = capacity;

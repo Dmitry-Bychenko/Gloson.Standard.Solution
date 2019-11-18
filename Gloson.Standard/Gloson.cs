@@ -5,12 +5,12 @@
 //
 // https://stackoverflow.com/questions/49572079/net-core-dependency-injection-backwards-compatibility-with-net-framework
 //
+// Install-Package Microsoft.Extensions.DependencyInjection -Version 3.0.0 -ProjectName Gloson.Standard
+// Install-Package Microsoft.Extensions.DependencyInjection.Abstractions -Version 3.0.0 -ProjectName Gloson.Standard
+//
 // HttpClient
 //
 // 2. Trie<T>
-// 3. Graph
-// 6. Git
-// 7. Stash
 // 8. Uri ReadLines etc. like File
 //
 //
