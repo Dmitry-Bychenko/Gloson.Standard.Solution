@@ -161,6 +161,45 @@ namespace Gloson.Numerics {
       return IsProbablePrime(value, 10);
     }
 
+    /// <summary>
+    /// Moebius function
+    /// https://en.wikipedia.org/wiki/Moebius_function
+    /// </summary>
+    public static int Moebius(this BigInteger value) {
+      if (value <= 0)
+        throw new ArgumentOutOfRangeException("value", "value must be a positive number.");
+
+      if (value == 1)
+        return 1;
+
+      int count = 0;
+
+      if (value % 2 == 0) {
+        if (value == 2)
+          return -1;
+
+        count += 1;
+        value = value / 2;
+
+        if (value % 2 == 0)
+          return 0;
+      }
+
+      count += 1;
+
+      for (long d = 3; d * d <= value; d += 2) {
+        if (value % d == 0) {
+          count += 1;
+          value /= d;
+
+          if (value % d == 0)
+            return 0;
+        }
+      }
+
+      return count % 2 == 0 ? 1 : -1;
+    }
+
     #endregion Public
   }
 }

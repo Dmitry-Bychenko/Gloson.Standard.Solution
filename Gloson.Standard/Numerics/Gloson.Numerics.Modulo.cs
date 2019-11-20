@@ -17,6 +17,31 @@ namespace Gloson.Numerics {
     #region Public
 
     /// <summary>
+    /// Mod
+    /// </summary>
+    public static BigInteger Mod(this BigInteger value, BigInteger mod) {
+      if (mod <= 0)
+        throw new ArgumentOutOfRangeException("mod", $"mod == {mod} must be positive.");
+
+      if (value >= 0 && value < mod)
+        return value;
+
+      value = value % mod;
+
+      if (value >= 0)
+        return value;
+      else
+        return value + mod;
+    }
+
+    /// <summary>
+    /// -value (mod mod)
+    /// </summary>
+    public static BigInteger ModNegate(this BigInteger value, BigInteger mod) {
+      return Mod(-value, mod);
+    }
+
+    /// <summary>
     /// Greatest Common Divisor
     /// </summary>
     public static BigInteger Gcd(this BigInteger left, BigInteger right) =>
