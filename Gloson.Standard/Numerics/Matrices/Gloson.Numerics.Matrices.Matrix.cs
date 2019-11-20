@@ -26,6 +26,12 @@ namespace Gloson.Numerics.Matrices {
     // Items
     internal double[][] m_Items;
 
+    private double m_Determinant = double.NaN;
+
+    private int m_Rank = -1;
+
+    private double[] m_LinearSolutions;
+
     #endregion Private Data
 
     #region Algorithm 
@@ -35,6 +41,12 @@ namespace Gloson.Numerics.Matrices {
 
     // Empty Constructor
     private Matrix() { }
+
+    // Low level constructor
+    private Matrix(double[][] items) 
+      : this() {
+      m_Items = items;
+    }
 
     /// <summary>
     /// Standard Constructor
@@ -253,6 +265,68 @@ namespace Gloson.Numerics.Matrices {
       return result;
     }
 
+    /// <summary>
+    /// Determinant
+    /// </summary>
+    public double Determinant { 
+      get {
+        if (double.IsNaN(m_Determinant))
+          m_Determinant = MatrixLowLevel.Determinant(m_Items);
+
+        return m_Determinant;
+      }
+    }
+
+    /// <summary>
+    /// Rank
+    /// </summary>
+    public int Rank {
+      get {
+        if (m_Rank < 0)
+          m_Rank = MatrixLowLevel.Rank(m_Items);
+
+        return m_Rank;
+      }
+    }
+
+    /// <summary>
+    /// Inverse
+    /// </summary>
+    public Matrix Inverse() {
+      if (ColumnCount != LineCount)
+        throw new InvalidOperationException("Only square matrix can be inversed.");
+
+      try {
+        return new Matrix(MatrixLowLevel.Inverse(m_Items));
+      }
+      catch (ArgumentException e) {
+        throw new InvalidOperationException("Degenerated matrix can't be inversed.");
+      }
+    }
+
+    /// <summary>
+    /// Pseudo Inverse
+    /// </summary>
+    public Matrix PseudoInverse() {
+      double[][] tran = MatrixLowLevel.Transpose(m_Items);
+
+      double[][] result = MatrixLowLevel.Multiply(MatrixLowLevel.Inverse(MatrixLowLevel.Multiply(tran, m_Items)), tran);
+
+      return new Matrix(result);
+    }
+
+    /// <summary>
+    /// Linear Solutions
+    /// </summary>
+    public double[] LinearSoution {
+      get {
+        if (null == m_LinearSolutions)
+          m_LinearSolutions = MatrixLowLevel.Solve(m_Items);
+
+        return m_LinearSolutions;
+      }
+    }
+
     #endregion Standard
 
     #endregion Public
@@ -435,6 +509,45 @@ namespace Gloson.Numerics.Matrices {
           return result;
     }
 
+    /// <summary>
+    /// Matrix Division
+    /// </summary>
+    public static Matrix operator / (Matrix left, Matrix right) {
+      if (ReferenceEquals(null, left))
+        throw new ArgumentNullException(nameof(left));
+      else if (ReferenceEquals(null, right))
+        throw new ArgumentNullException(nameof(right));
+
+      if (left.ColumnCount != right.LineCount)
+        throw new ArgumentException($"Right matrix must have {left.ColumnCount} liness, actual {right.LineCount}", nameof(right));
+      else if (right.ColumnCount != right.LineCount)
+        throw new ArgumentException("Divisor must be a square matrix.", nameof(right));
+
+      return new Matrix(MatrixLowLevel.Multiply(left.m_Items, MatrixLowLevel.Inverse(right.m_Items)));
+    }
+
+    /// <summary>
+    /// Matrix Division
+    /// </summary>
+    public static Matrix operator / (double left, Matrix right) {
+      if (ReferenceEquals(null, right))
+        throw new ArgumentNullException(nameof(right));
+
+      if (right.ColumnCount != right.LineCount)
+        throw new ArgumentException("Divisor must be a square matrix.", nameof(right));
+
+      double[][] result = MatrixLowLevel.Inverse(right.m_Items);
+
+      for (int i = result.Length - 1; i >= 0; --i) {
+        double[] line = result[i];
+
+        for (int j = line.Length - 1; j >= 0; --j)
+          line[j] = left * line[j];
+      }
+
+      return new Matrix(result);
+    }
+
     #endregion Arithmetics
 
     #endregion Operators
@@ -448,7 +561,13 @@ namespace Gloson.Numerics.Matrices {
       Matrix copy = new Matrix();
 
       copy.m_Items = m_Items
-        .Select(line => line.ToArray())
+        .Select(line => {
+          double[] result = new double[line.Length];
+
+          Array.Copy(line, 0, result, 0, line.Length);
+
+          return result;
+        })
         .ToArray();
 
       return copy;
@@ -529,8 +648,17 @@ namespace Gloson.Numerics.Matrices {
       if (string.IsNullOrEmpty(format) || "g".Equals(format, StringComparison.OrdinalIgnoreCase))
         return ToString();
 
+      int p = format.IndexOf('|');
+
+      string delimiter = p >= 0
+        ? format.Substring(p + 1)
+        : "\t";
+
+      if (p > 0)
+        format = format.Substring(0, p);
+
       return string.Join(Environment.NewLine, m_Items
-        .Select(line => string.Join("\t", line.Select(item => item.ToString(format, formatProvider)))));
+        .Select(line => string.Join(delimiter, line.Select(item => item.ToString(format, formatProvider)))));
     }
 
     /// <summary>
