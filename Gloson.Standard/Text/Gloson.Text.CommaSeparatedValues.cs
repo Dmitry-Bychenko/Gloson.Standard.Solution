@@ -84,9 +84,13 @@ namespace Gloson.Text {
 
         // Line completed
         if (!inQuotation) {
-          if (items.Any())
-            yield return items.ToArray();
+          if (sb.Length > 0 || items.Any()) {
+            items.Add(sb.ToString());
 
+            yield return items.ToArray();
+          }
+
+          sb.Clear();
           items.Clear();
         }
       }
