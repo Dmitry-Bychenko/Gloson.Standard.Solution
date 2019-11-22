@@ -23,6 +23,34 @@ namespace Gloson.Linq.Solvers.Knapsack {
     public sealed class KnapsackZeroOneSolution<T>
       : IReadOnlyList<T> {
 
+      #region Private Data
+
+      List<int> m_Indexes = new List<int>();
+      List<T> m_Items = new List<T>();
+
+      #endregion Private Data
+
+      #region Algorithm
+
+      internal KnapsackZeroOneSolution<T> AddExtra(double value, 
+                                                   double weight,
+                                                   IEnumerable<int> indexes,
+                                                   IEnumerable<T> items) {
+
+        Value += value;
+        Weight -= weight;
+
+        foreach (int index in indexes)
+          m_Indexes.Add(index);
+
+        foreach (T item in items)
+          m_Items.Add(item);
+
+        return this;
+      }
+
+      #endregion Algorithm
+
       #region Create 
 
       internal KnapsackZeroOneSolution(
@@ -36,8 +64,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
         Weight = weight;
         Capacity = capacity;
 
-        Indexes = indexes.ToList();
-        Items = items.ToList();
+        m_Indexes = indexes.ToList();
+        m_Items = items.ToList();
       }
 
       internal KnapsackZeroOneSolution(double capacity) {
@@ -45,8 +73,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
         Value = 0.0;
         Weight = 0.0;
 
-        Indexes = new List<int>();
-        Items = new List<T>();
+        m_Indexes = new List<int>();
+        m_Items = new List<T>();
       }
 
       #endregion Create
@@ -56,12 +84,12 @@ namespace Gloson.Linq.Solvers.Knapsack {
       /// <summary>
       /// Total Value of the solution
       /// </summary>
-      public double Value { get; }
+      public double Value { get; private set; }
 
       /// <summary>
       /// Total Weight of the solution
       /// </summary>
-      public double Weight { get; }
+      public double Weight { get; private set; }
 
       /// <summary>
       /// Initial knapsack Capacity
@@ -71,12 +99,12 @@ namespace Gloson.Linq.Solvers.Knapsack {
       /// <summary>
       /// Indexes of the original items to select
       /// </summary>
-      public IReadOnlyList<int> Indexes { get; }
+      public IReadOnlyList<int> Indexes => m_Indexes;
 
       /// <summary>
       /// Selected items
       /// </summary>
-      public IReadOnlyList<T> Items { get; }
+      public IReadOnlyList<T> Items => m_Items;
 
       /// <summary>
       /// Debug Information
@@ -140,6 +168,47 @@ namespace Gloson.Linq.Solvers.Knapsack {
       else if (ReferenceEquals(null, value))
         throw new ArgumentNullException(nameof(value));
 
+      double initialCapacity = capacity;
+
+      // --- /Now ---
+
+      // All Data Available
+      var allData = source
+        .Select((item, idx) => (
+           item: item,
+           weight: weight(item),
+           value: value(item),
+           index: idx))
+        .ToList();
+
+      var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
+
+      if (counterExample.weight < 0 && counterExample.value < 0) 
+        throw new ArgumentException(
+          $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
+            nameof(source));
+
+      var alwaysTakeData = allData
+        .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
+        .ToList();
+
+      double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
+      double extraValue    =  alwaysTakeData.Sum(item => item.value);
+
+      capacity += extraCapacity;
+
+      var data = allData
+        .Where(item => item.weight <= capacity)
+        .Where(item => item.value > 0 && item.weight > 0)
+        //.OrderBy(item => item.weight >= 0)
+        .OrderBy(item => item.weight)
+        .ToList();
+
+      // --- /Now ---
+
+      // --- Before ---
+
+      /*
       var data = source
         .Select((item, idx) => (
            item   : item, 
@@ -151,13 +220,20 @@ namespace Gloson.Linq.Solvers.Knapsack {
         .OrderBy(item => item.weight >= 0)
         .ThenByDescending(item => item.weight)
         .ToList();
+      */
+      // --- /Before ---
 
       // Specal Cases :
 
       // Empty :
 
       if (data.Count <= 0)
-        return new KnapsackZeroOneSolution<T>(capacity);
+        return new KnapsackZeroOneSolution<T>(initialCapacity)
+          .AddExtra(
+           extraValue,
+           extraCapacity,
+           alwaysTakeData.Select(item => item.index),
+           alwaysTakeData.Select(item => item.item)); 
 
       // All :
       
@@ -171,12 +247,17 @@ namespace Gloson.Linq.Solvers.Knapsack {
           .ToArray();
 
         return new KnapsackZeroOneSolution<T>(
-          capacity,
+          initialCapacity,
           positives.Sum(item => item.value),
           positives.Sum(item => item.weight),
           positives.Select(item => item.index),
           positives.Select(item => item.item)
-        );
+        )
+          .AddExtra(
+           extraValue,
+           extraCapacity,
+           alwaysTakeData.Select(item => item.index),
+           alwaysTakeData.Select(item => item.item));
       }
 
       // General case :
@@ -277,12 +358,17 @@ namespace Gloson.Linq.Solvers.Knapsack {
       sequence.Sort();
 
       return new KnapsackZeroOneSolution<T>(
-        capacity,
+        initialCapacity,
         solution,
         sequence.Sum(i => data[i].weight),
         sequence.Select(i => data[i].index),
         sequence.Select(i => data[i].item)
-      );
+      )
+        .AddExtra(
+           extraValue, 
+           extraCapacity,
+           alwaysTakeData.Select(item => item.index),
+           alwaysTakeData.Select(item => item.item));
     }
 
     #endregion Public

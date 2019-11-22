@@ -299,7 +299,7 @@ namespace Gloson.Numerics.Matrices {
       try {
         return new Matrix(MatrixLowLevel.Inverse(m_Items));
       }
-      catch (ArgumentException e) {
+      catch (ArgumentException) {
         throw new InvalidOperationException("Degenerated matrix can't be inversed.");
       }
     }

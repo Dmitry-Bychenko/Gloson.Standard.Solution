@@ -129,14 +129,14 @@ namespace Gloson.Linq.Solvers.Knapsack {
     #region Public
 
     /// <summary>
-    /// Knapsack Zero Or One Solution
+    /// Knapsack Continous Solution
     /// </summary>
     /// <param name="source">Possible items to take</param>
     /// <param name="capacity">Knapsack capacity</param>
     /// <param name="weight">Item's weight</param>
     /// <param name="value">Item's value</param>
     /// <returns></returns>
-    public static KnapsackContinuousSolution<T> KnapsackSolveForCpntinuous<T>(
+    public static KnapsackContinuousSolution<T> KnapsackSolveForContinuous<T>(
       this IEnumerable<T> source,
            double capacity,
            Func<T, double> weight,
