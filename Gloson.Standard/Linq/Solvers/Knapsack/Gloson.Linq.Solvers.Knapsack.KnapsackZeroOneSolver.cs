@@ -172,6 +172,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       // --- /Now ---
 
+      
       // All Data Available
       var allData = source
         .Select((item, idx) => (
@@ -199,16 +200,19 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       var data = allData
         .Where(item => item.weight <= capacity)
-        .Where(item => item.value > 0 && item.weight > 0)
-        //.OrderBy(item => item.weight >= 0)
-        .OrderBy(item => item.weight)
+        .Where(item => item.value > 0 && item.weight >= 0)
+        .OrderBy(item => item.weight >= 0)
+        //.OrderByDescending(item => item.weight)
         .ToList();
 
       // --- /Now ---
 
+
+
       // --- Before ---
 
       /*
+     
       var data = source
         .Select((item, idx) => (
            item   : item, 
@@ -220,7 +224,9 @@ namespace Gloson.Linq.Solvers.Knapsack {
         .OrderBy(item => item.weight >= 0)
         .ThenByDescending(item => item.weight)
         .ToList();
+
       */
+
       // --- /Before ---
 
       // Specal Cases :
@@ -228,12 +234,15 @@ namespace Gloson.Linq.Solvers.Knapsack {
       // Empty :
 
       if (data.Count <= 0)
-        return new KnapsackZeroOneSolution<T>(initialCapacity)
+        return new KnapsackZeroOneSolution<T>(initialCapacity) 
           .AddExtra(
            extraValue,
            extraCapacity,
            alwaysTakeData.Select(item => item.index),
-           alwaysTakeData.Select(item => item.item)); 
+           alwaysTakeData.Select(item => item.item))
+          
+            
+       ; 
 
       // All :
       
@@ -252,12 +261,14 @@ namespace Gloson.Linq.Solvers.Knapsack {
           positives.Sum(item => item.weight),
           positives.Select(item => item.index),
           positives.Select(item => item.item)
-        )
+        ) 
           .AddExtra(
            extraValue,
            extraCapacity,
            alwaysTakeData.Select(item => item.index),
            alwaysTakeData.Select(item => item.item));
+                        
+         ;  
       }
 
       // General case :
@@ -269,7 +280,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
           ? 0.0 
           : takeAll[i + 1];
 
-        takeAll[i] = data[i].weight + prior;
+        takeAll[i] = data[i].weight + prior; // !!!
       }
 
       // Cache (memoization) :
@@ -293,7 +304,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
           // Skip :
           return solver(i - 1, w);
         }
-        else if (data[i].weight <= 0 && data[i].value > 0) {
+        else if (w <= takeAll[i]) { 
           // Take :
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 
@@ -301,7 +312,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
           return result;
         }
-        else if (data[i].weight <= takeAll[i] && data[i].value > 0) {
+        else if (data[i].weight <= takeAll[i]) { // //else if (data[i].weight <= takeAll[i])
           // Take :
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 
@@ -311,7 +322,6 @@ namespace Gloson.Linq.Solvers.Knapsack {
         }
 
         // General Case : 
-
         var skip = solver(i - 1, w);
         var take = solver(i - 1, w - data[i].weight) + data[i].value;
 
@@ -364,11 +374,15 @@ namespace Gloson.Linq.Solvers.Knapsack {
         sequence.Select(i => data[i].index),
         sequence.Select(i => data[i].item)
       )
-        .AddExtra(
-           extraValue, 
-           extraCapacity,
-           alwaysTakeData.Select(item => item.index),
-           alwaysTakeData.Select(item => item.item));
+      
+      .AddExtra(
+         extraValue, 
+         extraCapacity,
+         alwaysTakeData.Select(item => item.index),
+         alwaysTakeData.Select(item => item.item)); 
+      
+
+      ;
     }
 
     #endregion Public
