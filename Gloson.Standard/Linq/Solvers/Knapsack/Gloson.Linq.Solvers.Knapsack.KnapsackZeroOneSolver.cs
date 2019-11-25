@@ -201,8 +201,10 @@ namespace Gloson.Linq.Solvers.Knapsack {
       var data = allData
         .Where(item => item.weight <= capacity)
         .Where(item => item.value > 0 && item.weight >= 0)
-        .OrderBy(item => item.weight >= 0)
+        //.OrderBy(item => item.value >= 0)
+        //.OrderBy(item => item.weight >= 0)
         //.OrderByDescending(item => item.weight)
+        .OrderByDescending(item => item.value / item.weight / item.weight)
         .ToList();
 
       // --- /Now ---
@@ -380,9 +382,83 @@ namespace Gloson.Linq.Solvers.Knapsack {
          extraCapacity,
          alwaysTakeData.Select(item => item.index),
          alwaysTakeData.Select(item => item.item)); 
-      
-
       ;
+    }
+
+    /// <summary>
+    /// Knapsack Zero Or One Greedy Approximate Solution
+    /// </summary>
+    /// <param name="source">Possible items to take</param>
+    /// <param name="capacity">Knapsack capacity</param>
+    /// <param name="weight">Item's weight</param>
+    /// <param name="value">Item's value</param>
+    /// <returns></returns>
+    public static KnapsackZeroOneSolution<T> KnapsackGreedySolveForZeroOne<T>(
+      this IEnumerable<T> source,
+           double capacity,
+           Func<T, double> weight,
+           Func<T, double> value) {
+
+      if (ReferenceEquals(null, source))
+        throw new ArgumentNullException(nameof(source));
+      else if (ReferenceEquals(null, weight))
+        throw new ArgumentNullException(nameof(weight));
+      else if (ReferenceEquals(null, value))
+        throw new ArgumentNullException(nameof(value));
+
+      double initialCapacity = capacity;
+
+      var allData = source
+        .Select((item, idx) => (
+           item: item,
+           weight: weight(item),
+           value: value(item),
+           index: idx))
+        .ToList();
+
+      var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
+
+      if (counterExample.weight < 0 && counterExample.value < 0)
+        throw new ArgumentException(
+          $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
+            nameof(source));
+
+      var alwaysTakeData = allData
+        .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
+        .ToList();
+
+      double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
+      double extraValue = alwaysTakeData.Sum(item => item.value);
+
+      capacity += extraCapacity;
+
+      var data = allData
+        .Where(item => item.weight <= capacity)
+        .Where(item => item.value > 0 && item.weight > 0)
+        .OrderByDescending(item => item.value / item.weight >= 0)
+        //.OrderByDescending(item => item.weight)
+        .ToList();
+
+      double totalWeight = -extraCapacity;
+      double soultion = extraValue;
+
+      foreach (var item in data) {
+        if (item.weight > capacity)
+          continue;
+
+        soultion += item.value;
+        capacity -= item.weight;
+        totalWeight += item.weight;
+
+        alwaysTakeData.Add(item);
+      }
+
+      return new KnapsackZeroOneSolution<T>(
+        initialCapacity, 
+        soultion,
+        totalWeight, 
+        alwaysTakeData.Select(item => item.index),
+        alwaysTakeData.Select(item => item.item));
     }
 
     #endregion Public
