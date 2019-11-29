@@ -273,6 +273,37 @@ namespace Gloson.Linq {
     }
 
     /// <summary>
+    /// Distributions
+    /// </summary>
+    /// <param name="source">Initial set</param>
+    /// <param name="size">Size of each chunk of the distribution</param>
+    /// <param name="withReplacement">With or without replacement</param>
+    /// <param name="orderMatters">If order matters or not</param>
+    /// <returns></returns>
+    public static IEnumerable<T[]> Distributions<T>(
+      this IEnumerable<T> source, 
+      int size, 
+      bool withReplacement,
+      bool orderMatters) {
+
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (size < 0)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      if (withReplacement)
+        if (orderMatters)
+          return OrderedWithReplacement(source, size);
+        else
+          return UnOrderedWithReplacement(source, size);
+      else
+        if (orderMatters)
+          return OrderedWithoutReplacement(source, size);
+        else
+          return UnOrderedWithoutReplacement(source, size);
+    }
+
+    /// <summary>
     /// Assignments
     /// e.g. {A, B, C}, {1, 2} -> {[(A, 1) (B, 2)], [(A, 1) (C, 2)], ..., [(B, 2) (C, 1)]}
     /// </summary>
