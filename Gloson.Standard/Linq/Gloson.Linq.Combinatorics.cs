@@ -170,7 +170,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, C}
     /// </summary>
-    public static IEnumerable<T[]> OrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> UnOrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
@@ -217,7 +217,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, A}, {B, C}, {C, A}, {C, B}
     /// </summary>
-    public static IEnumerable<T[]> UnOrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> OrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
@@ -257,14 +257,16 @@ namespace Gloson.Linq {
           else {
             indexes[i] = v;
 
-            int[] nums = Enumerable
-              .Range(0, indexes.Length)
-              .Except(indexes.Take(i))
-              .OrderBy(item => item)
-              .ToArray();
+            if (i < indexes.Length - 1) {
+              int[] nums = Enumerable
+                .Range(0, indexes.Length)
+                .Except(indexes.Take(i + 1))
+                .OrderBy(item => item)
+                .ToArray();
 
-            for (int j = i + 1; j < indexes.Length; ++j)
-              indexes[j] = nums[j - i - 1];
+              for (int j = i + 1; j < indexes.Length; ++j)
+                indexes[j] = nums[j - i - 1];
+            }
 
             break;
           }
