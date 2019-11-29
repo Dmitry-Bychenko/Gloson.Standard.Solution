@@ -22,7 +22,7 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<T[]> Permutations<T>(this IEnumerable<T> source) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
 
       T[] items = source.ToArray();
 
@@ -55,7 +55,7 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<T[]> SubSets<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
 
       T[] items = source.Distinct(comparer).ToArray();
 
@@ -76,7 +76,7 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<T[]> SubSets<T>(this IEnumerable<T> source) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
 
       T[] items = source.Distinct().ToArray();
 
@@ -97,9 +97,9 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
       else if (size < 0)
-        throw new ArgumentOutOfRangeException("size");
+        throw new ArgumentOutOfRangeException(nameof(size));
 
       T[] alphabet = source.ToArray();
 
@@ -133,9 +133,9 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
       else if (size < 0)
-        throw new ArgumentOutOfRangeException("size");
+        throw new ArgumentOutOfRangeException(nameof(size));
 
       T[] alphabet = source.ToArray();
 
@@ -164,6 +164,53 @@ namespace Gloson.Linq {
           }
       }
       while (!indexes.All(index => index == 0));
+    }
+
+    /// <summary>
+    /// Number Combinations
+    /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, C}
+    /// </summary>
+    public static IEnumerable<T[]> OrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (size < 0)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      T[] data = source.ToArray();
+
+      if (size > data.Length)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      if (size == 0)
+        yield break;
+
+      int[] indexes = Enumerable
+        .Range(0, size)
+        .Select(i => i)
+        .ToArray();
+
+      bool loop = true;
+
+      while (loop) {
+        yield return indexes
+          .Select(i => data[i])
+          .ToArray();
+
+        loop = false;
+
+        for (int i = indexes.Length - 1; i >= 0; --i) {
+          if (indexes[i] < data.Length - (indexes.Length - i)) {
+            indexes[i] += 1;
+
+            for (int j = i + 1; j < indexes.Length; ++j)
+              indexes[j] = indexes[i] + j - i;
+
+            loop = true;
+
+            break;
+          }
+        }
+      }
     }
 
     /// <summary>

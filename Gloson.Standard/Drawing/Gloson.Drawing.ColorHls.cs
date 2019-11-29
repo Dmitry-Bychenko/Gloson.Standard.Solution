@@ -154,6 +154,38 @@ namespace Gloson.Drawing {
     public ColorHls(int h, int l, int s) :
       this(0, h, l, s) { }
 
+    /*
+    public ColorHls(Color color) {
+      A = color.A;
+
+      int max = Math.Max(Math.Max(color.R, color.G), color.B);
+      int min = Math.Min(Math.Min(color.R, color.G), color.B);
+
+      L = unchecked((byte) ((max + min) / 2));
+
+      if (max == min)
+        S = 0;
+      else {
+        int u = byte.MaxValue * (max - min);
+        int d = 1 - Math.Abs(1 - max - min);
+
+        S = unchecked((byte)(u / d));
+      }
+
+      if (max == min)
+        H = 0;
+      else if (max == color.R) {
+
+      }
+      else if (max == color.G) {
+
+      }
+      else if (max == color.B) {
+
+      }
+    }
+    */
+
     #endregion Create
 
     #region Public
