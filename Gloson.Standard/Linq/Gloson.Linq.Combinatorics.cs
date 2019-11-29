@@ -95,7 +95,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, A}, ... , {C, C, C, C}
     /// </summary>
-    public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
@@ -131,7 +131,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, B}, {A, A, B, C},... , {C, C, C, C}
     /// </summary>
-    public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
@@ -206,6 +206,65 @@ namespace Gloson.Linq {
               indexes[j] = indexes[i] + j - i;
 
             loop = true;
+
+            break;
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Number Combinations
+    /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, A}, {B, C}, {C, A}, {C, B}
+    /// </summary>
+    public static IEnumerable<T[]> UnOrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (size < 0)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      T[] data = source.ToArray();
+
+      if (size > data.Length)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      if (size == 0)
+        yield break;
+
+      int[] indexes = Enumerable
+        .Range(0, size)
+        .Select(i => i)
+        .ToArray();
+
+      while (indexes[0] != -1) {
+        yield return indexes
+          .Select(i => data[i])
+          .ToArray();
+
+        for (int i = indexes.Length - 1; i >= 0; --i) {
+          int v = indexes[i] + 1;
+
+          for (int j = 0; j < i; ++j) {
+            if (indexes[j] == v) {
+              v = v + 1;
+
+              j = -1;
+            }
+          }
+
+          if (v >= data.Length)
+            indexes[i] = -1;
+          else {
+            indexes[i] = v;
+
+            int[] nums = Enumerable
+              .Range(0, indexes.Length)
+              .Except(indexes.Take(i))
+              .OrderBy(item => item)
+              .ToArray();
+
+            for (int j = i + 1; j < indexes.Length; ++j)
+              indexes[j] = nums[j - i - 1];
 
             break;
           }
