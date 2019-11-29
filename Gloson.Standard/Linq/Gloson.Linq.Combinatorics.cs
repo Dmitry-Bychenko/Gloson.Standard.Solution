@@ -95,7 +95,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, A}, ... , {C, C, C, C}
     /// </summary>
-    public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
@@ -131,7 +131,7 @@ namespace Gloson.Linq {
     /// Number Combinations
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, B}, {A, A, B, C},... , {C, C, C, C}
     /// </summary>
-    public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
+    public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
