@@ -94,6 +94,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Number Combinations
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, A}, ... , {C, C, C, C}
+    /// Order Matters
     /// </summary>
     public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
@@ -216,6 +217,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Number Combinations
     /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, A}, {B, C}, {C, A}, {C, B}
+    /// Order Matters
     /// </summary>
     public static IEnumerable<T[]> OrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
       if (null == source)
