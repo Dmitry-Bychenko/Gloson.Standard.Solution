@@ -132,6 +132,11 @@ namespace Gloson.Linq.Solvers.Pareto {
       return new List<ObjectiveItem<T>>();
     }
 
+    /// <summary>
+    /// Frontier
+    /// </summary>
+    public IReadOnlyList<ObjectiveItem<T>> Frontier() => Frontier(1);
+
     #endregion Public
   }
 
@@ -144,6 +149,38 @@ namespace Gloson.Linq.Solvers.Pareto {
   //-------------------------------------------------------------------------------------------------------------------
 
   public class ObjectiveItem<T> {
+    #region Inner Classes
+
+    private class FrontierAndCroudDistanceComparerClass : IComparer<ObjectiveItem<T>> {
+      public int Compare(ObjectiveItem<T> x, ObjectiveItem<T> y) {
+        if (ReferenceEquals(x, y))
+          return 0;
+        else if (ReferenceEquals(x, null))
+          return -1;
+        else if (ReferenceEquals(null, y))
+          return +1;
+
+        if (!ReferenceEquals(x.Owner, y.Owner))
+          return 0;
+
+        int result = x.FrontierLevel.CompareTo(y.FrontierLevel);
+
+        if (result < 0)
+          return 1;
+        else if (result > 0)
+          return -1;
+
+        result = x.CrowdingDistance.CompareTo(y.CrowdingDistance);
+
+        if (result != 0)
+          return result;
+
+        return 0;
+      }
+    }
+
+    #endregion Inner Classes
+
     #region Private Data
 
     private Dictionary<ObjectiveDescription<T>, double> m_Cached = new Dictionary<ObjectiveDescription<T>, double>();
@@ -153,6 +190,8 @@ namespace Gloson.Linq.Solvers.Pareto {
     internal List<ObjectiveItem<T>> m_WorseThan = new List<ObjectiveItem<T>>();
 
     internal int m_FrontierLevel = -1;
+
+    double m_CrowdingDistance = double.NaN;
 
     #endregion Private Data
 
@@ -166,6 +205,12 @@ namespace Gloson.Linq.Solvers.Pareto {
     #endregion Create
 
     #region Public
+
+    /// <summary>
+    /// Frontier And Distance Comparer
+    /// </summary>
+    public static IComparer<ObjectiveItem<T>> FrontierAndCroudDistanceComparer { get; } =
+      new FrontierAndCroudDistanceComparerClass();
 
     /// <summary>
     /// Dominance:
@@ -190,14 +235,14 @@ namespace Gloson.Linq.Solvers.Pareto {
         double v1 = left.ObjectiveValue(description);
         double v2 = right.ObjectiveValue(description);
 
-        if (v1 >= v2 && description.Goal == ObjectiveGoal.Min)
+        if (v1 > v2 && description.Goal == ObjectiveGoal.Min)
           canBeBetter = false; 
-        else if (v1 <= v2 && description.Goal == ObjectiveGoal.Max)
+        else if (v1 < v2 && description.Goal == ObjectiveGoal.Max)
           canBeBetter = false;
 
-        if (v2 >= v1 && description.Goal == ObjectiveGoal.Min)
+        if (v2 > v1 && description.Goal == ObjectiveGoal.Min)
           canBeWorse = false;
-        else if (v2 <= v1 && description.Goal == ObjectiveGoal.Max)
+        else if (v2 < v1 && description.Goal == ObjectiveGoal.Max)
           canBeWorse = false;
 
         if (!canBeBetter && !canBeWorse)
@@ -254,10 +299,10 @@ namespace Gloson.Linq.Solvers.Pareto {
         double v1 = this.ObjectiveValue(description);
         double v2 = other.ObjectiveValue(description);
 
-        if (v1 >= v2 && description.Goal == ObjectiveGoal.Min)
+        if (v1 > v2 && description.Goal == ObjectiveGoal.Min)
           return false;
 
-        if (v1 <= v2 && description.Goal == ObjectiveGoal.Max)
+        if (v1 < v2 && description.Goal == ObjectiveGoal.Max)
           return false;
       }
 
@@ -279,10 +324,10 @@ namespace Gloson.Linq.Solvers.Pareto {
         double v1 = this.ObjectiveValue(description);
         double v2 = other.ObjectiveValue(description);
 
-        if (v2 >= v1 && description.Goal == ObjectiveGoal.Min)
+        if (v2 > v1 && description.Goal == ObjectiveGoal.Min)
           return false;
 
-        if (v2 <= v1 && description.Goal == ObjectiveGoal.Max)
+        if (v2 < v1 && description.Goal == ObjectiveGoal.Max)
           return false;
       }
 
@@ -319,6 +364,58 @@ namespace Gloson.Linq.Solvers.Pareto {
         Owner.CoreUpdate();
 
         return m_FrontierLevel;
+      }
+    }
+
+    /// <summary>
+    /// Croding Distance
+    /// </summary>
+    public double CrowdingDistance {
+      get {
+        if (!double.IsNaN(m_CrowdingDistance))
+          return m_CrowdingDistance;
+
+        if (Owner.ObjectiveDescriptions.Count <= 0) {
+          m_CrowdingDistance = double.PositiveInfinity;
+
+          return m_CrowdingDistance;
+        }
+
+        var description = Owner.ObjectiveDescriptions.First();
+
+        var list = Owner
+          .Frontier(FrontierLevel)
+          .OrderBy(item => item.ObjectiveValue(description))
+          .ToList();
+
+        list[0].m_CrowdingDistance = double.PositiveInfinity;
+        list[list.Count - 1].m_CrowdingDistance = double.PositiveInfinity;
+
+        // weights
+        double[] weights = new double[Owner.ObjectiveDescriptions.Count];
+
+        for (int i = 0; i < weights.Length; ++i) {
+          weights[i] = Math.Abs(list[list.Count - 1].ObjectiveValue(Owner.ObjectiveDescriptions[i]) -
+                                list[0].ObjectiveValue(Owner.ObjectiveDescriptions[i]));
+        }
+        
+        // distance computation
+        for (int i = 1; i < list.Count - 1; ++i) {
+          double distance = 0.0;
+
+          for (int j = 0; j < Owner.ObjectiveDescriptions.Count; ++j) {
+            var desc = Owner.ObjectiveDescriptions[j];
+
+            double d1 = list[i - 1].ObjectiveValue(desc);
+            double d2 = list[i + 1].ObjectiveValue(desc);
+
+            distance += Math.Abs(d1 - d2) / weights[i];
+          }
+
+          list[i].m_CrowdingDistance = distance;
+        }
+
+        return CrowdingDistance;
       }
     }
 

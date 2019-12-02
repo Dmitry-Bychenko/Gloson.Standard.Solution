@@ -105,9 +105,9 @@ namespace Gloson.Linq.Solvers.Pareto {
       double v1 = ComputeObjectiveValue(solution);
       double v2 = ComputeObjectiveValue(solution);
 
-      if (v1 > v2 && Goal == ObjectiveGoal.Max)
+      if (v1 >= v2 && Goal == ObjectiveGoal.Max)
         return true;
-      else if (v1 < v2 && Goal == ObjectiveGoal.Min)
+      else if (v1 <= v2 && Goal == ObjectiveGoal.Min)
         return true;
 
       return false;
@@ -127,9 +127,9 @@ namespace Gloson.Linq.Solvers.Pareto {
       double v1 = ComputeObjectiveValue(solution);
       double v2 = ComputeObjectiveValue(solution);
 
-      if (v1 < v2 && Goal == ObjectiveGoal.Max)
+      if (v1 <= v2 && Goal == ObjectiveGoal.Max)
         return true;
-      else if (v1 > v2 && Goal == ObjectiveGoal.Min)
+      else if (v1 >= v2 && Goal == ObjectiveGoal.Min)
         return true;
 
       return false;
