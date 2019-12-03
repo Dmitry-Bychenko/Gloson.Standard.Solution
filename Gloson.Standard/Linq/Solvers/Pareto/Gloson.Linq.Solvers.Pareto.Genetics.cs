@@ -144,4 +144,35 @@ namespace Gloson.Linq.Solvers.Pareto {
     #endregion Public
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Pareto Solver
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static partial class EnumerableParetoExtensions {
+    #region Public
+
+    /// <summary>
+    /// To Pareto Solver
+    /// </summary>
+    public static ParetoGeneticsSolver<T> ToParetoSolver<T>(this IEnumerable<T> source,
+                                                                 IEnumerable<ObjectiveDescription<T>> objectives,
+                                                                 Func<T, T, T> breed,
+                                                                 IComparer<ObjectiveItem<T>> comparer) =>
+      new ParetoGeneticsSolver<T>(source, objectives, breed, comparer);
+
+    /// <summary>
+    /// To Pareto Solver
+    /// </summary>
+    public static ParetoGeneticsSolver<T> ToParetoSolver<T>(this IEnumerable<T> source,
+                                                                 IEnumerable<ObjectiveDescription<T>> objectives,
+                                                                 Func<T, T, T> breed) =>
+      new ParetoGeneticsSolver<T>(source, objectives, breed);
+
+    #endregion Public
+  }
+
 }
