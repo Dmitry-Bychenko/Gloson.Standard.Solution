@@ -47,7 +47,7 @@ namespace Gloson.Linq.Solvers.Pareto {
       else if (null == computation)
         throw new ArgumentNullException(nameof(computation));
 
-      Id = id;
+      Id = id?.Trim();
       Goal = goal;
       m_Computation = computation;
     }
@@ -152,6 +152,16 @@ namespace Gloson.Linq.Solvers.Pareto {
     }
 
     #endregion Public
+
+    #region Operators
+
+    /// <summary>
+    /// From tuple
+    /// </summary>
+    public static implicit operator ObjectiveDescription<T>((string, ObjectiveGoal, Func<T, double>) value) =>
+      new ObjectiveDescription<T>(value);
+
+    #endregion Operators
 
     #region IComparable<ObjectiveDescription<T>>
 
