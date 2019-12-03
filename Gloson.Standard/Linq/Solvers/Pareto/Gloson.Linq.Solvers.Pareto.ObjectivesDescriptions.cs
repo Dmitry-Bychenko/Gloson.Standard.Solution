@@ -21,6 +21,34 @@ namespace Gloson.Linq.Solvers.Pareto {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
+  /// 
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class ObjectiveGoalExtensions {
+    #region Public
+
+    /// <summary>
+    /// To Report
+    /// </summary>
+    public static string ToReport(this ObjectiveGoal value) {
+      switch (value) {
+        case ObjectiveGoal.Min:
+          return "Minimize";
+        case ObjectiveGoal.Max:
+          return "Maximize";
+        default:
+          return $"??? ({(int) value})";
+      }
+    }
+
+    #endregion Public
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
   /// Object Description
   /// </summary>
   //
@@ -139,6 +167,13 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// To String
     /// </summary>
     public override string ToString() => Id;
+
+    /// <summary>
+    /// To Report
+    /// </summary>
+    public string ToReport() {
+      return $"{Goal.ToReport()} {Id}";
+    }
 
     /// <summary>
     /// Deconstruct

@@ -4,7 +4,15 @@ using System.Linq;
 using System.Text;
 
 namespace Gloson.Linq {
-  
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Enumerable Extensions
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
   public static partial class EnumerableExtensions {
     #region Public
 
