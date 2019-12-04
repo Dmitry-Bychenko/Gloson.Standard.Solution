@@ -43,6 +43,39 @@ namespace Gloson.Linq.Solvers.Pareto {
     #region Create
 
     /// <summary>
+    /// Standard Construcrtor
+    /// </summary>
+    /// <param name="scope"></param>
+    /// <param name="breed"></param>
+    /// <param name="comparer"></param>
+    public ParetoGeneticsSolver(ObjectivesScope<T> scope,
+                                Func<T, T, T> breed,
+                                IComparer<ObjectiveItem<T>> comparer) {
+      if (null == scope)
+        throw new ArgumentNullException(nameof(scope));
+      else if (null == breed)
+        throw new ArgumentNullException(nameof(breed));
+
+      if (null == comparer)
+        comparer = ObjectiveItem<T>.FrontierAndCroudDistanceComparer;
+
+      m_Comparer = comparer;
+      Step = 1;
+
+      m_Scope = scope.Clone();
+      m_Breed = breed;
+    }
+
+    /// <summary>
+    /// Standard Construcrtor
+    /// </summary>
+    /// <param name="scope"></param>
+    /// <param name="breed"></param>
+    public ParetoGeneticsSolver(ObjectivesScope<T> scope, 
+                                Func<T, T, T> breed) 
+      : this(scope, breed, null) {}
+
+    /// <summary>
     /// Standard Constructor
     /// </summary>
     public ParetoGeneticsSolver(IEnumerable<T> source,
@@ -104,6 +137,11 @@ namespace Gloson.Linq.Solvers.Pareto {
 
       return result;
     }
+
+    /// <summary>
+    /// Scope
+    /// </summary>
+    public ObjectivesScope<T> Scope => m_Scope;
 
     /// <summary>
     /// Step

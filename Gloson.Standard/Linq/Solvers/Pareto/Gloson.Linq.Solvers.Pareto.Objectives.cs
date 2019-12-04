@@ -13,7 +13,7 @@ namespace Gloson.Linq.Solvers.Pareto {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class ObjectivesScope<T> {
+  public sealed class ObjectivesScope<T> {
     #region Private Data
 
     private bool m_IsUpdated;
@@ -106,9 +106,51 @@ namespace Gloson.Linq.Solvers.Pareto {
       }
     }
 
+    /// <summary>
+    /// Clone
+    /// </summary>
+    public ObjectivesScope<T> Clone() {
+      return new ObjectivesScope<T>(Items.Select(item => item.Solution), ObjectiveDescriptions);
+    }
+
     #endregion Create
 
     #region Public
+
+    /// <summary>
+    /// Eveolve
+    /// </summary>
+    /// <param name="generation">Generation number</param>
+    /// <param name="breed">Breed function</param>
+    /// <param name="comparer">Comparer (best fit), NSGA II on default</param>
+    /// <returns></returns>
+    public ObjectivesScope<T> Evolve(int generation, 
+                                     Func<T, T, T> breed,
+                                     IComparer<ObjectiveItem<T>> comparer) {
+      if (generation < 0)
+        throw new ArgumentOutOfRangeException(nameof(generation));
+      else if (null == breed)
+        throw new ArgumentNullException(nameof(breed));
+
+      if (generation == 0)
+        return this;
+
+      ParetoGeneticsSolver<T> solver = new ParetoGeneticsSolver<T>(this, breed, comparer);
+
+      for (int i = 1; i <= generation; ++i)
+        solver = solver.Next();
+
+      return solver.Scope;
+    }
+
+    /// <summary>
+    /// Eveonve
+    /// </summary>
+    /// <param name="generation">Generation Number</param>
+    /// <param name="breed">Breed</param>
+    public ObjectivesScope<T> Evolve(int generation,
+                                     Func<T, T, T> breed) =>
+      Evolve(generation, breed, null);
 
     /// <summary>
     /// Items
