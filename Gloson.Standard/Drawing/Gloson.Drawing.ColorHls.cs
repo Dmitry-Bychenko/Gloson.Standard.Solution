@@ -8,114 +8,126 @@ namespace Gloson.Drawing {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// Hue Luminosity Saturation Floating point color
+  /// Hue Luminosity Saturation Color
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public struct ColorHlsF : IEquatable<ColorHlsF> {
-    #region Algorithm
-    #endregion Algorithm
-
-    #region Create
-
-    /// <summary>
-    /// Standard Constructor
-    /// </summary>
-    public ColorHlsF(float a, float h, float l, float s) {
-      if (a < 0.0 || a > 1.0)
-        throw new ArgumentOutOfRangeException(nameof(a));
-      else if (h < 0.0 || h > 1.0)
-        throw new ArgumentOutOfRangeException(nameof(h));
-      else if (l < 0.0 || l > 1.0)
-        throw new ArgumentOutOfRangeException(nameof(l));
-      else if (s < 0.0 || s > 1.0)
-        throw new ArgumentOutOfRangeException(nameof(s));
-
-      A = a;
-      H = h;
-      L = l;
-      S = s;
-    }
-
-    /// <summary>
-    /// Standard Constructor
-    /// </summary>
-    public ColorHlsF(float h, float l, float s)
-      : this(0.0f, h, l, s) { }
-
-    #endregion Create
-
-    #region Public
-
-    /// <summary>
-    /// A
-    /// </summary>
-    public float A { get; }
-
-    /// <summary>
-    /// Hue
-    /// </summary>
-    public float H { get; }
-
-    /// <summary>
-    /// Luminosity
-    /// </summary>
-    public float L { get; }
-
-    /// <summary>
-    /// Saturation
-    /// </summary>
-    public float S { get; }
-
-    /// <summary>
-    /// To String
-    /// </summary>
-    public override string ToString() => string.Join("; ",
-        $"A : {A:f3}",
-        $"H : {H:f3}",
-        $"L : {L:f3}",
-        $"S : {S:f3}");
-
-    #endregion Public
-
-    #region IEquatable<ColorHlsF>
-
-    /// <summary>
-    /// Equals
-    /// </summary>
-    public bool Equals(ColorHlsF other) {
-      return A == other.A &&
-             H == other.H &&
-             L == other.L &&
-             S == other.S;
-    }
-
-    /// <summary>
-    /// Equals
-    /// </summary>
-    public override bool Equals(object obj) =>
-      (obj is ColorHlsF other) ? Equals(other) : false;
-
-    /// <summary>
-    /// Get Hash Code
-    /// </summary>
-    public override int GetHashCode() =>
-      A.GetHashCode() ^ H.GetHashCode() ^ L.GetHashCode() ^ S.GetHashCode();
-
-    #endregion IEquatable<ColorHlsF>
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  //
-  /// <summary>
-  /// Hue Luminosity Saturation Floating point color
-  /// </summary>
-  //
-  //-------------------------------------------------------------------------------------------------------------------
-
-  public struct ColorHls : IEquatable<ColorHls> {
+  public struct ColorHsl : IEquatable<ColorHsl> {
     #region Algorithm 
+
+    // RGB to HLS
+    private static void RgbToHls(int R, int G, int B,
+                                 out int H, out int L, out int S,
+                                 int scale) {
+
+      // luminosity
+      int cMax;
+      int cMin;
+
+      if (R > G) {
+        if (G > B) {
+          cMax = R;
+          cMin = B;
+        }
+        else if (B > R) {
+          cMax = B;
+          cMin = G;
+        }
+        else {
+          cMax = R;
+          cMin = G;
+        }
+      }
+      else if (R > B) {
+        cMax = G;
+        cMin = B;
+      }
+      else if (B > G) {
+        cMax = B;
+        cMin = R;
+      }
+      else {
+        cMax = G;
+        cMin = R;
+      }
+
+      L = (((cMax + cMin) * scale) + scale) / (2 * scale);
+
+      if (cMax == cMin) {           // <- r=g=b --> achromatic case 
+        S = 0;
+        H = 0;
+      }
+      else {                        // <- chromatic case 
+        if (L <= (scale / 2))
+          S = (((cMax - cMin) * scale) + ((cMax + cMin) / 2)) / (cMax + cMin);
+        else
+          S = (((cMax - cMin) * scale) + ((2 * scale - cMax - cMin) / 2)) /
+               (2 * scale - cMax - cMin);
+
+        // Hue
+        int Rdelta = (((cMax - R) * (scale / 6)) + ((cMax - cMin) / 2)) / (cMax - cMin);
+        int Gdelta = (((cMax - G) * (scale / 6)) + ((cMax - cMin) / 2)) / (cMax - cMin);
+        int Bdelta = (((cMax - B) * (scale / 6)) + ((cMax - cMin) / 2)) / (cMax - cMin);
+
+        if (R == cMax)
+          H = Bdelta - Gdelta;
+        else if (G == cMax)
+          H = (scale / 3) + Rdelta - Bdelta;
+        else /* B == cMax */
+          H = ((2 * scale) / 3) + Gdelta - Rdelta;
+
+        if (H < 0)
+          H += scale;
+        if (H > scale)
+          H -= scale;
+      }
+    }
+
+    // Hue to RGB
+    private static int HueToRGB(int n1, int n2, int hue, int scale) {
+      if (hue < 0)
+        hue += scale;
+      else if (hue > scale)
+        hue -= scale;
+
+      // return r,g, or b value from this tridrant 
+      if (hue < (scale / 6))
+        return (n1 + (((n2 - n1) * hue + (scale / 12)) / (scale / 6)));
+      if (hue < (scale / 2))
+        return (n2);
+      if (hue < ((scale * 2) / 3))
+        return (n1 + (((n2 - n1) * (((scale * 2) / 3) - hue) + (scale / 12)) / (scale / 6)));
+      else
+        return (n1);
+    }
+
+    // HLS to RGB
+    private static void HlsToRgb(int H, int L, int S,
+                                 out int R, out int G, out int B,
+                                 int scale) {
+      if (S == 0) { // <- achromatic case
+        R = L;
+        G = R;
+        B = R;
+      }
+      else { // <- chromatic case 
+        int magic1;
+        int magic2;
+
+        if (L <= (scale / 2))
+          magic2 = (L * (scale + S) + (scale / 2)) / scale;
+        else
+          magic2 = L + S - ((L * S) + (scale / 2)) / scale;
+
+        magic1 = 2 * L - magic2;
+
+        R = (HueToRGB(magic1, magic2, H + (scale / 3), scale) * scale + (scale / 2)) / scale;
+        G = (HueToRGB(magic1, magic2, H, scale) * scale + (scale / 2)) / scale;
+        B = (HueToRGB(magic1, magic2, H - (scale / 3), scale) * scale + (scale / 2)) / scale;
+      }
+    }
+
     #endregion Algorithm
 
     #region Create
@@ -125,9 +137,9 @@ namespace Gloson.Drawing {
     /// </summary>
     /// <param name="a">A</param>
     /// <param name="h">Hue</param>
-    /// <param name="l">Luminosity</param>
     /// <param name="s">Saturation</param>
-    public ColorHls(int a, int h, int l, int s) {
+    /// <param name="l">Luminosity</param>
+    public ColorHsl(int a, int h, int s, int l) {
       if (a < 0 || a > Byte.MaxValue)
         throw new ArgumentOutOfRangeException(nameof(a));
       else if (h < 0 || h > Byte.MaxValue)
@@ -149,42 +161,68 @@ namespace Gloson.Drawing {
     /// Standard Constructor
     /// </summary>
     /// <param name="h">Hue</param>
-    /// <param name="l">Luminosity</param>
     /// <param name="s">Saturation</param>
-    public ColorHls(int h, int l, int s) :
+    /// <param name="l">Luminosity</param>
+    public ColorHsl(int h, int s, int l) :
       this(0, h, l, s) { }
 
-    /*
-    public ColorHls(Color color) {
-      A = color.A;
+    /// <summary>
+    /// From ARGB
+    /// </summary>
+    public static ColorHsl FromArgb(int a, int r, int g, int b) {
+      if (a < 0 || a > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(a));
+      else if (r < 0 || r > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(r));
+      else if (g < 0 || g > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(g));
+      else if (b < 0 || b > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(b));
 
-      int max = Math.Max(Math.Max(color.R, color.G), color.B);
-      int min = Math.Min(Math.Min(color.R, color.G), color.B);
+      int h;
+      int l;
+      int s;
 
-      L = unchecked((byte) ((max + min) / 2));
+      RgbToHls(r, g, b, out h, out l, out s, byte.MaxValue);
 
-      if (max == min)
-        S = 0;
-      else {
-        int u = byte.MaxValue * (max - min);
-        int d = 1 - Math.Abs(1 - max - min);
-
-        S = unchecked((byte)(u / d));
-      }
-
-      if (max == min)
-        H = 0;
-      else if (max == color.R) {
-
-      }
-      else if (max == color.G) {
-
-      }
-      else if (max == color.B) {
-
-      }
+      return new ColorHsl(a, h, l, s);
     }
-    */
+
+    /// <summary>
+    /// From RGB
+    /// </summary>
+    public static ColorHsl FromArgb(int r, int g, int b) {
+      if (r < 0 || r > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(r));
+      else if (g < 0 || g > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(g));
+      else if (b < 0 || b > byte.MaxValue)
+        throw new ArgumentOutOfRangeException(nameof(b));
+
+      int h;
+      int l;
+      int s;
+
+      RgbToHls(r, g, b, out h, out s, out l, byte.MaxValue);
+
+      return new ColorHsl(0, h, l, s);
+    }
+
+    /// <summary>
+    /// From Color
+    /// </summary>
+    public ColorHsl(Color color) {
+      int h;
+      int l;
+      int s;
+
+      RgbToHls(color.R, color.G, color.B, out h, out l, out s, byte.MaxValue);
+
+      A = color.A;
+      H = (byte)h;
+      L = (byte)l;
+      S = (byte)s;
+    }
 
     #endregion Create
 
@@ -216,17 +254,63 @@ namespace Gloson.Drawing {
     public override string ToString() => string.Join("; ",
         $"A : {A,3}",
         $"H : {H,3}",
+        $"S : {S,3}",
         $"L : {L,3}",
-        $"S : {S,3}");
+        $" ({A:x2}{H:x2}{S:x2}{L:x2})");
 
     #endregion Public
+
+    #region Operators
+
+    #region Comparison
+
+    /// <summary>
+    /// Equal
+    /// </summary>
+    public static bool operator ==(ColorHsl left, ColorHsl right) => left.Equals(right);
+
+    /// <summary>
+    /// Not Equal
+    /// </summary>
+    public static bool operator !=(ColorHsl left, ColorHsl right) => !left.Equals(right);
+
+    #endregion Comparison
+
+    #region Cast
+
+    /// <summary>
+    /// From Color
+    /// </summary>
+    public static implicit operator ColorHsl(Color value) => new ColorHsl(value);
+
+    /// <summary>
+    /// To Color
+    /// </summary>
+    public Color ToColor() {
+      int r;
+      int g;
+      int b;
+
+      HlsToRgb(H, L, S, out r, out g, out b, byte.MaxValue);
+
+      return Color.FromArgb(A, r, g, b);
+    }
+
+    /// <summary>
+    /// To Color
+    /// </summary>
+    public static implicit operator Color(ColorHsl value) => value.ToColor();
+
+    #endregion Cast
+
+    #endregion Operators
 
     #region IEquatable<ColorHls>
 
     /// <summary>
     /// Equals
     /// </summary>
-    public bool Equals(ColorHls other) {
+    public bool Equals(ColorHsl other) {
       return A == other.A &&
              H == other.H &&
              L == other.L &&
@@ -237,7 +321,7 @@ namespace Gloson.Drawing {
     /// Equals
     /// </summary>
     public override bool Equals(object obj) =>
-      (obj is ColorHlsF other) ? Equals(other) : false;
+      (obj is ColorHsl other) ? Equals(other) : false;
 
     /// <summary>
     /// Get Hash Code
@@ -247,4 +331,5 @@ namespace Gloson.Drawing {
 
     #endregion IEquatable<ColorHls>
   }
+
 }
