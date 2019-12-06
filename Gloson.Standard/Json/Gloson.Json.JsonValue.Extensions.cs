@@ -21,9 +21,9 @@ namespace Gloson.Json {
     /// </summary>
     public static JsonValue Value(this JsonValue json, string name) {
       if (null == json)
-        throw new ArgumentNullException("json");
+        throw new ArgumentNullException(nameof(json));
       else if (string.IsNullOrWhiteSpace(name))
-        throw new ArgumentNullException("name");
+        throw new ArgumentNullException(nameof(name));
 
       JsonObject obj = json as JsonObject;
 
@@ -40,7 +40,7 @@ namespace Gloson.Json {
     /// </summary>
     public static JsonValue Value(this JsonValue json, int index) {
       if (null == json)
-        throw new ArgumentNullException("json");
+        throw new ArgumentNullException(nameof(json));
 
       JsonArray arr = json as JsonArray;
 

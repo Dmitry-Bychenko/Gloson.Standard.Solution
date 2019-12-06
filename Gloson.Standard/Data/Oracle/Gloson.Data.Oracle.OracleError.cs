@@ -304,4 +304,5 @@ namespace Gloson.Data.Oracle {
 
     #endregion Public
   }
+
 }

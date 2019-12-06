@@ -69,8 +69,8 @@ namespace Gloson.Globalization {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public TemporalCultureInfo() : this(CultureInfo.InvariantCulture) {
-    }
+    public TemporalCultureInfo()
+      : this(CultureInfo.InvariantCulture) {}
 
     /// <summary>
     /// Temporal Invariant Culture
@@ -97,7 +97,7 @@ namespace Gloson.Globalization {
     /// To String
     /// </summary>
     public override string ToString() {
-      return !IsDisposed 
+      return IsDisposed 
         ? $"Disposed instance of {GetType().Name}"
         : $"Temporary set \"{m_TemporalCulture}\" instead of current {m_CurrentCulture} culture.";
     }
