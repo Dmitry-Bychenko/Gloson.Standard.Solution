@@ -161,4 +161,5 @@ namespace Gloson.Drawing {
 
     #endregion IEquatable<ColorF>
   }
+
 }
