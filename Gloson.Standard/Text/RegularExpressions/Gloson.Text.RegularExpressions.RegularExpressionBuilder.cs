@@ -51,7 +51,7 @@ namespace Gloson.Text.RegularExpressions {
     /// </summary>
     /// <param name="value">wildcard</param>
     /// <param name="manyJoker">many joker, usually '*'</param>
-    /// <param name="oneJoker">many joker, usually '?'</param>
+    /// <param name="oneJoker">one joker, usually '?'</param>
     /// <param name="escape">escape symbol</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardPattern(string value, char manyJoker, char oneJoker, char escape) {
@@ -156,7 +156,7 @@ namespace Gloson.Text.RegularExpressions {
     /// </summary>
     /// <param name="value">wildcard</param>
     /// <param name="manyJoker">many joker, usually '*'</param>
-    /// <param name="oneJoker">many joker, usually '?'</param>
+    /// <param name="oneJoker">one joker, usually '?'</param>
     /// <param name="escape">escape</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardAnchoredPattern(string value, char manyJoker, char oneJoker, char escape) {
@@ -190,7 +190,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <summary>
     /// From options pattern: abc[XY[Z]]def where abcdef, abcXYdef, abcXYZdef are valid
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">value to convert to regex pattern</param>
     /// <returns></returns>
     public static string FromOptionsPattern(string value) {
       if (null == value)
@@ -225,7 +225,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <summary>
     /// From options pattern: abc[XY[Z]]def where abcdef, abcXYdef, abcXYZdef are valid
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">value to convert to regex pattern</param>
     /// <returns></returns>
     public static string FromOptionsAnchoredPattern(string value) {
       if (null == value)
