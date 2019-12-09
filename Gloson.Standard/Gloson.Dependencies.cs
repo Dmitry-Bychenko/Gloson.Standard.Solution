@@ -31,6 +31,16 @@ namespace Gloson {
     [CLSCompliant(false)]
     public static IServiceCollection Services { get; } = new ServiceCollection();
 
+    /// <summary>
+    /// Service Provider
+    /// </summary>
+    public static ServiceProvider Provider => Services.BuildServiceProvider();
+
+    /// <summary>
+    /// Create Required Service
+    /// </summary>
+    public static T GetServiceRequired<T>() => Provider.GetRequiredService<T>();
+
     #endregion Public
   }
 }
