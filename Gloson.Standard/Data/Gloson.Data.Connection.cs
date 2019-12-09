@@ -20,7 +20,7 @@ namespace Gloson.Data {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public interface IDbConnectionDialog {
+  public interface IRdbmsConnectionDialog {
     /// <summary>
     /// Connection string or null if not connected
     /// </summary>
@@ -35,7 +35,7 @@ namespace Gloson.Data {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public static class Connection {
+  public static class RdbmsConnection {
     #region Private Data
 
     private static String s_ConnectionString = "";
@@ -100,7 +100,7 @@ namespace Gloson.Data {
         (provider) => {
           IDbConnection result = Activator.CreateInstance(connectionType) as IDbConnection;
 
-          var dialog = Dependencies.Provider.GetService<IDbConnectionDialog>();
+          var dialog = Dependencies.Provider.GetService<IRdbmsConnectionDialog>();
 
           if (dialog != null) {
             string connectionString = dialog.ConnectionString(result);
