@@ -108,11 +108,11 @@ namespace Gloson.Data {
             if (!string.IsNullOrWhiteSpace(connectionString)) {
               Register(connectionType, connectionString);
 
+              result.ConnectionString = connectionString;
+
               result.Open(); 
             }
           }
-
-          //result.Open();
 
           return result;
         },
