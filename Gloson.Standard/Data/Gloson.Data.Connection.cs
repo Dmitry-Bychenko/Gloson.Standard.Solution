@@ -15,6 +15,21 @@ namespace Gloson.Data {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
+  /// DB Connection Dialog
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public interface IDbConnectionDialog {
+    /// <summary>
+    /// Connection string or null if not connected
+    /// </summary>
+    string ConnectionString(IDbConnection connection);
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
   /// Connection
   /// </summary>
   //
@@ -80,7 +95,30 @@ namespace Gloson.Data {
       
       var items = Dependencies.Services.RemoveAll(typeof(IDbConnection));
 
-      Dependencies.Services.AddTransient(typeof(IDbConnection), connectionType);
+      ServiceDescriptor descriptor = new ServiceDescriptor(
+        typeof(IDbConnection),
+        (provider) => {
+          IDbConnection result = Activator.CreateInstance(connectionType) as IDbConnection;
+
+          var dialog = Dependencies.Provider.GetService<IDbConnectionDialog>();
+
+          if (dialog != null) {
+            string connectionString = dialog.ConnectionString(result);
+
+            if (!string.IsNullOrWhiteSpace(connectionString)) {
+              Register(connectionType, connectionString);
+
+              result.Open(); 
+            }
+          }
+
+          //result.Open();
+
+          return result;
+        },
+        ServiceLifetime.Transient);
+
+      Dependencies.Services.Add(descriptor);
 
       Interlocked.Exchange(ref s_ConnectionString, "");
     }

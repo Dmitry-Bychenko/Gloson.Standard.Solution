@@ -34,6 +34,7 @@ namespace Gloson {
     /// <summary>
     /// Service Provider
     /// </summary>
+    [CLSCompliant(false)]
     public static ServiceProvider Provider => Services.BuildServiceProvider();
 
     /// <summary>
