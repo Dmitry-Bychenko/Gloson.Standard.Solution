@@ -42,6 +42,31 @@ namespace Gloson {
     /// </summary>
     public static T GetServiceRequired<T>() => Provider.GetRequiredService<T>();
 
+    /// <summary>
+    /// Create Service
+    /// </summary>
+    public static T GetService<T>() => Provider.GetService<T>();
+
+    /// <summary>
+    /// Create Service
+    /// </summary>
+    /// <typeparam name="T">Service to create</typeparam>
+    /// <param name="arguments">Argument to pass</param>
+    /// <returns>Created service</returns>
+    public static T CreateService<T>(params object[] arguments) {
+      return ActivatorUtilities.CreateInstance<T>(Provider, arguments);
+    }
+
+    /// <summary>
+    /// Create Service
+    /// </summary>
+    /// <typeparam name="T">Service to create</typeparam>
+    /// <param name="arguments">Argument to pass</param>
+    /// <returns>Created service</returns>
+    public static object CreateService(Type type, params object[] arguments) {
+      return ActivatorUtilities.CreateInstance(Provider, type, arguments);
+    }
+
     #endregion Public
   }
 }

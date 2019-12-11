@@ -39,7 +39,7 @@ namespace Gloson.Collections.Generic {
           return compare;
       }
 
-      return left < right ? -1 : 1; 
+      return left < right ? 1 : -1; 
     }
 
     #endregion Algorithm
@@ -138,8 +138,8 @@ namespace Gloson.Collections.Generic {
     /// Suffixes
     /// </summary>
     public IEnumerator<IEnumerable<T>> GetEnumerator() {
-      foreach (int index in m_Indexes)
-        yield return m_Items.Skip(m_Indexes[index]);
+      for (int i = 0; i < Count; ++i)
+        yield return Suffix(i);
     }
 
     /// <summary>

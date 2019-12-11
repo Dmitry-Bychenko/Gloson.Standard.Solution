@@ -36,7 +36,7 @@ namespace Gloson.Data {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public static class Rdbms {
+  public static partial class Rdbms {
     #region Private Data
 
     private static String s_ConnectionString = "";
