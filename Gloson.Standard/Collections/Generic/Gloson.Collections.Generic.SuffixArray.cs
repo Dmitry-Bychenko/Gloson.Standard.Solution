@@ -149,4 +149,5 @@ namespace Gloson.Collections.Generic {
 
     #endregion IEnumerable<IEnumerable<T>>
   }
+  
 }

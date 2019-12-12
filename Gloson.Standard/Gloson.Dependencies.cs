@@ -67,6 +67,48 @@ namespace Gloson {
       return ActivatorUtilities.CreateInstance(Provider, type, arguments);
     }
 
+    /// <summary>
+    /// Register service
+    /// </summary>
+    /// <param name="interfaceType"></param>
+    /// <param name="serviceType"></param>
+    public static void RegisterService(Type serviceType, Type implementationType) {
+      if (null == serviceType)
+        throw new ArgumentNullException(nameof(serviceType));
+
+      if (null == serviceType)
+        Services.RemoveAll(serviceType);
+      else {
+        ServiceDescriptor descriptor = new ServiceDescriptor(
+          serviceType,
+          implementationType,
+          ServiceLifetime.Transient);
+
+        Services.Add(descriptor);
+      }
+    }
+
+    /// <summary>
+    /// Try Register service
+    /// </summary>
+    /// <param name="interfaceType"></param>
+    /// <param name="serviceType"></param>
+    public static void TryRegisterService(Type serviceType, Type implementationType) {
+      if (null == serviceType)
+        throw new ArgumentNullException(nameof(serviceType));
+
+      if (null == serviceType)
+        Services.RemoveAll(serviceType);
+      else {
+        ServiceDescriptor descriptor = new ServiceDescriptor(
+          serviceType,
+          implementationType,
+          ServiceLifetime.Transient);
+
+        Services.TryAdd(descriptor);
+      }
+    }
+
     #endregion Public
   }
 }
