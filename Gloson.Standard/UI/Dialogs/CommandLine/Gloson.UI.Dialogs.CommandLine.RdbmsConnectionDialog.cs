@@ -19,14 +19,9 @@ namespace Gloson.UI.Dialogs.CommandLine {
   public class RdbmsConnectionDialog : IRdbmsConnectionDialog {
     #region Public
 
-    //-------------------------------------------------------------------------------------------------------------------
-    //
     /// <summary>
-    /// Makes and Tests connection string
+    /// Makes and Test connection string
     /// </summary>
-    // 
-    //-------------------------------------------------------------------------------------------------------------------
-
     public string ConnectionString(IDbConnection connection) {
       if (null == connection)
         return null;
@@ -54,7 +49,25 @@ namespace Gloson.UI.Dialogs.CommandLine {
             string.IsNullOrWhiteSpace(password))
           return null;
 
-        //TODO: Implement Me!
+        var cs = Dependencies.CreateService<IConnectionStringBuilder>();
+
+        cs.Login = login;
+        cs.Password = password;
+        cs.Server = serverName;
+
+        cs.IntegratedSecurity = string.IsNullOrEmpty(login) && string.IsNullOrEmpty(password);
+
+        connection.ConnectionString = cs.ConnectionString;
+
+        try {
+          connection.Open();
+          connection.Close();
+
+          return connection.ConnectionString;
+        }
+        catch (DataException) {
+          ;
+        }
       }
     }
 
