@@ -109,6 +109,17 @@ namespace Gloson {
       }
     }
 
+    /// <summary>
+    /// Register Instance
+    /// </summary>
+    public static void RegisterInstance(Type serviceType, Object instance) {
+      if (null == instance)
+        Services.RemoveAll(serviceType);
+      else {
+        Services.AddSingleton(serviceType, instance);
+      }
+    }
+
     #endregion Public
   }
 }
