@@ -13,7 +13,10 @@
 // 1. Shunting Yard Algorithm
 // 2. Trie<T>
 // 3. Command Line Descriptors
-// 4. About Dialog
+// 4. Dialogs
+//    4.1. RDBMS Connect
+//    4.2. About
+//    4.3. Unhandled Exception 
 // 5. Trees (RB, B)
 // 8. Uri ReadLines etc. like File
 //
