@@ -23,6 +23,14 @@ namespace Gloson {
     #region Algorithm
     #endregion Algorithm
 
+    #region Create
+
+    static Dependencies() {
+      StartUp.Run();
+    }
+
+    #endregion Create
+
     #region Public
 
     /// <summary>

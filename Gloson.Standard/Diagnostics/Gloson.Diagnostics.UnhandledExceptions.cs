@@ -27,6 +27,7 @@ namespace Gloson.Diagnostics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
+  [StartUp]
   public sealed class UnhandledExceptionTrap : IUnhandledExceptionsTrap {
     #region Algorithm
 
@@ -39,6 +40,10 @@ namespace Gloson.Diagnostics {
     #endregion Algorithm
 
     #region Create
+
+    static UnhandledExceptionTrap() {
+      Dependencies.TryRegisterService(typeof(IUnhandledExceptionsTrap), typeof(UnhandledExceptionTrap));
+    }
 
     /// <summary>
     /// Standard Constructor
@@ -88,4 +93,5 @@ namespace Gloson.Diagnostics {
 
     #endregion IDisposable
   }
+
 }
