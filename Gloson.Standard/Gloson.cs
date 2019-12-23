@@ -27,5 +27,34 @@ using System;
 
 [assembly: CLSCompliant(true)]
 namespace Gloson.Standard {
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Gloson Entry Point
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class GlosonEntryPoint {
+    #region Create
+
+    static GlosonEntryPoint() {
+      Run();
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Run
+    /// </summary>
+    public static void Run() {
+      StartUp.Run();
+    }
+
+    #endregion Public
+  }
  
 }
