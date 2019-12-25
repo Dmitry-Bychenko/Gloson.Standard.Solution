@@ -84,6 +84,11 @@ namespace Gloson.UI.CommandLine {
     #region Public
 
     /// <summary>
+    /// Default
+    /// </summary>
+    public static CommandLineDescriptors Default { get; } = new CommandLineDescriptors();
+
+    /// <summary>
     /// Items (Descriptors)
     /// </summary>
     public IReadOnlyList<CommandLineDescriptor> Items => m_Items;
@@ -135,14 +140,28 @@ namespace Gloson.UI.CommandLine {
     /// To String
     /// </summary>
     public override string ToString() {
+      int nameLength = m_Items.Any() 
+        ?  m_Items.Max(item => item.Name.Length) 
+        : 0;
+
       return string.Join(Environment.NewLine, m_Items
         .OrderBy(item => item)
-        .Select(item => item.ToString()));
+        .Select(item => $"{item.Name.PadRight(nameLength)} {item.Description}"));
     }
 
     #endregion Public
 
     #region IReadOnlyList<CommandLineDescriptor>
+
+    /// <summary>
+    /// Add Descriptor
+    /// </summary>
+    public CommandLineDescriptor Add(string name, CommandLineType valueType, string description) => 
+      new CommandLineDescriptor(this) { 
+        Name = name,
+        ValueType = valueType,
+        Description = description
+      };
 
     /// <summary>
     /// Indexer
@@ -217,9 +236,16 @@ namespace Gloson.UI.CommandLine {
     #region Private Data
 
     private string m_Name = "";
+    private int m_MatchPriority;
 
     private int m_MinCount;
     private int m_MaxCount;
+
+    private string m_Description = "";
+    private string m_HelpInfo = "";
+    private string m_DefaultValue = null;
+
+    private Regex m_RegularExpression;
 
     #endregion Private Data
 
@@ -257,28 +283,11 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public CommandLineDescriptor(CommandLineDescriptors owner,
-                                 string name = "",
-                                 CommandLineType valueType = CommandLineType.None,
-                                 int minCount = 0,
-                                 int maxCount = 1,
-                                 string description = "",
-                                 int matchPriority = 0,
-                                 string helpInfo = "") {
+    public CommandLineDescriptor(CommandLineDescriptors owner) {
       if (null == owner)
         throw new ArgumentNullException(nameof(owner));
 
       owner.Add(this);
-
-      Name          = name;
-      ValueType     = valueType;
-      MinCount      = minCount;
-      MaxCount      = maxCount;
-      MatchPriority = matchPriority == 0 && string.IsNullOrWhiteSpace(Name) ? int.MaxValue : matchPriority;
-      Description   = string.IsNullOrWhiteSpace(description) ? "" : description.Trim();
-      HelpInfo      = string.IsNullOrEmpty(helpInfo) ? "" : helpInfo.Trim();
-
-      RegularExpression = BuildRegular();
     }
 
     #endregion Create
@@ -321,13 +330,15 @@ namespace Gloson.UI.CommandLine {
           m_Name = "";
         else
           m_Name = CommandLineHelper.Normalize(value);
+
+        m_RegularExpression = null;
       }
     }
 
     /// <summary>
     /// Value Type
     /// </summary>
-    public CommandLineType ValueType { get; private set; }
+    public CommandLineType ValueType { get; set; }
 
     /// <summary>
     /// Min Count
@@ -360,17 +371,45 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Match Priority
     /// </summary>
-    public int MatchPriority { get; }
+    public int MatchPriority { 
+      get => string.IsNullOrWhiteSpace(Name) ? int.MaxValue : m_MatchPriority; 
+      set { m_MatchPriority = value; } 
+    }
 
     /// <summary>
     /// Description
     /// </summary>
-    public string Description { get; }
+    public string Description {
+      get => m_Description;
+      set {
+        m_Description = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+      }
+    }
+
+    /// <summary>
+    /// Default Value
+    /// </summary>
+    public string DefaultValue {
+      get => m_DefaultValue;
+      set {
+        m_DefaultValue = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+      }
+    }
 
     /// <summary>
     /// Help Info
     /// </summary>
-    public string HelpInfo { get; }
+    public string HelpInfo {
+      get => m_HelpInfo; 
+      set {
+        m_HelpInfo = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+      } 
+    }
+
+    /// <summary>
+    /// Extra Validator
+    /// </summary>
+    public Func<CommandLineDescriptor, IEnumerable<string>> ExtraValidator { get; set; }
 
     /// <summary>
     /// Is Required
@@ -385,7 +424,14 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Regular Expression To Match
     /// </summary>
-    public Regex RegularExpression { get; }
+    public Regex RegularExpression {
+      get {
+        if (null == m_RegularExpression)
+          m_RegularExpression = BuildRegular();
+
+        return m_RegularExpression;
+      }
+    }
 
     /// <summary>
     /// Validation Errors
@@ -394,6 +440,17 @@ namespace Gloson.UI.CommandLine {
       get {
         if (MinCount > MaxCount)
           yield return $"MaxCount > MinCount";
+
+        var extra = ExtraValidator;
+
+        IEnumerable<string> data = extra == null
+          ? null
+          : extra(this);
+
+        if (null != data)
+          foreach (string line in data)
+            if (!string.IsNullOrWhiteSpace(line))
+              yield return line;
       }
     }
 

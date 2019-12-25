@@ -493,11 +493,11 @@ namespace Gloson.Diagnostics {
         process.WaitForExit();
 
         return new ProcessExecutionResult(processPath,
-                                              processParameters,
-                                              sbOut.ToString(),
-                                              sbErr.ToString(),
-                                              process.ExitCode,
-                                              encoding);
+                                          processParameters,
+                                          sbOut.ToString(),
+                                          sbErr.ToString(),
+                                          process.ExitCode,
+                                          encoding);
       }
     }
 
