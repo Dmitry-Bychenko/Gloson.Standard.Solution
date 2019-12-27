@@ -66,4 +66,27 @@ namespace Gloson.UI.CommandLine {
     OptionalPrefix = 2,
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Special Descriptors
+  /// </summary>
+  // 
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public enum CommandLineDescriptorKind {
+    /// <summary>
+    /// Standard Command Line Argument
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// Standard Command Line Argument
+    /// </summary>
+    Standard = None,
+    /// <summary>
+    /// Help Command Line Argument
+    /// </summary>
+    Help = 1
+  }
+  
 }

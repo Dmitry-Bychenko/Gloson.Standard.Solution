@@ -188,6 +188,27 @@ namespace Gloson.Text.RegularExpressions {
     public static string FromWildCardAnchoredPattern(string value) => FromWildCardAnchoredPattern(value, '*', '?');
 
     /// <summary>
+    /// If options pattern: abc[XY[Z]]def where abcdef, abcXYdef, abcXYZdef are valid is valid
+    /// </summary>
+    public static bool IsOptionsPatternValid(string value) {
+      if (null == value)
+        return false;
+
+      int bracketsCount = 0;
+
+      foreach (char ch in value) {
+        if (ch == '[')
+          bracketsCount += 1;
+        else if (ch == ']') {
+          if (--bracketsCount < 0)
+            return false;
+        }
+      }
+
+      return bracketsCount == 0;
+    }
+
+    /// <summary>
     /// From options pattern: abc[XY[Z]]def where abcdef, abcXYdef, abcXYZdef are valid
     /// </summary>
     /// <param name="value">value to convert to regex pattern</param>

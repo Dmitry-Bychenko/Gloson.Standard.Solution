@@ -5,206 +5,39 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using Gloson.Diagnostics;
 using Gloson.Text.RegularExpressions;
 
 namespace Gloson.UI.CommandLine {
 
-
-
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// Command Line Descriptors
+  /// Command Line Argument Description
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class CommandLineDescriptors : IReadOnlyList<CommandLineDescriptor> {
-    #region Private Data
-
-    private List<CommandLineDescriptor> m_Items = new List<CommandLineDescriptor>();
-
-    #endregion Private Data
-
-    #region Algorithm
-
-    #endregion Algorithm
-
-    #region Create
-
-    /// <summary>
-    /// Standard constructor
-    /// </summary>
-    /// <param name="caseSensitive">If case Sensitive</param>
-    public CommandLineDescriptors(CommandLineDescriptorsOptions options = CommandLineDescriptorsOptions.None) {
-      Options = options;
-    }
-
-    #endregion Create
-
-    #region Public
-
-    /// <summary>
-    /// Default
-    /// </summary>
-    public static CommandLineDescriptors Default { get; } = new CommandLineDescriptors();
-
-    /// <summary>
-    /// Items (Descriptors)
-    /// </summary>
-    public IReadOnlyList<CommandLineDescriptor> Items => m_Items;
-
-    /// <summary>
-    /// Options
-    /// </summary>
-    public CommandLineDescriptorsOptions Options { get; }
-
-    /// <summary>
-    /// Case Sensitive
-    /// </summary>
-    public bool CaseSensitive => Options.HasFlag(CommandLineDescriptorsOptions.CaseSensitive);
-
-    /// <summary>
-    /// Add item
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    public CommandLineDescriptor Add(CommandLineDescriptor item) {
-      if (null == item)
-        throw new ArgumentNullException(nameof(item));
-
-      if (item.Owner == this)
-        return item;
-      else if (item.Owner != null)
-        throw new ArgumentException("item.Owner must be null", nameof(item));
-
-      m_Items.Add(item);
-
-      item.Owner = this;
-
-      return item;
-    }
-
-    /// <summary>
-    /// Validation Errors
-    /// </summary>
-    public IEnumerable<String> ValidationErrors {
-      get {
-        return m_Items
-          .SelectMany(item => item
-            .ValidationErrors
-            .Select(error => $"{item.Name} : {error}"));
-      }
-    }
-
-    /// <summary>
-    /// To String
-    /// </summary>
-    public override string ToString() {
-      int nameLength = m_Items.Any() 
-        ?  m_Items.Max(item => item.Name.Length) 
-        : 0;
-
-      return string.Join(Environment.NewLine, m_Items
-        .OrderBy(item => item)
-        .Select(item => $"{item.Name.PadRight(nameLength)} {item.Description}"));
-    }
-
-    #endregion Public
-
-    #region IReadOnlyList<CommandLineDescriptor>
-
-    /// <summary>
-    /// Add Descriptor
-    /// </summary>
-    public CommandLineDescriptor Add(string name, CommandLineType valueType, string description) => 
-      new CommandLineDescriptor(this) { 
-        Name = name,
-        ValueType = valueType,
-        Description = description
-      };
-
-    /// <summary>
-    /// Indexer
-    /// </summary>
-    public CommandLineDescriptor this[int index] => m_Items[index];
-
-    /// <summary>
-    /// Find By Name
-    /// </summary>
-    /// <param name="name">name</param>
-    /// <returns></returns>
-    public CommandLineDescriptor Find(string name) {
-      if (string.IsNullOrWhiteSpace(name))
-        name = "";
-
-      return m_Items
-        .Select(item => new {
-          value = item,
-          match = item.RegularExpression.Match(name)
-        })
-        .Where(item => item.match.Success)
-        .OrderBy(item => item.value.MatchPriority)
-        .ThenByDescending(item => item.match.Length)
-        .Select(item => item.value)
-        .FirstOrDefault();
-    }
-
-    /// <summary>
-    /// Descriptor by its name
-    /// </summary>
-    public CommandLineDescriptor this[string name] {
-      get {
-        CommandLineDescriptor result = Find(name);
-
-        if (null == result)
-          throw new ArgumentException($"Descriptor {name} is not found", nameof(name));
-
-        return result;
-      }
-    }
-
-    /// <summary>
-    /// Count
-    /// </summary>
-    public int Count => m_Items.Count;
-
-    /// <summary>
-    /// Enumerator
-    /// </summary>
-    public IEnumerator<CommandLineDescriptor> GetEnumerator() => m_Items.GetEnumerator();
-
-    /// <summary>
-    /// Enumerator
-    /// </summary>
-    IEnumerator IEnumerable.GetEnumerator() => m_Items.GetEnumerator();
-
-    #endregion IReadOnlyList<CommandLineDescriptor> 
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  //
-  /// <summary>
-  /// Command Line Descriptor
-  /// </summary>
-  //
-  //-------------------------------------------------------------------------------------------------------------------
-
-  public class CommandLineDescriptor 
-    : IComparable<CommandLineDescriptor>, 
-      IEquatable<CommandLineDescriptor> {
+  public sealed class CommandLineArgumentDescription
+    : IComparable<CommandLineArgumentDescription>,
+      IEquatable<CommandLineArgumentDescription> {
 
     #region Private Data
 
+    CommandLineArgumentDescriptions m_Owner;
     private string m_Name = "";
-    private int m_MatchPriority;
+    private string m_OrderName = "";
 
-    private int m_MinCount;
-    private int m_MaxCount;
+    private CommandLineType m_ValueType = CommandLineType.String;
+    private CommandLineDescriptorKind m_Kind = CommandLineDescriptorKind.None;
+    private string m_DefaultValue;
+    private int m_MinCount = 0;
+    private int m_MaxCount = 1;
 
     private string m_Description = "";
     private string m_HelpInfo = "";
-    private string m_DefaultValue = null;
+
+    private bool m_Visible = true;
 
     private Regex m_RegularExpression;
 
@@ -212,26 +45,25 @@ namespace Gloson.UI.CommandLine {
 
     #region Algorithm
 
-    private Regex BuildRegular() {
-      string patternBody = RegularExpressionBuilder.FromOptionsPattern(Name);
+    internal void OnOwnerUpdate() {
+      m_RegularExpression = null;
+    }
 
-      string countMarker = Owner.Options.HasFlag(CommandLineDescriptorsOptions.OptionalPrefix)
-        ? "*"
-        : "+";
+    private void OnUpdate() {
+      if (ReferenceEquals(null, Owner))
+        Owner.OnItemUpdate(this);
+    }
 
-      string pattrenPrefix = 
-        $"[\\s{string.Concat(CommandLineHelper.CommandLinePrefixes.Select(c => Regex.Escape(c.ToString())))}]{countMarker}";
-
+    private Regex CreateRegularExpression() {
       string pattern = string.Concat(
-        "^",
-        pattrenPrefix,
-       $"(?<name>{patternBody})",
-        pattrenPrefix
+        $"^[{string.Concat(CommandLineArgumentHelper.Prefixes.Select(c => Regex.Escape(c.ToString())))}]*",
+          RegularExpressionBuilder.FromOptionsPattern(CommandLineArgumentHelper.TrimName(Name)),
+        $"[{string.Concat(CommandLineArgumentHelper.Suffixes.Select(c => Regex.Escape(c.ToString())))}]*"
       );
 
       RegexOptions options = RegexOptions.None;
 
-      if (!CaseSensitive)
+      if ((Owner.Options & CommandLineDescriptorsOptions.CaseSensitive) != CommandLineDescriptorsOptions.CaseSensitive)
         options |= RegexOptions.IgnoreCase;
 
       return new Regex(pattern, options);
@@ -242,13 +74,10 @@ namespace Gloson.UI.CommandLine {
     #region Create
 
     /// <summary>
-    /// Standard Constructor
+    /// Standard constructor
     /// </summary>
-    public CommandLineDescriptor(CommandLineDescriptors owner) {
-      if (null == owner)
-        throw new ArgumentNullException(nameof(owner));
-
-      owner.Add(this);
+    public CommandLineArgumentDescription(CommandLineArgumentDescriptions owner) {
+      Owner = owner;
     }
 
     #endregion Create
@@ -258,48 +87,103 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Compare
     /// </summary>
-    public static int Compare(CommandLineDescriptor left, CommandLineDescriptor right) {
+    public static int Compare(CommandLineArgumentDescription left, CommandLineArgumentDescription right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(null, left))
-        return -1;
       else if (ReferenceEquals(null, right))
         return 1;
+      else if (ReferenceEquals(left, null))
+        return -1;
 
-      int result = string.Compare(left.Name, right.Name, StringComparison.OrdinalIgnoreCase);
+      int result = string.Compare(left.m_OrderName, right.m_OrderName, StringComparison.OrdinalIgnoreCase);
 
       if (result != 0)
         return result;
 
-      return string.Compare(left.Name, right.Name, StringComparison.Ordinal);
+      return string.Compare(left.m_OrderName, right.m_OrderName);
     }
 
     /// <summary>
     /// Owner
     /// </summary>
-    public CommandLineDescriptors Owner { get; internal set; }
+    public CommandLineArgumentDescriptions Owner {
+      get => m_Owner; 
+      private set {
+        if (ReferenceEquals(m_Owner, value))
+          return;
+        else if (ReferenceEquals(null, value))
+          throw new ArgumentNullException(nameof(value));
+
+        if (ReferenceEquals(null, m_Owner)) {
+          m_Owner.CoreRemove(this);
+          m_Owner.OnUpdate();
+        }
+
+        m_Owner = value;
+        m_Owner.CoreAdd(this);
+
+        OnUpdate();
+      }
+    }
 
     /// <summary>
     /// Name
     /// </summary>
     public string Name {
-      get {
-        return m_Name;
-      }
+      get => m_Name;
       set {
         if (string.IsNullOrWhiteSpace(value))
-          m_Name = "";
+          value = "";
         else
-          m_Name = CommandLineHelper.Normalize(value);
-
+          value = value.Trim();
+        
+        m_Name = value;
+        m_OrderName = string.Concat(m_Name.Select(c => char.IsLetterOrDigit(c) && c == '_'));
         m_RegularExpression = null;
+
+        OnUpdate();
       }
     }
 
     /// <summary>
-    /// Value Type
+    /// Type
     /// </summary>
-    public CommandLineType ValueType { get; set; }
+    public CommandLineType ValueType { 
+      get => m_ValueType; 
+      set {
+        if (m_ValueType != value) {
+          m_ValueType = value;
+
+          OnUpdate();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Kind
+    /// </summary>
+    public CommandLineDescriptorKind Kind {
+      get => m_Kind;
+      set {
+        if (m_Kind != value) {
+          m_Kind = value;
+
+          OnUpdate();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Default Value, if any
+    /// </summary>
+    public string DefaultValue {
+      get => m_DefaultValue;
+      set {
+        m_DefaultValue = value;
+
+        OnUpdate();
+      }
+    }
 
     /// <summary>
     /// Min Count
@@ -308,11 +192,14 @@ namespace Gloson.UI.CommandLine {
       get => m_MinCount;
       set {
         if (value < 0)
-          throw new ArgumentNullException(nameof(value));
+          throw new ArgumentOutOfRangeException(nameof(value));
 
-        m_MinCount = value;
+        if (m_MinCount != value) {
+          m_MinCount = value;
+
+          OnUpdate();
+        }
       }
-
     }
 
     /// <summary>
@@ -322,20 +209,25 @@ namespace Gloson.UI.CommandLine {
       get => m_MaxCount;
       set {
         if (value < 0)
-          throw new ArgumentNullException(nameof(value));
+          throw new ArgumentOutOfRangeException(nameof(value));
 
-        m_MaxCount = value;
+        if (m_MaxCount == value) {
+          m_MaxCount = value;
+
+          OnUpdate();
+        }
       }
-
     }
 
     /// <summary>
-    /// Match Priority
+    /// Required
     /// </summary>
-    public int MatchPriority { 
-      get => string.IsNullOrWhiteSpace(Name) ? int.MaxValue : m_MatchPriority; 
-      set { m_MatchPriority = value; } 
-    }
+    public bool IsRequired => m_MaxCount >= m_MinCount && m_MinCount > 0;
+
+    /// <summary>
+    /// Is Case Sensitive
+    /// </summary>
+    public bool IsCaseSensitive => (Owner.Options & CommandLineDescriptorsOptions.CaseSensitive) == CommandLineDescriptorsOptions.CaseSensitive;
 
     /// <summary>
     /// Description
@@ -343,17 +235,14 @@ namespace Gloson.UI.CommandLine {
     public string Description {
       get => m_Description;
       set {
-        m_Description = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
-      }
-    }
+        if (string.IsNullOrWhiteSpace(value))
+          value = "";
+        else
+          value = value.Trim();
 
-    /// <summary>
-    /// Default Value
-    /// </summary>
-    public string DefaultValue {
-      get => m_DefaultValue;
-      set {
-        m_DefaultValue = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
+        m_Description = value;
+
+        OnUpdate();
       }
     }
 
@@ -361,37 +250,64 @@ namespace Gloson.UI.CommandLine {
     /// Help Info
     /// </summary>
     public string HelpInfo {
-      get => m_HelpInfo; 
+      get => m_HelpInfo;
       set {
-        m_HelpInfo = string.IsNullOrWhiteSpace(value) ? "" : value.Trim();
-      } 
+        if (string.IsNullOrWhiteSpace(value))
+          value = "";
+        else
+          value = value.Trim();
+
+        m_HelpInfo = value;
+
+        OnUpdate();
+      }
     }
 
     /// <summary>
-    /// Extra Validator
+    /// Visible
     /// </summary>
-    public Func<CommandLineDescriptor, IEnumerable<string>> ExtraValidator { get; set; }
+    public bool Visible {
+      get => m_Visible;
+      set {
+        if (m_Visible == value)
+          return;
+
+        m_Visible = value;
+
+        OnUpdate();
+      }
+    }
 
     /// <summary>
-    /// Is Required
-    /// </summary>
-    public bool IsRequired => MinCount > 0;
-
-    /// <summary>
-    /// Case Sensitive
-    /// </summary>
-    public bool CaseSensitive => Owner == null ? false : Owner.CaseSensitive;
-
-    /// <summary>
-    /// Regular Expression To Match
+    /// Regular Expression
     /// </summary>
     public Regex RegularExpression {
       get {
         if (null == m_RegularExpression)
-          m_RegularExpression = BuildRegular();
+          m_RegularExpression = CreateRegularExpression();
 
         return m_RegularExpression;
       }
+    }
+
+    /// <summary>
+    /// Validate
+    /// </summary>
+    public event EventHandler<ValidationEventArgs<CommandLineArgumentDescription>> Validate;
+
+    /// <summary>
+    /// To String
+    /// </summary>
+    public override string ToString() {
+      var data = new string[] {
+        Name,
+        IsRequired ? "(*)" : "",
+        Description
+      }
+      .Where(line => !string.IsNullOrWhiteSpace(line))
+      .Select(line => line.Trim());
+
+      return string.Join(" ", data);
     }
 
     /// <summary>
@@ -399,83 +315,311 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     public IEnumerable<string> ValidationErrors { 
       get {
-        if (MinCount > MaxCount)
-          yield return $"MaxCount > MinCount";
+        if (m_MinCount > m_MaxCount)
+          yield return $"Min Count {m_MinCount} exceeds max count {m_MaxCount}";
 
-        var extra = ExtraValidator;
+        if (!RegularExpressionBuilder.IsOptionsPatternValid(Name))
+          yield return $"Invalid Name \"{Name}\": incorrect options pattern";
 
-        IEnumerable<string> data = extra == null
-          ? null
-          : extra(this);
+        EventHandler<ValidationEventArgs<CommandLineArgumentDescription>> custom = Validate;
 
-        if (null != data)
-          foreach (string line in data)
-            if (!string.IsNullOrWhiteSpace(line))
-              yield return line;
+        if (null != custom) {
+          ValidationEventArgs<CommandLineArgumentDescription> args = new ValidationEventArgs<CommandLineArgumentDescription>(this);
+
+          custom.Invoke(this, args);
+
+          foreach (string error in args)
+            yield return error;
+        }
       }
     }
+
+    /// <summary>
+    /// Is Valid
+    /// </summary>
+    public bool IsValid => !ValidationErrors.Any();
+
+    #endregion Public
+
+    #region IComparable<CommandLineArgumentDescription>
+
+    /// <summary>
+    /// Compare To
+    /// </summary>
+    public int CompareTo(CommandLineArgumentDescription other) => Compare(this, other);
+
+    #endregion IComparable<CommandLineArgumentDescription>
+
+    #region IEquatable<CommandLineArgumentDescription>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(CommandLineArgumentDescription other) {
+      if (ReferenceEquals(this, other))
+        return true;
+      else if (ReferenceEquals(null, other))
+        return false;
+      else if (!ReferenceEquals(Owner, other.Owner))
+        return false;
+
+      if ((Owner.Options & CommandLineDescriptorsOptions.CaseSensitive) == CommandLineDescriptorsOptions.CaseSensitive)
+        return string.Equals(m_OrderName, other.m_OrderName, StringComparison.Ordinal);
+      else
+        return string.Equals(m_OrderName, other.m_OrderName, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public override bool Equals(Object other) => Equals(other as CommandLineArgumentDescription);
+
+    /// <summary>
+    /// Hash Code
+    /// </summary>
+    /// <returns></returns>
+    public override int GetHashCode() {
+      if (null == m_OrderName)
+        return 0;
+      else if ((Owner.Options & CommandLineDescriptorsOptions.CaseSensitive) == CommandLineDescriptorsOptions.CaseSensitive)
+        return m_OrderName.GetHashCode();
+      else
+        return m_OrderName.ToUpperInvariant().GetHashCode();
+    }
+
+    #endregion IEquatable<CommandLineArgumentDescription>
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// CommandLineArgumentDescriptions
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class CommandLineArgumentDescriptions : IReadOnlyList<CommandLineArgumentDescription> {
+    #region Private Data 
+
+    // Items
+    private List<CommandLineArgumentDescription> m_Items = new List<CommandLineArgumentDescription>();
+
+    private CommandLineDescriptorsOptions m_Options;
+
+    #endregion Private Data
+
+    #region Algorithm
+
+    internal void OnItemUpdate(CommandLineArgumentDescription item) {
+      OnUpdate();
+    }
+
+    internal void OnUpdate() {
+      EventHandler updated = Updated;
+
+      if (null != updated)
+        updated.Invoke(this, EventArgs.Empty);
+    }
+
+    internal void CoreAdd(CommandLineArgumentDescription item) {
+      if (null == item)
+        return;
+
+      m_Items.Add(item);
+    }
+
+    internal void CoreRemove(CommandLineArgumentDescription item) {
+      if (null == item)
+        return;
+
+      m_Items.Remove(item);
+    }
+
+    #endregion Algorithm
+
+    #region Create
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Options
+    /// </summary>
+    public CommandLineDescriptorsOptions Options {
+      get => m_Options;
+      set {
+        if (m_Options != value) {
+          m_Options = value;
+
+          OnUpdate();
+
+          foreach (var item in m_Items)
+            item.OnOwnerUpdate();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Items
+    /// </summary>
+    public IReadOnlyList<CommandLineArgumentDescription> items => m_Items;
+
+    /// <summary>
+    /// Add
+    /// </summary>
+    public CommandLineArgumentDescription Add() {
+      return new CommandLineArgumentDescription(this);
+    }
+
+    /// <summary>
+    /// Add
+    /// </summary>
+    public CommandLineArgumentDescription Add(string name, 
+                                              CommandLineType valueType,
+                                              string description) {
+      return new CommandLineArgumentDescription(this) { 
+        Name = name,
+        ValueType = valueType,
+        Description = description
+      };
+    }
+
+    /// <summary>
+    /// Add
+    /// </summary>
+    public CommandLineArgumentDescription Add(string name,
+                                              CommandLineType valueType,
+                                              string description,
+                                              bool required) {
+      return new CommandLineArgumentDescription(this) {
+        Name = name,
+        ValueType = valueType,
+        Description = description,
+        MinCount = required ? 1 : 0
+      };
+    }
+
+    /// <summary>
+    /// Add Standard Help Option
+    /// </summary>
+    public void AddHelp() {
+      if (m_Items.Any(item => item.Kind == CommandLineDescriptorKind.Help))
+        return;
+
+      new CommandLineArgumentDescription(this) {
+        Name = "H[elp]",
+        Kind = CommandLineDescriptorKind.Help,
+        ValueType = CommandLineType.Integer,
+        DefaultValue = "0",
+        Description = "This help screen",
+        HelpInfo = "Provides help for the routine or for the particular command",
+      };
+
+      new CommandLineArgumentDescription(this) {
+        Name = "?",
+        Kind = CommandLineDescriptorKind.Help,
+        ValueType = CommandLineType.Integer,
+        DefaultValue = "0",
+        Description = "This help screen",
+        HelpInfo = "Provides help for the routine or for the particular command",
+      };
+    }
+
+    /// <summary>
+    /// Updated
+    /// </summary>
+    public event EventHandler Updated;
 
     /// <summary>
     /// To String
     /// </summary>
     public override string ToString() {
-      int length = Owner == null ? 0 : Owner.Items.Max(item => item.Name.Length);
+      if (!m_Items.Any())
+        return "";
 
-      var lines = new string[] {
-        Name.PadRight(length),
-        IsRequired ? "(*)" : "",
-        Description
-      };
+      int max = m_Items.Max(item => item.Name.Length);
 
-      return string.Join(" ", lines
-        .Where(item => !string.IsNullOrWhiteSpace(item))
-        .Select(item => item.Trim()));
+      return string.Join(Environment.NewLine, m_Items
+        .OrderBy(item => item)
+        .Select(item => $"{item.Name.PadRight(max)} {(item.IsRequired ? "(+)" : "   ")} {item.Description}"));
     }
+
+    /// <summary>
+    /// Validation Errors
+    /// </summary>
+    public IEnumerable<string> ValidationErrors {
+      get { 
+        foreach (var item in m_Items) {
+          foreach (string line in item.ValidationErrors)
+            yield return line;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Is Valid
+    /// </summary>
+    public bool IsValid => !ValidationErrors.Any();
 
     #endregion Public
 
-    #region IComparable<CommandLineDescriptor>
+    #region IReadOnlyList<CommandLineArgumentDescription>
 
     /// <summary>
-    /// Compare To
+    /// Find
     /// </summary>
-    public int CompareTo(CommandLineDescriptor other) => Compare(this, other);
+    public CommandLineArgumentDescription Find(string name) {
+      if (string.IsNullOrWhiteSpace(name))
+        name = "";
+      else
+        name = name.Trim().Replace("[", "").Replace("]", "");
 
-    #endregion IComparable<CommandLineDescriptor>
-
-    #region IEquatable<CommandLineDescriptor>
-
-    /// <summary>
-    /// Equals
-    /// </summary>
-    public bool Equals(CommandLineDescriptor other) {
-      if (ReferenceEquals(this, other))
-        return true;
-      else if (ReferenceEquals(null, other))
-        return false;
-
-      if (!ReferenceEquals(Owner, other.Owner))
-        return false;
-
-      return CaseSensitive
-        ? string.Equals(Name, other.Name, StringComparison.Ordinal)
-        : string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+      return m_Items
+        .Select(item => new {
+          item,
+          match = item.RegularExpression.Match(name)
+        })
+        .Where(item => item.match.Success)
+        .OrderByDescending(item => item.match.Length)
+        .FirstOrDefault()
+        .item;
     }
 
     /// <summary>
-    /// Equals
+    /// Count
     /// </summary>
-    public override bool Equals(object obj) => Equals(obj as CommandLineDescriptor);
+    public int Count => m_Items.Count;
 
     /// <summary>
-    /// Hash Code
+    /// Indexer
     /// </summary>
-    public override int GetHashCode() {
-      return Name == null
-        ? 0
-        : Name.ToUpperInvariant().GetHashCode();
+    public CommandLineArgumentDescription this[int index] => m_Items[index];
+
+    /// <summary>
+    /// Indexer
+    /// </summary>
+    public CommandLineArgumentDescription this[string name] {
+      get {
+        CommandLineArgumentDescription result = Find(name);
+
+        if (null == result)
+          throw new ArgumentException($"Description \"{name}\" is not found.", nameof(name));
+
+        return result;
+      }
     }
 
-    #endregion IEquatable<CommandLineDescriptor>
+    /// <summary>
+    /// Enumerator
+    /// </summary>
+    public IEnumerator<CommandLineArgumentDescription> GetEnumerator() => m_Items.GetEnumerator();
+
+    /// <summary>
+    /// Enumerator
+    /// </summary>
+    IEnumerator IEnumerable.GetEnumerator() => m_Items.GetEnumerator();
+
+    #endregion IReadOnlyList<CommandLineArgumentDescription>
   }
 }
