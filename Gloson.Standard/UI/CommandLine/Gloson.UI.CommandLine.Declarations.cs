@@ -44,7 +44,7 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Wants / Has parameter
     /// </summary>
-    public static bool WantsValue(CommandLineType kind) {
+    public static bool WantsValue(this CommandLineType kind) {
       return kind != CommandLineType.None;
     }
 

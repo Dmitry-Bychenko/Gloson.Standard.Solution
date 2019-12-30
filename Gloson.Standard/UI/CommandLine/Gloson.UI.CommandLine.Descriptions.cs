@@ -37,6 +37,8 @@ namespace Gloson.UI.CommandLine {
     private string m_Description = "";
     private string m_HelpInfo = "";
 
+    private string m_InputPrompt;
+
     private bool m_Visible = true;
 
     private Regex m_RegularExpression;
@@ -264,6 +266,20 @@ namespace Gloson.UI.CommandLine {
     }
 
     /// <summary>
+    /// Input Prompt
+    /// </summary>
+    public string InputPrompt {
+      get => m_InputPrompt;
+      set {
+        if (string.Equals(value, m_InputPrompt)) {
+          m_InputPrompt = value;
+
+          OnUpdate();
+        }
+      }
+    }
+
+    /// <summary>
     /// Visible
     /// </summary>
     public bool Visible {
@@ -442,6 +458,11 @@ namespace Gloson.UI.CommandLine {
     #endregion Create
 
     #region Public
+
+    /// <summary>
+    /// Default Description
+    /// </summary>
+    public static CommandLineArgumentDescriptions Default { get; }  = new CommandLineArgumentDescriptions();
 
     /// <summary>
     /// Options
