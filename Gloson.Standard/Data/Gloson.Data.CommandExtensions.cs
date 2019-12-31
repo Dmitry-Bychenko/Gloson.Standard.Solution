@@ -18,7 +18,9 @@ namespace Gloson.Data {
     /// <summary>
     /// As Enumerable
     /// </summary>
-    public static IEnumerable<IDataRecord> AsEnumerable(this IDbCommand command) {
+    public static IEnumerable<IDataRecord> AsEnumerable(
+      this IDbCommand command) {
+
       if (null == command)
         throw new ArgumentNullException(nameof(command));
 

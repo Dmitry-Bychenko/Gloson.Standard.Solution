@@ -253,6 +253,91 @@ namespace Gloson.Data {
     /// </summary>
     public static string ConnectionString => s_ConnectionString;
 
+    /// <summary>
+    /// Execute Non Query
+    /// </summary>
+    /// <param name="sql">SQL</param>
+    /// <param name="parameters">Parameters</param>
+    public static int ExecuteNonQuery(string sql, params (string, object)[] parameters) {
+      if (null == sql)
+        throw new ArgumentNullException(nameof(sql));
+      else if (null == parameters)
+        throw new ArgumentNullException(nameof(parameters));
+
+      using (IDbConnection conn = Connect()) {
+        using (IDbCommand q = conn.CreateCommand()) {
+          q.CommandText = sql;
+
+          foreach (var item in parameters) {
+            IDbDataParameter prm = q.CreateParameter();
+
+            prm.ParameterName = item.Item1;
+            prm.Value = item.Item2;
+          }
+
+          return q.ExecuteNonQuery();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Execute Scalar
+    /// </summary>
+    /// <param name="sql">SQL</param>
+    /// <param name="parameters">Parameters</param>
+    public static Object ExecuteScalar(string sql, params (string, object)[] parameters) {
+      if (null == sql)
+        throw new ArgumentNullException(nameof(sql));
+      else if (null == parameters)
+        throw new ArgumentNullException(nameof(parameters));
+
+      using (IDbConnection conn = Connect()) {
+        using (IDbCommand q = conn.CreateCommand()) {
+          q.CommandText = sql;
+
+          foreach (var item in parameters) {
+            IDbDataParameter prm = q.CreateParameter();
+
+            prm.ParameterName = item.Item1;
+            prm.Value = item.Item2;
+          }
+
+          return q.ExecuteScalar();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Execute Scalar
+    /// </summary>
+    /// <param name="sql">SQL</param>
+    /// <param name="parameters">Parameters</param>
+    public static IEnumerable<IDataRecord> ExecuteEnumerable(string sql, params (string, object)[] parameters) {
+      if (null == sql)
+        throw new ArgumentNullException(nameof(sql));
+      else if (null == parameters)
+        throw new ArgumentNullException(nameof(parameters));
+
+      using (IDbConnection conn = Connect()) {
+        using (IDbCommand q = conn.CreateCommand()) {
+          q.CommandText = sql;
+
+          foreach (var item in parameters) {
+            IDbDataParameter prm = q.CreateParameter();
+
+            prm.ParameterName = item.Item1;
+            prm.Value = item.Item2;
+          }
+
+          using (var reader = q.ExecuteReader()) {
+            while (reader.Read()) {
+              yield return reader;
+            }
+          }
+        }
+      }
+    }
+
     #endregion Public
   }
 
