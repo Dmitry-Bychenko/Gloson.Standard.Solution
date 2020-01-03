@@ -138,10 +138,27 @@ namespace Gloson.UI.CommandLine {
       if (m_Items != null)
         return;
 
+      bool parametersOnly = false;
+
       m_Items = new List<CommandLineArgument>();
 
       for (int i = 0; i < m_RawArguments.Count; ++i) {
         string arg = m_RawArguments[i];
+
+        if ("--" == arg) {
+          parametersOnly = true;
+
+          continue;
+        }
+
+        if (parametersOnly) {
+          new CommandLineArgument(
+            this, 
+            Descriptions.FirstOrDefault(item => string.IsNullOrWhiteSpace(item.Name)), 
+            arg);
+              
+          continue;
+        }
 
         var best = Descriptions
           .Select(item => new {
