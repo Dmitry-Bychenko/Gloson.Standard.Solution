@@ -11,7 +11,7 @@ namespace Gloson.Consoles {
   /// </summary>
   /// <example>
   /// <code>
-  /// using (new ConsoleAppearance() {ForegrounfColor = ConsoleColor.Red}) {
+  /// using (new ConsoleAppearance() {ForegroundColor = ConsoleColor.Red}) {
   ///   Console.WriteLine("Warning (RED alert)!");
   /// }
   /// </code>
