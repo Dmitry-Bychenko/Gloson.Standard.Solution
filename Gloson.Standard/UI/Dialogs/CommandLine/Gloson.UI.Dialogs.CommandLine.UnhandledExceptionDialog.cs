@@ -17,7 +17,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class UnhandledExceptionDialog {
+  public class UnhandledExceptionDialog : IUnhandledExceptionDialog {
     #region Algorithm
 
     private static string ToTable(string value, int shift) {
@@ -42,7 +42,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
 
     #endregion Algorithm
 
-    #region Public
+    #region IUnhandledExceptionDialog
 
     /// <summary>
     /// Show
@@ -65,6 +65,6 @@ namespace Gloson.UI.Dialogs.CommandLine {
       Console.WriteLine(sb.ToString());
     }
 
-    #endregion Public
+    #endregion IUnhandledExceptionDialog
   }
 }
