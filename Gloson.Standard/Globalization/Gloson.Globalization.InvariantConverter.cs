@@ -5,6 +5,8 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
+using Gloson.Text;
+
 namespace Gloson.Globalization {
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -22,15 +24,10 @@ namespace Gloson.Globalization {
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out byte result) {
-      if (null == value) {
-        result = byte.MinValue;
-        return false;
-      }
-
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return byte.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             byte.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      result = byte.MinValue;
+      
+      return Radix.TryToDecimal(value, out string data) &&
+             byte.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
@@ -38,30 +35,20 @@ namespace Gloson.Globalization {
     /// </summary>
     [CLSCompliant(false)]
     public static bool TryParse(string value, out sbyte result) {
-      if (null == value) {
-        result = sbyte.MinValue;
-        return false;
-      }
+      result = sbyte.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return sbyte.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             sbyte.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             sbyte.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out short result) {
-      if (null == value) {
-        result = short.MinValue;
-        return false;
-      }
+      result = short.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return short.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             short.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             short.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
@@ -69,30 +56,20 @@ namespace Gloson.Globalization {
     /// </summary>
     [CLSCompliant(false)]
     public static bool TryParse(string value, out UInt16 result) {
-      if (null == value) {
-        result = UInt16.MinValue;
-        return false;
-      }
+      result = UInt16.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return UInt16.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             UInt16.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             UInt16.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out int result) {
-      if (null == value) {
-        result = int.MinValue;
-        return false;
-      }
+      result = int.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return int.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             int.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             int.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
@@ -100,30 +77,20 @@ namespace Gloson.Globalization {
     /// </summary>
     [CLSCompliant(false)]
     public static bool TryParse(string value, out uint result) {
-      if (null == value) {
-        result = uint.MinValue;
-        return false;
-      }
+      result = uint.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return uint.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             uint.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             uint.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out long result) {
-      if (null == value) {
-        result = long.MinValue;
-        return false;
-      }
+      result = long.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return long.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             long.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+      return Radix.TryToDecimal(value, out string data) &&
+             long.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
@@ -131,15 +98,20 @@ namespace Gloson.Globalization {
     /// </summary>
     [CLSCompliant(false)]
     public static bool TryParse(string value, out ulong result) {
-      if (null == value) {
-        result = ulong.MinValue;
-        return false;
-      }
+      result = ulong.MinValue;
 
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
+      return Radix.TryToDecimal(value, out string data) &&
+             ulong.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+    }
 
-      return ulong.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             ulong.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
+    /// <summary>
+    /// Try Parse
+    /// </summary>
+    public static bool TryParse(string value, out BigInteger result) {
+      result = 0;
+
+      return Radix.TryToDecimal(value, out string data) &&
+             BigInteger.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>
@@ -168,21 +140,6 @@ namespace Gloson.Globalization {
       value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
 
       return double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-    }
-
-    /// <summary>
-    /// Try Parse
-    /// </summary>
-    public static bool TryParse(string value, out BigInteger result) {
-      if (null == value) {
-        result = 0;
-        return false;
-      }
-
-      value = string.Concat(value.Where(c => !Char.IsWhiteSpace(c) && c != '_'));
-
-      return BigInteger.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out result) ||
-             BigInteger.TryParse(value, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out result);
     }
 
     /// <summary>

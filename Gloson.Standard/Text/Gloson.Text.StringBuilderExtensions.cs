@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Gloson.Text {
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// StringBuilder Extensions
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class StringBuilderExtensions {
+    #region Public
+
+    /// <summary>
+    /// Reverse (at place)
+    /// </summary>
+    public static void Reverse(this StringBuilder value) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      for (int i = 0; i < value.Length / 2; ++i) {
+        char right = value[value.Length - 1 - i];
+
+        value[value.Length - 1 - i] = value[i];
+        value[i] = right;
+      }
+    }
+
+    #endregion Public
+  }
+}
