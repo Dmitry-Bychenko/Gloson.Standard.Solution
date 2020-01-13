@@ -240,7 +240,7 @@ namespace Gloson.Text {
       value = string.Concat(value.Where(c => !char.IsWhiteSpace(c) && c != '_'));
 
       if (IsValid(value, 10)) {
-        mantissa = value;
+        mantissa = value.TrimStart('+');
         radix = 10;
 
         return true;
@@ -272,7 +272,7 @@ namespace Gloson.Text {
           return false;
         }
 
-        mantissa = value.Substring(0, value.Length - match.Groups["number"].Length);
+        mantissa = value.Substring(0, value.Length - match.Length);
 
         if (IsValid(mantissa, radix))
           return true;

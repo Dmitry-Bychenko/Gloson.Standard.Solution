@@ -20,7 +20,7 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
-      Console.WriteLine(Radix.ToDecimal("123"));
+      Console.WriteLine(Radix.ToDecimal("123(16)"));
 
       Console.ReadKey();
     }
