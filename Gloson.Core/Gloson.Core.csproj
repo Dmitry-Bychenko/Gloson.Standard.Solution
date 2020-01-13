@@ -5,6 +5,10 @@
     <RootNamespace>Gloson</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Gloson.Core.snk</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Dmitry Bychenko</Authors>
+    <Copyright>Copyright (c) 2020</Copyright>
+    <PackageProjectUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

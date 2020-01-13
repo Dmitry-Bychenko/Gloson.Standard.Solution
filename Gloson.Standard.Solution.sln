@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Standard", "Gloson.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Standard.Test", "Gloson.Standard.Test\Gloson.Standard.Test.csproj", "{6A9587DA-1CC1-4C84-817C-6C67219BD3E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gloson.Core", "Gloson.Core\Gloson.Core.csproj", "{D847F5A3-C5F8-47C8-AB44-3F0FA31E60AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Core", "Gloson.Core\Gloson.Core.csproj", "{D847F5A3-C5F8-47C8-AB44-3F0FA31E60AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Gloson.Cmd", "Demo.Gloson.Cmd\Demo.Gloson.Cmd.csproj", "{43F0D18B-1EC3-4165-8C22-378C16D868E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D847F5A3-C5F8-47C8-AB44-3F0FA31E60AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D847F5A3-C5F8-47C8-AB44-3F0FA31E60AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D847F5A3-C5F8-47C8-AB44-3F0FA31E60AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F0D18B-1EC3-4165-8C22-378C16D868E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F0D18B-1EC3-4165-8C22-378C16D868E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F0D18B-1EC3-4165-8C22-378C16D868E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F0D18B-1EC3-4165-8C22-378C16D868E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -297,6 +297,19 @@ namespace Gloson.Text {
       }
     }
 
+    /// <summary>
+    /// Convert To Decimal (with radix autodetection)
+    /// </summary>
+    public static String ToDecimal(string value) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      if (TryToDecimal(value, out string result))
+        return result;
+      else
+        throw new FormatException("Invalid format");
+    }
+
     #endregion Public 
   }
 }
