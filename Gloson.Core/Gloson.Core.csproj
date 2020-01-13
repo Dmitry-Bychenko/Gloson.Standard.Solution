@@ -8,7 +8,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dmitry Bychenko</Authors>
     <Copyright>Copyright (c) 2020</Copyright>
-    <PackageProjectUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</PackageProjectUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@
     <ApplicationIcon />
     <Win32Resource />
     <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
