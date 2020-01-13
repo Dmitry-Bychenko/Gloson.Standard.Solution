@@ -25,6 +25,9 @@ namespace Gloson.Data.Oracle {
     #region Algorithm
 
     private static string ComputeAssemblyName() {
+      return "Oracle.ManagedDataAccess";
+
+      /*
       Assembly assembly = Assembly.GetEntryAssembly();
 
       if (null == assembly)
@@ -38,6 +41,7 @@ namespace Gloson.Data.Oracle {
       return isCore
         ? "Oracle.ManagedDataAccess.Core"
         : "Oracle.ManagedDataAccess";
+      */
     }
 
     private static Type ConnectionType() {

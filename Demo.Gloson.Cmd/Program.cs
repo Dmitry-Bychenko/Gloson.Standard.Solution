@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Data;
 
 using Gloson;
+using Gloson.Data;
+using Gloson.Data.Oracle;
 using Gloson.Text;
 
 namespace Demo.Gloson.Cmd {
@@ -20,9 +23,17 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
-      Console.WriteLine(Radix.ToDecimal("123(16)"));
+      RdbmsOracle.Register();
 
-      Console.ReadKey();
+      using (var conn = Rdbms.CreateConnection()) {
+        var result = conn.ExecuteScalar("select Sysdate from Dual");
+
+        Console.WriteLine(result);
+      }
+
+
+
+        Console.ReadKey();
     }
 
     #endregion Entry Point

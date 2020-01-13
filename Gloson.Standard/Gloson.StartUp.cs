@@ -80,7 +80,12 @@ namespace Gloson {
         if (!t.CustomAttributes.OfType<StartUpAttribute>().Any())
           continue;
 
-        RuntimeHelpers.RunClassConstructor(t.TypeHandle);
+        try {
+          RuntimeHelpers.RunClassConstructor(t.TypeHandle);
+        }
+        catch (Exception e) {
+          throw new InvalidProgramException($"{t.FullName} at {t.Assembly.FullName}", e);
+        }
       }
     }
 
