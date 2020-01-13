@@ -62,7 +62,9 @@ namespace Gloson {
     /// <param name="arguments">Argument to pass</param>
     /// <returns>Created service</returns>
     public static T CreateService<T>(params object[] arguments) {
-      return ActivatorUtilities.CreateInstance<T>(Provider, arguments);
+      Type t = Services.FirstOrDefault(sd => sd.ServiceType == typeof(T))?.ImplementationType ?? typeof(T);
+
+      return (T) (ActivatorUtilities.CreateInstance(Provider, t, arguments));
     }
 
     /// <summary>
@@ -72,7 +74,9 @@ namespace Gloson {
     /// <param name="arguments">Argument to pass</param>
     /// <returns>Created service</returns>
     public static object CreateService(Type type, params object[] arguments) {
-      return ActivatorUtilities.CreateInstance(Provider, type, arguments);
+      Type t = Services.FirstOrDefault(sd => sd.ServiceType == type)?.ImplementationType ?? type;
+
+      return ActivatorUtilities.CreateInstance(Provider, t, arguments);
     }
 
     /// <summary>

@@ -44,6 +44,8 @@ namespace Gloson.UI.Dialogs.CommandLine {
 
         string password = ConsoleReader.ReadPasswordLine('*');
 
+        Console.WriteLine();
+
         if (string.IsNullOrWhiteSpace(serverName) &&
             string.IsNullOrWhiteSpace(login) &&
             string.IsNullOrWhiteSpace(password))
@@ -63,7 +65,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
           connection.Open();
           connection.Close();
 
-          return connection.ConnectionString;
+          return cs.ConnectionString; 
         }
         catch (DataException) {
           ;

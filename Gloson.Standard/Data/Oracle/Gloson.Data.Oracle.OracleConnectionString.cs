@@ -32,6 +32,15 @@ namespace Gloson.Data.Oracle {
 
     #endregion Algorithm
 
+    #region Create
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public OracleConnectionStringBuilder() { }
+
+    #endregion Create
+
     #region IConnectionStringBuilder
 
     /// <summary>

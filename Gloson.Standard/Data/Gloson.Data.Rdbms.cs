@@ -211,7 +211,15 @@ namespace Gloson.Data {
     /// Create Connection
     /// </summary>
     public static IDbConnection CreateConnection() {
-      return Dependencies.Provider.GetRequiredService<IDbConnection>();
+      var result = Dependencies.Provider.GetRequiredService<IDbConnection>();
+
+      if (!string.IsNullOrWhiteSpace(s_ConnectionString)) {
+        result.ConnectionString = s_ConnectionString;
+
+        result.Open();
+      }
+
+      return result;
     }
 
     /// <summary>

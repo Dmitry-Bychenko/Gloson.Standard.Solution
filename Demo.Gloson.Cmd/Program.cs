@@ -26,7 +26,9 @@ namespace Demo.Gloson.Cmd {
       RdbmsOracle.Register();
 
       using (var conn = Rdbms.CreateConnection()) {
-        var result = conn.ExecuteScalar("select Sysdate from Dual");
+        var result = conn.ExecuteScalar(
+          @"select Sysdate 
+              from Dual");
 
         Console.WriteLine(result);
       }
