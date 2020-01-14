@@ -73,7 +73,28 @@ namespace Gloson.Text {
     /// Standard constructor
     /// </summary>
     public StringNaturalComparer() 
-      : this(null) { }
+      : this((IComparer<string>) null) { }
+
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    public StringNaturalComparer(CultureInfo culture, bool ignoreCase) {
+      if (null == culture)
+        culture = CultureInfo.CurrentCulture;
+
+      CompareOptions options = CompareOptions.None;
+
+      if (ignoreCase)
+        options |= CompareOptions.IgnoreCase;
+
+      m_Comparer = culture.CompareInfo.GetStringComparer(options);
+    }
+
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    public StringNaturalComparer(CultureInfo culture) 
+      : this(culture, false) { }
 
     #endregion Create
 
@@ -130,7 +151,6 @@ namespace Gloson.Text {
     #region Private Data
 
     private IComparer<string> m_Comparer;
-
     private IComparer<string> m_IgnoreCaseComparer;
 
     #endregion Private Data
