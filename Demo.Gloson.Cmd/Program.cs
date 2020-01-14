@@ -5,6 +5,9 @@ using Gloson;
 using Gloson.Data;
 using Gloson.Data.Oracle;
 using Gloson.Text;
+using Gloson.UI.Dialogs;
+using Gloson.UI.Dialogs.CommandLine;
+using Gloson.UI.CommandLine;
 
 namespace Demo.Gloson.Cmd {
 
@@ -23,6 +26,8 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
+      CommandLineConfigure.Configure();
+
       RdbmsOracle.Register();
 
       using (var conn = Rdbms.CreateConnection()) {

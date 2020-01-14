@@ -68,7 +68,11 @@ namespace Gloson.UI.Dialogs.CommandLine {
 
           return cs.ConnectionString; 
         }
-        catch (DbException) {
+        catch (DbException e) {
+          Console.WriteLine();
+          Console.WriteLine($"Failed to connect with message");
+          Console.WriteLine($"{e.Message}");
+          Console.WriteLine();
           ;
         }
       }
