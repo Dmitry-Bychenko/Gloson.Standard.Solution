@@ -1,8 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>Nexign</Company>
+    <Description>Demo project</Description>
+    <Authors>Dmitry Bychenko</Authors>
+    <Product>Demo Gloson</Product>
   </PropertyGroup>
 
   <ItemGroup>

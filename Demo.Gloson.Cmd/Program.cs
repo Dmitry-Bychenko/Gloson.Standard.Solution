@@ -26,8 +26,15 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
-      CommandLineConfigure.Configure();
+      Configuration.Apply();
 
+      
+
+      Dependencies.CreateService<IAboutDialog>().Show();
+
+      // IAboutDialog
+
+      /*
       RdbmsOracle.Register();
 
       using (var conn = Rdbms.CreateConnection()) {
@@ -37,10 +44,9 @@ namespace Demo.Gloson.Cmd {
 
         Console.WriteLine(result);
       }
+      */
 
-
-
-        Console.ReadKey();
+      Console.ReadKey();
     }
 
     #endregion Entry Point
