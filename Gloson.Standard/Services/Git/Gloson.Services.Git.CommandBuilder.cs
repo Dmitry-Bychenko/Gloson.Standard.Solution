@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using Gloson;
+using Gloson.Text;
+
 namespace Gloson.Services.Git {
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -98,6 +101,46 @@ namespace Gloson.Services.Git {
         return command;
 
       return string.Join(" ", command.TrimEnd(), $"-C \"{directory}\"");
+    }
+
+    /// <summary>
+    /// Add file(s) to the source control
+    /// </summary>
+    /// <param name="filesToAdd">Files to be added</param>
+    /// <returns></returns>
+    public static string AddFiles(params string[] filesToAdd) {
+      if (null == filesToAdd)
+        throw new ArgumentNullException(nameof(filesToAdd));
+      else if (filesToAdd.Length <= 0)
+        return "";
+
+      string files = string.Join(" ", filesToAdd.Select(file => Environment.ExpandEnvironmentVariables(file).QuotationAdd('\"')));
+
+      return string.Join(
+        " ",
+        "add -f",
+        "--",
+         files);
+    }
+
+    /// <summary>
+    /// Add file(s) to the source control
+    /// </summary>
+    /// <param name="filesToAdd">Files to be removed</param>
+    /// <returns></returns>
+    public static string RemoveFiles(params string[] filesToAdd) {
+      if (null == filesToAdd)
+        throw new ArgumentNullException(nameof(filesToAdd));
+      else if (filesToAdd.Length <= 0)
+        return "";
+
+      string files = string.Join(" ", filesToAdd.Select(file => Environment.ExpandEnvironmentVariables(file).QuotationAdd('\"')));
+
+      return string.Join(
+        " ",
+        "rm -f",
+        "--",
+         files);
     }
 
     #endregion Public

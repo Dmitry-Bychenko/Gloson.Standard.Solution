@@ -33,8 +33,16 @@ namespace Gloson.Services.Git {
     /// </summary>
     /// <param name="gitPath"></param>
     public GitController(string gitPath) {
-      if (string.IsNullOrWhiteSpace(gitPath))
-        gitPath = "git";
+      if (string.IsNullOrWhiteSpace(gitPath)) {
+        gitPath = Path.Combine(
+          Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+          "git",
+          "cmd",
+          "git.exe");
+
+        if (!File.Exists(gitPath))
+          gitPath = "git";
+      }
 
       Location = gitPath;
     }
@@ -75,6 +83,19 @@ namespace Gloson.Services.Git {
           return new Version(0, 0);
         else
           return new Version(match);
+      }
+    }
+
+    /// <summary>
+    /// Working Directory
+    /// </summary>
+    public string WorkingDirectory {
+      get {
+        var result = TryExecute("rev-parse --show-toplevel");
+
+        return result.Error.Length > 0
+          ? ""
+          : result.Value;
       }
     }
 
