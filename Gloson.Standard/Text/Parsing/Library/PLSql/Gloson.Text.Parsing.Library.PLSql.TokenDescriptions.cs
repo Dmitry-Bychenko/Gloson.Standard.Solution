@@ -36,12 +36,18 @@ namespace Gloson.Text.Parsing.Library.PLSql {
     private static readonly TokenDescription s_LineComment = TokenDescription.Create("(--).*$", classification: TokenClassification.WhiteSpace);
 
     // Identifier
-    private static readonly TokenDescription s_Identifier = TokenDescription.Create(@"[A-Za-z]+[A-Za-z0-9_$#]*", classification: TokenClassification.Identifier, options: TokenDescriptionOptions.IgnoreCase);
+    private static readonly TokenDescription s_Identifier = TokenDescription.Create(@"\p{L}+[\p{L}0-9_$#]*", classification: TokenClassification.Identifier, options: TokenDescriptionOptions.IgnoreCase);
 
     // Quotation
     private static readonly TokenDescription s_Quotation = TokenDescription.Create(TryStartQuotation, TryStopQuotation, classification: TokenClassification.Identifier);
     // String
     private static readonly TokenDescription s_String = TokenDescription.Create(TryStartString, TryStopString, classification: TokenClassification.String);
+
+    // Operators
+    private static readonly TokenDescription s_Operators = TokenDescription.Create(new string[] {
+      "!=", "~=", ">=", "<=", "<>", ">", "<", ":=", "=", "||", "+", "-", "*", "/" },
+      1800,
+      classification: TokenClassification.Operation);
 
     // Rules
     private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
@@ -54,6 +60,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       MultilineComment,
       LineComment,
       Identifier,
+      Operators,
     };
 
     #endregion Private Data
@@ -258,6 +265,15 @@ namespace Gloson.Text.Parsing.Library.PLSql {
     public static TokenKeyWords HardKeyWords {
       get {
         return s_Hard;
+      }
+    }
+
+    /// <summary>
+    /// Operators
+    /// </summary>
+    public static TokenDescription Operators {
+      get {
+        return s_Operators;
       }
     }
 

@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Gloson.IO;
+using Gloson.Text;
 
 namespace Gloson.Services.Git.Repository {
 
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// 
+  /// Git Repository
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class GitRepo {
-    #region Algorithm
-    #endregion Algorithm
+  public sealed class GitRepo 
+    : IEquatable<GitRepo>,
+      IComparable<GitRepo> {
 
     #region Create
 
@@ -60,7 +62,7 @@ namespace Gloson.Services.Git.Repository {
 
       string gitDir = Path.Combine(directory, ".git");
 
-      if (Directory.Exists(gitDir))
+      if (!Directory.Exists(gitDir))
         throw new ArgumentException("Not a repositary Directory", nameof(directory));
 
       GitRepo result = new GitRepo();
@@ -77,9 +79,58 @@ namespace Gloson.Services.Git.Repository {
     #region Public
 
     /// <summary>
+    /// Compare
+    /// </summary>
+    public static int Compare(GitRepo left, GitRepo right) {
+      if (ReferenceEquals(left, right))
+        return 0;
+      else if (ReferenceEquals(left, null))
+        return -1;
+      else if (ReferenceEquals(null, right))
+        return 1;
+
+      return StringComparers.StandardOrdinalComparer.Compare(left.Location, right.Location);
+    }
+
+    /// <summary>
     /// Directory
     /// </summary>
     public string Location { get; private set; } 
+
+    /// <summary>
+    /// Add File
+    /// </summary>
+    public void AddFile(string fileName) {
+      if (null == fileName)
+        throw new ArgumentNullException(nameof(fileName));
+      else if (!File.Exists(fileName))
+        throw new ArgumentException($"File {fileName} doesn't exist.", nameof(fileName));
+
+      Perform($"add -f -- {Environment.ExpandEnvironmentVariables(fileName).QuotationAdd('\"')}");
+    }
+
+    /// <summary>
+    /// Add File
+    /// </summary>
+    public void RemoveFile(string fileName) {
+      if (null == fileName)
+        throw new ArgumentNullException(nameof(fileName));
+      else if (!File.Exists(fileName))
+        throw new ArgumentException($"File {fileName} doesn't exist.", nameof(fileName));
+
+      Perform($"reset -- {Environment.ExpandEnvironmentVariables(fileName).QuotationAdd('\"')}");
+    }
+
+    /// <summary>
+    /// Files
+    /// </summary>
+    public IEnumerable<GitRepoFile> Files {
+      get {
+        return Perform($"ls-files -c -s -d -o -m -k")
+          .Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+          .Select(item => new GitRepoFile(item, this));
+      }
+    }
 
     /// <summary>
     /// SSH
@@ -90,6 +141,17 @@ namespace Gloson.Services.Git.Repository {
     /// Branch
     /// </summary>
     public string Branch => Perform("rev-parse --abbrev-ref HEAD");
+
+    /// <summary>
+    /// Branches
+    /// </summary>
+    public IEnumerable<GitRepoBranch> Branches { 
+      get {
+        return Perform("branch -a")
+          .Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+          .Select(item => new GitRepoBranch(item, this));
+      }
+    }
 
     /// <summary>
     /// Perform a command
@@ -111,5 +173,40 @@ namespace Gloson.Services.Git.Repository {
       $"{Ssh} (branch: {Branch})";
 
     #endregion Public
+
+    #region IEquatable<GitRepo>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(GitRepo other) {
+      if (ReferenceEquals(this, other))
+        return true;
+      else if (ReferenceEquals(null, other))
+        return false;
+
+      return String.Equals(Location, other.Location);
+    }
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public override bool Equals(object obj) => Equals(obj as GitRepo);
+
+    /// <summary>
+    /// Hash Code
+    /// </summary>
+    public override int GetHashCode() => Location == null ? 0 : Location.GetHashCode();
+
+    #endregion IEquatable<GitRepo>
+
+    #region IComparable<GitRepo>
+
+    /// <summary>
+    /// Compare To
+    /// </summary>
+    public int CompareTo(GitRepo other) => Compare(this, other);
+
+    #endregion IComparable<GitRepo>
   }
 }
