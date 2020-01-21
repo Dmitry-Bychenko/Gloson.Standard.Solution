@@ -36,7 +36,7 @@ namespace Gloson.Resources {
                                                                                     CultureInfo culture) {
 
       if (null == manager)
-        throw new ArgumentNullException();
+        throw new ArgumentNullException(nameof(manager));
 
       if (null == culture)
         culture = CultureInfo.CurrentUICulture;
@@ -59,9 +59,26 @@ namespace Gloson.Resources {
     /// </summary>
     public static Assembly ResourceMainAssembly(this ResourceManager manager) {
       if (null == manager)
-        throw new ArgumentNullException();
+        throw new ArgumentNullException(nameof(manager));
 
       return s_MainAssembly.Value.GetValue(manager) as Assembly;
+    }
+
+    /// <summary>
+    /// Load Assembly
+    /// </summary>
+    public static Assembly LoadAssembly(this ResourceManager manager, string resourceName) {
+      if (null == manager)
+        throw new ArgumentNullException(nameof(manager));
+      else if (null == resourceName)
+        throw new ArgumentNullException(nameof(resourceName));
+
+      byte[] bytes = manager.GetObject(resourceName) as byte[];
+
+      if (null == bytes)
+        throw new ArgumentException($"Resource {resourceName} is not found.", nameof(resourceName));
+
+      return Assembly.Load(bytes);
     }
 
     #endregion Public

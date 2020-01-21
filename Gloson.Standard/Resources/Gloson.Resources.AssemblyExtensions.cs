@@ -126,7 +126,6 @@ namespace Gloson.Resources {
                                                      string address) =>
       ResourceValues(assembly, address, null, null);
 
-
     #endregion Public
   }
 

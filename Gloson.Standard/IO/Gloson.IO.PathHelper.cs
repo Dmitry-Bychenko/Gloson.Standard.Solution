@@ -32,6 +32,28 @@ namespace Gloson.IO {
         .ExpandEnvironmentVariables(path)
         .QuotationAdd();
     }
+    
+    /// <summary>
+    /// Split path into chunks
+    /// </summary>
+    public static IEnumerable<string> Split(string path) {
+      if (string.IsNullOrEmpty(path))
+        yield break;
+
+      for (DirectoryInfo di = new DirectoryInfo(path); di != null; di = di.Parent) 
+        yield return di.Name;
+    }
+
+    /// <summary>
+    /// Split path into Subdirectories
+    /// </summary>
+    public static IEnumerable<string> Subdirectories(string path) {
+      if (string.IsNullOrEmpty(path))
+        yield break;
+
+      for (DirectoryInfo di = new DirectoryInfo(path); di != null; di = di.Parent)
+        yield return di.FullName;
+    }
 
     #endregion Public
   }

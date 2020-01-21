@@ -154,6 +154,49 @@ namespace Gloson.Services.Git.Repository {
     }
 
     /// <summary>
+    /// Commit
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public string Commit(string message) {
+      if (null == message)
+        message = "";
+
+      message = string.Concat(message.Where(c => !char.IsControl(c)));
+
+      return Perform("commit -m " + message.QuotationAdd('"'));
+    }
+
+    /// <summary>
+    /// Push
+    /// </summary>
+    public void Push(string origin = null) {
+      if (string.IsNullOrWhiteSpace(origin))
+        origin = "origin";
+
+      origin = string.Concat(origin.Where(c => !char.IsControl(c)));
+
+      Perform($"push --force {origin}");
+    }
+
+    /// <summary>
+    /// Commit And Push
+    /// </summary>
+    public void CommitAndPush(string message, string origin = null) {
+      message = (null == message) 
+        ? ""
+        : string.Concat(message.Where(c => !char.IsControl(c)));
+
+      Perform("commit -m " + message.QuotationAdd('"'));
+
+      origin = string.IsNullOrWhiteSpace(origin)
+        ? "origin"
+        : string.Concat(origin.Where(c => !char.IsControl(c)));
+
+      Perform($"push --force {origin}");
+    }
+
+    /// <summary>
     /// Perform a command
     /// </summary>
     /// <param name="command">Command to perform</param>
