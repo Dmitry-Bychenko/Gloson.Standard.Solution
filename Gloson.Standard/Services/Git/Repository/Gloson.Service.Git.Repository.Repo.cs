@@ -197,6 +197,16 @@ namespace Gloson.Services.Git.Repository {
     }
 
     /// <summary>
+    /// Pull
+    /// </summary>
+    public void Pull(string origin = null) {
+      if (string.IsNullOrEmpty(origin))
+        origin = "origin";
+
+      Perform($"pull {origin.QuotationAdd()}");
+    }
+
+    /// <summary>
     /// Perform a command
     /// </summary>
     /// <param name="command">Command to perform</param>

@@ -348,8 +348,6 @@ namespace Gloson.Text {
       if (ReferenceEquals(null, culture))
         culture = CultureInfo.CurrentCulture;
 
-      CompareOptions options = CompareOptions.None;
-
       return new StringNaturalComparer(culture.CompareInfo.GetStringComparer(CompareOptions.None));
     }
 
