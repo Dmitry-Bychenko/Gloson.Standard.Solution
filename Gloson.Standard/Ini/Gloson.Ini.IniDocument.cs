@@ -701,7 +701,7 @@ namespace Gloson.Ini {
 
       int index = 0;
 
-      foreach (string line in lines) {
+      foreach (string line in lines.Select(x => x.Trim())) {
         index += 1;
 
         if (string.IsNullOrWhiteSpace(line))

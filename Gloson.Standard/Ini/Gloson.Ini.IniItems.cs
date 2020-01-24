@@ -286,30 +286,73 @@ namespace Gloson.Ini {
       if (string.IsNullOrEmpty(value))
         return false;
 
-      if (!value.StartsWith("\"")) {
+      value = value.Trim();
+
+      if (string.IsNullOrEmpty(value))
+        return false;
+
+      if (!value.StartsWith("\"") && !value.StartsWith("'")) {
         int p = value.IndexOf('=');
 
         if (p < 0)
           return false;
 
-        result = new IniFileRecord(value.Substring(0, p).Trim(), value.Substring(p + 1));
+        result = new IniFileRecord(value.Substring(0, p).Trim(), value.Substring(p + 1).Trim());
         return true;
       }
 
       bool inQuot = false;
+      bool inApostroph = false;
 
       for (int i = 0; i < value.Length; ++i) {
-        if (value[i] == '"')
-          inQuot = !inQuot;
-        
+        if (inQuot) {
+          if (value[i] == '"')
+            inQuot = false;
+
+          continue;
+        }
+        else if (inApostroph) {
+          if (value[i] == '\'')
+            inApostroph = false;
+
+          continue;
+        }
+                              
+        if (value[i] == '"') {
+          inQuot = true;
+
+          continue;
+        }
+        else if (value[i] == '\'') {
+          inApostroph = true;
+
+          continue;
+        }
+
         if (!inQuot && value[i] == '=') {
           string name = value.Substring(0, i).Trim();
 
-          if (name.StartsWith("\""))
+          if (name.StartsWith("\"")) {
             if (!name.TryQuotationRemove(out name))
               return false;
+          }
+          else if (name.StartsWith("'")) {
+            if (!name.TryQuotationRemove(out name, '\''))
+              return false;
+          }
 
-          result = new IniFileRecord(name, value.Substring(i + 1));
+          string v = value.Substring(i + 1);
+
+          if (v.StartsWith("\"")) {
+            if (!v.TryQuotationRemove(out v))
+              return false;
+          }
+          else if (v.StartsWith("'")) {
+            if (!v.TryQuotationRemove(out v, '\''))
+              return false;
+          }
+
+          result = new IniFileRecord(name, v);
           return true;
         }
       }
