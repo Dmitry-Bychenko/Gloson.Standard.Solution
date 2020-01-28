@@ -21,6 +21,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     public static void Configure() {
       Dependencies.RegisterService(typeof(IAboutDialog), typeof(AboutDialog));
       Dependencies.RegisterService(typeof(IUnhandledExceptionDialog), typeof(UnhandledExceptionDialog));
+      Dependencies.RegisterService(typeof(INetworkCredentialDialog), typeof(NetworkCredentialDialog));
     }
 
     #endregion Public

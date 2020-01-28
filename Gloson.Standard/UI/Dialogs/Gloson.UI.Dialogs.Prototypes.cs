@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
 namespace Gloson.UI.Dialogs {
@@ -53,5 +54,17 @@ namespace Gloson.UI.Dialogs {
 
   public interface IUnhandledExceptionDialog {
     void Show(Exception error);
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Ask For Network Credential
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public interface INetworkCredentialDialog {
+    bool ShowDialog(string title, ref NetworkCredential credential);
   }
 }

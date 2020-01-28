@@ -8,6 +8,7 @@ using System.Text;
 
 using Gloson;
 using Gloson.Json;
+using Gloson.Net;
 
 namespace Gloson.Services.Git.Stash {
 
@@ -126,6 +127,18 @@ namespace Gloson.Services.Git.Stash {
       );
 
       return new StashStorage(connection);
+    }
+
+    /// <summary>
+    /// Nexign
+    /// </summary>
+    public static StashStorage Nexign() {
+      NetworkCredential credential = 
+           NetworkCredentials.Default.GetCredential(new Uri($@"https://{Environment.UserName}@stash.billing.ru"))
+        ?? NetworkCredentials.Default.GetCredential(new Uri($@"https://stash.billing.ru"))
+        ?? NetworkCredentials.Default.WorkStation;
+
+      return Nexign(credential?.Password);
     }
 
     #endregion Create
