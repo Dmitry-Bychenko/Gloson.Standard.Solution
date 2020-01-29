@@ -255,6 +255,13 @@ namespace Gloson.Collections.Generic {
         yield return Pop();
     }
 
+    /// <summary>
+    /// Copy
+    /// </summary>
+    public T[] Copy() {
+      return m_Items.ToArray();
+    }
+
     #endregion Public
 
     #region IEnumerable<T>
@@ -823,6 +830,13 @@ namespace Gloson.Collections.Generic {
     }
 
     /// <summary>
+    /// Remove single value
+    /// </summary>
+    public bool Remove(T value) {
+      return m_Heap.Remove(value);
+    }
+
+    /// <summary>
     /// Trim Excess
     /// </summary>
     public void TrimExcess() {
@@ -835,6 +849,13 @@ namespace Gloson.Collections.Generic {
     public IEnumerable<T> Consume() {
       while (m_Heap.Count > 0)
         yield return m_Heap.Pop();
+    }
+
+    /// <summary>
+    /// Copy
+    /// </summary>
+    public T[] Copy() {
+      return m_Heap.Copy();
     }
 
     #endregion Public
