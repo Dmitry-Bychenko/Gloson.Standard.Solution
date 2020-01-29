@@ -123,7 +123,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Items.Count <= 0) {
-        value = default;
+        value = default(T);
 
         return false;
       }
@@ -564,7 +564,7 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class PriorityQueue<T>
+  public sealed class QueueWithPriority<T>
     : IEnumerable<T>,
       IReadOnlyCollection<T> {
 
@@ -579,7 +579,7 @@ namespace Gloson.Collections.Generic {
       public T Value { get; }
       public double Priority { get; }
 
-      public int CompareTo(PriorityQueue<T>.QueueItem other) {
+      public int CompareTo(QueueWithPriority<T>.QueueItem other) {
         return Priority.CompareTo(other.Priority);
       }
     }
@@ -598,14 +598,14 @@ namespace Gloson.Collections.Generic {
     /// Standard Constructor
     /// </summary>
     /// <param name="capacity">Expected Capacity</param>
-    public PriorityQueue(int capacity) {
+    public QueueWithPriority(int capacity) {
       m_Heap = new MaxHeap<QueueItem>(capacity);
     }
 
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public PriorityQueue()
+    public QueueWithPriority()
       : this(-1) {
     }
 
@@ -647,7 +647,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default;
+        value = default(T);
 
         return false;
       }
@@ -662,7 +662,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryDequeue(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default;
+        value = default(T);
 
         return false;
       }
@@ -702,6 +702,142 @@ namespace Gloson.Collections.Generic {
     IEnumerator IEnumerable.GetEnumerator() => m_Heap.Select(item => item.Value).GetEnumerator();
 
     #endregion IEnumerable<T>
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Priority Queue (the lower priority the sooner)
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class PriorityQueue<T> {
+    #region Private Data
+
+    private MinHeap<T> m_Heap;
+
+    #endregion Private Data
+
+    #region Create
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public PriorityQueue(IComparer<T> comparer, int capacity) {
+      if (null == comparer)
+        comparer = Comparer<T>.Default;
+
+      if (null == comparer)
+        throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
+
+      Capacity = capacity < 0 ? -1 : capacity;
+      Comparer = comparer;
+      m_Heap = new MinHeap<T>(comparer, capacity);
+    }
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public PriorityQueue(IComparer<T> comparer) : this(comparer, -1) { }
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public PriorityQueue(int capacity) : this(null, capacity) { }
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public PriorityQueue() : this(null, -1) { }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Comparer
+    /// </summary>
+    public IComparer<T> Comparer { get; }
+
+    /// <summary>
+    /// Capacity
+    /// </summary>
+    public int Capacity { get; }
+
+    /// <summary>
+    /// Enqueue
+    /// </summary>
+    public void Enqueue(T value) {
+      m_Heap.Add(value);
+    }
+
+    /// <summary>
+    /// Dequeue
+    /// </summary>
+    public T Dequeue() => m_Heap.Pop();
+
+    /// <summary>
+    /// Count
+    /// </summary>
+    public int Count => m_Heap.Count;
+
+    /// <summary>
+    /// Peek
+    /// </summary>
+    public T Peek() => m_Heap.Peek();
+
+    /// <summary>
+    /// Clear
+    /// </summary>
+    public void Clear() => m_Heap.Clear();
+
+    /// <summary>
+    /// Try Peek
+    /// </summary>
+    public bool TryPeek(out T value) {
+      if (m_Heap.Count <= 0) {
+        value = default(T);
+
+        return false;
+      }
+
+      value = m_Heap.Peek();
+
+      return true;
+    }
+
+    /// <summary>
+    /// Try Dequeue
+    /// </summary>
+    public bool TryDequeue(out T value) {
+      if (m_Heap.Count <= 0) {
+        value = default(T);
+
+        return false;
+      }
+
+      value = m_Heap.Pop();
+
+      return true;
+    }
+
+    /// <summary>
+    /// Trim Excess
+    /// </summary>
+    public void TrimExcess() {
+      m_Heap.TrimExcess();
+    }
+
+    /// <summary>
+    /// Consume
+    /// </summary>
+    public IEnumerable<T> Consume() {
+      while (m_Heap.Count > 0)
+        yield return m_Heap.Pop();
+    }
+
+    #endregion Public
   }
 
 }
