@@ -74,6 +74,23 @@ namespace Gloson.Collections {
       public int Occurrences { get; internal set; }
 
       /// <summary>
+      /// Terminations (how many sequencies ends on this node)
+      /// </summary>
+      public int Terminations {
+        get {
+          if (m_Items.Count <= 0)
+            return Occurrences;
+
+          int result = Occurrences;
+
+          foreach (var item in m_Items.Values)
+            result -= item.Occurrences;
+
+          return result;
+        }
+      }
+
+      /// <summary>
       /// Trie the Node belongs to
       /// </summary>
       public StringTrie Trie { get; private set; }
@@ -87,6 +104,25 @@ namespace Gloson.Collections {
       /// Value
       /// </summary>
       public char Value { get; }
+
+      /// <summary>
+      /// Sequence
+      /// </summary>
+      public string Sequence {
+        get {
+          if (null == Parent)
+            return "";
+
+          List<char> letters = new List<char>();
+
+          for (Node current = this; !current.IsRoot; current = current.Parent)
+            letters.Add(current.Value);
+
+          letters.Reverse();
+
+          return new string(letters.ToArray());
+        }
+      }
 
       /// <summary>
       /// Items
@@ -104,9 +140,25 @@ namespace Gloson.Collections {
       public bool IsRoot => ReferenceEquals(this, Trie?.Root);
 
       /// <summary>
+      /// Level (0 for Root)
+      /// </summary>
+      public int Level {
+        get {
+          int result = 0;
+
+          for (Node current = this; current.Parent != null; current = current.Parent)
+            result += 1;
+
+          return result;
+        }
+      }
+
+      /// <summary>
       /// To String
       /// </summary>
-      public override string ToString() => $"{Value} ({Occurrences} occurrences)";
+      public override string ToString() => IsRoot
+        ? $"Root ({m_Items.Count} children; {Occurrences} occurrences; {Terminations} terminations)"
+        : $"{Value} ({m_Items.Count} children; {Occurrences} occurrences; {Terminations} terminations)";
 
       #endregion Public
     }
@@ -144,6 +196,46 @@ namespace Gloson.Collections {
     /// Root
     /// </summary>
     public Node Root { get; }
+
+    /// <summary>
+    /// Nodes (BFS)
+    /// </summary>
+    public IEnumerable<Node> Nodes {
+      get {
+        List<Node> agenda = new List<Node>() { Root };
+
+        while (agenda.Count > 0) {
+          List<Node> next = new List<Node>();
+
+          foreach (Node node in agenda) {
+            yield return node;
+
+            next.AddRange(node.Items.Values);
+          }
+
+          agenda = next;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Strings that are in trie
+    /// </summary>
+    public IEnumerable<string> Strings {
+      get {
+        foreach (Node node in Nodes) {
+          int count = node.Terminations;
+
+          if (count <= 0)
+            continue;
+
+          string result = node.Sequence;
+
+          for (int i = 0; i < count; ++i)
+            yield return result;
+        }
+      }
+    }
 
     /// <summary>
     /// Add
@@ -200,24 +292,15 @@ namespace Gloson.Collections {
 
       Node leaf = nodes[nodes.Count - 1];
 
-      if (leaf.IsLeaf) {
-        for (int i = nodes.Count - 1; i >= 0; --i) {
-          nodes[i].Occurrences -= 1;
-
-          if (nodes[i].Occurrences == 0)
-            nodes[i].Remove();
-        }
-
-        return true;
-      }
-
-      int childrenCount = leaf.Items.Sum(item => item.Value.Occurrences);
-
-      if (childrenCount >= leaf.Occurrences)
+      if (leaf.Terminations <= 0)
         return false;
 
-      for (int i = nodes.Count - 1; i >= 0; --i)
+      for (int i = nodes.Count - 1; i >= 0; --i) {
         nodes[i].Occurrences -= 1;
+
+        if (nodes[i].Occurrences == 0)
+          nodes[i].Remove();
+      }
 
       return true;
     }
