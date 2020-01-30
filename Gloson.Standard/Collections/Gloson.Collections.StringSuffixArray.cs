@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace Gloson.Collections {
   //
   //---------------------------------------------------------------------------
 
-  [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
   public sealed class StringSuffixArray : IReadOnlyList<String> {
     #region Private Data
 
@@ -246,9 +244,6 @@ namespace Gloson.Collections {
     /// <summary>
     /// Indexes of substring (in Value)
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
     public List<int> IndexesOf(String value) {
       List<int> result = new List<int>();
 
@@ -280,8 +275,6 @@ namespace Gloson.Collections {
     /// </summary>
     /// <param name="value">Substring to find</param>
     /// <param name="tolerance">Errors number tolerated in the substring</param>
-    /// <returns></returns>
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
     public List<int> IndexesOf(String value, int tolerance) {
       if (tolerance <= 0)
         return IndexesOf(value);
@@ -347,8 +340,6 @@ namespace Gloson.Collections {
     /// Indexes of substrings (in Value)
     /// </summary>
     /// <param name="values">Substrings</param>
-    /// <returns></returns>
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
     public List<int> IndexesOf(IEnumerable<String> values) {
       List<int> result = new List<int>();
 
@@ -385,8 +376,6 @@ namespace Gloson.Collections {
     /// </summary>
     /// <param name="values">Substrings to find</param>
     /// <param name="tolerance">Errors number tolerated in the substring</param>
-    /// <returns></returns>
-    [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
     public List<int> IndexesOf(IEnumerable<String> values, int tolerance) {
       List<int> result = new List<int>();
 
