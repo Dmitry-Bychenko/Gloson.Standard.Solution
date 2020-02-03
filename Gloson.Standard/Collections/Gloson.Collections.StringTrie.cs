@@ -183,6 +183,43 @@ namespace Gloson.Collections {
     /// </summary>
     public StringTrie() : this(null) { }
 
+    /// <summary>
+    /// Create suffix trie
+    /// </summary>
+    public static StringTrie Create(string value, IEqualityComparer<char> comparer) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      StringTrie result = new StringTrie(comparer);
+
+      for (int start = 0; start < value.Length; ++start) {
+        Node current = result.Root;
+
+        current.Occurrences += 1;
+
+        for (int i = start; i < value.Length; ++i) {
+          Node next;
+          char c = value[i];
+
+          if (!current.Items.TryGetValue(c, out next))
+            next = new Node(result, current, c);
+
+          next.Occurrences += 1;
+          current = next;
+        }
+      }
+
+      // Empty Suffix
+      result.Root.Occurrences += 1;
+
+      return result;
+    }
+
+    /// <summary>
+    /// Create suffix trie
+    /// </summary>
+    public static StringTrie Create(string value) => Create(value, null);
+
     #endregion Create
 
     #region Public
