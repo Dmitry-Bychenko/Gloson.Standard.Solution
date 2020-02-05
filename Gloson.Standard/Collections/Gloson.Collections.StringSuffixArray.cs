@@ -454,6 +454,17 @@ namespace Gloson.Collections {
     }
 
     /// <summary>
+    /// Suffix Start
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int SuffixStart(int index) {
+      CoreUpdate();
+
+      return m_Value.Length - m_Array[index];
+    }
+
+    /// <summary>
     /// Hash code
     /// </summary>
     public override int GetHashCode() {
