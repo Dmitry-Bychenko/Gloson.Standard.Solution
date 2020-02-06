@@ -13,6 +13,14 @@ namespace Gloson.Collections.Generic {
   //-------------------------------------------------------------------------------------------------------------------
 
   public static partial class ComparerBuilder {
+    #region Internal Classes
+
+    private sealed class EmptyComparer<T> : IComparer<T> {
+      public int Compare(T x, T y) => 0;
+    }
+
+    #endregion Internal Classes
+
     #region Public
 
     /// <summary>
@@ -55,6 +63,28 @@ namespace Gloson.Collections.Generic {
 
         return 0;
       });
+    }
+
+    /// <summary>
+    /// Empty (all are equal to one another)
+    /// </summary>
+    public static IComparer<T> Empty<T>() => new EmptyComparer<T>();
+
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static IComparer<T> Default<T>() => Comparer<T>.Default;
+
+    /// <summary>
+    /// Default (Required)
+    /// </summary>
+    public static IComparer<T> DefaultRequired<T>() {
+      IComparer<T> result = Comparer<T>.Default;
+
+      if (null == result)
+        throw new InvalidOperationException($"Type {typeof(T).Name} doesn't have any default Comparer.");
+
+      return result;
     }
 
     #endregion Public
