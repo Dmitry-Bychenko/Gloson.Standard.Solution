@@ -191,4 +191,5 @@ namespace Gloson.Collections.Generic {
     #endregion Public
 
   }
+
 }
