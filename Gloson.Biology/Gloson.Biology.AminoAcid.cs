@@ -33,7 +33,7 @@ namespace Gloson.Biology {
 
     #region Algorithm
 
-    private static void RegiterAminoCodon(char code, params string[] codons) {
+    private static void RegisterAminoCodon(char code, params string[] codons) {
       var keys = codons
         .SelectMany(item => new string[] { item, item.Replace("U", "T") })
         .Distinct();
@@ -45,31 +45,31 @@ namespace Gloson.Biology {
     }
 
     private static void RegisterCodons() {
-      RegiterAminoCodon('A', "GCU", "GCC", "GCA", "GCG");
-      RegiterAminoCodon('R', "CGU", "CGC", "CGA", "CGG", "AGA", "AGG");
-      RegiterAminoCodon('N', "AAU", "AAC");
-      RegiterAminoCodon('D', "GAU", "GAC");
-      RegiterAminoCodon('C', "UGU", "UGC");
-      RegiterAminoCodon('Q', "CAA", "CAG");
-      RegiterAminoCodon('E', "GAA", "GAG");
-      RegiterAminoCodon('G', "GGU", "GGC", "GGA", "GGG");
-      RegiterAminoCodon('H', "CAU", "CAC");
-      RegiterAminoCodon('I', "AUU", "AUC", "AUA");
+      RegisterAminoCodon('A', "GCU", "GCC", "GCA", "GCG");
+      RegisterAminoCodon('R', "CGU", "CGC", "CGA", "CGG", "AGA", "AGG");
+      RegisterAminoCodon('N', "AAU", "AAC");
+      RegisterAminoCodon('D', "GAU", "GAC");
+      RegisterAminoCodon('C', "UGU", "UGC");
+      RegisterAminoCodon('Q', "CAA", "CAG");
+      RegisterAminoCodon('E', "GAA", "GAG");
+      RegisterAminoCodon('G', "GGU", "GGC", "GGA", "GGG");
+      RegisterAminoCodon('H', "CAU", "CAC");
+      RegisterAminoCodon('I', "AUU", "AUC", "AUA");
 
-      RegiterAminoCodon('L', "UUA", "UUG", "CUU", "CUC", "CUA", "CUG");
-      RegiterAminoCodon('K', "AAA", "AAG");
-      RegiterAminoCodon('M', "AUG"); // Start
-      RegiterAminoCodon('F', "UUU", "UUC");
-      RegiterAminoCodon('P', "CCU", "CCC", "CCA", "CCG");
-      RegiterAminoCodon('S', "UCU", "UCC", "UCA", "UCG", "AGU", "AGC");
-      RegiterAminoCodon('T', "ACU", "ACC", "ACA", "ACG");
-      RegiterAminoCodon('W', "UGG");
-      RegiterAminoCodon('Y', "UAU", "UAC");
-      RegiterAminoCodon('V', "GUU", "GUC", "GUA", "GUG");
+      RegisterAminoCodon('L', "UUA", "UUG", "CUU", "CUC", "CUA", "CUG");
+      RegisterAminoCodon('K', "AAA", "AAG");
+      RegisterAminoCodon('M', "AUG"); // Start
+      RegisterAminoCodon('F', "UUU", "UUC");
+      RegisterAminoCodon('P', "CCU", "CCC", "CCA", "CCG");
+      RegisterAminoCodon('S', "UCU", "UCC", "UCA", "UCG", "AGU", "AGC");
+      RegisterAminoCodon('T', "ACU", "ACC", "ACA", "ACG");
+      RegisterAminoCodon('W', "UGG");
+      RegisterAminoCodon('Y', "UAU", "UAC");
+      RegisterAminoCodon('V', "GUU", "GUC", "GUA", "GUG");
 
-      RegiterAminoCodon('U', "UGA");
-      RegiterAminoCodon('O', "UAG");
-      RegiterAminoCodon('O', "UAA"); // ?
+      RegisterAminoCodon('U', "UGA");
+      RegisterAminoCodon('O', "UAG");
+      RegisterAminoCodon('*', "UAA"); 
     }
 
     #endregion Algorithm
@@ -123,12 +123,13 @@ namespace Gloson.Biology {
         Residue = false
       };
 
-      new AminoAcid("Unspecified or unknown amino acid", "Xaa", 'X') {
+      new AminoAcid("Stop", "***", '*') {
         Mandatory = false,
-        Residue = false
+        Residue = false,
+        IsStop = true,
       };
 
-      new AminoAcid("Stop", "***", '*') {
+      new AminoAcid("Unspecified or unknown amino acid", "Xaa", 'X') {
         Mandatory = false,
         Residue = false
       };
@@ -151,6 +152,8 @@ namespace Gloson.Biology {
 
       s_DictThreeLetter.Add(IsoCode, this);
       s_DictThreeLetter.Add(Code.ToString(), this);
+      
+      s_DictThreeLetter.Add(title, this);
     }
 
     // Standard constructor
