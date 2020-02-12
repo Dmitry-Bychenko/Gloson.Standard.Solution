@@ -8,6 +8,8 @@ using NUnit.Framework;
 
 namespace Gloson.Standard.Test.Text.NaturalLanguages {
 
+  // https://gigi.nullneuron.net/gigilabs/data-driven-tests-with-nunit/
+
   public class SoundexTest {
     #region Tests
 
