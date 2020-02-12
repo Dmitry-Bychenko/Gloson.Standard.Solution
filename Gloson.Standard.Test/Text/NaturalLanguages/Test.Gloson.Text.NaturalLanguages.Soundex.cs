@@ -11,8 +11,8 @@ namespace Gloson.Standard.Test.Text.NaturalLanguages {
   public class SoundexTest {
     #region Tests
 
-    public static List<TestCaseData> TestCases() {
-      return new List<TestCaseData>() {
+    public static IEnumerable<TestCaseData> TestCases() {
+      return new TestCaseData[] {
         new TestCaseData("ammonium").Returns("A555"),
         new TestCaseData("implementation").Returns("I514"),
         new TestCaseData("Robert").Returns("R163"),

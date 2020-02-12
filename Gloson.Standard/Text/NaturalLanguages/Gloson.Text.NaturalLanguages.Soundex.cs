@@ -12,6 +12,7 @@ namespace Gloson.Text.NaturalLanguages {
   /// <summary>
   /// Soundex (English)
   /// </summary>
+  /// https://habr.com/ru/post/114947/
   //
   //-------------------------------------------------------------------------------------------------------------------
 
@@ -44,19 +45,45 @@ namespace Gloson.Text.NaturalLanguages {
       { 'r', 6},
     };
 
+    private static Dictionary<char, int> s_CorrespondenceNext = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
+      { 'b', 1},
+      { 'p', 1},
+
+      { 'f', 2},
+      { 'v', 2},
+
+      { 'c', 3},
+      { 'k', 3},
+      { 's', 3},
+
+      { 'g', 4},
+      { 'j', 4},
+      
+      { 'q', 5},
+      { 'x', 5},
+      { 'z', 5},
+
+      { 'd', 6},
+      { 't', 6},
+
+      { 'l', 7},
+
+      { 'm', 8},
+      { 'n', 8},
+
+      { 'r', 9},
+    };
+
     #endregion Private Data
 
-    #region Public
+    #region Algorithm
 
-    /// <summary>
-    /// Encode To Soundex
-    /// </summary>
-    /// <see cref="https://ru.wikipedia.org/wiki/Soundex"/>
-    public static string Encode(string value) {
+    private static string CoreEncode(string value, 
+                                     Dictionary<char, int> translation, 
+                                     int size, 
+                                     bool trim) {
       if (string.IsNullOrEmpty(value))
         return value;
-
-      int size = 4;
 
       StringBuilder sb = new StringBuilder();
 
@@ -75,7 +102,7 @@ namespace Gloson.Text.NaturalLanguages {
         if (c == 'H' || c == 'W')
           continue;
 
-        if (s_Correspondence.TryGetValue(c, out int v)) {
+        if (translation.TryGetValue(c, out int v)) {
           if (sb[sb.Length - 1] == '0' + v)
             continue;
 
@@ -88,12 +115,29 @@ namespace Gloson.Text.NaturalLanguages {
           break;
       }
 
-      string result = sb.ToString().Replace("0", "").PadRight(size, '0');
+      string result = trim
+        ? sb.ToString().Replace("0", "").PadRight(size, '0')
+        : sb.ToString().PadRight(size, '0');
 
-      return result.Length > size
+      return result.Length > size && trim
         ? result.Substring(0, size)
         : result;
     }
+
+    #endregion Algorithm
+
+    #region Public
+
+    /// <summary>
+    /// Encode To Soundex
+    /// </summary>
+    /// <see cref="https://ru.wikipedia.org/wiki/Soundex"/>
+    public static string Encode(string value) => CoreEncode(value, s_Correspondence, 4, true);
+
+    /// <summary>
+    /// Encode To Soundex (advanced version)
+    /// </summary>
+    public static string EncodeAdvanced(string value) => CoreEncode(value, s_CorrespondenceNext, 4, false);
 
     #endregion Public
   }
