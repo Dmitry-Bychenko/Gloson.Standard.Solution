@@ -82,8 +82,12 @@ namespace Gloson.Text.NaturalLanguages {
                                      Dictionary<char, int> translation, 
                                      int size, 
                                      bool trim) {
-      if (string.IsNullOrEmpty(value))
-        return value;
+      if (string.IsNullOrEmpty(value)) {
+        if (trim)
+          return new string('0', size);
+
+        return "";
+      }
 
       StringBuilder sb = new StringBuilder();
 
@@ -138,6 +142,20 @@ namespace Gloson.Text.NaturalLanguages {
     /// Encode To Soundex (advanced version)
     /// </summary>
     public static string EncodeAdvanced(string value) => CoreEncode(value, s_CorrespondenceNext, 4, false);
+
+    /// <summary>
+    /// Encode To Soundex
+    /// </summary>
+    public static string Encode(string value, bool advanced, int size, bool trim) {
+      if (size <= 0)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      return CoreEncode(
+        value,
+        advanced ? s_CorrespondenceNext : s_Correspondence,
+        size,
+        trim);
+    }
 
     #endregion Public
   }
