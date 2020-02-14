@@ -76,16 +76,21 @@ namespace Gloson {
       if (!s_Assemblies.TryAdd(assembly, true))
         return;
 
-      foreach (Type t in assembly.GetTypes()) {
-        if (!t.CustomAttributes.OfType<StartUpAttribute>().Any())
-          continue;
+      try {
+        foreach (Type t in assembly.GetTypes()) {
+          if (!t.GetCustomAttributes<StartUpAttribute>().Any())
+            continue;
 
-        try {
-          RuntimeHelpers.RunClassConstructor(t.TypeHandle);
+          try {
+            RuntimeHelpers.RunClassConstructor(t.TypeHandle);
+          }
+          catch (Exception e) {
+            throw new InvalidProgramException($"{t.FullName} at {t.Assembly.FullName}", e);
+          }
         }
-        catch (Exception e) {
-          throw new InvalidProgramException($"{t.FullName} at {t.Assembly.FullName}", e);
-        }
+      }
+      catch (Exception) {
+        //throw new InvalidProgramException($"Assembly {assembly.GetName().Name} failed", ee);
       }
     }
 

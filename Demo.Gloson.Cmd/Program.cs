@@ -5,6 +5,8 @@ using Gloson;
 using Gloson.Data;
 using Gloson.Data.Oracle;
 using Gloson.Text;
+using Gloson.Text.NaturalLanguages;
+using Gloson.Text.NaturalLanguages.Library;
 using Gloson.UI.Dialogs;
 using Gloson.UI.Dialogs.CommandLine;
 using Gloson.UI.CommandLine;
@@ -28,9 +30,16 @@ namespace Demo.Gloson.Cmd {
     static void Main(string[] args) {
       Configuration.Apply();
 
-      
+      var data = Transliterations.GetTransliterations().Length;
 
-      Dependencies.CreateService<IAboutDialog>().Show();
+      //int r = Transliterations.GetTransliterations().Length;
+
+      Console.WriteLine(data);
+
+      //Gloson.Text.NaturalLanguages.
+
+      //Dependencies.CreateService<IAboutDialog>().Show();
+
 
       // IAboutDialog
 

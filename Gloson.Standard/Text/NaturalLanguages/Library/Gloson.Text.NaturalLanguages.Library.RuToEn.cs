@@ -19,6 +19,12 @@ namespace Gloson.Text.NaturalLanguages.Library {
   public sealed class RussianToEnglishAlaAc : StandardTransliteration {
     #region Create
 
+    static RussianToEnglishAlaAc() {
+      Instance = new RussianToEnglishAlaAc();
+
+      Transliterations.Register(Instance);
+    }
+
     /// <summary>
     /// Standard constructor
     /// </summary>
@@ -69,7 +75,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static RussianToEnglishAlaAc Instance { get; } = new RussianToEnglishAlaAc();
+    public static RussianToEnglishAlaAc Instance { get; }
 
     #endregion Public
   }
@@ -84,6 +90,12 @@ namespace Gloson.Text.NaturalLanguages.Library {
 
   public sealed class RussianToEnglishGost1983UN1987 : StandardTransliteration {
     #region Create
+
+    static RussianToEnglishGost1983UN1987() {
+      Instance = new RussianToEnglishGost1983UN1987();
+
+      Transliterations.Register(Instance);
+    }
 
     /// <summary>
     /// Standard constructor
@@ -135,7 +147,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static RussianToEnglishGost1983UN1987 Instance { get; } = new RussianToEnglishGost1983UN1987();
+    public static RussianToEnglishGost1983UN1987 Instance { get; }
 
     #endregion Public
   }
@@ -150,6 +162,12 @@ namespace Gloson.Text.NaturalLanguages.Library {
 
   public sealed class RussianToEnglishIso9 : StandardTransliteration {
     #region Create
+
+    static RussianToEnglishIso9() {
+      Instance = new RussianToEnglishIso9();
+
+      Transliterations.Register(Instance);
+    }
 
     /// <summary>
     /// Standard constructor
@@ -201,7 +219,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static RussianToEnglishIso9 Instance { get; } = new RussianToEnglishIso9();
+    public static RussianToEnglishIso9 Instance { get; }
 
     #endregion Public
   }
@@ -216,6 +234,12 @@ namespace Gloson.Text.NaturalLanguages.Library {
 
   public sealed class RussianToEnglishScholary : StandardTransliteration {
     #region Create
+
+    static RussianToEnglishScholary() {
+      Instance = new RussianToEnglishScholary();
+
+      Transliterations.Register(Instance);
+    }
 
     /// <summary>
     /// Standard constructor
@@ -267,7 +291,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static RussianToEnglishScholary Instance { get; } = new RussianToEnglishScholary();
+    public static RussianToEnglishScholary Instance { get; }
 
     #endregion Public
   }

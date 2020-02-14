@@ -19,12 +19,18 @@ namespace Gloson.Text.NaturalLanguages.Library {
   public sealed class TajikToEnglishAlaAc : StandardTransliteration {
     #region Create
 
+    static TajikToEnglishAlaAc() {
+      Instance = new TajikToEnglishAlaAc();
+
+      Transliterations.Register(Instance);
+    }
+
     /// <summary>
     /// Standard constructor
     /// </summary>
     public TajikToEnglishAlaAc() : base(
       "AlaAc",
-       CultureInfo.GetCultureInfo("Tj"),
+       CultureInfo.GetCultureInfo("Tg"),
        CultureInfo.GetCultureInfo("En"),
        new (string, string)[] {
          ("а", "a"),
@@ -71,7 +77,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static TajikToEnglishAlaAc Instance { get; } = new TajikToEnglishAlaAc();
+    public static TajikToEnglishAlaAc Instance { get; }
 
     #endregion Public
   }
@@ -87,12 +93,18 @@ namespace Gloson.Text.NaturalLanguages.Library {
   public sealed class TajikToEnglishIso9 : StandardTransliteration {
     #region Create
 
+    static TajikToEnglishIso9() {
+      Instance = new TajikToEnglishIso9();
+
+      Transliterations.Register(Instance);
+    }
+
     /// <summary>
     /// Standard constructor
     /// </summary>
     public TajikToEnglishIso9() : base(
       "Iso9",
-       CultureInfo.GetCultureInfo("Tj"),
+       CultureInfo.GetCultureInfo("Tg"),
        CultureInfo.GetCultureInfo("En"),
        new (string, string)[] {
          ("а", "a"),
@@ -139,7 +151,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static TajikToEnglishIso9 Instance { get; } = new TajikToEnglishIso9();
+    public static TajikToEnglishIso9 Instance { get; } 
 
     #endregion Public
   }

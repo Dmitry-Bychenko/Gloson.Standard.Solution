@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Gloson.Text.NaturalLanguages {
@@ -303,5 +304,58 @@ namespace Gloson.Text.NaturalLanguages {
 
     #endregion Public
   }
-  
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Transliterations
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class Transliterations {
+    #region Private Data
+
+    private static ConcurrentDictionary<ITransliteration, bool> s_Items;
+
+    #endregion Private Data
+
+    #region Create
+
+    static Transliterations() {
+      s_Items = new ConcurrentDictionary<ITransliteration, bool>();
+
+      Register(Library.RussianToEnglishAlaAc.Instance);
+      Register(Library.RussianToEnglishGost1983UN1987.Instance);
+      Register(Library.RussianToEnglishIso9.Instance);
+      Register(Library.RussianToEnglishScholary.Instance);
+      
+      Register(Library.TajikToEnglishAlaAc.Instance);
+      Register(Library.TajikToEnglishIso9.Instance);
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Register new transliteration
+    /// </summary>
+    public static bool Register(ITransliteration value) {
+      if (null == value)
+        return false;
+
+      return s_Items.TryAdd(value, true);
+    }
+
+    /// <summary>
+    /// Transliterations 
+    /// </summary>
+    public static ITransliteration[] GetTransliterations() {
+      return s_Items.Keys.ToArray();
+    }
+
+    #endregion Public
+  }
+
 }
