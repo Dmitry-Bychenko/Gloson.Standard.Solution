@@ -17,8 +17,8 @@ namespace Gloson.Collections.Generic {
     #region Internal Classes
 
     private sealed class EqualityComparerFunc<T> : IEqualityComparer<T> {
-      private Func<T, T, bool> m_Equals;
-      private Func<T, int> m_Hash;
+      private readonly Func<T, T, bool> m_Equals;
+      private readonly Func<T, int> m_Hash;
 
       public EqualityComparerFunc(Func<T, T, bool> equals, Func<T, int> hash) {
         m_Equals = equals;
@@ -108,7 +108,7 @@ namespace Gloson.Collections.Generic {
     public sealed class EqualityComparerCombined<T> : IEqualityComparer<T> {
       #region Private Data
 
-      private List<IEqualityComparer<T>> m_Items = new List<IEqualityComparer<T>>();
+      private readonly List<IEqualityComparer<T>> m_Items = new List<IEqualityComparer<T>>();
 
       #endregion Private Data
 

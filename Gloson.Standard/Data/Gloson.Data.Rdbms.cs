@@ -41,7 +41,7 @@ namespace Gloson.Data {
 
     private static String s_ConnectionString = "";
 
-    private static object s_SyncObj = new Object();
+    private static readonly object s_SyncObj = new Object();
 
     #endregion Private Data
 
@@ -272,8 +272,10 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbConnection conn = Connect()) {
-        using (IDbCommand q = conn.CreateCommand()) {
+      using IDbConnection conn = Connect();
+
+
+      using IDbCommand q = conn.CreateCommand();
           q.CommandText = sql;
 
           foreach (var item in parameters) {
@@ -284,8 +286,8 @@ namespace Gloson.Data {
           }
 
           return q.ExecuteNonQuery();
-        }
-      }
+        
+      
     }
 
     /// <summary>
@@ -299,20 +301,19 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbConnection conn = Connect()) {
-        using (IDbCommand q = conn.CreateCommand()) {
-          q.CommandText = sql;
+      using IDbConnection conn = Connect();
+      using IDbCommand q = conn.CreateCommand();
 
-          foreach (var item in parameters) {
-            IDbDataParameter prm = q.CreateParameter();
+      q.CommandText = sql;
 
-            prm.ParameterName = item.Item1;
-            prm.Value = item.Item2;
-          }
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-          return q.ExecuteScalar();
-        }
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
       }
+
+      return q.ExecuteScalar();
     }
 
     /// <summary>
@@ -326,24 +327,22 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbConnection conn = Connect()) {
-        using (IDbCommand q = conn.CreateCommand()) {
-          q.CommandText = sql;
+      using IDbConnection conn = Connect();
+      using IDbCommand q = conn.CreateCommand();
+      
+      q.CommandText = sql;
 
-          foreach (var item in parameters) {
-            IDbDataParameter prm = q.CreateParameter();
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-            prm.ParameterName = item.Item1;
-            prm.Value = item.Item2;
-          }
-
-          using (var reader = q.ExecuteReader()) {
-            while (reader.Read()) {
-              yield return reader;
-            }
-          }
-        }
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
       }
+
+      using var reader = q.ExecuteReader();
+
+      while (reader.Read())
+        yield return reader;
     }
 
     #endregion Public

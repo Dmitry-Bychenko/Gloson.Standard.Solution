@@ -43,12 +43,10 @@ namespace Gloson.Services.Git.Repository {
 
       GitController.Default.Execute(command);
 
-      GitRepo result = new GitRepo();
-
-      result.Location = directory;
-      result.Ssh = ssh;
-
-      return result;
+      return new GitRepo() {
+        Location = directory,
+        Ssh = ssh,
+      };
     }
 
     /// <summary>
@@ -65,13 +63,9 @@ namespace Gloson.Services.Git.Repository {
       if (!Directory.Exists(gitDir))
         throw new ArgumentException("Not a repositary Directory", nameof(directory));
 
-      GitRepo result = new GitRepo();
-
-      result.Location = directory;
-
-      //result.Ssh = ssh;
-
-      return result;
+      return new GitRepo() {
+        Location = directory
+      };
     }
 
     #endregion Create

@@ -103,7 +103,7 @@ namespace Gloson.UI.CommandLine {
 
     private List<CommandLineArgument> m_Items = null;
 
-    private List<string> m_RawArguments;
+    private readonly List<string> m_RawArguments;
 
     #endregion Private Data
 

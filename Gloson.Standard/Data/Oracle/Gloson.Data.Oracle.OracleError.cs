@@ -25,7 +25,7 @@ namespace Gloson.Data.Oracle {
 
     #region Algorithm
 
-    private static Regex s_Regex = 
+    private static readonly Regex s_Regex = 
       new Regex(@"^\s*(?<name>[\w\*\d]+)\s*\-\s*(?<number>[0-9]{1,5})\s*:\s*(?<message>.*)$");
 
     #endregion Algorithm
@@ -57,8 +57,8 @@ namespace Gloson.Data.Oracle {
         throw new ArgumentNullException(nameof(message));
 
       Prefix = prefix.Trim().ToUpperInvariant();
-      number = Math.Abs(number);
-      message = message.Trim();
+      Number = Math.Abs(number);
+      Message = message.Trim();
     }
 
     /// <summary>

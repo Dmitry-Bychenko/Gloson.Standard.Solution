@@ -610,7 +610,7 @@ namespace Gloson.Ini {
 
     #region Private Data
 
-    private Dictionary<string, IniDocumentSection> m_Sections;
+    private readonly Dictionary<string, IniDocumentSection> m_Sections;
 
     #endregion Private Data
 
@@ -722,8 +722,9 @@ namespace Gloson.Ini {
             }
           }
           else {
-            section = new IniDocumentSection(iniSection.Value, result);
-            section.Comments = commentText;
+            section = new IniDocumentSection(iniSection.Value, result) {
+              Comments = commentText
+            };
           }
 
           comments.Clear();

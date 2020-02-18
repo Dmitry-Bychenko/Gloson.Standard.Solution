@@ -36,7 +36,7 @@ namespace Gloson {
     #region Private Data
 
     // Assemblies initialized
-    private static ConcurrentDictionary<Assembly, bool> s_Assemblies = 
+    private static readonly ConcurrentDictionary<Assembly, bool> s_Assemblies = 
       new ConcurrentDictionary<Assembly, bool>();
 
     #endregion Private Data
@@ -70,7 +70,7 @@ namespace Gloson {
       if (null == assembly)
         assembly = Assembly.GetCallingAssembly();
 
-      if (s_Assemblies.TryGetValue(assembly, out bool _value))
+      if (s_Assemblies.TryGetValue(assembly, out bool _))
         return;
 
       if (!s_Assemblies.TryAdd(assembly, true))

@@ -336,7 +336,7 @@ namespace Gloson.Numerics.MachineLearning {
     /// <summary>
     /// To String
     /// </summary>
-    public string ToString(IFormatProvider formatProvider) => ToString(null, CultureInfo.InvariantCulture);
+    public string ToString(IFormatProvider formatProvider) => ToString(null, formatProvider);
 
     /// <summary>
     /// To String

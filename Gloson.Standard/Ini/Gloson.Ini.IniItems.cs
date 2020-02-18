@@ -45,14 +45,11 @@ namespace Gloson.Ini {
     /// To Prefix
     /// </summary>
     public static string ToPrefix(this IniFileCommentKind value) {
-      switch (value) {
-        case IniFileCommentKind.Windows:
-          return ";";
-        case IniFileCommentKind.Unix:
-          return "#";
-        default:
-          return "";
-      }
+      return value switch { 
+        IniFileCommentKind.Windows => ";",
+        IniFileCommentKind.Unix    => "#",
+        _                          => "", 
+      };
     }
 
     #endregion Public
