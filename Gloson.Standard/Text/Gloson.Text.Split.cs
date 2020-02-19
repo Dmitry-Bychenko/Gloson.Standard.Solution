@@ -41,22 +41,15 @@ namespace Gloson.Text {
     /// <param name="newLine">New Line</param>
     /// <returns>delimiter or null if doesn't exists</returns>
     public static string Delimiter(this NewLine newLine) {
-      switch (newLine) {
-        case NewLine.Smart:
-          return null;
-        case NewLine.Default:
-          return Environment.NewLine;
-        case NewLine.N:
-          return "\n";
-        case NewLine.R:
-          return "\r";
-        case NewLine.RN:
-          return "\r\n";
-        case NewLine.NR:
-          return "\n\r";
-        default:
-          return null;
-      }
+      return newLine switch  {
+        NewLine.Smart   => null,
+        NewLine.Default => Environment.NewLine,
+        NewLine.N       => "\n",
+        NewLine.R       => "\r",
+        NewLine.RN      => "\r\n",
+        NewLine.NR      => "\n\r",
+        _               => null,
+      };
     }
 
     /// <summary>

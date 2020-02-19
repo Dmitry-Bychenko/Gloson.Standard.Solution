@@ -53,7 +53,7 @@ namespace Gloson.Data {
     #region Private
 
     // Items
-    private Dictionary<string, string> m_Items = 
+    private readonly Dictionary<string, string> m_Items = 
       new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     #endregion Private
@@ -71,10 +71,7 @@ namespace Gloson.Data {
       if (null == builder)
         builder = Dependencies.GetService<IConnectionStringBuilder>();
 
-      if (null == builder)
-        throw new ArgumentNullException(nameof(builder));
-
-      Builder = builder;
+      Builder = builder ?? throw new ArgumentNullException(nameof(builder));
     }
 
     /// <summary>

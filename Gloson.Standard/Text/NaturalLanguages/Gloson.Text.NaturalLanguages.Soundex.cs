@@ -19,7 +19,7 @@ namespace Gloson.Text.NaturalLanguages {
   public static class Soundex {
     #region Private Data
 
-    private static Dictionary<char, int> s_Correspondence = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
+    private static readonly Dictionary<char, int> s_Correspondence = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
       { 'b', 1},
       { 'f', 1},
       { 'p', 1},
@@ -45,7 +45,7 @@ namespace Gloson.Text.NaturalLanguages {
       { 'r', 6},
     };
 
-    private static Dictionary<char, int> s_CorrespondenceNext = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
+    private static readonly Dictionary<char, int> s_CorrespondenceNext = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
       { 'b', 1},
       { 'p', 1},
 
