@@ -891,6 +891,13 @@ namespace Gloson.Games.Cards {
         m_Items.Shuffle(random);
     }
 
+    /// <summary>
+    /// Shuffle
+    /// </summary>
+    public void Shuffle(int seed) {
+      m_Items.Shuffle(seed);
+    }
+
     #endregion Public
 
     #region IList<Card>
