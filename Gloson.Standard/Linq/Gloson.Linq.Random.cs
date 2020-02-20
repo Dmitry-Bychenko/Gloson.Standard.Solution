@@ -55,6 +55,13 @@ namespace Gloson.Linq {
     }
 
     /// <summary>
+    /// Shuffle items
+    /// </summary>
+    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, int seed) {
+      return Shuffle(source, new Random(seed));
+    }
+
+    /// <summary>
     /// Extract sub sequences (e.g. training, cv and test) from the main one
     /// </summary>
     /// <param name="source">source sequence</param>
