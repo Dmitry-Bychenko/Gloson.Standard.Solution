@@ -558,6 +558,68 @@ namespace Gloson.Games.Cards {
       Suit = suit;
     }
 
+    /// <summary>
+    /// Try Parse
+    /// </summary>
+    public static bool TryParse(string value, out Card result) {
+      result = null;
+
+      if (string.IsNullOrWhiteSpace(value))
+        return false;
+
+      if (value.Equals("joker", StringComparison.OrdinalIgnoreCase) ||
+          value.Equals("?", StringComparison.OrdinalIgnoreCase) ||
+          value.Equals("*", StringComparison.OrdinalIgnoreCase) ||
+          value.Equals("any", StringComparison.OrdinalIgnoreCase)) {
+        result = new Card(0, CardSuit.None);
+
+        return true; 
+      }
+
+      HashSet<char> suitsMarks = new HashSet<char>() {
+        'S', 'C', 'D', 'H',
+        's', 'c', 'd', 'h',
+        '♣', '♦', '♥', '♠',
+        '♤', '♡', '♢', '♧'
+      };
+
+      var suits = value
+        .Where(c => suitsMarks.Contains(c))
+        .Select(c => CardSuit.Parse(c))
+        .Distinct()
+        .ToList();
+
+      if (suits.Count != 0)
+        return false;
+
+      CardSuit suit = suits[0];
+
+      string valueData = string.Concat(value
+        .Where(c => char.IsLetterOrDigit(c))
+        .Where(c => !suitsMarks.Contains(c)));
+
+      if (!CardValue.TryParse(valueData, out CardValue cardValue))
+        return false;
+
+      result = new Card(cardValue, suit);
+
+      return true;
+    }
+
+    /// <summary>
+    /// Parse into Card
+    /// </summary>
+    public static Card Parse(string value) {
+      return TryParse(value, out Card result)
+        ? result
+        : throw new FormatException($"{value} is not a valid Card");
+    }
+
+    /// <summary>
+    /// Create Joker
+    /// </summary>
+    public static Card CreateJoker() => new Card(0, CardSuit.None);
+    
     #endregion Create
 
     #region Public
@@ -600,7 +662,7 @@ namespace Gloson.Games.Cards {
     /// ToString
     /// </summary>
     public override string ToString() {
-      return IsJoker ? Value.Symbol : $"{Suit.Symbol}{Value.Symbol}"; 
+      return IsJoker ? "Joker" : $"{Suit.Symbol}{Value.Symbol}"; 
     }
 
     #endregion Public
@@ -702,7 +764,7 @@ namespace Gloson.Games.Cards {
       };
 
       var cards = Enumerable
-        .Range(from, to - from)
+        .Range(from, to - from + 1)
         .SelectMany(index => suits.Select(suit => new Card(index, suit)))
         .Concat(Enumerable
           .Range(0, jokers)
@@ -791,7 +853,8 @@ namespace Gloson.Games.Cards {
 
         var cards = string.Join(" ", m_Items
           .Where(card => card.Suit == suit)
-          .OrderByDescending(card => card.Value));
+          .OrderByDescending(card => card.Value)
+          .Select(card => card.Value.Symbol));
 
         sb.Append($"{suit.Symbol} : {cards}");
       }
@@ -878,24 +941,32 @@ namespace Gloson.Games.Cards {
     /// Shuffle
     /// </summary>
     public void Shuffle() {
-      m_Items.Shuffle();
+      var list = m_Items.Shuffle().ToList();
+
+      m_Items.Clear();
+      m_Items.AddRange(list);
     }
 
     /// <summary>
     /// Shuffle
     /// </summary>
     public void Shuffle(Random random) {
-      if (null == random)
-        m_Items.Shuffle();
-      else
-        m_Items.Shuffle(random);
+      var list = (null == random)
+        ? m_Items.Shuffle().ToList()
+        : m_Items.Shuffle(random).ToList();
+
+      m_Items.Clear();
+      m_Items.AddRange(list);
     }
 
     /// <summary>
     /// Shuffle
     /// </summary>
     public void Shuffle(int seed) {
-      m_Items.Shuffle(seed);
+      var list = m_Items.Shuffle(seed).ToList();
+
+      m_Items.Clear();
+      m_Items.AddRange(list);
     }
 
     #endregion Public

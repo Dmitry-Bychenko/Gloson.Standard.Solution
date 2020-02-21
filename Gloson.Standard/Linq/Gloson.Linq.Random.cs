@@ -29,7 +29,7 @@ namespace Gloson.Linq {
       if (generator != null)
         next = (arg) => generator.Next(arg);
       else if (Object.ReferenceEquals(null, generator))
-        throw new ArgumentNullException(nameof(generator));
+        generator = new Random();
 
       T[] data = source.ToArray();
 
