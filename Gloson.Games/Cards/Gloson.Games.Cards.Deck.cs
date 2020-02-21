@@ -589,7 +589,7 @@ namespace Gloson.Games.Cards {
         .Distinct()
         .ToList();
 
-      if (suits.Count != 0)
+      if (suits.Count != 1)
         return false;
 
       CardSuit suit = suits[0];
@@ -723,6 +723,18 @@ namespace Gloson.Games.Cards {
     #endregion Private Data
 
     #region Algorithm
+
+    private int ReferenceIndex(Card value) {
+      if (null == value)
+        return -1;
+
+      for (int i = 0; i < m_Items.Count; ++i)
+        if (ReferenceEquals(value, m_Items[i]))
+          return i;
+
+      return -1;
+    }
+
     #endregion Algorithm
 
     #region Create
@@ -741,6 +753,28 @@ namespace Gloson.Games.Cards {
     public CardHand() :
       this(false) {
     }
+
+    /// <summary>
+    /// Hand
+    /// </summary>
+    public CardHand(IEnumerable<Card> cards, bool isOrdered) 
+      : this(isOrdered) {
+
+      if (null == cards)
+        throw new ArgumentNullException(nameof(cards));
+
+      foreach (var card in cards) {
+        if (null == card)
+          throw new ArgumentException("Null cards aren't allowed!", nameof(cards));
+
+        Add(card);
+      }
+    }
+
+    /// <summary>
+    /// Create hand from cards
+    /// </summary>
+    public CardHand(IEnumerable<Card> cards) : this(cards, false) { }
 
     /// <summary>
     /// Build Pack
@@ -991,7 +1025,7 @@ namespace Gloson.Games.Cards {
         int old;
 
         if (index == m_Items.Count) {
-          old = IndexOf(value);
+          old = ReferenceIndex(value);
 
           if (old >= 0)
             m_Items.RemoveAt(old);
@@ -1004,7 +1038,7 @@ namespace Gloson.Games.Cards {
         if (m_Items[index] == value)
           return;
 
-        old = IndexOf(value);
+        old = ReferenceIndex(value);
 
         if (old < 0) {
           m_Items[index] = value;
@@ -1028,7 +1062,7 @@ namespace Gloson.Games.Cards {
       if (null == item)
         throw new ArgumentNullException(nameof(item));
 
-      int old = m_Items.IndexOf(item);
+      int old = ReferenceIndex(item);
 
       if (old >= 0)
         m_Items.RemoveAt(old);
@@ -1045,7 +1079,7 @@ namespace Gloson.Games.Cards {
       else if (null == item)
         throw new ArgumentNullException(nameof(item));
 
-      int old = m_Items.IndexOf(item);
+      int old = ReferenceIndex(item);
 
       if (old < 0)
         m_Items.Insert(index, item);

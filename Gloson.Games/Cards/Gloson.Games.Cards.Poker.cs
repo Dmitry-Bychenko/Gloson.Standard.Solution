@@ -137,7 +137,7 @@ namespace Gloson.Games.Cards {
             if (MajorValue == 14)
               Combination = PokerCombination.RoyalFlush;
             else
-              Combination = PokerCombination.Straight;
+              Combination = PokerCombination.StraitFlush;
 
             return true;
           }
@@ -268,7 +268,7 @@ namespace Gloson.Games.Cards {
         .GroupBy(card => card.Value)
         .Where(group => group.Count() > 1)
         .OrderByDescending(group => group.Count())
-        .ThenBy(group => group.Key.Value)
+        .ThenByDescending(group => group.Key.Value)
         .Take(2)
         .Select(group => group.ToArray())
         .ToArray();
@@ -299,7 +299,7 @@ namespace Gloson.Games.Cards {
           return;
         }
 
-        if (bestSeq[0].Length + jokers >= 3 && bestSeq[1].Length == 2) {
+        if (bestSeq[0].Length + jokers >= 3 && bestSeq.Length > 1 && bestSeq[1].Length == 2) {
           Combination = PokerCombination.FullHouse;
 
           m_CombinationSet.AddRange(Hand.Where(card => card.IsJoker));
@@ -329,7 +329,7 @@ namespace Gloson.Games.Cards {
           return;
         }
 
-        if (bestSeq[0].Length + jokers >= 2 && bestSeq[1].Length == 2) {
+        if (bestSeq[0].Length + jokers >= 2 && bestSeq.Length > 1 && bestSeq[1].Length == 2) {
           Combination = PokerCombination.TwoPairs;
 
           m_CombinationSet.AddRange(Hand.Where(card => card.IsJoker));
@@ -355,6 +355,15 @@ namespace Gloson.Games.Cards {
       }
 
       // Nothing
+      if (HasStraitFlush())
+        return;
+
+      if (HasFlush())
+        return;
+
+      if (HasStrait())
+        return;
+
       Combination = PokerCombination.None;
 
       var maxCard = Hand.OrderByDescending(item => item.Value).First();
