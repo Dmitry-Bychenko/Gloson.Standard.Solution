@@ -78,9 +78,9 @@ namespace Gloson.Services.Git.Repository {
     public static int Compare(GitRepo left, GitRepo right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (left == null)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       return StringComparers.StandardOrdinalComparer.Compare(left.Location, right.Location);
@@ -229,7 +229,7 @@ namespace Gloson.Services.Git.Repository {
     public bool Equals(GitRepo other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return String.Equals(Location, other.Location);

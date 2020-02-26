@@ -132,9 +132,9 @@ namespace Gloson.Data.Oracle {
     public static int Compare(OracleError left, OracleError right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result = string.Compare(left.Prefix, right.Prefix, StringComparison.Ordinal);
@@ -239,7 +239,7 @@ namespace Gloson.Data.Oracle {
     public bool Equals(OracleError other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return string.Equals(Prefix, other.Prefix, StringComparison.OrdinalIgnoreCase) &&

@@ -53,7 +53,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static double[][] Transpose(double[][] value) {
-      if (Object.ReferenceEquals(null, value))
+      if (null == value)
         return null;
 
       int colCount = value.Length;
@@ -157,7 +157,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static int Rank(double[][] value) {
-      if (Object.ReferenceEquals(null, value))
+      if (null == value)
         return 0;
       
       double[][] m = Clone(value);
@@ -310,7 +310,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static double[] Solve(double[][] value) {
-      if (Object.ReferenceEquals(null, value))
+      if (null == value)
         return new Double[0];
       else if (value.Length <= 0)
         return new Double[0];

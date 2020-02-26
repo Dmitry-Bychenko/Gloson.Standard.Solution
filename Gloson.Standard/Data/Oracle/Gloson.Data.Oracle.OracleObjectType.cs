@@ -108,9 +108,9 @@ namespace Gloson.Data.Oracle {
     public static int Compare(OracleObjectType left, OracleObjectType right) {
       if (ReferenceEquals(left, right))
         return 0; 
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return -1;
-      else if (ReferenceEquals(left, null))
+      else if (left == null)
         return 1;
 
       return left.Id.CompareTo(right.Id);
@@ -186,10 +186,8 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// To String (Name)
     /// </summary>
-    public static implicit operator string(OracleObjectType value) => null == value
-      ? null
-      : value.Name;
-
+    public static implicit operator string(OracleObjectType value) => value?.Name;
+      
     /// <summary>
     /// Try Parse
     /// </summary>

@@ -26,9 +26,9 @@ namespace Gloson.Numerics.MachineLearning {
       public int Compare(ConfusionMatrix<T> x, ConfusionMatrix<T> y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(x, null))
+        else if (x == null)
           return -1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return 1;
         else
           return x.F1Score.CompareTo(y.F1Score);
@@ -249,7 +249,7 @@ namespace Gloson.Numerics.MachineLearning {
     public static bool operator ==(ConfusionMatrix<T> left, ConfusionMatrix<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || left == null)
         return false;
       else
         return left.Equals(right);
@@ -261,7 +261,7 @@ namespace Gloson.Numerics.MachineLearning {
     public static bool operator !=(ConfusionMatrix<T> left, ConfusionMatrix<T> right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || left == null)
         return true;
       else
         return !left.Equals(right);
@@ -277,7 +277,7 @@ namespace Gloson.Numerics.MachineLearning {
     public bool Equals(ConfusionMatrix<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return TruePositive == other.TruePositive &

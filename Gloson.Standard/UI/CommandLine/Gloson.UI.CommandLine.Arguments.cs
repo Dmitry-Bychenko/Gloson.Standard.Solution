@@ -36,10 +36,7 @@ namespace Gloson.UI.CommandLine {
     public CommandLineArgument(CommandLineArguments owner, 
                                CommandLineArgumentDescription description, 
                                string rawValue) {
-      if (null == owner)
-        throw new ArgumentNullException(nameof(owner));
-
-      Owner = owner;
+      Owner = owner ?? throw new ArgumentNullException(nameof(owner));
       Description = description;
       RawValue = rawValue ?? "";
     }
@@ -57,12 +54,12 @@ namespace Gloson.UI.CommandLine {
         if (ReferenceEquals(m_Owner, value))
           return;
 
-        if (!ReferenceEquals(null, m_Owner))
+        if (null != m_Owner)
           m_Owner.CoreRemove(this);
 
         m_Owner = value;
 
-        if (!ReferenceEquals(null, m_Owner))
+        if (null != m_Owner)
           m_Owner.CoreAdd(this);
       }
     }

@@ -138,12 +138,9 @@ namespace Gloson.Ini {
       get {
         if (Document != null)
           return Document.Comparer;
-        else if (m_Records != null) {
-          StringComparer comparer = m_Records.Comparer as StringComparer;
-
-          if (null != comparer)
+        else if (m_Records != null) 
+          if (m_Records.Comparer is StringComparer comparer)
             return comparer;
-        }
 
         return StringComparer.OrdinalIgnoreCase;
       }
@@ -292,7 +289,7 @@ namespace Gloson.Ini {
     public static bool operator == (IniDocumentSection left, IniDocumentSection right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, left) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return false;
       else
         return left.Equals(right);
@@ -304,7 +301,7 @@ namespace Gloson.Ini {
     public static bool operator !=(IniDocumentSection left, IniDocumentSection right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, left) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return true;
       else
         return !left.Equals(right);
@@ -320,7 +317,7 @@ namespace Gloson.Ini {
     public bool Equals(IniDocumentSection other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Comparer == other.Comparer &&
@@ -577,7 +574,7 @@ namespace Gloson.Ini {
     public bool Equals(IniDocumentRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Comparer == other.Comparer &&

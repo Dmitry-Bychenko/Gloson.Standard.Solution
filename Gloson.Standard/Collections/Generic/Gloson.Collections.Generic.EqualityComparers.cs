@@ -28,16 +28,16 @@ namespace Gloson.Collections.Generic {
       public bool Equals(T x, T y) {
         if (ReferenceEquals(x, y))
           return true;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return false;
-        else if (ReferenceEquals(x, null))
+        else if (x ==  null)
           return false;
 
         return m_Equals(x, y);
       }
 
       public int GetHashCode(T obj) {
-        if (ReferenceEquals(null, obj))
+        if (null == obj)
           return 0;
 
         return m_Hash(obj);
