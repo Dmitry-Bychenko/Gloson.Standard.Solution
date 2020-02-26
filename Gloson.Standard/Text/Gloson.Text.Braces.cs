@@ -96,6 +96,30 @@ namespace Gloson.Text {
       return result;
     }
 
+    /// <summary>
+    /// Valid Parentheses
+    /// </summary>
+    public static bool ParenthesesValid(string value) {
+      if (string.IsNullOrEmpty(value))
+        return true;
+
+      Stack<char> opened = new Stack<char>();
+
+      foreach (var c in value) {
+        var category = char.GetUnicodeCategory(c);
+
+        if (category == UnicodeCategory.OpenPunctuation)
+          opened.Push(c);
+        else if (category == UnicodeCategory.ClosePunctuation) 
+          if (opened.Count <= 0)
+            return false;
+          else if (s_Pairs[c] != opened.Pop())
+            return false;
+      }
+
+      return opened.Count <= 0;
+    }
+
     #endregion Public
   }
 }

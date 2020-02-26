@@ -10,7 +10,6 @@
 //
 // HttpClient
 //
-// 1. Shunting Yard Algorithm
 // 3. Command Line Descriptors
 // 5. Trees (RB, B)
 // 8. Uri ReadLines etc. like File
