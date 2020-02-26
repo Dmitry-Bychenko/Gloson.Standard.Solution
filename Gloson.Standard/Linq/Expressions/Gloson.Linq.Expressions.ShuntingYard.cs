@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using Gloson.Text;
 
@@ -70,6 +72,58 @@ namespace Gloson.Linq.Expressions {
       Name = name;
       Priority = priority;
       Kind = kind;
+    }
+
+    /// <summary>
+    /// Standard Constructor (all types except operators)
+    /// </summary>
+    public ExpressionToken(string name, ExpressionTokenKind kind) {
+      if (kind == ExpressionTokenKind.Operator)
+        throw new InvalidOperationException("Priority must be specified for an operator.");
+
+      Name = name;
+      Priority = 0;
+      Kind = kind;
+    }
+
+    /// <summary>
+    /// Standard constructor (operator)
+    /// </summary>
+    public ExpressionToken(string name, int priority) {
+      Name = name;
+      Priority = priority;
+      Kind = ExpressionTokenKind.Operator;
+    }
+
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
+    public ExpressionToken(string name) {
+      if (string.IsNullOrEmpty(name))
+        throw new InvalidOperationException("name should be specified here.");
+
+      var category = char.GetUnicodeCategory(name[0]);
+
+      if (category == UnicodeCategory.OpenPunctuation) {
+        Name = name;
+        Priority = 0;
+        Kind = ExpressionTokenKind.BraceOpen;
+      }
+      else if (category == UnicodeCategory.ClosePunctuation) {
+        Name = name;
+        Priority = 0;
+        Kind = ExpressionTokenKind.BraceClose;
+      }
+      else if (name.Trim().Length == 1 && category == UnicodeCategory.OtherPunctuation) {
+        Name = name;
+        Priority = 0;
+        Kind = ExpressionTokenKind.Delimiter;
+      }
+      else {
+        Name = name;
+        Priority = 0;
+        Kind = ExpressionTokenKind.Constant;
+      }
     }
 
     #endregion Create
