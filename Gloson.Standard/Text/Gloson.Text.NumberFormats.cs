@@ -16,7 +16,7 @@ namespace Gloson.Text {
   public static class NumberFormatsConverter {
     #region Private Data
 
-    private static Dictionary<char, int> s_Romans = new Dictionary<char, int>() {
+    private static readonly Dictionary<char, int> s_Romans = new Dictionary<char, int>() {
       { 'M', 1000 },
       { 'D',  500 },
       { 'C',  100 },
@@ -138,9 +138,7 @@ namespace Gloson.Text {
       int last = int.MaxValue;
 
       foreach (char ch in value.Trim()) {
-        int v = 0;
-
-        if (!s_Romans.TryGetValue(char.ToUpperInvariant(ch), out v)) 
+        if (!s_Romans.TryGetValue(char.ToUpperInvariant(ch), out int v)) 
           return false;
 
         if (v < last) {

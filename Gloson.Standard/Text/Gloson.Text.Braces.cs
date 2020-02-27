@@ -17,7 +17,7 @@ namespace Gloson.Text {
   public static partial class StringBracesExtensions {
     #region Private Data
 
-    private static Dictionary<char, char> s_Pairs;
+    private static readonly Dictionary<char, char> s_Pairs;
 
     #endregion Private Data
 

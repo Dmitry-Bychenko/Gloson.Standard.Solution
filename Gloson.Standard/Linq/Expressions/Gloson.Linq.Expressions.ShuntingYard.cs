@@ -164,7 +164,7 @@ namespace Gloson.Linq.Expressions {
     public bool Equals(IExpressionToken other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return string.Equals(Name, other.Name) &&
