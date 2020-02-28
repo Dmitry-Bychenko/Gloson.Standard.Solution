@@ -5,6 +5,8 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+using Gloson.Text.NaturalLanguages.Library;
+
 namespace Gloson.Text.NaturalLanguages {
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -159,6 +161,8 @@ namespace Gloson.Text.NaturalLanguages {
 
     static NumberToWords() {
       s_Items = new ConcurrentDictionary<CultureInfo, INumberToWords>();
+
+      Register(CultureInfo.GetCultureInfo("Ru"), new RuNumberToWords());
     }
 
     #endregion Create
@@ -231,4 +235,5 @@ namespace Gloson.Text.NaturalLanguages {
 
     #endregion Public
   }
+
 }

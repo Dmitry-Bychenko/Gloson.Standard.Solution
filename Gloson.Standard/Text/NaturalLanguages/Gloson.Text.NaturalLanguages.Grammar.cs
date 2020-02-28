@@ -79,6 +79,9 @@ namespace Gloson.Text.NaturalLanguages {
       public GrammaticalNumber Detect(int value) {
         value = Math.Abs(value % 100);
 
+        if (value >= 20)
+          value %= 10;
+
         return
             value == 1 ? GrammaticalNumber.Singular
           : value == 2 || value == 3 || value == 4 ? GrammaticalNumber.Dual
