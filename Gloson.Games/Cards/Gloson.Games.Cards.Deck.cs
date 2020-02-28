@@ -57,9 +57,9 @@ namespace Gloson.Games.Cards {
       public int Compare(CardSuit x, CardSuit y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(x, null))
+        else if (null == x)
           return -1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return 1;
 
         int pX = Order.IndexOf(x.Symbol);
@@ -73,7 +73,7 @@ namespace Gloson.Games.Cards {
 
     #region Private Data
 
-    private static string s_StandardOrder = $"-♣♦♥♠";
+    private const string s_StandardOrder = "-♣♦♥♠";
 
     #endregion Private Data
 
@@ -204,9 +204,9 @@ namespace Gloson.Games.Cards {
     public int Compare(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int pLeft = s_StandardOrder.IndexOf(left.Symbol);
@@ -240,7 +240,7 @@ namespace Gloson.Games.Cards {
     public static bool operator ==(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || left == null)
         return false;
 
       return left.Equals(right);
@@ -252,7 +252,7 @@ namespace Gloson.Games.Cards {
     public static bool operator !=(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || null == left)
         return true;
 
       return !left.Equals(right);
@@ -268,7 +268,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardSuit other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return string.Equals(Name, other.Name);
@@ -308,7 +308,7 @@ namespace Gloson.Games.Cards {
   public sealed class CardValue : IEquatable<CardValue>, IComparable<CardValue> {
     #region Private Data
 
-    private static List<CardValue> s_Items;
+    private readonly static List<CardValue> s_Items;
 
     #endregion Private Data
 
@@ -384,9 +384,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(CardValue left, CardValue right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       return left.Value - right.Value;
@@ -503,7 +503,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardValue other) {
       if (ReferenceEquals(other, this))
         return true;
-      else if (ReferenceEquals(other, null))
+      else if (null == other)
         return false;
 
       return other.Value == Value;
@@ -630,9 +630,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(Card left, Card right) {
       if (ReferenceEquals(left, right))
         return  0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return  1;
 
       int result = left.Suit.CompareTo(right.Suit);
@@ -675,7 +675,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(Card other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Value == other.Value && Suit == other.Suit;
@@ -718,7 +718,7 @@ namespace Gloson.Games.Cards {
   public sealed class CardHand : IList<Card>, IEquatable<CardHand> {
     #region Private Data
 
-    private List<Card> m_Items = new List<Card>();
+    private readonly List<Card> m_Items = new List<Card>();
 
     #endregion Private Data
 
@@ -1156,7 +1156,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardHand other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (IsOrdered != other.IsOrdered)
