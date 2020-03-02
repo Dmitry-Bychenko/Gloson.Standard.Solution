@@ -91,6 +91,18 @@ namespace Gloson.Linq {
     public static T[] LongestIncreasingSubsequence<T>(this IEnumerable<T> source, IComparer<T> comparer) =>
       LongestIncreasingSubsequence<T>(source, false, comparer);
 
+    /// <summary>
+    /// Longest Non Decreasing Subsequence
+    /// </summary>
+    public static T[] LongestNonDecreasingSubsequence<T>(this IEnumerable<T> source) =>
+      LongestIncreasingSubsequence<T>(source, true, null);
+
+    /// <summary>
+    /// Longest Non Decreasing Subsequence
+    /// </summary>
+    public static T[] LongestNonDecreasingSubsequence<T>(this IEnumerable<T> source, IComparer<T> comparer) =>
+      LongestIncreasingSubsequence<T>(source, true, comparer);
+
     #endregion Public
   }
 }
