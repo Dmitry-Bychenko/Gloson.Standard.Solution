@@ -69,7 +69,7 @@ namespace Gloson.Net {
     public bool Equals(NetworkCredentialRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Address == other.Address &&
@@ -101,7 +101,7 @@ namespace Gloson.Net {
   public sealed class NetworkCredentials : ICredentials {
     #region Private Data
 
-    private ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential> m_Cache =
+    private readonly ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential> m_Cache =
       new ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential>();
 
     #endregion Private Data

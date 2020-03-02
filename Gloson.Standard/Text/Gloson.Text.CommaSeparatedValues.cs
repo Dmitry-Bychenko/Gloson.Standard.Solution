@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -100,6 +101,28 @@ namespace Gloson.Text {
 
       if (items.Any())
         yield return items.ToArray();
+    }
+
+    /// <summary>
+    /// Parse Csv
+    /// </summary>
+    public static IEnumerable<string[]> ParseCsv(TextReader reader, char delimiter, char quotation) {
+      if (null == reader)
+        throw new ArgumentNullException(nameof(reader));
+
+      return ParseCsv(reader.AsEnumerable(), delimiter, quotation);
+    }
+
+    /// <summary>
+    /// Parse Csv
+    /// </summary>
+    public static IEnumerable<string[]> ParseCsv(Stream stream, char delimiter, char quotation, Encoding encoding) {
+      if (null == stream)
+        throw new ArgumentNullException(nameof(stream));
+
+      using StreamReader reader = new StreamReader(stream, encoding, true, 8192, true);
+      
+      return ParseCsv(reader, delimiter, quotation);
     }
 
     #endregion Public

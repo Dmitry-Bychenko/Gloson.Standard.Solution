@@ -20,7 +20,7 @@ namespace Gloson.Text {
     /// <summary>
     /// As Enumerable
     /// </summary>
-    public static IEnumerator<string> AsEnumerable(this TextReader reader) {
+    public static IEnumerable<string> AsEnumerable(this TextReader reader) {
       if (null == reader)
         throw new ArgumentNullException(nameof(reader));
 
