@@ -20,13 +20,13 @@ namespace Gloson.IO.Compression {
 
     private const int BufferSize = 8192;
 
-    private static byte[] signature = new byte[] { 0x50, 0x4B, 0x03, 0x04 };
+    private static readonly byte[] signature = new byte[] { 0x50, 0x4B, 0x03, 0x04 };
 
     #endregion Private Data
 
     #region Algorithm
 
-    private static bool isZipped(Stream value) {
+    private static bool IsZipped(Stream value) {
       if (null == value)
         return false;
 
@@ -50,26 +50,26 @@ namespace Gloson.IO.Compression {
       }
     }
 
-    private static IEnumerable<byte[]> ReadChunks(Stream stream) {
-      if (null == stream)
-        yield break;
+    //private static IEnumerable<byte[]> ReadChunks(Stream stream) {
+    //  if (null == stream)
+    //    yield break;
 
-      byte[] buffer = new byte[BufferSize];
+    //  byte[] buffer = new byte[BufferSize];
 
-      while (true) {
-        int read = stream.Read(buffer, 0, buffer.Length);
+    //  while (true) {
+    //    int read = stream.Read(buffer, 0, buffer.Length);
 
-        if (read <= 0)
-          break;
-        else if (read == buffer.Length)
-          yield return buffer.ToArray();
-        else {
-          yield return buffer.Take(read).ToArray();
+    //    if (read <= 0)
+    //      break;
+    //    else if (read == buffer.Length)
+    //      yield return buffer.ToArray();
+    //    else {
+    //      yield return buffer.Take(read).ToArray();
 
-          break;
-        }
-      }
-    }
+    //      break;
+    //    }
+    //  }
+    //}
 
     #endregion Algorithm
 
@@ -80,10 +80,10 @@ namespace Gloson.IO.Compression {
     /// </summary>
     /// <param name="fileName">File Name</param>
     public static Stream ReadStream(string fileName, FileMode mode) {
-      Stream stm = null;
+      Stream stm = new FileStream(fileName, mode);
 
       try {
-        if (isZipped(stm))
+        if (IsZipped(stm))
           return new GZipStream(stm, CompressionLevel.Optimal);
         else
           return stm;
@@ -106,7 +106,7 @@ namespace Gloson.IO.Compression {
         stm = new FileStream(fileName, mode, FileAccess.ReadWrite);
 
         if (mode == FileMode.Append) {
-          if (isZipped(stm))
+          if (IsZipped(stm))
             return new GZipStream(stm, compression);
           else if (stm.Position == 0 && compression != CompressionLevel.NoCompression)
             return new GZipStream(stm, compression);
@@ -133,15 +133,15 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (var stm = ReadStream(fileName, FileMode.Open)) {
-        while (true) {
-          int b = stm.ReadByte();
+      using var stm = ReadStream(fileName, FileMode.Open);
+        
+      while (true) {
+        int b = stm.ReadByte();
 
-          if (b < 0)
-            yield break;
+        if (b < 0)
+          yield break;
 
-          yield return (byte)b;
-        }
+        yield return (byte)b;
       }
     }
 
@@ -162,24 +162,24 @@ namespace Gloson.IO.Compression {
       else if (null == bytes)
         throw new ArgumentNullException(nameof(bytes));
 
-      using (Stream stm = WriteStream(fileName, FileMode.Create, compression)) {
-        byte[] buffer = new byte[BufferSize];
-        int index = 0;
+      using Stream stm = WriteStream(fileName, FileMode.Create, compression);
 
-        foreach (byte b in bytes) {
-          buffer[index] = b;
-          index += 1;
+      byte[] buffer = new byte[BufferSize];
+      int index = 0;
 
-          if (index >= buffer.Length) {
-            stm.Write(buffer, 0, buffer.Length);
+      foreach (byte b in bytes) {
+        buffer[index] = b;
+        index += 1;
 
-            index = 0;
-          }
+        if (index >= buffer.Length) {
+          stm.Write(buffer, 0, buffer.Length);
+
+          index = 0;
         }
-
-        if (index > 0)
-          stm.Write(buffer, 0, index);
       }
+
+      if (index > 0)
+        stm.Write(buffer, 0, index);
     }
 
     /// <summary>
@@ -194,24 +194,24 @@ namespace Gloson.IO.Compression {
       else if (null == bytes)
         throw new ArgumentNullException(nameof(bytes));
 
-      using (Stream stm = WriteStream(fileName, FileMode.Append, compression)) {
-        byte[] buffer = new byte[BufferSize];
-        int index = 0;
+      using Stream stm = WriteStream(fileName, FileMode.Append, compression);
 
-        foreach (byte b in bytes) {
-          buffer[index] = b;
-          index += 1;
+      byte[] buffer = new byte[BufferSize];
+      int index = 0;
 
-          if (index >= buffer.Length) {
-            stm.Write(buffer, 0, buffer.Length);
+      foreach (byte b in bytes) {
+        buffer[index] = b;
+        index += 1;
 
-            index = 0;
-          }
+        if (index >= buffer.Length) {
+          stm.Write(buffer, 0, buffer.Length);
+
+          index = 0;
         }
-
-        if (index > 0)
-          stm.Write(buffer, 0, index);
       }
+
+      if (index > 0)
+        stm.Write(buffer, 0, index);
     }
 
     /// <summary>
@@ -223,9 +223,9 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding)) {
-        return reader.ReadToEnd();
-      }
+      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
+      
+      return reader.ReadToEnd();
     }
 
     /// <summary>
@@ -236,9 +236,9 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true)) {
-        return reader.ReadToEnd();
-      }
+      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
+      
+      return reader.ReadToEnd();
     }
 
     /// <summary>
@@ -250,15 +250,15 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding)) {
-        while (true) {
-          string line = reader.ReadLine();
+      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
 
-          if (null == line)
-            yield break;
-          else
-            yield return line;
-        }
+      while (true) {
+        string line = reader.ReadLine();
+
+        if (null == line)
+          yield break;
+        else
+          yield return line;
       }
     }
 
@@ -270,15 +270,15 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true)) {
-        while (true) {
-          string line = reader.ReadLine();
+      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
 
-          if (null == line)
-            yield break;
-          else
-            yield return line;
-        }
+      while (true) {
+        string line = reader.ReadLine();
+
+        if (null == line)
+          yield break;
+        else
+          yield return line;
       }
     }
 
@@ -295,9 +295,9 @@ namespace Gloson.IO.Compression {
       else if (null == text)
         throw new ArgumentNullException(text);
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding)) {
-        writer.Write(text);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
+
+      writer.Write(text);
     }
 
     /// <summary>
@@ -312,9 +312,9 @@ namespace Gloson.IO.Compression {
       else if (null == text)
         throw new ArgumentNullException(text);
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression))) {
-        writer.Write(text);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
+        
+      writer.Write(text);
     }
 
     /// <summary>
@@ -330,9 +330,9 @@ namespace Gloson.IO.Compression {
       else if (null == text)
         throw new ArgumentNullException(text);
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding)) {
-        writer.Write(text);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
+
+      writer.Write(text);
     }
 
     /// <summary>
@@ -347,9 +347,9 @@ namespace Gloson.IO.Compression {
       else if (null == text)
         throw new ArgumentNullException(text);
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression))) {
-        writer.Write(text);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
+
+      writer.Write(text);
     }
 
     /// <summary>
@@ -365,10 +365,10 @@ namespace Gloson.IO.Compression {
       else if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding)) {
-        foreach (var line in lines)
-          writer.WriteLine(line);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding); 
+
+      foreach (var line in lines)
+        writer.WriteLine(line);
     }
 
     /// <summary>
@@ -383,10 +383,10 @@ namespace Gloson.IO.Compression {
       else if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression))) {
-        foreach (var line in lines)
-          writer.WriteLine(line);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
+
+      foreach (var line in lines)
+        writer.WriteLine(line);
     }
 
     /// <summary>
@@ -402,10 +402,10 @@ namespace Gloson.IO.Compression {
       else if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding)) {
-        foreach (var line in lines)
-          writer.WriteLine(line);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
+
+      foreach (var line in lines)
+        writer.WriteLine(line);
     }
 
     /// <summary>
@@ -420,10 +420,10 @@ namespace Gloson.IO.Compression {
       else if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
-      using (StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression))) {
-        foreach (var line in lines)
-          writer.WriteLine(line);
-      }
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
+
+      foreach (var line in lines)
+        writer.WriteLine(line);
     }
 
     /// <summary>
@@ -433,9 +433,9 @@ namespace Gloson.IO.Compression {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      using (Stream stm = ReadStream(fileName, FileMode.Open)) {
-        return isZipped(stm);
-      }
+      using Stream stm = ReadStream(fileName, FileMode.Open);
+      
+      return IsZipped(stm);
     }
 
     /// <summary>

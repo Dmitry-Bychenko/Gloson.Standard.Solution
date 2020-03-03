@@ -96,7 +96,11 @@ namespace Gloson.Services.Quandl {
       using var response = await httpClient.GetAsync(address).ConfigureAwait(false);
       using Stream stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-      return CommaSeparatedValues.ParseCsv(stream, ',', '"', Encoding.UTF8).ToArray();
+      return await Task<string[][]>.Run(() => CommaSeparatedValues
+        .ParseCsv(stream, ',', '"', Encoding.UTF8)
+        .ToArray()).ConfigureAwait(false);
+
+      //return CommaSeparatedValues.ParseCsv(stream, ',', '"', Encoding.UTF8).ToArray();
     }
 
     /// <summary>

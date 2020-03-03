@@ -43,7 +43,7 @@ namespace Gloson.Linq {
                                         IEqualityComparer<T> comparer) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+      else if (null == left || null == right)
         return false;
 
       // Ordered and Counted
@@ -65,34 +65,33 @@ namespace Gloson.Linq {
         HashSet<T> leftHs = new HashSet<T>();
         HashSet<T> rightHs = new HashSet<T>();
 
-        using (var enLeft = left.GetEnumerator()) {
-          using (var enRight = right.GetEnumerator()) {
-            while (true) {
-              if (!enLeft.MoveNext())
-                break;
-              else if (!leftHs.Add(enLeft.Current))
-                continue;
+        using var enLeft = left.GetEnumerator();
+        using var enRight = right.GetEnumerator();
 
-              bool found = false;
+        while (true) {
+          if (!enLeft.MoveNext())
+            break;
+          else if (!leftHs.Add(enLeft.Current))
+            continue;
 
-              while (enRight.MoveNext()) 
-                if (rightHs.Add(enRight.Current)) {
-                  found = true;
+          bool found = false;
 
-                  break;
-                }
+          while (enRight.MoveNext()) 
+            if (rightHs.Add(enRight.Current)) {
+              found = true;
 
-              if (!found || comparer.Equals(enLeft.Current, enRight.Current))
-                return false;
+              break;
             }
 
-            while (enRight.MoveNext())
-              if (rightHs.Add(enRight.Current))
-                return false;
-          }
+          if (!found || comparer.Equals(enLeft.Current, enRight.Current))
+            return false;
         }
-      }
 
+        while (enRight.MoveNext())
+          if (rightHs.Add(enRight.Current))
+            return false;
+      }
+       
       // Not ordered, not counted
       if (!orderMatters && !countMatters) {
         HashSet<T> leftHs = new HashSet<T>(left, comparer);
