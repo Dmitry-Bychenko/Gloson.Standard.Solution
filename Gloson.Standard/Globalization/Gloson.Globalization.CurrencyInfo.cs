@@ -226,42 +226,42 @@ namespace Gloson.Globalization {
       None = Parse("XXX");
     }
 
-    /// <summary>
-    /// Standard constructor
-    /// </summary>
-    /// <param name="number">Code</param>
-    /// <param name="code">Symbol</param>
-    /// <param name="name">Name</param>
-    /// <param name="symbol">Symbol</param>
-    private CurrencyInfo(int number, string code, string name, string symbol) {
-      if (number < 0)
-        throw new ArgumentOutOfRangeException(nameof(number));
-      else if (string.IsNullOrWhiteSpace(code))
-        throw new ArgumentNullException(nameof(code), "Must not be null or whitespace only.");
-      else if (string.IsNullOrWhiteSpace(name))
-        throw new ArgumentNullException(nameof(name), "Must not be null or whitespace only.");
-      else if (string.IsNullOrWhiteSpace(symbol))
-        throw new ArgumentNullException(nameof(symbol), "Must not be null or whitespace only.");
+    ///// <summary>
+    ///// Standard constructor
+    ///// </summary>
+    ///// <param name="number">Code</param>
+    ///// <param name="code">Symbol</param>
+    ///// <param name="name">Name</param>
+    ///// <param name="symbol">Symbol</param>
+    //private CurrencyInfo(int number, string code, string name, string symbol) {
+    //  if (number < 0)
+    //    throw new ArgumentOutOfRangeException(nameof(number));
+    //  else if (string.IsNullOrWhiteSpace(code))
+    //    throw new ArgumentNullException(nameof(code), "Must not be null or whitespace only.");
+    //  else if (string.IsNullOrWhiteSpace(name))
+    //    throw new ArgumentNullException(nameof(name), "Must not be null or whitespace only.");
+    //  else if (string.IsNullOrWhiteSpace(symbol))
+    //    throw new ArgumentNullException(nameof(symbol), "Must not be null or whitespace only.");
 
-      Number = number;
-      Code = code.Trim().ToUpperInvariant();
+    //  Number = number;
+    //  Code = code.Trim().ToUpperInvariant();
 
-      Name = name;
-      Symbol = symbol;
+    //  Name = name;
+    //  Symbol = symbol;
 
-      s_NumberDictionary.Add(Number, this);
+    //  s_NumberDictionary.Add(Number, this);
 
-      try {
-        s_CodeDictionary.Add(Code, this);
-      }
-      catch {
-        s_NumberDictionary.Remove(Number);
+    //  try {
+    //    s_CodeDictionary.Add(Code, this);
+    //  }
+    //  catch {
+    //    s_NumberDictionary.Remove(Number);
 
-        throw;
-      }
+    //    throw;
+    //  }
 
-      s_Items.Add(this);
-    }
+    //  s_Items.Add(this);
+    //}
 
     /// <summary>
     /// Constructor to create CurrencyInfo from ISO data
@@ -322,9 +322,9 @@ namespace Gloson.Globalization {
     public static int Compare(CurrencyInfo left, CurrencyInfo right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(null, left))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result = string.Compare(left.Code, right.Code, StringComparison.OrdinalIgnoreCase);
@@ -396,6 +396,20 @@ namespace Gloson.Globalization {
     /// Has Second Minor
     /// </summary>
     public bool HasSecondMinor => RatioMinorToSecondMinor > 1;
+
+    /// <summary>
+    /// Decimals
+    /// </summary>
+    public int Decimals {
+      get {
+        int result = 0;
+
+        for (long ratio = RatioMainToMinor * RatioMinorToSecondMinor; ratio > 1; ratio /= 10)
+          result += 1;
+
+        return result;
+      }
+    }
 
     #endregion Public
 
