@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Gloson.Cmd", "Demo.Glo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Biology", "Gloson.Biology\Gloson.Biology.csproj", "{A399A3FD-A63C-458A-978E-39E4E919D832}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gloson.Games", "Gloson.Games\Gloson.Games.csproj", "{12A9962E-31EC-4F91-92F5-698C0B6EFB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Games", "Gloson.Games\Gloson.Games.csproj", "{12A9962E-31EC-4F91-92F5-698C0B6EFB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Gloson.WinForms", "Demo.Gloson.WinForms\Demo.Gloson.WinForms.csproj", "{8CDC594A-EE2F-4B0B-A9F5-341588A8F7FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Gloson.Wpf", "Demo.Gloson.Wpf\Demo.Gloson.Wpf.csproj", "{11D7C4AF-031C-46CE-A12C-391348E81DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{12A9962E-31EC-4F91-92F5-698C0B6EFB74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12A9962E-31EC-4F91-92F5-698C0B6EFB74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12A9962E-31EC-4F91-92F5-698C0B6EFB74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDC594A-EE2F-4B0B-A9F5-341588A8F7FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDC594A-EE2F-4B0B-A9F5-341588A8F7FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDC594A-EE2F-4B0B-A9F5-341588A8F7FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDC594A-EE2F-4B0B-A9F5-341588A8F7FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D7C4AF-031C-46CE-A12C-391348E81DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D7C4AF-031C-46CE-A12C-391348E81DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D7C4AF-031C-46CE-A12C-391348E81DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D7C4AF-031C-46CE-A12C-391348E81DB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
