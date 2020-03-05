@@ -35,7 +35,7 @@ namespace Gloson.Numerics {
     public static int FromGrayCode(this int value) {
       uint result = unchecked((uint)value);
 
-      for (uint v = result >> 1; v > 0; v = v >> 1)
+      for (uint v = result >> 1; v > 0; v >>= 1)
         result ^= v;
 
       return unchecked((int)value);
@@ -47,7 +47,7 @@ namespace Gloson.Numerics {
     public static long FromGrayCode(this long value) {
       ulong result = unchecked((ulong)value);
 
-      for (ulong v = result >> 1; v > 0; v = v >> 1)
+      for (ulong v = result >> 1; v > 0; v >>= 1)
         result ^= v;
 
       return unchecked((long)value);

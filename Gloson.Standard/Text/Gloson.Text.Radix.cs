@@ -19,7 +19,7 @@ namespace Gloson.Text {
   public static class Radix {
     #region Private Data
 
-    private static Dictionary<char, int> s_RadixPrefix = new Dictionary<char, int>() {
+    private static readonly Dictionary<char, int> s_RadixPrefix = new Dictionary<char, int>() {
       { 'b',  2},
       { 'B',  2},
       { 'o',  8},

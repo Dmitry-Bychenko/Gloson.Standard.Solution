@@ -26,7 +26,7 @@ namespace Gloson.Numerics {
       if (value >= 0 && value < mod)
         return value;
 
-      value = value % mod;
+      value %= mod;
 
       if (value >= 0)
         return value;
