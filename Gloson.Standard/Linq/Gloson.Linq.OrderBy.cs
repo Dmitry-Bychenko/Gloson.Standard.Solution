@@ -20,9 +20,9 @@ namespace Gloson.Linq {
     /// Order By
     /// </summary>
     public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> source, Func<T, T, int> comparer) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, comparer))
+      else if (null == comparer)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -33,9 +33,9 @@ namespace Gloson.Linq {
     /// Order By Descending
     /// </summary>
     public static IEnumerable<T> OrderByDescending<T>(this IEnumerable<T> source, Func<T, T, int> comparer) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, comparer))
+      else if (null == comparer)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -46,9 +46,9 @@ namespace Gloson.Linq {
     /// Then By
     /// </summary>
     public static IOrderedEnumerable<T> ThenBy<T>(this IOrderedEnumerable<T> source, Func<T, T, int> comparer) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, comparer))
+      else if (null == comparer)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -59,9 +59,9 @@ namespace Gloson.Linq {
     /// Then By Descending
     /// </summary>
     public static IOrderedEnumerable<T> ThenByDescending<T>(this IOrderedEnumerable<T> source, Func<T, T, int> comparer) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, comparer))
+      else if (null == comparer)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
