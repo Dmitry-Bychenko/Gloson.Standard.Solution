@@ -20,7 +20,7 @@ namespace Gloson.Collections.Generic {
     #region Private Data
 
     // Items
-    private Dictionary<T, long> m_Items;
+    private readonly Dictionary<T, long> m_Items;
 
     #endregion Private Data
 
@@ -37,11 +37,8 @@ namespace Gloson.Collections.Generic {
       if (null == comparer)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer), 
-          $"No default equality comparer is found for {typeof(T).Name}.");
-
-      Comparer = comparer;
+      Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
+          $"No default equality comparer is found for {typeof(T).Name}."); 
 
       m_Items = new Dictionary<T, long>(Comparer);
     }
@@ -59,12 +56,9 @@ namespace Gloson.Collections.Generic {
     public MultiHashSet(IEnumerable<T> source, IEqualityComparer<T> comparer) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
-
-      if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer),
+      
+      Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
           $"No default equality comparer is found for {typeof(T).Name}.");
-
-      Comparer = comparer;
 
       m_Items = new Dictionary<T, long>(Comparer);
 
@@ -417,7 +411,7 @@ namespace Gloson.Collections.Generic {
     public bool Equals(MultiHashSet<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (m_Items.Count != other.m_Items.Count)
@@ -593,9 +587,9 @@ namespace Gloson.Collections.Generic {
                                              IEqualityComparer<T> comparer) {
       if (ReferenceEquals(source, other))
         return true;
-      else if (ReferenceEquals(null, source))
+      else if (null == source)
         return false;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       var left = new MultiHashSet<T>(source, comparer);

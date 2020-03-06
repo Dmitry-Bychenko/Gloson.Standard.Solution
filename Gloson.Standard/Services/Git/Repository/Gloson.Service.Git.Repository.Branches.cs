@@ -45,9 +45,9 @@ namespace Gloson.Services.Git.Repository {
     public static int Compare(GitRepoBranch left, GitRepoBranch right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (left == null)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result = GitRepo.Compare(left.Repo, right.Repo);
@@ -88,7 +88,7 @@ namespace Gloson.Services.Git.Repository {
     public bool Equals(GitRepoBranch other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (!GitRepo.Equals(Repo, other.Repo))

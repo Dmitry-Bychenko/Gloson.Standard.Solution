@@ -197,7 +197,7 @@ namespace Gloson.Ini {
     public bool Equals(NameValueRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (Comparer != other.Comparer)
@@ -232,7 +232,7 @@ namespace Gloson.Ini {
   public sealed class NameValueDocument {
     #region Private Data
 
-    private Dictionary<string, NameValueRecord> m_Records;
+    private readonly Dictionary<string, NameValueRecord> m_Records;
 
     #endregion Private Data
 

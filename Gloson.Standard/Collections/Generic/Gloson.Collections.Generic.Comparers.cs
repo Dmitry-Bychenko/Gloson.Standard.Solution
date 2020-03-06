@@ -40,9 +40,9 @@ namespace Gloson.Collections.Generic {
       return Comparer<T>.Create((x, y) => {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(null, x))
+        else if (null == x)
           return -1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return 1;
 
         return 0;
@@ -56,9 +56,9 @@ namespace Gloson.Collections.Generic {
       return Comparer<T>.Create((x, y) => {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(null, x))
+        else if (null == x)
           return 1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return -1;
 
         return 0;
@@ -102,7 +102,7 @@ namespace Gloson.Collections.Generic {
     #region Inner Classes
 
     private class ReversedComparer<T> : IComparer<T> {
-      private IComparer<T> m_Comparer;
+      private readonly IComparer<T> m_Comparer;
 
       public ReversedComparer(IComparer<T> comparer) {
         m_Comparer = comparer;
@@ -121,8 +121,8 @@ namespace Gloson.Collections.Generic {
     }
 
     private class ThenByComparer<T> : IComparer<T> {
-      private IComparer<T> m_First;
-      private IComparer<T> m_Next;
+      private readonly IComparer<T> m_First;
+      private readonly IComparer<T> m_Next;
 
       public ThenByComparer(IComparer<T> first, IComparer<T> next) {
         m_First = first;
@@ -139,8 +139,8 @@ namespace Gloson.Collections.Generic {
     }
 
     private class ThenByDescendingComparer<T> : IComparer<T> {
-      private IComparer<T> m_First;
-      private IComparer<T> m_Next;
+      private readonly IComparer<T> m_First;
+      private readonly IComparer<T> m_Next;
 
       public ThenByDescendingComparer(IComparer<T> first, IComparer<T> next) {
         m_First = first;

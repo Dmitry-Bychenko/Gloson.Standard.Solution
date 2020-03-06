@@ -142,16 +142,16 @@ namespace Gloson.Linq.Solvers.Knapsack {
            Func<T, double> weight,
            Func<T, double> value) {
 
-      if (ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (ReferenceEquals(null, weight))
+      else if (null == weight)
         throw new ArgumentNullException(nameof(weight));
-      else if (ReferenceEquals(null, value))
+      else if (null == value)
         throw new ArgumentNullException(nameof(value));
 
       var data = source
         .Select((item, idx) => (
-           item: item,
+           item,
            weight: weight(item),
            value: value(item),
            index: idx))

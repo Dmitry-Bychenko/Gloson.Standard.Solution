@@ -40,10 +40,7 @@ namespace Gloson.Globalization {
     /// </summary>
     public TemporalCultureInfo(CultureInfo temporalCulture) {
       m_CurrentCulture = CultureInfo.CurrentCulture;
-
-      m_TemporalCulture = ReferenceEquals(null, temporalCulture)
-        ? CultureInfo.InvariantCulture
-        : temporalCulture;
+      m_TemporalCulture = temporalCulture ?? CultureInfo.InvariantCulture;
 
       CultureInfo.CurrentCulture = m_TemporalCulture;
     }
@@ -111,7 +108,7 @@ namespace Gloson.Globalization {
     /// </summary>
     private void Dispose(bool disposing) {
       if (disposing) {
-        if (!ReferenceEquals(null, m_CurrentCulture)) {
+        if (null != m_CurrentCulture) {
           if (CultureInfo.CurrentCulture == m_TemporalCulture)
             CultureInfo.CurrentCulture = m_CurrentCulture;
           else
@@ -127,7 +124,7 @@ namespace Gloson.Globalization {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => ReferenceEquals(null, m_CurrentCulture);
+    public bool IsDisposed => null == m_CurrentCulture;
 
     /// <summary>
     /// Dispose
@@ -144,7 +141,7 @@ namespace Gloson.Globalization {
     public bool Equals(TemporalCultureInfo other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return m_CurrentCulture == other.m_CurrentCulture &&

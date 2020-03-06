@@ -200,7 +200,7 @@ namespace Gloson.Services.Git {
     /// To String
     /// </summary>
     public static implicit operator string(GitResult value) {
-      return (null != value) ? value.Value : null;
+      return value?.Value;
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ namespace Gloson.Services.Git {
     public static bool operator ==(GitResult left, GitResult right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      else if (object.ReferenceEquals(left, null) || object.ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return false;
       else
         return left.Equals(right);
@@ -221,7 +221,7 @@ namespace Gloson.Services.Git {
     public static bool operator !=(GitResult left, GitResult right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      else if (object.ReferenceEquals(left, null) || object.ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return true;
       else
         return !left.Equals(right);

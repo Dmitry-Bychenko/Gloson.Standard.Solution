@@ -80,7 +80,7 @@ namespace Gloson {
       if (string.IsNullOrWhiteSpace(value))
         return false;
 
-      string main = "";
+      string main;
       string pre = "";
       string build = "";
 
@@ -121,12 +121,12 @@ namespace Gloson {
       while (list.Count < 3)
         list.Add(0);
 
-      result = new SemanticVersion();
-
-      result.m_MainVersion = list.ToArray();
-      result.m_Prerelease = pre.Split('.');
-      result.m_BuildMetaData = build.Split('.');
-
+      result = new SemanticVersion() {
+        m_MainVersion = list.ToArray(),
+        m_Prerelease = pre.Split('.'),
+        m_BuildMetaData = build.Split('.'),
+      };
+      
       return true;
     }
 
@@ -209,9 +209,9 @@ namespace Gloson {
     public static int Compare(SemanticVersion left, SemanticVersion right) {
       if (object.ReferenceEquals(left, right))
         return 0;
-      else if (object.ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result;

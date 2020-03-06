@@ -19,11 +19,11 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Start expression
-    private string m_StartPattern;
+    private readonly string m_StartPattern;
     // Stop expression
-    private string m_StopPattern;
+    private readonly string m_StopPattern;
     // Entire expression
-    private string m_EntirePattern;
+    private readonly string m_EntirePattern;
 
     // Start Regex
     private Regex m_StartRegex;
@@ -158,13 +158,13 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Start match
-    private Locator m_StartMatch;
+    private readonly Locator m_StartMatch;
 
     // Stop match
-    private LocatorStop m_StopMatch;
+    private readonly LocatorStop m_StopMatch;
 
     // Entire match
-    private Locator m_EntireMatch;
+    private readonly Locator m_EntireMatch;
 
     #endregion Private Data
 
@@ -217,13 +217,8 @@ namespace Gloson.Text.Parsing {
     public TokenDescriptionFunc(Locator startLocator, LocatorStop stopLocator, int priority, TokenDescriptionOptions options)
       : base(priority, options) {
 
-      if (object.ReferenceEquals(null, startLocator))
-        throw new ArgumentNullException("startLocator", "Start locator must not be null.");
-      else if (object.ReferenceEquals(null, stopLocator))
-        throw new ArgumentNullException("stopLocator", "Stop locator must not be null.");
-
-      m_StartMatch = startLocator;
-      m_StopMatch = stopLocator;
+      m_StartMatch = startLocator ?? throw new ArgumentNullException("startLocator", "Start locator must not be null.");
+      m_StopMatch = stopLocator ?? throw new ArgumentNullException("stopLocator", "Stop locator must not be null.");
     }
 
     /// <summary>
@@ -232,10 +227,7 @@ namespace Gloson.Text.Parsing {
     public TokenDescriptionFunc(Locator entireLocator, int priority, TokenDescriptionOptions options)
       : base(priority, options) {
 
-      if (object.ReferenceEquals(null, entireLocator))
-        throw new ArgumentNullException("entireLocator", "Entire locator must not be null.");
-
-      m_EntireMatch = entireLocator;
+      m_EntireMatch = entireLocator ?? throw new ArgumentNullException("entireLocator", "Entire locator must not be null.");
     }
 
     #endregion Create

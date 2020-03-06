@@ -70,9 +70,9 @@ namespace Gloson.Text.Parsing {
       public int Compare(Token x, Token y) {
         if (object.ReferenceEquals(x, y))
           return 0;
-        else if (object.ReferenceEquals(x, null))
+        else if (null == x)
           return -1;
-        else if (object.ReferenceEquals(null, y))
+        else if (null == y)
           return 1;
 
         int result = x.StartLine.CompareTo(y.StartLine);
@@ -128,9 +128,9 @@ namespace Gloson.Text.Parsing {
     #region Private data
 
     // Location comparer
-    private static TokenComparer s_LocationComparer = new TokenComparer();
+    private static readonly TokenComparer s_LocationComparer = new TokenComparer();
 
-    private static EssenceEqualityComparer s_EssenceComparer = new EssenceEqualityComparer();
+    private static readonly EssenceEqualityComparer s_EssenceComparer = new EssenceEqualityComparer();
 
     #endregion Private data 
 

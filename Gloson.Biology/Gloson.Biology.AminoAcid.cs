@@ -22,12 +22,12 @@ namespace Gloson.Biology {
     
     #region Private Data
 
-    private static List<AminoAcid> s_Items = new List<AminoAcid>();
+    private static readonly List<AminoAcid> s_Items = new List<AminoAcid>();
 
-    private static Dictionary<char, AminoAcid> s_DictOneLetter =
+    private static readonly Dictionary<char, AminoAcid> s_DictOneLetter =
       new Dictionary<char, AminoAcid>(CharacterComparer.OrdinalIgnoreCase);
 
-    private static Dictionary<string, AminoAcid> s_DictThreeLetter = new Dictionary<string, AminoAcid>();
+    private static readonly Dictionary<string, AminoAcid> s_DictThreeLetter = new Dictionary<string, AminoAcid>();
 
     #endregion Private Data
 
@@ -171,9 +171,9 @@ namespace Gloson.Biology {
     public static int Compare(AminoAcid left, AminoAcid right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       return left.Code.CompareTo(right.Code);
@@ -311,7 +311,7 @@ namespace Gloson.Biology {
     public bool Equals(AminoAcid other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Code == other.Code;

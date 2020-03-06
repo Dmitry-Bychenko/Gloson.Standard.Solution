@@ -33,14 +33,11 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// To Report
     /// </summary>
     public static string ToReport(this ObjectiveGoal value) {
-      switch (value) {
-        case ObjectiveGoal.Min:
-          return "Minimize";
-        case ObjectiveGoal.Max:
-          return "Maximize";
-        default:
-          return $"??? ({(int) value})";
-      }
+      return value switch {
+        ObjectiveGoal.Min => "Minimize",
+        ObjectiveGoal.Max => "Maximize",
+        _ => $"??? ({(int)value})",
+      };
     }
 
     #endregion Public
@@ -60,7 +57,7 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     #region Private Data
 
-    private Func<T, double> m_Computation;
+    private readonly Func<T, double> m_Computation;
 
     #endregion Private Data
 
@@ -96,9 +93,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     public static int Compare(ObjectiveDescription<T> left, ObjectiveDescription<T> right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return -1;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return 1;
 
       return string.Compare(left.Id, right.Id);
@@ -125,7 +122,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Dominates(ObjectiveDescription<T> other, T solution) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
       else if (!string.Equals(Id, other.Id))
         return false;
@@ -147,7 +144,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool IsDominated(ObjectiveDescription<T> other, T solution) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
       else if (!string.Equals(Id, other.Id))
         return false;
@@ -215,7 +212,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Equals(ObjectiveDescription<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return string.Equals(this.Id, other.Id);

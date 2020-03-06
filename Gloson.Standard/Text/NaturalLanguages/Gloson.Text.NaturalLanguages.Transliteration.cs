@@ -100,7 +100,7 @@ namespace Gloson.Text.NaturalLanguages {
     public static bool operator == (BaseTransliteration left, BaseTransliteration right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || null == left)
         return false;
 
       return left.Equals(right);
@@ -112,7 +112,7 @@ namespace Gloson.Text.NaturalLanguages {
     public static bool operator !=(BaseTransliteration left, BaseTransliteration right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, right) || ReferenceEquals(left, null))
+      else if (null == right || null == left)
         return true;
 
       return !left.Equals(right);
@@ -157,7 +157,7 @@ namespace Gloson.Text.NaturalLanguages {
     public bool Equals(ITransliteration other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return LanguageFrom == other.LanguageFrom &&
@@ -249,13 +249,10 @@ namespace Gloson.Text.NaturalLanguages {
     #region Inner Classes
 
     private sealed class TransliterationReversed : BaseTransliteration {
-      private ITransliteration m_Source;
+      private readonly ITransliteration m_Source;
 
       public TransliterationReversed(ITransliteration source) {
-        if (null == source)
-          throw new ArgumentNullException(nameof(source));
-
-        m_Source = source;
+        m_Source = source ?? throw new ArgumentNullException(nameof(source));
       }
 
       /// <summary>
@@ -316,7 +313,7 @@ namespace Gloson.Text.NaturalLanguages {
   public static class Transliterations {
     #region Private Data
 
-    private static ConcurrentDictionary<ITransliteration, bool> s_Items;
+    private static readonly ConcurrentDictionary<ITransliteration, bool> s_Items;
 
     #endregion Private Data
 

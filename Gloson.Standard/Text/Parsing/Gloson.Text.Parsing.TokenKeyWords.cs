@@ -30,11 +30,11 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Is identifier
-    private IsIdentifierLetter m_IsIdentifierLetter;
+    private readonly IsIdentifierLetter m_IsIdentifierLetter;
     // Is case sensitive
-    private bool m_IsCaseSensitive;
+    private readonly bool m_IsCaseSensitive;
     // KeyWords
-    private List<string> m_Items = new List<string>();
+    private readonly List<string> m_Items = new List<string>();
 
     #endregion Private Data
 
@@ -49,7 +49,7 @@ namespace Gloson.Text.Parsing {
       if (null == keyWords)
         throw new ArgumentNullException("keyWords");
 
-      m_IsIdentifierLetter = identifier == null ? IsStandardIdentifier : identifier;
+      m_IsIdentifierLetter = identifier ?? IsStandardIdentifier;
       m_IsCaseSensitive = isCaseSensitive;
 
       HashSet<string> hs = new HashSet<string>(isCaseSensitive ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase);
@@ -192,9 +192,9 @@ namespace Gloson.Text.Parsing {
     public static bool operator ==(TokenKeyWords left, TokenKeyWords right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      else if (object.ReferenceEquals(left, null))
+      else if (null == left)
         return false;
-      else if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return false;
 
       return left.Equals(right);
@@ -206,9 +206,9 @@ namespace Gloson.Text.Parsing {
     public static bool operator !=(TokenKeyWords left, TokenKeyWords right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      else if (object.ReferenceEquals(left, null))
+      else if (null == left)
         return true;
-      else if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return true;
 
       return !left.Equals(right);
@@ -260,7 +260,7 @@ namespace Gloson.Text.Parsing {
     public bool Equals(TokenKeyWords other) {
       if (object.ReferenceEquals(this, other))
         return true;
-      else if (object.ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (m_IsCaseSensitive != other.m_IsCaseSensitive)
@@ -313,7 +313,7 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Key words
-    private TokenKeyWords m_KeyWords;
+    private readonly TokenKeyWords m_KeyWords;
 
     #endregion Private Data
 
@@ -325,10 +325,7 @@ namespace Gloson.Text.Parsing {
     public TokenDescriptionKeyWords(TokenKeyWords keyWords, int priority)
       : base(priority, keyWords.IsCaseSensitive ? TokenDescriptionOptions.None : TokenDescriptionOptions.IgnoreCase) {
 
-      if (object.ReferenceEquals(null, keyWords))
-        throw new ArgumentNullException("keyWords");
-
-      m_KeyWords = keyWords;
+      m_KeyWords = keyWords ?? throw new ArgumentNullException("keyWords");
     }
 
     /// <summary>

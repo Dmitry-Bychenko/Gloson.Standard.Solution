@@ -22,7 +22,7 @@ namespace Gloson.Collections {
     public sealed class Node {
       #region Private Data
 
-      private Dictionary<char, Node> m_Items;
+      private readonly Dictionary<char, Node> m_Items;
 
       #endregion Private Data
 
@@ -198,10 +198,9 @@ namespace Gloson.Collections {
         current.Occurrences += 1;
 
         for (int i = start; i < value.Length; ++i) {
-          Node next;
           char c = value[i];
 
-          if (!current.Items.TryGetValue(c, out next))
+          if (!current.Items.TryGetValue(c, out Node next))
             next = new Node(result, current, c);
 
           next.Occurrences += 1;
@@ -286,9 +285,7 @@ namespace Gloson.Collections {
       current.Occurrences += 1;
 
       foreach (char value in sequence) {
-        Node next;
-
-        if (!current.Items.TryGetValue(value, out next))
+        if (!current.Items.TryGetValue(value, out Node next))
           next = new Node(this, current, value);
 
         next.Occurrences += 1;

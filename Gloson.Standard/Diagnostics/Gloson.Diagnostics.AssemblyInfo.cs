@@ -159,9 +159,9 @@ namespace Gloson.Diagnostics {
     public static bool operator == (AssemblyInfo left, AssemblyInfo right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return false;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return false;
 
       return left.Equals(right);
@@ -173,9 +173,9 @@ namespace Gloson.Diagnostics {
     public static bool operator !=(AssemblyInfo left, AssemblyInfo right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return true;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return true;
 
       return !left.Equals(right);

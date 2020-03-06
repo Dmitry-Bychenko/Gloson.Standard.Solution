@@ -24,34 +24,34 @@ namespace Gloson.Xml.Linq {
     /// <param name="comment">Add standard caption</param>
     public static void AddStandardCaption(this XDocument document,
                                           String comment) {
-      if (Object.ReferenceEquals(null, document))
+      if (null == document)
         throw new ArgumentNullException(nameof(document));
 
       XComment xComment = null;
 
-      using (var en = document.Nodes().GetEnumerator()) {
-        while (en.MoveNext()) {
-          if (en.Current is XElement)
-            break;
+      using var en = document.Nodes().GetEnumerator();
 
-          if (Object.ReferenceEquals(null, xComment))
-            xComment = en.Current as XComment;
+      while (en.MoveNext()) {
+        if (en.Current is XElement)
+          break;
+
+        if (null == xComment)
+          xComment = en.Current as XComment;
+      }
+
+      // Creating the declaration
+      if (null == document.Declaration)
+        document.Declaration = new XDeclaration("1.0", "utf-8", "yes");
+
+      // Changing or creating comment
+      if (!String.IsNullOrEmpty(comment)) {
+        if (null == xComment) {
+          xComment = new XComment(comment);
+
+          document.AddFirst(xComment);
         }
 
-        // Creating the declaration
-        if (Object.ReferenceEquals(null, document.Declaration))
-          document.Declaration = new XDeclaration("1.0", "utf-8", "yes");
-
-        // Changing or creating comment
-        if (!String.IsNullOrEmpty(comment)) {
-          if (Object.ReferenceEquals(null, xComment)) {
-            xComment = new XComment(comment);
-
-            document.AddFirst(xComment);
-          }
-
-          xComment.Value = comment;
-        }
+        xComment.Value = comment;
       }
     }
 
@@ -68,12 +68,12 @@ namespace Gloson.Xml.Linq {
     /// </summary>
     /// <param name="document">Document to save</param>
     public static String SaveToString(this XDocument document) {
-      if (Object.ReferenceEquals(null, document))
+      if (null == document)
         throw new ArgumentNullException(nameof(document));
 
       StringBuilder Sb = new StringBuilder();
 
-      if (!Object.ReferenceEquals(null, document.Declaration))
+      if (null != document.Declaration)
         Sb.Append(document.Declaration.ToString());
 
       if (Sb.Length > 0)
@@ -92,9 +92,9 @@ namespace Gloson.Xml.Linq {
       if (String.IsNullOrEmpty(xmlText))
         return new XDocument();
 
-      using (TextReader tr = new StringReader(xmlText)) {
-        return XDocument.Load(tr);
-      }
+      using TextReader tr = new StringReader(xmlText);
+      
+      return XDocument.Load(tr);
     }
 
     #endregion Public

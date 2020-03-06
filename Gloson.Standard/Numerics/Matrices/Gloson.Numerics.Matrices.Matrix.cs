@@ -341,9 +341,9 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator ==(Matrix left, Matrix right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return false;
-      else if (ReferenceEquals(null, left))
+      else if (null == left)
         return false;
 
       return left.Equals(right);
@@ -355,9 +355,9 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator !=(Matrix left, Matrix right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return true;
-      else if (ReferenceEquals(null, left))
+      else if (null == left)
         return true;
 
       return !left.Equals(right);
@@ -440,9 +440,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Addition
     /// </summary>
     public static Matrix operator + (Matrix left, Matrix right) {
-      if (ReferenceEquals(null, left))
+      if (null == left)
         throw new ArgumentNullException(nameof(left));
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         throw new ArgumentNullException(nameof(right));
 
       if (left.LineCount != right.LineCount)
@@ -463,9 +463,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Subtractions
     /// </summary>
     public static Matrix operator - (Matrix left, Matrix right) {
-      if (ReferenceEquals(null, left))
+      if (null == left)
         throw new ArgumentNullException(nameof(left));
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         throw new ArgumentNullException(nameof(right));
 
       if (left.LineCount != right.LineCount)
@@ -486,9 +486,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Mutiplication
     /// </summary>
     public static Matrix operator * (Matrix left, Matrix right) {
-      if (ReferenceEquals(null, left))
+      if (null == left)
         throw new ArgumentNullException(nameof(left));
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         throw new ArgumentNullException(nameof(right));
 
       if (left.ColumnCount != right.LineCount)
@@ -513,9 +513,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Division
     /// </summary>
     public static Matrix operator / (Matrix left, Matrix right) {
-      if (ReferenceEquals(null, left))
+      if (null == left)
         throw new ArgumentNullException(nameof(left));
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         throw new ArgumentNullException(nameof(right));
 
       if (left.ColumnCount != right.LineCount)
@@ -530,7 +530,7 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Division
     /// </summary>
     public static Matrix operator / (double left, Matrix right) {
-      if (ReferenceEquals(null, right))
+      if (null == right)
         throw new ArgumentNullException(nameof(right));
 
       if (right.ColumnCount != right.LineCount)
@@ -558,19 +558,15 @@ namespace Gloson.Numerics.Matrices {
     /// Deep copy
     /// </summary>
     public Matrix Clone() {
-      Matrix copy = new Matrix();
-
-      copy.m_Items = m_Items
-        .Select(line => {
-          double[] result = new double[line.Length];
-
-          Array.Copy(line, 0, result, 0, line.Length);
-
-          return result;
-        })
-        .ToArray();
-
-      return copy;
+      return new Matrix() {
+        m_Items = m_Items
+                    .Select(line => {
+                       double[] result = new double[line.Length];
+                       Array.Copy(line, 0, result, 0, line.Length);
+                       return result;
+                     })
+                    .ToArray()
+      };
     }
 
     /// <summary>
@@ -591,7 +587,7 @@ namespace Gloson.Numerics.Matrices {
 
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (this.ColumnCount != other.ColumnCount || this.LineCount != other.LineCount)
@@ -613,7 +609,7 @@ namespace Gloson.Numerics.Matrices {
     public bool Equals(Matrix other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       if (this.ColumnCount != other.ColumnCount || this.LineCount != other.LineCount)

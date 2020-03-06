@@ -44,7 +44,7 @@ namespace Gloson.Text.Parsing {
     /// <param name="source">Source lines</param>
     /// <returns>Tokens</returns>
     public static IEnumerable<Token> Parse(this ITokenDescriptionRules rule, IEnumerable<string> source) {
-      if (object.ReferenceEquals(null, rule))
+      if (null == rule)
         throw new ArgumentNullException("rule");
 
       return Tokenizer.Parse(source, rule);
@@ -65,7 +65,7 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Items
-    private List<TokenDescription> m_Items = new List<TokenDescription>();
+    private readonly List<TokenDescription> m_Items = new List<TokenDescription>();
     // Is updated
     private bool m_Updated = false;
 
@@ -100,11 +100,9 @@ namespace Gloson.Text.Parsing {
     private TokenDescription.TokenDescriptionMatch CoreEntireMatch(string line,
                                                                    int startAt,
                                                                    IReadOnlyList<Token> context) {
-      TokenDescription.TokenDescriptionMatch match;
-
       // Entire
       foreach (var item in m_Items)
-        if (item.TryMatchEntire(line, startAt, context, out match))
+        if (item.TryMatchEntire(line, startAt, context, out var match))
           return match;
 
       return TokenDescription.TokenDescriptionMatch.EmptyMatch;
@@ -114,16 +112,11 @@ namespace Gloson.Text.Parsing {
     private TokenDescription.TokenDescriptionMatch CoreStartMatch(string line,
                                                                   int startAt,
                                                                   IReadOnlyList<Token> context) {
-      TokenDescription.TokenDescriptionMatch match;
-
       // Starts
       foreach (var item in m_Items)
-        if (item.TryMatchStart(line, startAt, context, out match)) {
-          // So far so good we get Start match, let's look for the Stop one:
-          TokenDescription.TokenDescriptionMatch matchStop;
-
+        if (item.TryMatchStart(line, startAt, context, out var match)) {
           // No Stop match, just return the start
-          if (!item.TryMatchStop(line, startAt + match.Length, context, out matchStop, match.Extract(line))) // + 1 removed !!!!!!
+          if (!item.TryMatchStop(line, startAt + match.Length, context, out var matchStop, match.Extract(line))) // + 1 removed !!!!!!
             return match;
 
           // Let's combine start and stop into entire
@@ -165,7 +158,7 @@ namespace Gloson.Text.Parsing {
     /// Add a description
     /// </summary>
     public void Add(TokenDescription value) {
-      if (object.ReferenceEquals(null, value))
+      if (null == value)
         throw new ArgumentNullException("value");
 
       CoreAdd(value);
@@ -175,7 +168,7 @@ namespace Gloson.Text.Parsing {
     /// Add range of descriptions
     /// </summary>
     public void AddRange(IEnumerable<TokenDescription> values) {
-      if (object.ReferenceEquals(null, values))
+      if (null == values)
         throw new ArgumentNullException("values");
 
       foreach (var value in values)

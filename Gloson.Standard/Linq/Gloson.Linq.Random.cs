@@ -21,14 +21,14 @@ namespace Gloson.Linq {
     /// Shuffle items
     /// </summary>
     public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random generator) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
 
       Func<int, int> next = (arg) => RandomThreadSafe.Default.Next(arg);
 
       if (generator != null)
         next = (arg) => generator.Next(arg);
-      else if (Object.ReferenceEquals(null, generator))
+      else if (null == generator)
         generator = new Random();
 
       T[] data = source.ToArray();
@@ -69,9 +69,9 @@ namespace Gloson.Linq {
     /// <param name="weights">weighs, the last one is computed</param>
     /// <returns></returns>
     public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, Random generator, params Double[] weights) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException("source");
-      else if (Object.ReferenceEquals(null, weights))
+      else if (null == weights)
         return new IEnumerable<T>[] { source };
       else if (weights.Length <= 0)
         return new IEnumerable<T>[] { source };

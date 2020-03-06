@@ -80,9 +80,9 @@ namespace Gloson {
     public static bool operator == (Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      if (object.ReferenceEquals(left, null))
+      else if (null == left)
         return false;
-      if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return false;
 
       return left.Equals(right);
@@ -94,9 +94,9 @@ namespace Gloson {
     public static bool operator != (Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      if (object.ReferenceEquals(left, null))
+      else if (null == left)
         return true;
-      if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return true;
 
       return !left.Equals(right);

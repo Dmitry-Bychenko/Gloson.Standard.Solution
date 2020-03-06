@@ -93,9 +93,9 @@ namespace Gloson.Diagnostics {
     public static int Compare(ProcessExecutionResult left, ProcessExecutionResult right) {
       if (object.ReferenceEquals(left, right))
         return 0;
-      else if (object.ReferenceEquals(null, left))
+      else if (null == left)
         return -1;
-      else if (object.ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result = left.AtUtc.CompareTo(right.AtUtc);
@@ -209,7 +209,7 @@ namespace Gloson.Diagnostics {
       if (!((ExitCode != 0) || (throwOnErrorMessage && string.IsNullOrWhiteSpace(Error))))
         return;
 
-      string message = "";
+      string message;
 
       if (!string.IsNullOrWhiteSpace(Error))
         message = Error;
@@ -469,36 +469,37 @@ namespace Gloson.Diagnostics {
         StandardOutputEncoding = encoding,
       };
 
-      using (Process process = new Process()) {
-        process.StartInfo = info;
-        process.Start();
+      using Process process = new Process() {
+        StartInfo = info,
+      };
 
-        StringBuilder sbOut = new StringBuilder();
-        StringBuilder sbErr = new StringBuilder();
+      process.Start();
 
-        process.OutputDataReceived += (sender, e) => {
-          if (e.Data != null) {
-            sbOut.AppendLine(e.Data);
-          }
-        };
+      StringBuilder sbOut = new StringBuilder();
+      StringBuilder sbErr = new StringBuilder();
 
-        process.ErrorDataReceived += (sender, e) => {
-          if (e.Data != null)
-            sbErr.AppendLine(e.Data);
-        };
+      process.OutputDataReceived += (sender, e) => {
+        if (e.Data != null) {
+          sbOut.AppendLine(e.Data);
+        }
+      };
 
-        process.BeginErrorReadLine();
-        process.BeginOutputReadLine();
+      process.ErrorDataReceived += (sender, e) => {
+        if (e.Data != null)
+          sbErr.AppendLine(e.Data);
+      };
 
-        process.WaitForExit();
+      process.BeginErrorReadLine();
+      process.BeginOutputReadLine();
 
-        return new ProcessExecutionResult(processPath,
-                                          processParameters,
-                                          sbOut.ToString(),
-                                          sbErr.ToString(),
-                                          process.ExitCode,
-                                          encoding);
-      }
+      process.WaitForExit();
+
+      return new ProcessExecutionResult(processPath,
+                                        processParameters,
+                                        sbOut.ToString(),
+                                        sbErr.ToString(),
+                                        process.ExitCode,
+                                        encoding);
     }
 
     /// <summary>
@@ -538,10 +539,10 @@ namespace Gloson.Diagnostics {
 
       token.ThrowIfCancellationRequested();
 
-      Process process = new Process();
-
-      process.StartInfo = info;
-      process.EnableRaisingEvents = true;
+      Process process = new Process() {
+        StartInfo = info,
+        EnableRaisingEvents = true
+      };
 
       process.Exited += (s, e) => {
         try {
@@ -627,14 +628,15 @@ namespace Gloson.Diagnostics {
         FileName = processPath,
       };
 
-      using (Process process = new Process()) {
-        process.StartInfo = info;
-        process.Start();
+      using Process process = new Process() { 
+        StartInfo = info
+      };
 
-        process.WaitForExit();
+      process.Start();
 
-        return process.ExitCode;
-      }
+      process.WaitForExit();
+
+      return process.ExitCode;
     }
 
     /// <summary>

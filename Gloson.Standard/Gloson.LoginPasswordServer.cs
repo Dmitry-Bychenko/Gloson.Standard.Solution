@@ -62,9 +62,9 @@ namespace Gloson {
       public int Compare(LoginPasswordServer x, LoginPasswordServer y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(null, x))
+        else if (null == x)
           return -1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return 1;
 
         int result = string.Compare(x.Server, y.Server, StringComparison.OrdinalIgnoreCase);
@@ -251,7 +251,7 @@ namespace Gloson {
     public static bool operator == (LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(null, left) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return false;
 
       return left.Equals(right);
@@ -263,7 +263,7 @@ namespace Gloson {
     public static bool operator != (LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(null, left) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return true;
 
       return !left.Equals(right);
@@ -279,7 +279,7 @@ namespace Gloson {
     public bool Equals(LoginPasswordServer other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return 

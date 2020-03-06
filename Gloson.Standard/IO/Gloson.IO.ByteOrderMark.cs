@@ -17,9 +17,9 @@ namespace Gloson.IO {
   public sealed class ByteOrderMark : IEquatable<ByteOrderMark> {
     #region Create
 
-    private static List<ByteOrderMark> s_Items = new List<ByteOrderMark>();
+    private static readonly List<ByteOrderMark> s_Items = new List<ByteOrderMark>();
 
-    private static Dictionary<string, ByteOrderMark> s_ByName =
+    private static readonly Dictionary<string, ByteOrderMark> s_ByName =
       new Dictionary<string, ByteOrderMark>(StringComparer.OrdinalIgnoreCase);
 
     #endregion Create
@@ -78,7 +78,9 @@ namespace Gloson.IO {
       else if (null == sequences)
         throw new ArgumentNullException(nameof(sequences));
 
+      Encoding = encoding;
       Name = name;
+
       Sequences = sequences
         .Where(seq => seq != null)
         .Select(seq => seq.ToList())
@@ -212,7 +214,7 @@ namespace Gloson.IO {
     public bool Equals(ByteOrderMark other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return string.Equals(Name, other.Name);

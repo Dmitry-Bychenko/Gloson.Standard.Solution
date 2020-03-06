@@ -18,7 +18,7 @@ namespace Gloson.Text {
 
     #region Private Data
 
-    private IComparer<string> m_Comparer;
+    private readonly IComparer<string> m_Comparer;
 
     #endregion Private Data
 
@@ -150,8 +150,8 @@ namespace Gloson.Text {
   public sealed class StringStandardComparer : IComparer<String> {
     #region Private Data
 
-    private IComparer<string> m_Comparer;
-    private IComparer<string> m_IgnoreCaseComparer;
+    private readonly IComparer<string> m_Comparer;
+    private readonly IComparer<string> m_IgnoreCaseComparer;
 
     #endregion Private Data
 
@@ -330,7 +330,7 @@ namespace Gloson.Text {
     /// Natural Comparer
     /// </summary>
     public static IComparer<String> NaturalComparer(CultureInfo culture, bool ignoreCase) {
-      if (ReferenceEquals(null, culture))
+      if (null == culture)
         culture = CultureInfo.CurrentCulture;
 
       CompareOptions options = CompareOptions.None;
@@ -345,7 +345,7 @@ namespace Gloson.Text {
     /// Natural Comparer
     /// </summary>
     public static IComparer<String> NaturalComparer(CultureInfo culture) {
-      if (ReferenceEquals(null, culture))
+      if (null == culture)
         culture = CultureInfo.CurrentCulture;
 
       return new StringNaturalComparer(culture.CompareInfo.GetStringComparer(CompareOptions.None));

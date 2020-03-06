@@ -57,9 +57,9 @@ namespace Gloson.Biology {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
 
-      Rna result = new Rna();
-
-      result.m_Items = new List<RnaNuclearbase>(source.Count);
+      Rna result = new Rna() {
+        m_Items = new List<RnaNuclearbase>(source.Count)
+      };
 
       for (int i = 0; i < source.Count; ++i)
         result.m_Items.Add(source[i].RnaComplement());
@@ -91,7 +91,7 @@ namespace Gloson.Biology {
     public static bool operator ==(Rna left, Rna right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return false;
 
       return left.Equals(right);
@@ -103,7 +103,7 @@ namespace Gloson.Biology {
     public static bool operator !=(Rna left, Rna right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return true;
 
       return !left.Equals(right);
@@ -150,7 +150,7 @@ namespace Gloson.Biology {
     public bool Equals(Rna other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return Enumerable.SequenceEqual(m_Items, other.m_Items);

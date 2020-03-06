@@ -28,7 +28,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     }
 
     private static string InnerMessage(Exception e) {
-      if (ReferenceEquals(null, e))
+      if (null == e)
         return "";
 
       StringBuilder sb = new StringBuilder();
@@ -48,7 +48,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     /// Show
     /// </summary>
     public void Show(Exception error) {
-      if (ReferenceEquals(null, error))
+      if (null == error)
         return;
 
       StringBuilder sb = new StringBuilder();

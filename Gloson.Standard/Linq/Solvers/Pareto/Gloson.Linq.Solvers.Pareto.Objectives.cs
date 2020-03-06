@@ -18,11 +18,11 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     private bool m_IsUpdated;
 
-    private List<ObjectiveDescription<T>> m_ObjectiveDescriptions;
+    private readonly List<ObjectiveDescription<T>> m_ObjectiveDescriptions;
 
-    private List<ObjectiveItem<T>> m_Items = new List<ObjectiveItem<T>>();
+    private readonly List<ObjectiveItem<T>> m_Items = new List<ObjectiveItem<T>>();
 
-    private Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers = 
+    private readonly Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers = 
       new Dictionary<int, IReadOnlyList<ObjectiveItem<T>>>();
 
     #endregion Private Data
@@ -197,9 +197,9 @@ namespace Gloson.Linq.Solvers.Pareto {
       public int Compare(ObjectiveItem<T> x, ObjectiveItem<T> y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (ReferenceEquals(x, null))
+        else if (null == x)
           return -1;
-        else if (ReferenceEquals(null, y))
+        else if (null == y)
           return +1;
 
         if (!ReferenceEquals(x.Owner, y.Owner))
@@ -225,7 +225,7 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     #region Private Data
 
-    private Dictionary<ObjectiveDescription<T>, double> m_Cached = new Dictionary<ObjectiveDescription<T>, double>();
+    private readonly Dictionary<ObjectiveDescription<T>, double> m_Cached = new Dictionary<ObjectiveDescription<T>, double>();
 
     internal List<ObjectiveItem<T>> m_BetterThan = new List<ObjectiveItem<T>>();
 
@@ -263,9 +263,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     public static int Dominance(ObjectiveItem<T> left, ObjectiveItem<T> right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
       else if (!ReferenceEquals(left.Owner, right.Owner))
         return 0;
@@ -332,7 +332,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Dominates(ObjectiveItem<T> other) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return true;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;
@@ -357,7 +357,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool IsDominated(ObjectiveItem<T> other) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;

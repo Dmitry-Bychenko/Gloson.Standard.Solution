@@ -31,25 +31,24 @@ namespace Gloson.Linq {
            IEnumerable<TRight> right,
            Func<TLeft, bool, TRight, bool, TResult> map) {
 
-      if (Object.ReferenceEquals(null, left))
+      if (null == left)
         throw new ArgumentNullException("first");
-      else if (Object.ReferenceEquals(null, right))
+      else if (null == right)
         throw new ArgumentNullException("second");
-      else if (Object.ReferenceEquals(null, map))
+      else if (null == map)
         throw new ArgumentNullException("map");
 
-      using (var enFirst = left.GetEnumerator()) {
-        using (var enSecond = right.GetEnumerator()) {
-          while (enFirst.MoveNext())
-            if (enSecond.MoveNext())
-              yield return map(enFirst.Current, true, enSecond.Current, true);
-            else
-              yield return map(enFirst.Current, true, default, false);
+      using var enFirst = left.GetEnumerator();
+      using var enSecond = right.GetEnumerator();
 
-          while (enSecond.MoveNext())
-            yield return map(default, false, enSecond.Current, true);
-        }
-      }
+       while (enFirst.MoveNext())
+          if (enSecond.MoveNext())
+            yield return map(enFirst.Current, true, enSecond.Current, true);
+          else
+            yield return map(enFirst.Current, true, default, false);
+
+        while (enSecond.MoveNext())
+          yield return map(default, false, enSecond.Current, true);
     }
 
     #endregion Public

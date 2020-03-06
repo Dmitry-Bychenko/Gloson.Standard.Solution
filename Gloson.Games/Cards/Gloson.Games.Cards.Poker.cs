@@ -87,7 +87,7 @@ namespace Gloson.Games.Cards {
 
     #region Private Data
 
-    private List<Card> m_CombinationSet = new List<Card>();
+    private readonly List<Card> m_CombinationSet = new List<Card>();
 
     #endregion Private Data
 
@@ -398,9 +398,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(PokerBestScore left, PokerBestScore right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
 
       int result = left.Combination.CompareTo(right.Combination);

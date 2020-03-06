@@ -25,8 +25,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       #region Private Data
 
-      List<int> m_Indexes = new List<int>();
-      List<T> m_Items = new List<T>();
+      private readonly List<int> m_Indexes = new List<int>();
+      private readonly List<T> m_Items = new List<T>();
 
       #endregion Private Data
 
@@ -161,11 +161,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
            Func<T, double> weight,
            Func<T, double> value) {
 
-      if (ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (ReferenceEquals(null, weight))
+      else if (null == weight)
         throw new ArgumentNullException(nameof(weight));
-      else if (ReferenceEquals(null, value))
+      else if (null == value)
         throw new ArgumentNullException(nameof(value));
 
       double initialCapacity = capacity;
@@ -176,7 +176,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
       // All Data Available
       var allData = source
         .Select((item, idx) => (
-           item: item,
+           item,
            weight: weight(item),
            value: value(item),
            index: idx))
@@ -291,9 +291,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
                  Tuple<double, bool>> cache =
         new Dictionary<Tuple<int, double>, Tuple<double, bool>>();
 
-      Func<int, double, double> solver = null;
-
-      solver = (i, w) => {
+      double solver(int i, double w) {
         if (i < 0 || w < 0)
           return 0.0;
 
@@ -306,7 +304,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
           // Skip :
           return solver(i - 1, w);
         }
-        else if (w <= takeAll[i]) { 
+        else if (w <= takeAll[i]) {
           // Take :
           result = solver(i - 1, w - data[i].weight) + data[i].value;
 
@@ -399,18 +397,18 @@ namespace Gloson.Linq.Solvers.Knapsack {
            Func<T, double> weight,
            Func<T, double> value) {
 
-      if (ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (ReferenceEquals(null, weight))
+      else if (null == weight)
         throw new ArgumentNullException(nameof(weight));
-      else if (ReferenceEquals(null, value))
+      else if (null == value)
         throw new ArgumentNullException(nameof(value));
 
       double initialCapacity = capacity;
 
       var allData = source
         .Select((item, idx) => (
-           item: item,
+           item,
            weight: weight(item),
            value: value(item),
            index: idx))

@@ -47,18 +47,14 @@ namespace Gloson.Linq {
     #region Algorithm
 
     internal string ToReport() {
-      switch (Kind) {
-        case EditOperationKind.None:
-          return $"Keep   '{Before}', ({Cost})";
-        case EditOperationKind.Insert:
-          return $"Insert '{After}', ({Cost})";
-        case EditOperationKind.Delete:
-          return $"Delete '{Before}', ({Cost})";
-        case EditOperationKind.Edit:
-          return $"Edit   '{Before}' into '{After}', ({Cost})";
-        default:
-          return $"???    '{Before}' into '{After}', ({Cost})";
-      }
+      return Kind switch
+      {
+        EditOperationKind.None   => $"Keep   '{Before}', ({Cost})",
+        EditOperationKind.Insert => $"Insert '{After}', ({Cost})",
+        EditOperationKind.Delete => $"Delete '{Before}', ({Cost})",
+        EditOperationKind.Edit   => $"Edit   '{Before}' into '{After}', ({Cost})",
+                             _   => $"???    '{Before}' into '{After}', ({Cost})",
+      };
     }
 
     #endregion Algorithm
@@ -112,18 +108,13 @@ namespace Gloson.Linq {
     /// To String
     /// </summary>
     public override string ToString() {
-      switch (Kind) {
-        case EditOperationKind.None:
-          return $"Keep '{Before}'";
-        case EditOperationKind.Insert:
-          return $"Insert '{After}'";
-        case EditOperationKind.Delete:
-          return $"Delete '{Before}'";
-        case EditOperationKind.Edit:
-          return $"Edit '{Before}' into '{After}'";
-        default:
-          return $"Unknown '{Before}' into '{After}'";
-      }
+      return Kind switch {
+        EditOperationKind.None   => $"Keep '{Before}'",
+        EditOperationKind.Insert => $"Insert '{After}'",
+        EditOperationKind.Delete => $"Delete '{Before}'",
+        EditOperationKind.Edit   => $"Edit '{Before}' into '{After}'",
+                               _ => $"Unknown '{Before}' into '{After}'",
+      };
     }
 
     #endregion Public
@@ -136,7 +127,7 @@ namespace Gloson.Linq {
     public static bool operator ==(EditOperation<T> left, EditOperation<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return false;
 
       return left.Equals(right);
@@ -148,7 +139,7 @@ namespace Gloson.Linq {
     public static bool operator !=(EditOperation<T> left, EditOperation<T> right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+      else if (null == left || null == right)
         return true;
 
       return !left.Equals(right);
@@ -164,7 +155,7 @@ namespace Gloson.Linq {
     public bool Equals(EditOperation<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
 
       return object.Equals(this.Before, other.Before) &&
@@ -395,15 +386,15 @@ namespace Gloson.Linq {
                          Func<T, double> insertCost,
                          Func<T, double> deleteCost,
                          Func<T, T, double> editCost) {
-      if (ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (ReferenceEquals(null, target))
+      else if (null == target)
         throw new ArgumentNullException(nameof(target));
-      else if (ReferenceEquals(null, insertCost))
+      else if (null == insertCost)
         throw new ArgumentNullException(nameof(insertCost));
-      else if (ReferenceEquals(null, deleteCost))
+      else if (null == deleteCost)
         throw new ArgumentNullException(nameof(deleteCost));
-      else if (ReferenceEquals(null, editCost))
+      else if (null == editCost)
         throw new ArgumentNullException(nameof(editCost));
 
       CorePerform(source.ToArray(),
@@ -422,11 +413,11 @@ namespace Gloson.Linq {
     public EditProcedure(IEnumerable<T> source,
                          IEnumerable<T> target,
                          IEditCost<T> price) {
-      if (ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (ReferenceEquals(null, target))
+      else if (null == target)
         throw new ArgumentNullException(nameof(target));
-      else if (ReferenceEquals(null, price))
+      else if (null == price)
         throw new ArgumentNullException(nameof(price));
 
       Func<T, double> insertCost = price.InsertionPrice;

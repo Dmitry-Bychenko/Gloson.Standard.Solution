@@ -88,7 +88,7 @@ namespace Gloson.Linq {
       public static bool operator ==(Vertex<T> left, Vertex<T> right) {
         if (ReferenceEquals(left, right))
           return true;
-        else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+        else if (null == left || null == right)
           return false;
 
         return left.Equals(right);
@@ -100,7 +100,7 @@ namespace Gloson.Linq {
       public static bool operator !=(Vertex<T> left, Vertex<T> right) {
         if (ReferenceEquals(left, right))
           return false;
-        else if (ReferenceEquals(left, null) || ReferenceEquals(null, right))
+        else if (null == left || null ==  right)
           return true;
 
         return !left.Equals(right);
@@ -130,7 +130,7 @@ namespace Gloson.Linq {
       public bool Equals(Vertex<T> other) {
         if (ReferenceEquals(this, other))
           return true;
-        else if (ReferenceEquals(null, other))
+        else if (null == other)
           return false;
 
         return object.Equals(Value, other.Value);
@@ -149,9 +149,9 @@ namespace Gloson.Linq {
     /// <param name="source">Top items (connected components representatives)</param>
     /// <param name="children">return children on given item</param>
     public static IEnumerable<Vertex<T>> BreadthFirstSearch<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> children) {
-      if (Object.ReferenceEquals(null, source))
+      if (null ==  source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, children))
+      else if (null == children)
         throw new ArgumentNullException(nameof(children));
 
       HashSet<T> proceeded = new HashSet<T>();
@@ -163,7 +163,7 @@ namespace Gloson.Linq {
       while (queue.Count > 0) {
         IEnumerable<Vertex<T>> src = queue.Dequeue();
 
-        if (Object.ReferenceEquals(null, src))
+        if (null ==  src)
           continue;
 
         foreach (var item in src)
@@ -181,9 +181,9 @@ namespace Gloson.Linq {
     /// <param name="source">Top items (connected components representatives)</param>
     /// <param name="children">return children on given item</param>
     public static IEnumerable<Vertex<T>> DepthFirstSearch<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> children) {
-      if (Object.ReferenceEquals(null, source))
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
-      else if (Object.ReferenceEquals(null, children))
+      else if (null == children)
         throw new ArgumentNullException(nameof(children));
 
       HashSet<T> proceeded = new HashSet<T>();
@@ -195,7 +195,7 @@ namespace Gloson.Linq {
       while (stack.Count > 0) {
         IEnumerable<Vertex<T>> src = stack.Pop();
 
-        if (Object.ReferenceEquals(null, src))
+        if (null == src)
           continue;
 
         foreach (var item in src)

@@ -52,8 +52,8 @@ namespace Gloson.UI.CommandLine {
     }
 
     private void OnUpdate() {
-      if (ReferenceEquals(null, Owner))
-        Owner.OnItemUpdate(this);
+      if (null == Owner)
+        Owner.OnItemUpdate();
     }
 
     private Regex CreateRegularExpression() {
@@ -92,9 +92,9 @@ namespace Gloson.UI.CommandLine {
     public static int Compare(CommandLineArgumentDescription left, CommandLineArgumentDescription right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(null, right))
+      else if (null == right)
         return 1;
-      else if (ReferenceEquals(left, null))
+      else if (null == left)
         return -1;
 
       int result = string.Compare(left.m_OrderName, right.m_OrderName, StringComparison.OrdinalIgnoreCase);
@@ -113,10 +113,10 @@ namespace Gloson.UI.CommandLine {
       private set {
         if (ReferenceEquals(m_Owner, value))
           return;
-        else if (ReferenceEquals(null, value))
+        else if (null == value)
           throw new ArgumentNullException(nameof(value));
 
-        if (ReferenceEquals(null, m_Owner)) {
+        if (null != m_Owner) {
           m_Owner.CoreRemove(this);
           m_Owner.OnUpdate();
         }
@@ -374,7 +374,7 @@ namespace Gloson.UI.CommandLine {
     public bool Equals(CommandLineArgumentDescription other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (ReferenceEquals(null, other))
+      else if (null == other)
         return false;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;
@@ -418,7 +418,7 @@ namespace Gloson.UI.CommandLine {
     #region Private Data 
 
     // Items
-    private List<CommandLineArgumentDescription> m_Items = new List<CommandLineArgumentDescription>();
+    private readonly List<CommandLineArgumentDescription> m_Items = new List<CommandLineArgumentDescription>();
 
     private CommandLineDescriptorsOptions m_Options;
 
@@ -426,7 +426,7 @@ namespace Gloson.UI.CommandLine {
 
     #region Algorithm
 
-    internal void OnItemUpdate(CommandLineArgumentDescription item) {
+    internal void OnItemUpdate() {
       OnUpdate();
     }
 
@@ -484,7 +484,7 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Items
     /// </summary>
-    public IReadOnlyList<CommandLineArgumentDescription> items => m_Items;
+    public IReadOnlyList<CommandLineArgumentDescription> Items => m_Items;
 
     /// <summary>
     /// Add
