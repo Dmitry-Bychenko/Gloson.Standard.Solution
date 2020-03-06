@@ -22,7 +22,7 @@ namespace Gloson.Collections.Generic {
     public sealed class Node {
       #region Private Data
 
-      private Dictionary<T, Node> m_Items;
+      private readonly Dictionary<T, Node> m_Items;
 
       #endregion Private Data
 
@@ -172,12 +172,9 @@ namespace Gloson.Collections.Generic {
     public Trie(IEqualityComparer<T> comparer) {
       if (null == comparer)
         comparer = EqualityComparer<T>.Default;
-
-      if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer), $"No default equality comparer for {typeof(T).Name}");
-
-      Comparer = comparer;
-      Root = new Node(this, null, default(T));
+      
+      Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No default equality comparer for {typeof(T).Name}");
+      Root = new Node(this, null, default);
     }
 
     /// <summary>
@@ -251,9 +248,7 @@ namespace Gloson.Collections.Generic {
       current.Occurrences += 1;
 
       foreach (T value in sequence) {
-        Node next;
-
-        if (!current.Items.TryGetValue(value, out next))
+        if (!current.Items.TryGetValue(value, out Node next))
           next = new Node(this, current, value);
 
         next.Occurrences += 1;

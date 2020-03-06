@@ -16,7 +16,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
   public abstract class CheckSumBase<T> {
     #region Private Data
 
-    private List<T> m_Items;
+    private readonly List<T> m_Items;
 
     #endregion Private Data
 
@@ -85,7 +85,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
     /// To Boolean (not null and IsValid)
     /// </summary>
     public static implicit operator bool (CheckSumBase<T> value) =>
-      !ReferenceEquals(value, null) && value.IsValid;
+      (null != value) && value.IsValid;
 
     #endregion Operators
   }

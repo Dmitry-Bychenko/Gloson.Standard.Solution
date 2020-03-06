@@ -70,10 +70,7 @@ namespace Gloson.Collections.Generic {
       /// <param name="graph">Parent Graph</param>
       /// <param name="value">Value associated with the Vertex</param>
       public Vertex(Graph<V, E> graph, V value) {
-        if (null == graph)
-          throw new ArgumentNullException(nameof(graph));
-
-        Graph = graph;
+        Graph = graph ?? throw new ArgumentNullException(nameof(graph));
         Value = value;
 
         if (!Graph.CoreAddVertex(this)) {
@@ -163,11 +160,13 @@ namespace Gloson.Collections.Generic {
 
       #region Create
 
-      private Edge(Vertex from, Vertex to, E value, bool check) {
+      /*
+      private Edge(Vertex from, Vertex to, E value, bool check) { //, bool check
         To = to;
         From = from;
         Value = value;
       }
+      */
 
       /// <summary>
       /// Standard Constructor
@@ -192,9 +191,9 @@ namespace Gloson.Collections.Generic {
 
         // Correct; create create twin
         if (Graph.Options.HasFlag(GraphOptions.Undirected)) {
-          m_Twin = new Edge(to, from, value, true);
-
-          m_Twin.m_Twin = this;
+          m_Twin = new Edge(to, from, value) {
+            m_Twin = this
+          };
         }
       }
 
@@ -222,10 +221,9 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Graph
       /// </summary>
-      public Graph<V, E> Graph  => null != From
+      public Graph<V, E> Graph => null != From
         ? From.Graph
-        : null != To ? To.Graph
-        : null;
+        : To?.Graph;
 
       /// <summary>
       /// Value
