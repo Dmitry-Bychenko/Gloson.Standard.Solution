@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Gloson;
@@ -31,6 +32,38 @@ namespace Gloson.IO {
       return Environment
         .ExpandEnvironmentVariables(path)
         .QuotationAdd();
+    }
+
+    /// <summary>
+    /// Subtract
+    /// </summary>
+    public static string Subtract(string path, string root, StringComparison comparison = StringComparison.OrdinalIgnoreCase) {
+      if (null == path || null == root)
+        return path;
+
+      int index = -1;
+      string[] ri = Split(root).ToArray();
+
+      IEnumerable<string> di = Split(path);
+
+      bool remove = true;
+      List<string> list = new List<string>();
+
+      foreach (string dir in di) {
+        if (remove) {
+          index += 1;
+
+          if (index >= ri.Length)
+            remove = false;
+          else if (!string.Equals(dir, ri[index], comparison))
+            remove = false;
+        } 
+
+        if (!remove)
+          list.Add(dir);
+      }
+
+      return string.Join(Path.DirectorySeparatorChar.ToString(), list);
     }
     
     /// <summary>

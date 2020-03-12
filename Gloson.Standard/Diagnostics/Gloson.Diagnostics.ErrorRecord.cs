@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+
+using Gloson.IO;
+using Gloson.Text;
 
 namespace Gloson.Diagnostics {
 
@@ -19,6 +23,15 @@ namespace Gloson.Diagnostics {
       IComparable<ErrorRecord> {
 
     #region Algorithm
+
+    private static readonly int SeverityMaxLength = Enum
+      .GetNames(typeof(ErrorSeverity))
+      .Max(item => item.Length);
+
+    private static readonly int PriorityMaxLength = Enum
+      .GetNames(typeof(ErrorPriority))
+      .Max(item => item.Length);
+
 
     #endregion Algorithm
 
@@ -183,6 +196,48 @@ namespace Gloson.Diagnostics {
       return String.Join(" ", Records
         .Where(item => !string.IsNullOrWhiteSpace(item))
         .Select(item => Regex.Replace(item.Trim(), @"\s+", " ")));
+    }
+
+    /// <summary>
+    /// To Report
+    /// </summary>
+    public string ToReport(string fileNameRoot = null,
+                           int shift = 0) {
+      fileNameRoot = fileNameRoot?.Trim() ?? "";
+      string pad = shift <= 0 ? "" : new string(' ', shift);
+
+      var lines = Description.SplitToLines().ToArray();
+
+      StringBuilder sb = new StringBuilder();
+
+      sb.Append(pad);
+
+      sb.Append(Priority.ToString().PadLeft(PriorityMaxLength));
+      sb.Append(" : ");
+      sb.Append(Severity.ToString().PadLeft(SeverityMaxLength));
+      sb.Append(" ");
+
+      if (lines.Length > 0) 
+        sb.Append(lines[0].Trim());
+
+      sb.Append(PathHelper.Subtract(FileName, fileNameRoot));
+
+      sb.Append(" ");
+
+      if (Line >= 0 && Column >= 0)
+        sb.Append($"{Line:000000}:{Column:0000}");
+      else if (Line >= 0)
+        sb.Append($"{Line:000000}");
+      else if (Column >= 0)
+        sb.Append($"?:{Column:0000}");
+
+      for (int i = 1; i < lines.Length; ++i) {
+        sb.AppendLine();
+        sb.Append(new string(' ', PriorityMaxLength + SeverityMaxLength + 4));
+        sb.Append(lines[i].Trim());
+      }
+
+      return sb.ToString();
     }
 
     #endregion Public
