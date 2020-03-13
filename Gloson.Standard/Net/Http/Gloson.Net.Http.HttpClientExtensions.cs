@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Json;
 using System.Net;
 using System.Net.Http;
@@ -28,11 +29,11 @@ namespace Gloson.Net.Http {
       if (null == client)
         throw new ArgumentNullException(nameof(client));
 
-      var respond = await client.GetAsync(address);
+      var respond = await client.GetAsync(address).ConfigureAwait(false);
 
       respond.EnsureSuccessStatusCode();
 
-      var text = await respond.Content.ReadAsStringAsync();
+      var text = await respond.Content.ReadAsStringAsync().ConfigureAwait(false);
 
       return JsonValue.Parse(text);
     }
@@ -44,13 +45,30 @@ namespace Gloson.Net.Http {
       if (null == client)
         throw new ArgumentNullException(nameof(client));
 
-      var respond = await client.GetAsync(address);
+      var respond = await client.GetAsync(address).ConfigureAwait(false);
 
       respond.EnsureSuccessStatusCode();
 
-      var text = await respond.Content.ReadAsStringAsync();
+      var text = await respond.Content.ReadAsStringAsync().ConfigureAwait(false);
 
       return XDocument.Parse(text);
+    }
+
+    /// <summary>
+    /// Read Lines
+    /// </summary>
+    public static IEnumerable<string> ReadLines(this HttpClient client, string address, Encoding encoding = null) {
+      if (null == client)
+        throw new ArgumentNullException(nameof(client));
+      else if (null == address)
+        throw new ArgumentNullException(nameof(address));
+
+      using var reader = null == encoding
+        ? new StreamReader(client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult())
+        : new StreamReader(client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult(), encoding);
+
+      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
+        yield return line;
     }
 
     #endregion Public
