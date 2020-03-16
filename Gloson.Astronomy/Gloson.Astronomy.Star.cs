@@ -101,7 +101,11 @@ namespace Gloson.Astronomy {
 
       Bayer              = record[27].Trim();
       Flamsteed          = record[28].Trim();
-      Constellation      = record[29].Trim();
+
+      if (Constellation.TryParse(record[29].Trim(), out var con)) 
+        Constellation = con;
+      else 
+        Constellation = Constellation.Unknown;
 
       Companion          = record[30].Trim();
       CompanionPrimary   = record[31].Trim();
@@ -283,7 +287,7 @@ namespace Gloson.Astronomy {
     /// <summary>
     /// The Flamsteed designation as a distinct value 
     /// </summary>
-    public string Constellation { get; }
+    public Constellation Constellation { get; }
 
     /// <summary>
     /// ID of companion star
