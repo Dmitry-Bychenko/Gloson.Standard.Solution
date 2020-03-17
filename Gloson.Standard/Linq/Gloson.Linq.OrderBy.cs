@@ -87,7 +87,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Detect order of the sequence
     /// </summary>
-    public static Orders Order<T>(this IOrderedEnumerable<T> source, IComparer<T> comparer = null) {
+    public static Orders Order<T>(this IEnumerable<T> source, IComparer<T> comparer = null) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
 
