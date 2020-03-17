@@ -24,6 +24,37 @@ namespace Gloson.Linq {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
+  /// Orders Helper
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class OrdersHelpers {
+    /// <summary>
+    /// From Integer
+    /// </summary>
+    public static Orders FromInt(int value) {
+      return
+          value == 0 ? Orders.AscendingAndDescending
+        : value < 0 ? Orders.Descending
+        : Orders.Ascending;
+
+    }
+
+    /// <summary>
+    /// To Integer
+    /// </summary>
+    public static int ToInt (Orders value) {
+      return
+          value == Orders.AscendingAndDescending ? 0
+        : value == Orders.Descending ? -1
+        : 1;
+    }
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
   /// Enumerable Extensions - Order By
   /// </summary>
   //
