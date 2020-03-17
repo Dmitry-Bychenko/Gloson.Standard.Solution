@@ -24,7 +24,7 @@ namespace Gloson.Biology {
 
     #region Private Data
 
-    private static Regex s_WhiteSpaces = new Regex(@"\s+");
+    private static readonly Regex s_WhiteSpaces = new Regex(@"\s+");
 
     #endregion Private Data
 
@@ -224,7 +224,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// To String
     /// </summary>
-    public string ToString() => ToString(0);
+    public override string ToString() => ToString(0);
 
     /// <summary>
     /// To String
