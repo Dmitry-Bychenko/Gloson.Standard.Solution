@@ -58,7 +58,7 @@ namespace Gloson {
         }
 
         // Here v >= u.
-        right = right - left;
+        right -= left;
 
       } while (right != 0);
 
@@ -181,7 +181,7 @@ namespace Gloson {
         }
 
         // Here v >= u.
-        right = right - left;
+        right -= left;
 
       } while (right != 0);
 
