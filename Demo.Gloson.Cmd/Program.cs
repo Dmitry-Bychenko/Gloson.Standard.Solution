@@ -4,6 +4,9 @@ using System.Data;
 using Gloson;
 using Gloson.Data;
 using Gloson.Data.Oracle;
+
+using Gloson.Games.TicTacToe;
+
 using Gloson.Text;
 using Gloson.Text.NaturalLanguages;
 using Gloson.Text.NaturalLanguages.Library;
@@ -28,13 +31,15 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
-      Configuration.Apply();
+      //Configuration.Apply();
 
-      var data = Transliterations.GetTransliterations().Length;
+      Console.WriteLine(TicTacToePosition.Empty.MoveNumber);
+
+      //var data = Transliterations.GetTransliterations().Length;
 
       //int r = Transliterations.GetTransliterations().Length;
 
-      Console.WriteLine(data);
+      //Console.WriteLine(data);
 
       //Gloson.Text.NaturalLanguages.
 

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gloson.Games\Gloson.Games.csproj" />
     <ProjectReference Include="..\Gloson.Standard\Gloson.Standard.csproj" />
   </ItemGroup>
 
