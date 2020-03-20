@@ -25,11 +25,19 @@ namespace Gloson {
     #region Algorithm
 
     private static void CoreInitialization() {
-      ServicePointManager.SecurityProtocol = 
-        SecurityProtocolType.Ssl3 | 
-        SecurityProtocolType.Tls | 
-        SecurityProtocolType.Tls11 | 
-        SecurityProtocolType.Tls12;
+      try {
+        ServicePointManager.SecurityProtocol =
+          SecurityProtocolType.Ssl3 |
+          SecurityProtocolType.Tls |
+          SecurityProtocolType.Tls11 |
+          SecurityProtocolType.Tls12;
+      }
+      catch (NotSupportedException) {
+        ServicePointManager.SecurityProtocol =
+          SecurityProtocolType.Tls |
+          SecurityProtocolType.Tls11 |
+          SecurityProtocolType.Tls12;
+      }
 
       HttpClient httpClient = new HttpClient();
 

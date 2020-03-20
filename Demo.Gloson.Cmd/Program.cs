@@ -31,7 +31,7 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main(string[] args) {
-      //Configuration.Apply();
+      Configuration.Apply();
 
       Console.WriteLine(TicTacToePosition.Empty.MoveNumber);
 
