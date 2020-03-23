@@ -25,11 +25,7 @@ namespace Gloson.Json {
       else if (string.IsNullOrWhiteSpace(name))
         throw new ArgumentNullException(nameof(name));
 
-      JsonObject obj = json as JsonObject;
-
-      if (null == obj)
-        return null;
-      else if (obj.TryGetValue(name, out var result))
+      if (json is JsonObject obj && obj.TryGetValue(name, out var result))
         return result;
       else
         return null;
@@ -42,14 +38,10 @@ namespace Gloson.Json {
       if (null == json)
         throw new ArgumentNullException(nameof(json));
 
-      JsonArray arr = json as JsonArray;
-
-      if (null == arr)
-        return null;
-      else if (index < 0 || index >= arr.Count)
-        return null;
-      else
+      if (json is JsonArray arr && (index >= 0 || index < arr.Count))
         return arr[index];
+      else
+        return null;
     }
 
     #endregion Public

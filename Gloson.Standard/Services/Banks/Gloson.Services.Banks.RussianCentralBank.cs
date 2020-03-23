@@ -17,6 +17,7 @@ namespace Gloson.Services.Banks {
   /// <summary>
   /// Russian Central Bank
   /// </summary>
+  // https://www.cbr.ru/development/SXML/
   //
   //-------------------------------------------------------------------------------------------------------------------
 
