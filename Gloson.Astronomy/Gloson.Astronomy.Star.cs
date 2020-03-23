@@ -1,12 +1,7 @@
-﻿using System;
+﻿using Gloson.Net.Http;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
-using Gloson;
-using Gloson.Linq;
-using Gloson.Text;
-using Gloson.Net.Http;
 
 namespace Gloson.Astronomy {
 
@@ -94,24 +89,24 @@ namespace Gloson.Astronomy {
       VelocityY = Parse(record[21]);
       VelocityZ = Parse(record[22]);
 
-      RadiansRA          = Parse(record[23]);
-      RadiansDec         = Parse(record[24]);
-      RadiansVelocityRA  = Parse(record[25]);
+      RadiansRA = Parse(record[23]);
+      RadiansDec = Parse(record[24]);
+      RadiansVelocityRA = Parse(record[25]);
       RadiansVelocityDec = Parse(record[26]);
 
-      Bayer              = record[27].Trim();
-      Flamsteed          = record[28].Trim();
+      Bayer = record[27].Trim();
+      Flamsteed = record[28].Trim();
 
-      if (Constellation.TryParse(record[29].Trim(), out var con)) 
+      if (Constellation.TryParse(record[29].Trim(), out var con))
         Constellation = con;
-      else 
+      else
         Constellation = Constellation.Unknown;
 
-      Companion          = record[30].Trim();
-      CompanionPrimary   = record[31].Trim();
-      CompanionBase      = record[32].Trim();
+      Companion = record[30].Trim();
+      CompanionPrimary = record[31].Trim();
+      CompanionBase = record[32].Trim();
 
-      Luminosity         = Parse(record[33]);
+      Luminosity = Parse(record[33]);
 
       VariableDesignation = record[34].Trim();
 
@@ -257,7 +252,7 @@ namespace Gloson.Astronomy {
     /// <summary>
     /// The position in radians Right Ascension
     /// </summary>
-    public double RadiansRA {get;}
+    public double RadiansRA { get; }
 
     /// <summary>
     /// The position in radians Declination

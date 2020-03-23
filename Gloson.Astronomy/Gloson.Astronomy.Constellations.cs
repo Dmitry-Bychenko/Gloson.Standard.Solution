@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Astronomy {
 
@@ -12,8 +11,8 @@ namespace Gloson.Astronomy {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Constellation : 
-    IEquatable<Constellation>, 
+  public sealed class Constellation :
+    IEquatable<Constellation>,
     IComparable<Constellation> {
 
     #region Private Data
@@ -154,12 +153,12 @@ namespace Gloson.Astronomy {
     }
 
     private Constellation(string name, string acronym, string nasa, string genitive) {
-      Name        = name ?? "";
-      Acronym     = acronym ?? "";
+      Name = name ?? "";
+      Acronym = acronym ?? "";
       AcronymNasa = nasa ?? "";
-      Genitive    = genitive ?? "";
+      Genitive = genitive ?? "";
 
-      s_Dictionary.Add(Name, this); 
+      s_Dictionary.Add(Name, this);
 
       if (!s_Dictionary.ContainsKey(Acronym))
         s_Dictionary.Add(Acronym, this);
@@ -202,7 +201,7 @@ namespace Gloson.Astronomy {
     /// <summary>
     /// Compare
     /// </summary>
-    public static int Compare (Constellation left, Constellation right) {
+    public static int Compare(Constellation left, Constellation right) {
       if (ReferenceEquals(left, right))
         return 0;
       else if (null == left)
