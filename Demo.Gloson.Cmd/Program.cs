@@ -30,7 +30,7 @@ namespace Demo.Gloson.Cmd {
     /// <summary>
     /// Entry Point
     /// </summary>
-    static void Main(string[] args) {
+    static void Main() {
       Configuration.Apply();
 
       Console.WriteLine(TicTacToePosition.Empty.MoveNumber);
