@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Gloson {
 
@@ -126,7 +124,7 @@ namespace Gloson {
         m_Prerelease = pre.Split('.'),
         m_BuildMetaData = build.Split('.'),
       };
-      
+
       return true;
     }
 

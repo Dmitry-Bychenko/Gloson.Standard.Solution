@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -116,7 +115,7 @@ namespace Gloson.IO {
         }
       }
       catch {
-        if (stream.CanSeek) 
+        if (stream.CanSeek)
           stream.Position = position;
 
         throw;
@@ -141,9 +140,9 @@ namespace Gloson.IO {
     /// <param name="bytes">Bytes</param>
     /// <param name="chunkSize">Chunk size to use</param>
     /// <returns>bytes written</returns>
-    public static async Task<long> WriteAllBytesAsync(this Stream stream, 
-                                                      IEnumerable<byte> bytes, 
-                                                      CancellationToken token, 
+    public static async Task<long> WriteAllBytesAsync(this Stream stream,
+                                                      IEnumerable<byte> bytes,
+                                                      CancellationToken token,
                                                       int chunkSize) {
       if (null == stream)
         throw new ArgumentNullException(nameof(stream));

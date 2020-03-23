@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Gloson.Data {
 
@@ -86,7 +83,7 @@ namespace Gloson.Data {
         .Where(t => !t.IsAbstract && t.IsPublic)
         .Where(t => t.GetInterfaces().Any(itf => itf == typeof(IDbDataAdapter)))
         .FirstOrDefault();
-      
+
       if (transactionType != null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(IDbTransaction),
@@ -149,9 +146,9 @@ namespace Gloson.Data {
           (provider) => {
             IDbConnection result = Activator.CreateInstance(connectionType, connectionString) as IDbConnection;
 
-          //result.Open();
+            //result.Open();
 
-          return result;
+            return result;
           },
           ServiceLifetime.Transient);
 
@@ -276,18 +273,18 @@ namespace Gloson.Data {
 
 
       using IDbCommand q = conn.CreateCommand();
-          q.CommandText = sql;
+      q.CommandText = sql;
 
-          foreach (var item in parameters) {
-            IDbDataParameter prm = q.CreateParameter();
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-            prm.ParameterName = item.Item1;
-            prm.Value = item.Item2;
-          }
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
+      }
 
-          return q.ExecuteNonQuery();
-        
-      
+      return q.ExecuteNonQuery();
+
+
     }
 
     /// <summary>
@@ -329,7 +326,7 @@ namespace Gloson.Data {
 
       using IDbConnection conn = Connect();
       using IDbCommand q = conn.CreateCommand();
-      
+
       q.CommandText = sql;
 
       foreach (var item in parameters) {

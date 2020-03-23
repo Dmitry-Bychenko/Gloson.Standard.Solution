@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -30,7 +29,7 @@ namespace Gloson.Collections.Generic {
           return true;
         else if (null == y)
           return false;
-        else if (x ==  null)
+        else if (x == null)
           return false;
 
         return m_Equals(x, y);
@@ -185,7 +184,7 @@ namespace Gloson.Collections.Generic {
       if (others.Length <= 0)
         return master;
 
-      return new EqualityComparerCombined<T>(new IEqualityComparer<T>[] { master}.Concat(others));
+      return new EqualityComparerCombined<T>(new IEqualityComparer<T>[] { master }.Concat(others));
     }
 
     #endregion Public

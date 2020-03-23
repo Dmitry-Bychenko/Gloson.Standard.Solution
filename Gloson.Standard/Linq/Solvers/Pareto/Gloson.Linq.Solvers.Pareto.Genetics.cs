@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Gloson.Linq.Solvers.Pareto {
 
@@ -71,9 +69,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// </summary>
     /// <param name="scope"></param>
     /// <param name="breed"></param>
-    public ParetoGeneticsSolver(ObjectivesScope<T> scope, 
-                                Func<T, T, T> breed) 
-      : this(scope, breed, null) {}
+    public ParetoGeneticsSolver(ObjectivesScope<T> scope,
+                                Func<T, T, T> breed)
+      : this(scope, breed, null) { }
 
     /// <summary>
     /// Standard Constructor

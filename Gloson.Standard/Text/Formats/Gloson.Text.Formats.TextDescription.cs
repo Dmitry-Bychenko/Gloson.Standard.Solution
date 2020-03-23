@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Drawing;
 
 namespace Gloson.Text.Formats {
 
@@ -60,12 +57,12 @@ namespace Gloson.Text.Formats {
   //-------------------------------------------------------------------------------------------------------------------
 
   public enum FontModifiers {
-    None      = 0,
-    Regular   = 0,
-    Bold      = 1,
-    Italic    = 2,
+    None = 0,
+    Regular = 0,
+    Bold = 1,
+    Italic = 2,
     Underline = 4,
-    Crossed   = 8,
+    Crossed = 8,
   }
 
   //-------------------------------------------------------------------------------------------------------------------

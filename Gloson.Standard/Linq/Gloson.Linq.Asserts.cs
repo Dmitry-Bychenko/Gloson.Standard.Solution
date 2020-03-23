@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -28,14 +26,14 @@ namespace Gloson.Linq {
         throw new ArgumentNullException(nameof(predicate));
 
       foreach (T item in source) {
-        if (!predicate(item)) 
+        if (!predicate(item))
           throw exception?.Invoke(item) ?? new InvalidOperationException("Assertion failed. Sequence has an invalid item.");
 
         yield return item;
       }
     }
 
-    public static IEnumerable<T> Assert<T>(this IEnumerable<T> source, Func<T, bool> predicate) => 
+    public static IEnumerable<T> Assert<T>(this IEnumerable<T> source, Func<T, bool> predicate) =>
       Assert(source, predicate, null);
 
     #endregion Public

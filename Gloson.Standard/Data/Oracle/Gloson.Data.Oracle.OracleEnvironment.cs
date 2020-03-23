@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
-using System.Reflection;
-using System.Text;
 
 namespace Gloson.Data.Oracle {
 
@@ -19,7 +17,7 @@ namespace Gloson.Data.Oracle {
   public sealed class OracleEnvironment {
     #region Private Data
 
-    private readonly Dictionary<string, string> m_Cached = 
+    private readonly Dictionary<string, string> m_Cached =
       new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     private Version m_Version = null;

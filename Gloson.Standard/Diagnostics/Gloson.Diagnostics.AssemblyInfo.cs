@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Gloson.Diagnostics {
 
@@ -140,7 +137,7 @@ namespace Gloson.Diagnostics {
     /// To String
     /// </summary>
     public override string ToString() {
-      return string.Join(" ", new string[] { 
+      return string.Join(" ", new string[] {
            Company,
            Title,
          $"Version {FileVersion}",
@@ -156,7 +153,7 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Equal
     /// </summary>
-    public static bool operator == (AssemblyInfo left, AssemblyInfo right) {
+    public static bool operator ==(AssemblyInfo left, AssemblyInfo right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == right)

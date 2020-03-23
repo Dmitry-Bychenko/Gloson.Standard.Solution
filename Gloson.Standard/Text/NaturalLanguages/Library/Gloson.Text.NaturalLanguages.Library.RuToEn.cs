@@ -1,10 +1,6 @@
 ﻿// https://www.translitteration.com/transliteration/en/russian/iso-9/
 
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Gloson.Text.NaturalLanguages.Library {
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Gloson.Services.Git {
 
@@ -50,7 +48,7 @@ namespace Gloson.Services.Git {
   public sealed class GitNotFoundException : GitException {
     #region Algorithm
 
-    private static bool IsWindows { 
+    private static bool IsWindows {
       get {
         return Environment.OSVersion.Platform == PlatformID.Win32NT;
       }
@@ -63,8 +61,8 @@ namespace Gloson.Services.Git {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public GitNotFoundException() 
-      : base(IsWindows 
+    public GitNotFoundException()
+      : base(IsWindows
           ? @"Git not found. Add path in registry [HKEY_LOCAL_MACHINE\Software\GitForWindows] [InstallPath] to %PATH%"
           : @"Git not found") { }
 

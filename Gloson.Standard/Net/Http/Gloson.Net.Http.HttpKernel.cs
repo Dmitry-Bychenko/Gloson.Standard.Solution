@@ -1,15 +1,12 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Json;
-using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
-using Gloson.Text;
 
 namespace Gloson.Net.Http {
 
@@ -52,9 +49,9 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Read Csv
     /// </summary>
-    public static IEnumerable<string[]> ReadCsv(string address, 
-                                                Encoding encoding = null, 
-                                                char delimiter = ',', 
+    public static IEnumerable<string[]> ReadCsv(string address,
+                                                Encoding encoding = null,
+                                                char delimiter = ',',
                                                 char quotation = '"') {
       if (null == address)
         throw new ArgumentNullException(nameof(address));
@@ -97,7 +94,7 @@ namespace Gloson.Net.Http {
 
       var text = reader.ReadToEnd();
 
-      return XDocument.Parse(text); 
+      return XDocument.Parse(text);
     }
 
     #endregion Sync

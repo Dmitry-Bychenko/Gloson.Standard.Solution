@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace Gloson.Numerics.Matrices {
 
@@ -159,7 +155,7 @@ namespace Gloson.Numerics.Matrices {
     internal static int Rank(double[][] value) {
       if (null == value)
         return 0;
-      
+
       double[][] m = Clone(value);
 
       int size = m.Length;

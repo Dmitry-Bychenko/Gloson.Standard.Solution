@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Linq.Solvers.Pareto {
 
@@ -33,7 +30,8 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// To Report
     /// </summary>
     public static string ToReport(this ObjectiveGoal value) {
-      return value switch {
+      return value switch
+      {
         ObjectiveGoal.Min => "Minimize",
         ObjectiveGoal.Max => "Maximize",
         _ => $"??? ({(int)value})",
@@ -51,8 +49,8 @@ namespace Gloson.Linq.Solvers.Pareto {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ObjectiveDescription<T> 
-    : IComparable<ObjectiveDescription<T>>, 
+  public sealed class ObjectiveDescription<T>
+    : IComparable<ObjectiveDescription<T>>,
       IEquatable<ObjectiveDescription<T>> {
 
     #region Private Data
@@ -175,7 +173,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// <summary>
     /// Deconstruct
     /// </summary>
-    public void Deconstruct(out string id, 
+    public void Deconstruct(out string id,
                             out ObjectiveGoal goal,
                             out Func<T, double> computation) {
       id = Id;
@@ -226,10 +224,10 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// <summary>
     /// Hash Code
     /// </summary>
-    public override int GetHashCode() => 
+    public override int GetHashCode() =>
       null == Id ? 0 : Id.GetHashCode();
 
     #endregion IEquatable<ObjectiveDescription<T>>
   }
-  
+
 }

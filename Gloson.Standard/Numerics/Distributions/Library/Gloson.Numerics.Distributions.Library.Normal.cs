@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson.Numerics.Calculus;
-using Gloson.Numerics.Distributions;
+﻿using Gloson.Numerics.Calculus;
 using Gloson.Numerics.SpecialFunctions;
+using System;
 
 namespace Gloson.Numerics.Distributions.Library {
 

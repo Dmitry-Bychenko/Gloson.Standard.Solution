@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Gloson.Text {
 
@@ -19,8 +17,8 @@ namespace Gloson.Text {
     /// <summary>
     /// Ordinal Comparison
     /// </summary>
-    public sealed class OrdinalComparer 
-      : IComparer<char>, 
+    public sealed class OrdinalComparer
+      : IComparer<char>,
         IEqualityComparer<char> {
 
       #region Create
@@ -43,7 +41,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Ordinal Ignore Case Comparison
     /// </summary>
-    public sealed class OrdinalIgnoreCaseComparer 
+    public sealed class OrdinalIgnoreCaseComparer
       : IComparer<char>,
         IEqualityComparer<char> {
 
@@ -67,7 +65,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Current Culture Comparison
     /// </summary>
-    public sealed class CurrentCultureComparer 
+    public sealed class CurrentCultureComparer
       : IComparer<char>,
         IEqualityComparer<char> {
 
@@ -79,7 +77,7 @@ namespace Gloson.Text {
 
       #region Public
 
-      public int Compare(char x, char y) => 
+      public int Compare(char x, char y) =>
         StringComparer.CurrentCulture.Compare(x.ToString(), y.ToString());
 
       public bool Equals(char x, char y) => StringComparer.CurrentCulture.Equals(x.ToString(), y.ToString());
@@ -92,7 +90,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Current Culture Comparison
     /// </summary>
-    public sealed class CurrentCultureIgnoreCaseComparer 
+    public sealed class CurrentCultureIgnoreCaseComparer
       : IComparer<char>,
         IEqualityComparer<char> {
 
@@ -107,10 +105,10 @@ namespace Gloson.Text {
       public int Compare(char x, char y) =>
         StringComparer.CurrentCultureIgnoreCase.Compare(x.ToString(), y.ToString());
 
-      public bool Equals(char x, char y) => 
+      public bool Equals(char x, char y) =>
         StringComparer.CurrentCultureIgnoreCase.Equals(x.ToString(), y.ToString());
 
-      public int GetHashCode(char obj) => 
+      public int GetHashCode(char obj) =>
         StringComparer.CurrentCultureIgnoreCase.GetHashCode(obj);
 
       #endregion Public

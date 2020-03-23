@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson.Globalization;
+﻿using Gloson.Globalization;
 using Gloson.Numerics;
+using System;
 
 namespace Gloson.Enterprise {
 
@@ -26,7 +23,7 @@ namespace Gloson.Enterprise {
     /// </summary>
     public Money(decimal value, CurrencyInfo info) {
       Currency = info ?? throw new ArgumentNullException(nameof(info));
-      Value    = value + DecimalHelper.Zero(Currency.Decimals);
+      Value = value + DecimalHelper.Zero(Currency.Decimals);
     }
 
     #endregion Create

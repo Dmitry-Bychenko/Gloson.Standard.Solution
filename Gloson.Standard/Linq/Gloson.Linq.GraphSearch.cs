@@ -100,7 +100,7 @@ namespace Gloson.Linq {
       public static bool operator !=(Vertex<T> left, Vertex<T> right) {
         if (ReferenceEquals(left, right))
           return false;
-        else if (null == left || null ==  right)
+        else if (null == left || null == right)
           return true;
 
         return !left.Equals(right);
@@ -149,7 +149,7 @@ namespace Gloson.Linq {
     /// <param name="source">Top items (connected components representatives)</param>
     /// <param name="children">return children on given item</param>
     public static IEnumerable<Vertex<T>> BreadthFirstSearch<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> children) {
-      if (null ==  source)
+      if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (null == children)
         throw new ArgumentNullException(nameof(children));
@@ -163,7 +163,7 @@ namespace Gloson.Linq {
       while (queue.Count > 0) {
         IEnumerable<Vertex<T>> src = queue.Dequeue();
 
-        if (null ==  src)
+        if (null == src)
           continue;
 
         foreach (var item in src)

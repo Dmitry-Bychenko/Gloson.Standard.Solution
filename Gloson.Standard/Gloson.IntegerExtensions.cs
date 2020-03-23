@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson {
 
@@ -123,7 +121,7 @@ namespace Gloson {
     /// </summary>
     public static long ModDivision(this long left, long right, long modulo) =>
       (left * ModInversion(right, modulo)) % modulo;
-    
+
     #endregion public
   }
 
@@ -246,7 +244,7 @@ namespace Gloson {
     /// </summary>
     public static int ModDivision(this int left, int right, int modulo) =>
       (left * ModInversion(right, modulo)) % modulo;
-    
+
     #endregion public
   }
 

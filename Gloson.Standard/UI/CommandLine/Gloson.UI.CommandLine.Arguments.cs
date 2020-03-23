@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
-using Gloson.Text;
 
 namespace Gloson.UI.CommandLine {
 
@@ -33,8 +29,8 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public CommandLineArgument(CommandLineArguments owner, 
-                               CommandLineArgumentDescription description, 
+    public CommandLineArgument(CommandLineArguments owner,
+                               CommandLineArgumentDescription description,
                                string rawValue) {
       Owner = owner ?? throw new ArgumentNullException(nameof(owner));
       Description = description;
@@ -150,10 +146,10 @@ namespace Gloson.UI.CommandLine {
 
         if (parametersOnly) {
           new CommandLineArgument(
-            this, 
-            Descriptions.FirstOrDefault(item => string.IsNullOrWhiteSpace(item.Name)), 
+            this,
+            Descriptions.FirstOrDefault(item => string.IsNullOrWhiteSpace(item.Name)),
             arg);
-              
+
           continue;
         }
 
@@ -197,7 +193,7 @@ namespace Gloson.UI.CommandLine {
       m_RawArguments = (null == arguments)
         ? Environment.GetCommandLineArgs().Skip(1).ToList()
         : arguments.ToList();
-      
+
       if (null == descriptions)
         descriptions = CommandLineArgumentDescriptions.Default;
 
@@ -252,7 +248,7 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Items
     /// </summary>
-    public IReadOnlyList<CommandLineArgument> Items { 
+    public IReadOnlyList<CommandLineArgument> Items {
       get {
         CoreParse();
 
@@ -265,7 +261,7 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     public IEnumerable<string> ValidationErrors {
       get {
-        foreach (var item in m_Items) 
+        foreach (var item in m_Items)
           foreach (var err in item.ValidationErrors)
             yield return err;
       }

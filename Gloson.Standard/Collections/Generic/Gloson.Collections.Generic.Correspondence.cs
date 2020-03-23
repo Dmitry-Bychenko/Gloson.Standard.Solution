@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -30,7 +28,7 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Correspondence<K, V> 
+  public sealed class Correspondence<K, V>
     : IDictionary<K, V>,
       IReadOnlyCorrespondence<K, V> {
 
@@ -50,8 +48,8 @@ namespace Gloson.Collections.Generic {
     /// <param name="capacity">Capacity</param>
     /// <param name="directComparer">Direct Comparer</param>
     /// <param name="reversedComparer">reversedComparer</param>
-    public Correspondence(int capacity, 
-                          IEqualityComparer<K> directComparer, 
+    public Correspondence(int capacity,
+                          IEqualityComparer<K> directComparer,
                           IEqualityComparer<V> reversedComparer) {
       if (capacity <= 0)
         capacity = 0;
@@ -110,7 +108,7 @@ namespace Gloson.Collections.Generic {
 
           throw;
         }
-      } 
+      }
     }
 
     /// <summary>
@@ -171,7 +169,7 @@ namespace Gloson.Collections.Generic {
     /// Contains Value
     /// </summary>
     public bool ContainsValue(V value) => m_Reverse.ContainsKey(value);
-    
+
     /// <summary>
     /// Copy To
     /// </summary>

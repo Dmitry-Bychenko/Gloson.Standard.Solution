@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Gloson {
 
@@ -89,7 +86,7 @@ namespace Gloson {
     public static T CreateService<T>(params object[] arguments) {
       Type t = Services.FirstOrDefault(sd => sd.ServiceType == typeof(T))?.ImplementationType ?? typeof(T);
 
-      return (T) (ActivatorUtilities.CreateInstance(Provider, t, arguments));
+      return (T)(ActivatorUtilities.CreateInstance(Provider, t, arguments));
     }
 
     /// <summary>
@@ -159,5 +156,5 @@ namespace Gloson {
 
     #endregion Public
   }
- 
+
 }

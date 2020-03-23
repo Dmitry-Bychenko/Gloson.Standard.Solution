@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -55,19 +54,19 @@ namespace Gloson.Linq {
     /// Standard constructor
     /// </summary>
     public Aggregator(V seed, Func<V, S, int, V> update) {
-      Index             = -1;
-      m_Current         = seed;
+      Index = -1;
+      m_Current = seed;
       m_UpdateWithIndex = update ?? throw new ArgumentNullException(nameof(update));
-      m_Initialized     = true;
+      m_Initialized = true;
     }
 
     /// <summary>
     /// Standard constructor
     /// </summary>
     public Aggregator(V seed, Func<V, S, V> update) {
-      Index         = -1;
-      m_Current     = seed;
-      m_Update      = update ?? throw new ArgumentNullException(nameof(update));
+      Index = -1;
+      m_Current = seed;
+      m_Update = update ?? throw new ArgumentNullException(nameof(update));
       m_Initialized = true;
     }
 
@@ -78,7 +77,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Current
     /// </summary>
-    public V Current { 
+    public V Current {
       get {
         if (m_Initialized)
           return m_Current;
@@ -134,21 +133,21 @@ namespace Gloson.Linq {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public Aggregator(V seed, Func<V, V, int, V> update) 
+    public Aggregator(V seed, Func<V, V, int, V> update)
       : base(seed, update) {
     }
 
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public Aggregator(V seed, Func<V, V, V> update) 
+    public Aggregator(V seed, Func<V, V, V> update)
       : base(seed, update) {
     }
 
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public Aggregator(Func<V, V, int, V> update) 
+    public Aggregator(Func<V, V, int, V> update)
       : base(default, update) {
 
       IsInitialized = false;
@@ -157,7 +156,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public Aggregator(Func<V, V, V> update) 
+    public Aggregator(Func<V, V, V> update)
       : base(default, update) {
 
       IsInitialized = false;
@@ -181,7 +180,7 @@ namespace Gloson.Linq {
     /// Compute several aggregators
     /// </summary>
     public static Aggregator<T, V>[] AggregateMany<T, V>(
-      this IEnumerable<T> source, 
+      this IEnumerable<T> source,
       params Aggregator<T, V>[] aggregators) {
 
       if (null == source)

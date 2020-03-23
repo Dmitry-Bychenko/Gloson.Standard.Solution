@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gloson.Diagnostics {
 
@@ -16,7 +16,7 @@ namespace Gloson.Diagnostics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ProcessExecutionResult 
+  public sealed class ProcessExecutionResult
     : IEquatable<ProcessExecutionResult>,
       IComparable<ProcessExecutionResult>,
       ISerializable {
@@ -628,7 +628,7 @@ namespace Gloson.Diagnostics {
         FileName = processPath,
       };
 
-      using Process process = new Process() { 
+      using Process process = new Process() {
         StartInfo = info
       };
 

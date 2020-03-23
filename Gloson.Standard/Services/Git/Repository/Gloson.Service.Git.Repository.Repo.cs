@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Gloson.IO;
+using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-
-using Gloson.IO;
-using Gloson.Text;
 
 namespace Gloson.Services.Git.Repository {
 
@@ -17,7 +15,7 @@ namespace Gloson.Services.Git.Repository {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class GitRepo 
+  public sealed class GitRepo
     : IEquatable<GitRepo>,
       IComparable<GitRepo> {
 
@@ -89,7 +87,7 @@ namespace Gloson.Services.Git.Repository {
     /// <summary>
     /// Directory
     /// </summary>
-    public string Location { get; private set; } 
+    public string Location { get; private set; }
 
     /// <summary>
     /// Add File
@@ -139,7 +137,7 @@ namespace Gloson.Services.Git.Repository {
     /// <summary>
     /// Branches
     /// </summary>
-    public IEnumerable<GitRepoBranch> Branches { 
+    public IEnumerable<GitRepoBranch> Branches {
       get {
         return Perform("branch -a")
           .Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
@@ -177,7 +175,7 @@ namespace Gloson.Services.Git.Repository {
     /// Commit And Push
     /// </summary>
     public void CommitAndPush(string message, string origin = null) {
-      message = (null == message) 
+      message = (null == message)
         ? ""
         : string.Concat(message.Where(c => !char.IsControl(c)));
 

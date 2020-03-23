@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -25,7 +23,7 @@ namespace Gloson.Linq {
       else if (null == predicate)
         throw new ArgumentNullException(nameof(predicate));
 
-      foreach (var item in source) 
+      foreach (var item in source)
         return predicate(item);
 
       return false;
@@ -42,7 +40,7 @@ namespace Gloson.Linq {
 
       int count = -1;
 
-      if (source is IList<T> list) 
+      if (source is IList<T> list)
         return (count = list.Count) <= 0 ? false : predicate(list[count - 1]);
       else if (source is T[] arr)
         return (count = arr.Length) <= 0 ? false : predicate(arr[count - 1]);

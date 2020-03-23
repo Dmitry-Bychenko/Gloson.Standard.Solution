@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text;
 
 namespace Gloson.Text.NaturalLanguages.Library {
@@ -15,7 +11,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class RuNumberToWords: INumberToWords {
+  public sealed class RuNumberToWords : INumberToWords {
     #region Private Data
 
     private static readonly (long value, string[] name)[] s_Powers = new (long value, string[] name)[] {
@@ -53,8 +49,8 @@ namespace Gloson.Text.NaturalLanguages.Library {
     };
 
     private static readonly string[] s_Decimals = new string[] {
-      "десять", 
-      "двадцать", 
+      "десять",
+      "двадцать",
       "тридцать",
       "сорок",
       "пятьдесят",
@@ -147,9 +143,9 @@ namespace Gloson.Text.NaturalLanguages.Library {
           if (sb.Length > 0)
             sb.Append(' ');
 
-          sb.Append(Short(v, 
-               tuple.value == 1000 ? GrammaticalGender.Feminine 
-             : tuple.value ==    1 ? gender
+          sb.Append(Short(v,
+               tuple.value == 1000 ? GrammaticalGender.Feminine
+             : tuple.value == 1 ? gender
              : GrammaticalGender.Masculine));
 
           if (tuple.value > 1) {

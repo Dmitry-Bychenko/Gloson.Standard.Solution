@@ -41,14 +41,15 @@ namespace Gloson.Text {
     /// <param name="newLine">New Line</param>
     /// <returns>delimiter or null if doesn't exists</returns>
     public static string Delimiter(this NewLine newLine) {
-      return newLine switch  {
-        NewLine.Smart   => null,
+      return newLine switch
+      {
+        NewLine.Smart => null,
         NewLine.Default => Environment.NewLine,
-        NewLine.N       => "\n",
-        NewLine.R       => "\r",
-        NewLine.RN      => "\r\n",
-        NewLine.NR      => "\n\r",
-        _               => null,
+        NewLine.N => "\n",
+        NewLine.R => "\r",
+        NewLine.RN => "\r\n",
+        NewLine.NR => "\n\r",
+        _ => null,
       };
     }
 
@@ -106,14 +107,14 @@ namespace Gloson.Text {
             yield return source.Substring(postion, i - postion);
           }
 
-          if (next != current && (next == '\n' || next == '\r')) 
+          if (next != current && (next == '\n' || next == '\r'))
             i += 1;
 
           postion = i + 1;
 
           if (count > 0 || index >= count - 1)
             break;
-        }  
+        }
       }
 
       // Tail if any
@@ -136,7 +137,7 @@ namespace Gloson.Text {
     /// <param name="source"></param>
     /// <param name="newLine"></param>
     /// <returns></returns>
-    public static IEnumerable<string> SplitToLines(this string source, 
+    public static IEnumerable<string> SplitToLines(this string source,
                                                    NewLine newLine,
                                                    int count,
                                                    StringSplitOptions splitOptions) {

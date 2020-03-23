@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Text.RegularExpressions;
-
-using Gloson.Text;
 
 namespace Gloson.Data.Oracle {
 
@@ -18,14 +16,14 @@ namespace Gloson.Data.Oracle {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class OracleError 
+  public sealed class OracleError
     : IEquatable<OracleError>,
       IComparable<OracleError>,
       ISerializable {
 
     #region Algorithm
 
-    private static readonly Regex s_Regex = 
+    private static readonly Regex s_Regex =
       new Regex(@"^\s*(?<name>[\w\*\d]+)\s*\-\s*(?<number>[0-9]{1,5})\s*:\s*(?<message>.*)$");
 
     #endregion Algorithm
@@ -178,14 +176,14 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// Is User Error
     /// </summary>
-    public bool IsUserError  =>
+    public bool IsUserError =>
        string.Equals("ORA", Prefix, StringComparison.InvariantCultureIgnoreCase) &&
       (Number >= 20000 && Number < 21000);
 
     /// <summary>
     /// Is Fatal Error
     /// </summary>
-    public bool IsFatalError  => 
+    public bool IsFatalError =>
        string.Equals("ORA", Prefix, StringComparison.InvariantCultureIgnoreCase) &&
       (Number >= 600 && Number < 700);
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Numerics;
 
 namespace Gloson.Numerics.Combinatorics {
@@ -65,8 +64,8 @@ namespace Gloson.Numerics.Combinatorics {
     /// <param name="orderMatters">If order matters or not (i.e. if [a, b] =/!= [b, a])</param>
     /// <returns></returns>
     public static BigInteger DistributionCount(
-      int take, 
-      int from, 
+      int take,
+      int from,
       bool withRepetitions,
       bool orderMatters) {
 
@@ -76,9 +75,9 @@ namespace Gloson.Numerics.Combinatorics {
         throw new ArgumentOutOfRangeException(nameof(from));
 
       if (withRepetitions) {
-        if (orderMatters) 
-          return from == 0 && take == 0 
-            ? 1 
+        if (orderMatters)
+          return from == 0 && take == 0
+            ? 1
             : BigInteger.Pow(from, take);
 
         // C(take, take + from - 1)
@@ -120,7 +119,7 @@ namespace Gloson.Numerics.Combinatorics {
         comparer = EqualityComparer<T>.Default;
 
       if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer), 
+        throw new ArgumentNullException(nameof(comparer),
           $"{nameof(comparer)} is not provided and there are no default equality comparer for {typeof(T).Name} type");
 
       if (withRepetitions) {

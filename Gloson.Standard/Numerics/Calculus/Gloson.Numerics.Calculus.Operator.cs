@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Numerics.Calculus {
 
@@ -44,7 +42,7 @@ namespace Gloson.Numerics.Calculus {
         throw new ArgumentException("Argument must not be NaN", nameof(from));
       else if (double.IsNaN(to))
         throw new ArgumentException("Argument must not be NaN", nameof(to));
-      
+
       return (toFind) => InverseAt(function, toFind, from, to);
     }
 
@@ -74,7 +72,7 @@ namespace Gloson.Numerics.Calculus {
       toFind = ToFinite(toFind);
       from = ToFinite(from);
       to = ToFinite(to);
-      
+
       if (to < from)
         throw new ArgumentOutOfRangeException(nameof(to), "Empty interval.");
 

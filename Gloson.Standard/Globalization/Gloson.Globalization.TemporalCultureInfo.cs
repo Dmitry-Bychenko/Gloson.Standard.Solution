@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Gloson.Globalization {
 
@@ -20,7 +18,7 @@ namespace Gloson.Globalization {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class TemporalCultureInfo 
+  public sealed class TemporalCultureInfo
     : IDisposable,
       IEquatable<TemporalCultureInfo> {
 
@@ -67,7 +65,7 @@ namespace Gloson.Globalization {
     /// Standard constructor
     /// </summary>
     public TemporalCultureInfo()
-      : this(CultureInfo.InvariantCulture) {}
+      : this(CultureInfo.InvariantCulture) { }
 
     /// <summary>
     /// Temporal Invariant Culture
@@ -81,20 +79,20 @@ namespace Gloson.Globalization {
     /// <summary>
     /// Culture In use
     /// </summary>
-    public CultureInfo CultureInUse => 
+    public CultureInfo CultureInUse =>
       !IsDisposed ? m_TemporalCulture : throw new ObjectDisposedException("Instance has been disposed");
 
     /// <summary>
     /// Culture Masked
     /// </summary>
-    public CultureInfo CultureMasked => 
+    public CultureInfo CultureMasked =>
       !IsDisposed ? m_CurrentCulture : throw new ObjectDisposedException("Instance has been disposed");
 
     /// <summary>
     /// To String
     /// </summary>
     public override string ToString() {
-      return IsDisposed 
+      return IsDisposed
         ? $"Disposed instance of {GetType().Name}"
         : $"Temporary set \"{m_TemporalCulture}\" instead of current {m_CurrentCulture} culture.";
     }

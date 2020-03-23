@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Numerics.Calculus {
 
@@ -48,8 +45,8 @@ namespace Gloson.Numerics.Calculus {
 
       double result = 0.0;
       double h = (to - from) / points;
-      
-      for (int i = 1; i < points; ++i) 
+
+      for (int i = 1; i < points; ++i)
         result += (4 - ((i + 1) % 2) * 2) * func(from + i * h);
 
       result += (func(from) + func(to));

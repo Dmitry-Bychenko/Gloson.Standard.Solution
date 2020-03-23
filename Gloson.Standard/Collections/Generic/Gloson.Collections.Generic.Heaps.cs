@@ -59,9 +59,9 @@ namespace Gloson.Collections.Generic {
     protected BaseHeap(IComparer<T> comparer, int capacity) {
       if (null == comparer)
         comparer = Comparer<T>.Default;
-                  
+
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No comparer provided when {typeof(T).Name} doesn't provide default one");
-      
+
       m_Items = capacity < 0 ? new List<T>() : new List<T>(capacity);
     }
 

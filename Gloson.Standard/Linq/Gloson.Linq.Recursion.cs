@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -22,7 +21,7 @@ namespace Gloson.Linq {
       if (null == next)
         throw new ArgumentNullException(nameof(next));
 
-      while (true) 
+      while (true)
         yield return next();
     }
 
@@ -57,7 +56,7 @@ namespace Gloson.Linq {
 
         yield return result;
 
-        first  = second;
+        first = second;
         second = result;
       }
     }
@@ -78,9 +77,9 @@ namespace Gloson.Linq {
 
         yield return result;
 
-        first  = second;
+        first = second;
         second = third;
-        third  = result;
+        third = result;
       }
     }
 
@@ -101,9 +100,9 @@ namespace Gloson.Linq {
 
         yield return result;
 
-        first  = second;
+        first = second;
         second = third;
-        third  = fourth;
+        third = fourth;
         fourth = result;
       }
     }

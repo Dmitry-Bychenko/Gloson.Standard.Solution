@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -21,7 +19,7 @@ namespace Gloson.Linq {
     /// To Data Table
     /// </summary>
     public static DataTable ToDataTable<T>(
-      this IEnumerable<T> source, 
+      this IEnumerable<T> source,
       params (string, Type, Func<T, object>)[] columns) {
 
       if (null == source)
@@ -31,7 +29,7 @@ namespace Gloson.Linq {
 
       DataTable result = new DataTable();
 
-      for (int i = 0; i < columns.Length; ++i) 
+      for (int i = 0; i < columns.Length; ++i)
         result.Columns.Add(columns[i].Item1 ?? $"Column #{i + 1}", columns[i].Item2 ?? typeof(object));
 
       foreach (var item in source) {

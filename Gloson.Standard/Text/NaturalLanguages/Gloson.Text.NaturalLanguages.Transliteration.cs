@@ -3,8 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Gloson.Text.NaturalLanguages {
 
@@ -59,9 +57,9 @@ namespace Gloson.Text.NaturalLanguages {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    protected BaseTransliteration(string name, 
+    protected BaseTransliteration(string name,
                                   ITransliterator direct,
-                                  ITransliterator reverse) 
+                                  ITransliterator reverse)
       : this() {
 
       if (null == name)
@@ -97,7 +95,7 @@ namespace Gloson.Text.NaturalLanguages {
     /// <summary>
     /// Equal
     /// </summary>
-    public static bool operator == (BaseTransliteration left, BaseTransliteration right) {
+    public static bool operator ==(BaseTransliteration left, BaseTransliteration right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == right || null == left)
@@ -193,7 +191,7 @@ namespace Gloson.Text.NaturalLanguages {
   public sealed class EmptyTransliteration : BaseTransliteration {
     #region Create
 
-    public EmptyTransliteration(CultureInfo culture) 
+    public EmptyTransliteration(CultureInfo culture)
       : base("[Empty]", new EmptyTransliterator(culture), new EmptyTransliterator(culture)) {
     }
 
@@ -218,10 +216,9 @@ namespace Gloson.Text.NaturalLanguages {
                                    CultureInfo languageFrom,
                                    CultureInfo languageTo,
                                    IEnumerable<KeyValuePair<string, string>> pairs)
-      : base(name, 
+      : base(name,
              new StandardTransliterator(languageFrom, languageTo, pairs),
-             new StandardTransliterator(languageTo, languageFrom, pairs.Select(p => new KeyValuePair<string, string>(p.Value, p.Key)))) 
-      { }
+             new StandardTransliterator(languageTo, languageFrom, pairs.Select(p => new KeyValuePair<string, string>(p.Value, p.Key)))) { }
 
     /// <summary>
     /// Standard Constructor
@@ -326,7 +323,7 @@ namespace Gloson.Text.NaturalLanguages {
       Register(Library.RussianToEnglishGost1983UN1987.Instance);
       Register(Library.RussianToEnglishIso9.Instance);
       Register(Library.RussianToEnglishScholary.Instance);
-      
+
       Register(Library.TajikToEnglishAlaAc.Instance);
       Register(Library.TajikToEnglishIso9.Instance);
     }

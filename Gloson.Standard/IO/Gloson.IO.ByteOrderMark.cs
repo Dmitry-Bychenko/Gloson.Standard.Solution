@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Gloson.IO {
@@ -193,7 +193,7 @@ namespace Gloson.IO {
           if (v < 0)
             break;
 
-          list.Add((byte) v);
+          list.Add((byte)v);
         }
 
         return FromSequence(list);
@@ -238,5 +238,5 @@ namespace Gloson.IO {
 
     #endregion IEquatable<ByteOrderMark>
   }
-  
+
 }

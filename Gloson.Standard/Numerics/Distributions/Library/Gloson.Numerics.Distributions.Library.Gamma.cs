@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson.Numerics.Calculus;
-using Gloson.Numerics.Distributions;
-using Gloson.Numerics.SpecialFunctions;
+﻿using Gloson.Numerics.SpecialFunctions;
+using System;
 
 namespace Gloson.Numerics.Distributions.Library {
 
@@ -104,7 +99,7 @@ namespace Gloson.Numerics.Distributions.Library {
       else if (x == 0)
         return Shape <= 1 ? double.PositiveInfinity : 0.0;
 
-      return Math.Pow(x, Shape - 1) * 
+      return Math.Pow(x, Shape - 1) *
              Math.Exp(-x / Scale) /
             (GammaFunctions.Gamma(Shape) * Math.Pow(Scale, Shape));
     }

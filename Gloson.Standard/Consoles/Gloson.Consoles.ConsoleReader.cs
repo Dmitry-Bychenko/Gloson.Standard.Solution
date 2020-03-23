@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Gloson.Consoles {
@@ -61,7 +60,7 @@ namespace Gloson.Consoles {
     /// Read string as password (masked)
     /// </summary>
     public static string ReadPasswordLine() => ReadPasswordLine('*');
-    
+
     #endregion Public
   }
 

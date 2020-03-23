@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-using Gloson.Globalization;
-using Gloson.Text;
 
 namespace Gloson.Ini {
 
@@ -161,13 +157,13 @@ namespace Gloson.Ini {
     /// <summary>
     /// Name
     /// </summary>
-    public string Value { 
+    public string Value {
       get {
         return m_Value;
-      } 
+      }
       set {
         m_Value = value ?? "";
-      } 
+      }
     }
 
     /// <summary>
@@ -312,8 +308,8 @@ namespace Gloson.Ini {
     /// <summary>
     /// Load
     /// </summary>
-    public static NameValueDocument Load(IEnumerable<string> lines, 
-                                         StringComparer comparer, 
+    public static NameValueDocument Load(IEnumerable<string> lines,
+                                         StringComparer comparer,
                                          IniFileCommentKind commentKind) {
       if (null == lines)
         throw new ArgumentNullException(nameof(lines));
@@ -365,9 +361,9 @@ namespace Gloson.Ini {
     /// <summary>
     /// Load From File
     /// </summary>
-    public static NameValueDocument LoadFromFile(string fileName, 
+    public static NameValueDocument LoadFromFile(string fileName,
                                                  Encoding encoding,
-                                                 StringComparer comparer, 
+                                                 StringComparer comparer,
                                                  IniFileCommentKind commentKind) {
       NameValueDocument result = Load(File.ReadAllLines(fileName, encoding), comparer, commentKind);
 
@@ -438,7 +434,7 @@ namespace Gloson.Ini {
     /// <summary>
     /// Record
     /// </summary>
-    public bool Remove (string name) {
+    public bool Remove(string name) {
       if (m_Records.TryGetValue(name, out var record)) {
         CoreRemoveRecord(record);
 

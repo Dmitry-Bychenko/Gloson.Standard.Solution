@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Globalization;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Resources;
-using System.Text;
-using System.Threading;
 
 namespace Gloson.Resources {
 
@@ -21,8 +18,8 @@ namespace Gloson.Resources {
   public static partial class AssemblyExtensions {
     #region Private Data
 
-    private static readonly Lazy<MethodInfo> s_GetNeutralResourcesLanguage = new Lazy<MethodInfo>(() => 
-      typeof(ResourceManager).GetMethod("GetNeutralResourcesLanguage", 
+    private static readonly Lazy<MethodInfo> s_GetNeutralResourcesLanguage = new Lazy<MethodInfo>(() =>
+      typeof(ResourceManager).GetMethod("GetNeutralResourcesLanguage",
         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static));
 
     #endregion Private Data
@@ -62,8 +59,8 @@ namespace Gloson.Resources {
     /// <param name="culture"></param>
     /// <param name="comparer"></param>
     /// <returns></returns>
-    public static IEnumerable<Object> ResourceValues(this Assembly assembly, 
-                                                     string address, 
+    public static IEnumerable<Object> ResourceValues(this Assembly assembly,
+                                                     string address,
                                                      CultureInfo culture,
                                                      StringComparer comparer) {
       if (null == assembly)

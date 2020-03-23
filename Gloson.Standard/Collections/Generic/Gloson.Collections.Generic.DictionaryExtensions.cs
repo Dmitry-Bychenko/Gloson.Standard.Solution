@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -26,7 +25,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="tie">Tie break</param>
     /// <returns>true if value added; false if value updated</returns>
     public static bool TryAddOrUpdate<K, V>(
-      this IDictionary<K, V> dictionary, 
+      this IDictionary<K, V> dictionary,
            K key,
            V value,
            Func<K, V, V> tie) {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Linq;
@@ -93,7 +92,7 @@ namespace Gloson.Xml.Linq {
         return new XDocument();
 
       using TextReader tr = new StringReader(xmlText);
-      
+
       return XDocument.Load(tr);
     }
 

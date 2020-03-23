@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace Gloson {
 
@@ -12,7 +10,7 @@ namespace Gloson {
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
- 
+
   [Flags]
   public enum LoginPasswordServerPolicy {
     /// <summary>
@@ -138,7 +136,7 @@ namespace Gloson {
     /// </summary>
     public static bool TryParse(string value, out LoginPasswordServer result, LoginPasswordServerPolicy policy) {
       result = null;
-      
+
       if (string.IsNullOrWhiteSpace(value))
         return false;
 
@@ -248,7 +246,7 @@ namespace Gloson {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (LoginPasswordServer left, LoginPasswordServer right) {
+    public static bool operator ==(LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)
@@ -260,7 +258,7 @@ namespace Gloson {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator != (LoginPasswordServer left, LoginPasswordServer right) {
+    public static bool operator !=(LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return false;
       else if (null == left || null == right)
@@ -282,7 +280,7 @@ namespace Gloson {
       else if (null == other)
         return false;
 
-      return 
+      return
         string.Equals(Login, other.Login, ComparisonFor(Policy & LoginPasswordServerPolicy.LoginCaseInsensitive, other.Policy)) &&
         string.Equals(Password, other.Password, ComparisonFor(Policy & LoginPasswordServerPolicy.PasswordCaseInsensitive, other.Policy)) &&
         string.Equals(Server, other.Server, ComparisonFor(Policy & LoginPasswordServerPolicy.ServerCaseInsensitive, other.Policy));

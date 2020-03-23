@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using Gloson.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Gloson.Collections.Generic;
 
 namespace Gloson.Linq {
 
@@ -30,9 +28,9 @@ namespace Gloson.Linq {
     /// <param name="comparer">Keys comparer</param>
     /// <returns>Groups of adjacent items</returns>
     public static IEnumerable<IGrouping<K, V>> GroupByAdjacent<S, K, V>
-      (this IEnumerable<S> source, 
-            Func<S, K> key, 
-            Func<S, V> value, 
+      (this IEnumerable<S> source,
+            Func<S, K> key,
+            Func<S, V> value,
             IEqualityComparer<K> comparer) {
 
       if (null == source)
@@ -47,7 +45,7 @@ namespace Gloson.Linq {
 
       if (null == comparer)
         throw new ArgumentNullException(
-            nameof(comparer), 
+            nameof(comparer),
           $"No default equality comparer found for {typeof(K).Name}");
 
       List<V> group = new List<V>();

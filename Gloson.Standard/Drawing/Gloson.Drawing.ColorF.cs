@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace Gloson.Drawing {
 
@@ -107,10 +105,10 @@ namespace Gloson.Drawing {
     /// To Color
     /// </summary>
     public Color ToColor() => Color.FromArgb(
-      (int) (A * 255 + 0.5),
-      (int) (R * 255 + 0.5),
-      (int) (G * 255 + 0.5),
-      (int) (B * 255 + 0.5)
+      (int)(A * 255 + 0.5),
+      (int)(R * 255 + 0.5),
+      (int)(G * 255 + 0.5),
+      (int)(B * 255 + 0.5)
     );
 
     /// <summary>
@@ -153,9 +151,9 @@ namespace Gloson.Drawing {
     /// Get Hash Code
     /// </summary>
     public override int GetHashCode() {
-      return A.GetHashCode() ^ 
-             R.GetHashCode() ^ 
-             G.GetHashCode() ^ 
+      return A.GetHashCode() ^
+             R.GetHashCode() ^
+             G.GetHashCode() ^
              B.GetHashCode();
     }
 

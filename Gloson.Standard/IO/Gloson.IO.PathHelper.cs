@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-
-using Gloson;
-using Gloson.Text;
 
 namespace Gloson.IO {
 
@@ -57,7 +54,7 @@ namespace Gloson.IO {
             remove = false;
           else if (!string.Equals(dir, ri[index], comparison))
             remove = false;
-        } 
+        }
 
         if (!remove)
           list.Add(dir);
@@ -65,7 +62,7 @@ namespace Gloson.IO {
 
       return string.Join(Path.DirectorySeparatorChar.ToString(), list);
     }
-    
+
     /// <summary>
     /// Split path into chunks
     /// </summary>
@@ -73,7 +70,7 @@ namespace Gloson.IO {
       if (string.IsNullOrEmpty(path))
         yield break;
 
-      for (DirectoryInfo di = new DirectoryInfo(path); di != null; di = di.Parent) 
+      for (DirectoryInfo di = new DirectoryInfo(path); di != null; di = di.Parent)
         yield return di.Name;
     }
 

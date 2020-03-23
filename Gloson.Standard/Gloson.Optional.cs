@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson {
 
@@ -12,7 +10,7 @@ namespace Gloson {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Optional<T> 
+  public sealed class Optional<T>
     : IEquatable<Optional<T>>,
       IEquatable<T> {
 
@@ -77,7 +75,7 @@ namespace Gloson {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (Optional<T> left, Optional<T> right) {
+    public static bool operator ==(Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return true;
       else if (null == left)
@@ -91,7 +89,7 @@ namespace Gloson {
     /// <summary>
     /// Not Equals
     /// </summary>
-    public static bool operator != (Optional<T> left, Optional<T> right) {
+    public static bool operator !=(Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return false;
       else if (null == left)
@@ -105,7 +103,7 @@ namespace Gloson {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (Optional<T> left, T right) {
+    public static bool operator ==(Optional<T> left, T right) {
       if (null == left || !left.Exists)
         return false;
 
@@ -115,7 +113,7 @@ namespace Gloson {
     /// <summary>
     /// Not Equals
     /// </summary>
-    public static bool operator != (Optional<T> left, T right) {
+    public static bool operator !=(Optional<T> left, T right) {
       if (null == left || !left.Exists)
         return true;
 

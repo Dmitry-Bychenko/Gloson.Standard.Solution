@@ -134,7 +134,7 @@ namespace Gloson.IO.Compression {
         throw new ArgumentNullException(nameof(fileName));
 
       using var stm = ReadStream(fileName, FileMode.Open);
-        
+
       while (true) {
         int b = stm.ReadByte();
 
@@ -224,7 +224,7 @@ namespace Gloson.IO.Compression {
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
-      
+
       return reader.ReadToEnd();
     }
 
@@ -237,7 +237,7 @@ namespace Gloson.IO.Compression {
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
-      
+
       return reader.ReadToEnd();
     }
 
@@ -313,7 +313,7 @@ namespace Gloson.IO.Compression {
         throw new ArgumentNullException(text);
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
-        
+
       writer.Write(text);
     }
 
@@ -365,7 +365,7 @@ namespace Gloson.IO.Compression {
       else if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding); 
+      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
 
       foreach (var line in lines)
         writer.WriteLine(line);
@@ -434,7 +434,7 @@ namespace Gloson.IO.Compression {
         throw new ArgumentNullException(nameof(fileName));
 
       using Stream stm = ReadStream(fileName, FileMode.Open);
-      
+
       return IsZipped(stm);
     }
 
@@ -450,7 +450,7 @@ namespace Gloson.IO.Compression {
 
         WriteAllBytes(targetFile, data, targetFileCompression);
       }
-      else 
+      else
         WriteAllBytes(targetFile, ReadBytes(sourceFile), targetFileCompression);
     }
 

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq.Solvers.Knapsack {
 
@@ -32,7 +31,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       #region Algorithm
 
-      internal KnapsackZeroOneSolution<T> AddExtra(double value, 
+      internal KnapsackZeroOneSolution<T> AddExtra(double value,
                                                    double weight,
                                                    IEnumerable<int> indexes,
                                                    IEnumerable<T> items) {
@@ -172,7 +171,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       // --- /Now ---
 
-      
+
       // All Data Available
       var allData = source
         .Select((item, idx) => (
@@ -184,7 +183,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
 
-      if (counterExample.weight < 0 && counterExample.value < 0) 
+      if (counterExample.weight < 0 && counterExample.value < 0)
         throw new ArgumentException(
           $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
             nameof(source));
@@ -194,7 +193,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
         .ToList();
 
       double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
-      double extraValue    =  alwaysTakeData.Sum(item => item.value);
+      double extraValue = alwaysTakeData.Sum(item => item.value);
 
       capacity += extraCapacity;
 
@@ -236,18 +235,18 @@ namespace Gloson.Linq.Solvers.Knapsack {
       // Empty :
 
       if (data.Count <= 0)
-        return new KnapsackZeroOneSolution<T>(initialCapacity) 
+        return new KnapsackZeroOneSolution<T>(initialCapacity)
           .AddExtra(
            extraValue,
            extraCapacity,
            alwaysTakeData.Select(item => item.index),
            alwaysTakeData.Select(item => item.item))
-          
-            
-       ; 
+
+
+       ;
 
       // All :
-      
+
       double maxCapacity = data
         .Where(item => item.value > 0)
         .Sum(item => item.weight);
@@ -263,14 +262,14 @@ namespace Gloson.Linq.Solvers.Knapsack {
           positives.Sum(item => item.weight),
           positives.Select(item => item.index),
           positives.Select(item => item.item)
-        ) 
+        )
           .AddExtra(
            extraValue,
            extraCapacity,
            alwaysTakeData.Select(item => item.index),
            alwaysTakeData.Select(item => item.item));
-                        
-         ;  
+
+        ;
       }
 
       // General case :
@@ -278,8 +277,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
       double[] takeAll = new double[data.Count];
 
       for (int i = data.Count - 1; i >= 0; --i) {
-        double prior = i >= data.Count - 1 
-          ? 0.0 
+        double prior = i >= data.Count - 1
+          ? 0.0
           : takeAll[i + 1];
 
         takeAll[i] = data[i].weight + prior; // !!!
@@ -374,12 +373,12 @@ namespace Gloson.Linq.Solvers.Knapsack {
         sequence.Select(i => data[i].index),
         sequence.Select(i => data[i].item)
       )
-      
+
       .AddExtra(
-         extraValue, 
+         extraValue,
          extraCapacity,
          alwaysTakeData.Select(item => item.index),
-         alwaysTakeData.Select(item => item.item)); 
+         alwaysTakeData.Select(item => item.item));
       ;
     }
 
@@ -452,9 +451,9 @@ namespace Gloson.Linq.Solvers.Knapsack {
       }
 
       return new KnapsackZeroOneSolution<T>(
-        initialCapacity, 
+        initialCapacity,
         soultion,
-        totalWeight, 
+        totalWeight,
         alwaysTakeData.Select(item => item.index),
         alwaysTakeData.Select(item => item.item));
     }

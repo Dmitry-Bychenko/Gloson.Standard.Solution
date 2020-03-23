@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Gloson.IO {
 
@@ -480,7 +477,7 @@ namespace Gloson.IO {
   //
   //--------------------------------------------------------------------------------------------------------------------
 
-  public sealed class StreamEnumerable 
+  public sealed class StreamEnumerable
     : IEnumerable<byte>,
       IEnumerable<char>,
       IEnumerable<string> {
@@ -545,7 +542,7 @@ namespace Gloson.IO {
     /// <summary>
     /// Stream Enumerator
     /// </summary>
-    IEnumerator<byte> IEnumerable<byte>.GetEnumerator() => 
+    IEnumerator<byte> IEnumerable<byte>.GetEnumerator() =>
       new StreamByteEnumerator(Stream, m_DisposeStream);
 
     /// <summary>

@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Gloson.Globalization;
+using Gloson.Text;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-using Gloson.Globalization;
-using Gloson.Text;
 
 namespace Gloson.Ini {
 
@@ -19,7 +17,7 @@ namespace Gloson.Ini {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class IniDocumentSection 
+  public sealed class IniDocumentSection
     : IEquatable<IniDocumentSection>,
       IDictionary<string, string> {
 
@@ -114,7 +112,7 @@ namespace Gloson.Ini {
     /// <summary>
     /// Comments
     /// </summary>
-    public string Comments { 
+    public string Comments {
       get {
         return m_Comments;
       }
@@ -138,7 +136,7 @@ namespace Gloson.Ini {
       get {
         if (Document != null)
           return Document.Comparer;
-        else if (m_Records != null) 
+        else if (m_Records != null)
           if (m_Records.Comparer is StringComparer comparer)
             return comparer;
 
@@ -286,7 +284,7 @@ namespace Gloson.Ini {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (IniDocumentSection left, IniDocumentSection right) {
+    public static bool operator ==(IniDocumentSection left, IniDocumentSection right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)
@@ -361,10 +359,10 @@ namespace Gloson.Ini {
     /// <summary>
     /// Indexer
     /// </summary>
-    public string this[string key] { 
+    public string this[string key] {
       get {
-        return m_Records.TryGetValue(key, out var record) 
-          ? record.Value 
+        return m_Records.TryGetValue(key, out var record)
+          ? record.Value
           : "";
       }
       set {
@@ -440,7 +438,7 @@ namespace Gloson.Ini {
       foreach (var pair in m_Records) {
         array[i] = new KeyValuePair<string, string>(pair.Key, pair.Value.Value);
 
-        i += 1; 
+        i += 1;
       }
     }
 
@@ -482,7 +480,7 @@ namespace Gloson.Ini {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class IniDocumentRecord 
+  public sealed class IniDocumentRecord
     : IEquatable<IniDocumentRecord> {
 
     #region Private Data
@@ -602,7 +600,7 @@ namespace Gloson.Ini {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class IniDocument 
+  public sealed class IniDocument
     : IReadOnlyDictionary<string, IniDocumentSection> {
 
     #region Private Data
@@ -877,10 +875,10 @@ namespace Gloson.Ini {
     public void Clear() {
       var sections = m_Sections.Values.ToList();
 
-      foreach (var section in sections) 
+      foreach (var section in sections)
         CoreRemoveSection(section);
 
-      m_Sections.Clear();  
+      m_Sections.Clear();
     }
 
     /// <summary>
@@ -904,7 +902,7 @@ namespace Gloson.Ini {
       recordName ??= "";
 
       return m_Sections.TryGetValue(sectionName, out var section) &&
-             section.Remove(recordName);   
+             section.Remove(recordName);
     }
 
     /// <summary>

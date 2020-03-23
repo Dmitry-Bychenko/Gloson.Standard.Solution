@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Gloson.IO {
 
@@ -30,7 +28,7 @@ namespace Gloson.IO {
       if (null == fileName)
         throw new ArgumentNullException(nameof(fileName));
 
-      m_Stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None); 
+      m_Stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None);
 
       FileName = fileName;
     }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Gloson.Text {
 
@@ -79,9 +77,9 @@ namespace Gloson.Text {
       foreach (char c in value) {
         var category = char.GetUnicodeCategory(c);
 
-        int v = 
-               c == '<' || category == UnicodeCategory.OpenPunctuation  ? -1 
-             : c == '>' || category == UnicodeCategory.ClosePunctuation ? +1 
+        int v =
+               c == '<' || category == UnicodeCategory.OpenPunctuation ? -1
+             : c == '>' || category == UnicodeCategory.ClosePunctuation ? +1
              : 0;
 
         if (v == 0)
@@ -110,7 +108,7 @@ namespace Gloson.Text {
 
         if (category == UnicodeCategory.OpenPunctuation)
           opened.Push(c);
-        else if (category == UnicodeCategory.ClosePunctuation) 
+        else if (category == UnicodeCategory.ClosePunctuation)
           if (opened.Count <= 0)
             return false;
           else if (s_Pairs[c] != opened.Pop())

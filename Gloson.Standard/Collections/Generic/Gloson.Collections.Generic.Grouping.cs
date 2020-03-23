@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -16,7 +15,7 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Grouping<K, V> 
+  public sealed class Grouping<K, V>
     : IGrouping<K, V>,
       IReadOnlyList<V> {
 

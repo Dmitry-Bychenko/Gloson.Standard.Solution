@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-using Gloson.Text;
 
 namespace Gloson.Text.NaturalLanguages {
 
@@ -58,7 +55,7 @@ namespace Gloson.Text.NaturalLanguages {
 
       { 'g', 4},
       { 'j', 4},
-      
+
       { 'q', 5},
       { 'x', 5},
       { 'z', 5},
@@ -78,9 +75,9 @@ namespace Gloson.Text.NaturalLanguages {
 
     #region Algorithm
 
-    private static string CoreEncode(string value, 
-                                     Dictionary<char, int> translation, 
-                                     int size, 
+    private static string CoreEncode(string value,
+                                     Dictionary<char, int> translation,
+                                     int size,
                                      bool trim) {
       if (string.IsNullOrEmpty(value)) {
         if (trim)

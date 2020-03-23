@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Gloson.IO;
+using Gloson.Text;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-
-using Gloson.IO;
-using Gloson.Text;
 
 namespace Gloson.Diagnostics {
 
@@ -18,7 +16,7 @@ namespace Gloson.Diagnostics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ErrorRecord 
+  public sealed class ErrorRecord
     : IEquatable<ErrorRecord>,
       IComparable<ErrorRecord> {
 
@@ -40,22 +38,22 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public ErrorRecord(string fileName        = null,
-                       string description     = null,
-                       string errorCategory   = null, 
-                       int errorCode          = 0,
+    public ErrorRecord(string fileName = null,
+                       string description = null,
+                       string errorCategory = null,
+                       int errorCode = 0,
                        ErrorSeverity severity = ErrorSeverity.Major,
                        ErrorPriority priority = ErrorPriority.Medium,
-                       int line               = -1,
-                       int column             = -1) {
-      FileName      = fileName?.Trim() ?? "";
-      Description   = description?.Trim() ?? "";
+                       int line = -1,
+                       int column = -1) {
+      FileName = fileName?.Trim() ?? "";
+      Description = description?.Trim() ?? "";
       ErrorCategory = (errorCategory ?? "").Trim().PadRight(3, '_').Substring(0, 3).ToUpperInvariant();
-      ErrorCode     = errorCode < 0 ? 0 : errorCode;
-      Severity      = severity;
-      Priority      = priority;
-      Line          = line < 0 ? -1 : line;
-      Column        = column < 0 ? -1 : column;
+      ErrorCode = errorCode < 0 ? 0 : errorCode;
+      Severity = severity;
+      Priority = priority;
+      Line = line < 0 ? -1 : line;
+      Column = column < 0 ? -1 : column;
     }
 
     #endregion Create
@@ -217,7 +215,7 @@ namespace Gloson.Diagnostics {
       sb.Append(Severity.ToString().PadLeft(SeverityMaxLength));
       sb.Append(" ");
 
-      if (lines.Length > 0) 
+      if (lines.Length > 0)
         sb.Append(lines[0].Trim());
 
       sb.Append(PathHelper.Subtract(FileName, fileNameRoot));
@@ -247,7 +245,7 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (ErrorRecord left, ErrorRecord right) {
+    public static bool operator ==(ErrorRecord left, ErrorRecord right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)

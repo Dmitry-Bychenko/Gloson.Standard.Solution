@@ -13,7 +13,7 @@ namespace Gloson.Numerics.MachineLearning {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ConfusionMatrix<T> 
+  public sealed class ConfusionMatrix<T>
     : IEquatable<ConfusionMatrix<T>>,
       IFormattable {
 

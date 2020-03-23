@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Numerics;
 
 namespace Gloson.Text {
 
@@ -257,15 +257,15 @@ namespace Gloson.Text {
         if (value[0] == '-')
           mantissa = "-" + mantissa;
 
-        if (IsValid(mantissa, radix)) 
+        if (IsValid(mantissa, radix))
           return true;
       }
       else {
         match = Regex.Match(value, @"\((?<number>[0-9]+)\)");
 
         if (!match.Success)
-          return false;  
-        
+          return false;
+
         if (!int.TryParse(match.Groups["number"].Value, NumberStyles.Any, CultureInfo.InvariantCulture, out radix)) {
           radix = -1;
 

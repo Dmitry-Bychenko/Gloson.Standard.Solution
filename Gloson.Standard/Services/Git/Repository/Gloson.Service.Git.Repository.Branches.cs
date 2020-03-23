@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-using Gloson.IO;
-using Gloson.Text;
+﻿using Gloson.Text;
+using System;
 
 namespace Gloson.Services.Git.Repository {
 
@@ -17,7 +11,7 @@ namespace Gloson.Services.Git.Repository {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class GitRepoBranch 
+  public sealed class GitRepoBranch
     : IEquatable<GitRepoBranch>,
       IComparable<GitRepoBranch> {
 

@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Gloson.Text.NaturalLanguages.Library;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-
-using Gloson.Text.NaturalLanguages.Library;
 
 namespace Gloson.Text.NaturalLanguages {
 

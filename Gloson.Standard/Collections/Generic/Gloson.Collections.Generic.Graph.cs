@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -35,7 +34,7 @@ namespace Gloson.Collections.Generic {
     /// 
     /// </summary>
     Acyclic = 8,
-  } 
+  }
 
   //-------------------------------------------------------------------------------------------------------------------
   //
@@ -228,16 +227,16 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Value
       /// </summary>
-      public E Value { 
+      public E Value {
         get {
           return m_Value;
-        } 
+        }
         set {
           m_Value = value;
 
           if (null != m_Twin)
             m_Twin.m_Value = value;
-        } 
+        }
       }
 
       #endregion Public
@@ -283,7 +282,7 @@ namespace Gloson.Collections.Generic {
           return false;
 
         HashSet<Vertex> used = new HashSet<Vertex>();
-        HashSet<Vertex> agenda = new HashSet<Vertex>() { from, to};
+        HashSet<Vertex> agenda = new HashSet<Vertex>() { from, to };
 
         while (agenda.Any()) {
           List<Vertex> nodes = agenda.ToList();
@@ -314,7 +313,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public Graph(GraphOptions options) 
+    public Graph(GraphOptions options)
       : base() {
 
       Options = options;

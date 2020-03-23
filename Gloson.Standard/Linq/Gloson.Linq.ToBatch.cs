@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -23,7 +21,7 @@ namespace Gloson.Linq {
     /// <param name="addToBatch">If current item should be added into current batch</param>
     /// <returns>Enumeration of batches</returns>
     public static IEnumerable<T[]> ToBatch<T>(
-      this IEnumerable<T> source, 
+      this IEnumerable<T> source,
       Func<ICollection<T>, T, bool> addToBatch) {
 
       if (null == source)

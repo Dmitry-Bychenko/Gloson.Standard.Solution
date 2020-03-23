@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -44,7 +43,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// To Integer
     /// </summary>
-    public static int ToInt (Orders value) {
+    public static int ToInt(Orders value) {
       return
           value == Orders.AscendingAndDescending ? 0
         : value == Orders.Descending ? -1

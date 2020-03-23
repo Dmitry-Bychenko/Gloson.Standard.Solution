@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -148,7 +146,7 @@ namespace Gloson.Linq {
             aggregatedValue = aggregate(aggregatedValue, item);
 
           if (!condition(aggregatedValue)) {
-            skip = false; 
+            skip = false;
 
             yield return item;
           }

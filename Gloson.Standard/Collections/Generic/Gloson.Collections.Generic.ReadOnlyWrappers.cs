@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -34,7 +32,7 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ReadOnlyHashSetWrapper<T> 
+  public sealed class ReadOnlyHashSetWrapper<T>
     : IReadOnlyHashSet<T> {
 
     #region Private Data
@@ -87,7 +85,7 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ReadOnlyArrayWrapper<T> 
+  public sealed class ReadOnlyArrayWrapper<T>
     : IReadOnlyList<T> {
 
     #region Private Data
@@ -189,7 +187,7 @@ namespace Gloson.Collections.Generic {
     /// Contains Value
     /// </summary>
     public bool ContainsValue(V value) => m_Correspondence.ContainsValue(value);
-    
+
     /// <summary>
     /// Try Get Key
     /// </summary>

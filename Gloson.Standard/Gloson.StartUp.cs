@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -36,7 +34,7 @@ namespace Gloson {
     #region Private Data
 
     // Assemblies initialized
-    private static readonly ConcurrentDictionary<Assembly, bool> s_Assemblies = 
+    private static readonly ConcurrentDictionary<Assembly, bool> s_Assemblies =
       new ConcurrentDictionary<Assembly, bool>();
 
     #endregion Private Data
@@ -97,7 +95,7 @@ namespace Gloson {
     /// <summary>
     /// Number of assemblies initialized
     /// </summary>
-    public static int Count { 
+    public static int Count {
       get {
         return s_Assemblies.Count;
       }

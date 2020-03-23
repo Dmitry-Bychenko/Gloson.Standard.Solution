@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -285,8 +284,8 @@ namespace Gloson.Linq {
     /// <param name="orderMatters">If order matters or not</param>
     /// <returns></returns>
     public static IEnumerable<T[]> Distributions<T>(
-      this IEnumerable<T> source, 
-      int size, 
+      this IEnumerable<T> source,
+      int size,
       bool withReplacement,
       bool orderMatters) {
 
@@ -302,9 +301,9 @@ namespace Gloson.Linq {
           return UnOrderedWithReplacement(source, size);
       else
         if (orderMatters)
-          return OrderedWithoutReplacement(source, size);
-        else
-          return UnOrderedWithoutReplacement(source, size);
+        return OrderedWithoutReplacement(source, size);
+      else
+        return UnOrderedWithoutReplacement(source, size);
     }
 
     /// <summary>

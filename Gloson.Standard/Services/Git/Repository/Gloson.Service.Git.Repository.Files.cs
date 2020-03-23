@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gloson.Text;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-
-using Gloson.IO;
-using Gloson.Text;
 
 namespace Gloson.Services.Git.Repository {
 

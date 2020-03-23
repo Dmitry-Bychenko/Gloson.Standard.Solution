@@ -1,13 +1,7 @@
-﻿using System;
+﻿using Gloson.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Json;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-using Gloson;
-using Gloson.Json;
 
 namespace Gloson.Services.Git.Stash {
 
@@ -29,7 +23,7 @@ namespace Gloson.Services.Git.Stash {
     #region Algorithm
 
     private List<StashRepository> CoreLoadRepositories() {
-      List<StashRepository> result  = new List<StashRepository>();
+      List<StashRepository> result = new List<StashRepository>();
 
       foreach (var json in Storage.Query($"projects/{Key}/repos"))
         result.Add(new StashRepository(this, json));
@@ -44,10 +38,10 @@ namespace Gloson.Services.Git.Stash {
     internal StashProject(StashStorage controller, JsonValue json) {
       Storage = controller;
 
-      Id          = json.Value("id");
-      Key         = json.Value("key");
-      Title       = json.Value("name");
-      IsPublic    = json.Value("public");
+      Id = json.Value("id");
+      Key = json.Value("key");
+      Title = json.Value("name");
+      IsPublic = json.Value("public");
 
       Description = json.Value("description") ?? "";
 

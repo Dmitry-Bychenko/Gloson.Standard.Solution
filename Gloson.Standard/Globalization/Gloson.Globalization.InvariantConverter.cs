@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gloson.Text;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-
-using Gloson.Text;
 
 namespace Gloson.Globalization {
 
@@ -25,7 +22,7 @@ namespace Gloson.Globalization {
     /// </summary>
     public static bool TryParse(string value, out byte result) {
       result = byte.MinValue;
-      
+
       return Radix.TryToDecimal(value, out string data) &&
              byte.TryParse(data, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
     }

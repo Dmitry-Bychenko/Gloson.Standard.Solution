@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gloson.Diagnostics;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Gloson.Diagnostics;
 
 namespace Gloson.Services.Git {
 
@@ -50,7 +48,7 @@ namespace Gloson.Services.Git {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public GitController() 
+    public GitController()
       : this(null) { }
 
     #endregion Create
@@ -138,7 +136,7 @@ namespace Gloson.Services.Git {
     /// <summary>
     /// Try Execute (async version)
     /// </summary>
-    public async Task<GitResult> TryExecuteAsync(string command) 
+    public async Task<GitResult> TryExecuteAsync(string command)
       => await TryExecuteAsync(command, CancellationToken.None);
 
     /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Gloson.Text {
@@ -138,7 +137,7 @@ namespace Gloson.Text {
       int last = int.MaxValue;
 
       foreach (char ch in value.Trim()) {
-        if (!s_Romans.TryGetValue(char.ToUpperInvariant(ch), out int v)) 
+        if (!s_Romans.TryGetValue(char.ToUpperInvariant(ch), out int v))
           return false;
 
         if (v < last) {
@@ -163,8 +162,8 @@ namespace Gloson.Text {
         else {
           if (count != 1)
             return false;
-          else if ((last ==   1 && (v ==   5 || v ==   10)) ||
-                   (last ==  10 && (v ==  50 || v ==  100)) ||
+          else if ((last == 1 && (v == 5 || v == 10)) ||
+                   (last == 10 && (v == 50 || v == 100)) ||
                    (last == 100 && (v == 500 || v == 1000))) {
 
             sum -= 2 * last;

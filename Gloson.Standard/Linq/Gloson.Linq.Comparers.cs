@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -36,9 +35,9 @@ namespace Gloson.Linq {
     /// <summary>
     /// Elaborated Sequence Equals
     /// </summary>
-    public static bool SequenceEqual<T>(IEnumerable<T> left, 
-                                        IEnumerable<T> right, 
-                                        bool orderMatters, 
+    public static bool SequenceEqual<T>(IEnumerable<T> left,
+                                        IEnumerable<T> right,
+                                        bool orderMatters,
                                         bool countMatters,
                                         IEqualityComparer<T> comparer) {
       if (ReferenceEquals(left, right))
@@ -76,7 +75,7 @@ namespace Gloson.Linq {
 
           bool found = false;
 
-          while (enRight.MoveNext()) 
+          while (enRight.MoveNext())
             if (rightHs.Add(enRight.Current)) {
               found = true;
 
@@ -91,7 +90,7 @@ namespace Gloson.Linq {
           if (rightHs.Add(enRight.Current))
             return false;
       }
-       
+
       // Not ordered, not counted
       if (!orderMatters && !countMatters) {
         HashSet<T> leftHs = new HashSet<T>(left, comparer);

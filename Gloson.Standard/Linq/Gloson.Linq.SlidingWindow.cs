@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-
-using Gloson;
 
 namespace Gloson.Linq {
 
@@ -90,7 +87,7 @@ namespace Gloson.Linq {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class SlidingWindow<T> 
+  public class SlidingWindow<T>
     : IEnumerable<T>,
       IReadOnlyList<T> {
 
@@ -468,7 +465,7 @@ namespace Gloson.Linq {
     /// <returns>Sliding Window</returns>
     public static IEnumerable<SlidingWindow<T>> SlidingWindow<T>(this IEnumerable<T> source,
                                                                  int beforeCapacity,
-                                                                 int afterCapacity, 
+                                                                 int afterCapacity,
                                                                  bool completedOnly) {
       return SlidingWindow(source, beforeCapacity, afterCapacity, completedOnly, null);
     }

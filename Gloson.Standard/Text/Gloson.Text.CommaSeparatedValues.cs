@@ -121,7 +121,7 @@ namespace Gloson.Text {
         throw new ArgumentNullException(nameof(stream));
 
       using StreamReader reader = new StreamReader(stream, encoding, true, 8192, true);
-      
+
       return ParseCsv(reader, delimiter, quotation);
     }
 

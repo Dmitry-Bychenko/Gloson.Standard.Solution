@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Security.Cryptography;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-
+﻿using Gloson.ComponentModel;
 using Gloson.Numerics.Calculus;
-
-using Gloson.ComponentModel;
+using System;
+using System.ComponentModel;
+using System.Reflection;
+using System.Security.Cryptography;
+using System.Threading;
 
 namespace Gloson.Numerics.Distributions {
 
@@ -197,5 +193,5 @@ namespace Gloson.Numerics.Distributions {
 
     #endregion Public
   }
-  
+
 }

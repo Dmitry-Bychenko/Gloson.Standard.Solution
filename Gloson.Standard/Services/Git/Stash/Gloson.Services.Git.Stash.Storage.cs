@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Gloson.Json;
+using Gloson.Net;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Json;
 using System.Linq;
 using System.Net;
 using System.Text;
-
-using Gloson;
-using Gloson.Json;
-using Gloson.Net;
 
 namespace Gloson.Services.Git.Stash {
 
@@ -63,11 +61,11 @@ namespace Gloson.Services.Git.Stash {
 
         JsonValue root = null;
 
-        using (WebResponse response = request.GetResponse()) 
-          using (Stream stream = response.GetResponseStream()) 
-            using (StreamReader reader = new StreamReader(stream)) {
-              root = JsonValue.Parse(reader.ReadToEnd());
-            }
+        using (WebResponse response = request.GetResponse())
+        using (Stream stream = response.GetResponseStream())
+        using (StreamReader reader = new StreamReader(stream)) {
+          root = JsonValue.Parse(reader.ReadToEnd());
+        }
 
         if (root?.Value("values") is JsonArray array && array != null) {
           foreach (JsonValue item in array)
@@ -85,8 +83,8 @@ namespace Gloson.Services.Git.Stash {
 
     private List<StashProject> CoreLoadProjects() {
       List<StashProject> result = new List<StashProject>();
-  
-      foreach (var json in CoreQuery("projects")) 
+
+      foreach (var json in CoreQuery("projects"))
         result.Add(new StashProject(this, json));
 
       return result;
@@ -133,7 +131,7 @@ namespace Gloson.Services.Git.Stash {
     /// Nexign
     /// </summary>
     public static StashStorage Nexign() {
-      NetworkCredential credential = 
+      NetworkCredential credential =
            NetworkCredentials.Default.GetCredential(new Uri($@"https://{Environment.UserName}@stash.billing.ru"))
         ?? NetworkCredentials.Default.GetCredential(new Uri($@"https://stash.billing.ru"))
         ?? NetworkCredentials.Default.WorkStation;

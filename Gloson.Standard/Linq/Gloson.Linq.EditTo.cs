@@ -49,11 +49,11 @@ namespace Gloson.Linq {
     internal string ToReport() {
       return Kind switch
       {
-        EditOperationKind.None   => $"Keep   '{Before}', ({Cost})",
+        EditOperationKind.None => $"Keep   '{Before}', ({Cost})",
         EditOperationKind.Insert => $"Insert '{After}', ({Cost})",
         EditOperationKind.Delete => $"Delete '{Before}', ({Cost})",
-        EditOperationKind.Edit   => $"Edit   '{Before}' into '{After}', ({Cost})",
-                             _   => $"???    '{Before}' into '{After}', ({Cost})",
+        EditOperationKind.Edit => $"Edit   '{Before}' into '{After}', ({Cost})",
+        _ => $"???    '{Before}' into '{After}', ({Cost})",
       };
     }
 
@@ -108,12 +108,13 @@ namespace Gloson.Linq {
     /// To String
     /// </summary>
     public override string ToString() {
-      return Kind switch {
-        EditOperationKind.None   => $"Keep '{Before}'",
+      return Kind switch
+      {
+        EditOperationKind.None => $"Keep '{Before}'",
         EditOperationKind.Insert => $"Insert '{After}'",
         EditOperationKind.Delete => $"Delete '{Before}'",
-        EditOperationKind.Edit   => $"Edit '{Before}' into '{After}'",
-                               _ => $"Unknown '{Before}' into '{After}'",
+        EditOperationKind.Edit => $"Edit '{Before}' into '{After}'",
+        _ => $"Unknown '{Before}' into '{After}'",
       };
     }
 

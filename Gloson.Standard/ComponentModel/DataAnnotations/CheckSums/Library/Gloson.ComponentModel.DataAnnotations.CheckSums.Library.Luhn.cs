@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Gloson.ComponentModel.DataAnnotations.CheckSums.Library {
 
@@ -33,7 +31,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums.Library {
           return;
 
         if (i == Sequence.Count - 1) {
-          IsValid = d == (10 - (isEven ? oddSum : evenSum)) % 10; 
+          IsValid = d == (10 - (isEven ? oddSum : evenSum)) % 10;
         }
 
         int modified = d * 2 < 10 ? d * 2 : d * 2 - 9;
@@ -51,7 +49,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums.Library {
         oddSum %= 10;
         evenSum %= 10;
       }
-      
+
       ControlDigit = (10 - (isEven ? oddSum : evenSum)) % 10;
     }
 

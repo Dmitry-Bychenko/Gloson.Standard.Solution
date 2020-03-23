@@ -1,13 +1,7 @@
-﻿using System;
+﻿using Gloson.Json;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Json;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-using Gloson;
-using Gloson.Json;
 
 namespace Gloson.Services.Git.Stash {
 
@@ -44,14 +38,14 @@ namespace Gloson.Services.Git.Stash {
     internal StashRepository(StashProject project, JsonValue json) {
       Project = project;
 
-      Slug       = json.Value("slug");
-      Id         = json.Value("id");
-      Key        = json.Value("name");
+      Slug = json.Value("slug");
+      Id = json.Value("id");
+      Key = json.Value("name");
       IsForkable = json.Value("forkable");
 
       m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches);
 
-      if (json.Value("links")?.Value("clone") is JsonArray array && array != null) 
+      if (json.Value("links")?.Value("clone") is JsonArray array && array != null)
         foreach (JsonValue item in array) {
           string hRef = item.Value("href");
 

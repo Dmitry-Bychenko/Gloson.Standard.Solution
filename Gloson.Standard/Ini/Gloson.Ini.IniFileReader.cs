@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -156,13 +155,13 @@ namespace Gloson.Ini {
 
         Current = null;
 
-        if (IniFileComment.TryParse(line, out var c)) 
+        if (IniFileComment.TryParse(line, out var c))
           Current = c;
         else if (IniFileSection.TryParse(line, out var s)) {
           Section = s;
           Current = s;
         }
-        else if (IniFileRecord.TryParse(line, out var r)) 
+        else if (IniFileRecord.TryParse(line, out var r))
           Current = r;
 
         if (null != Current)

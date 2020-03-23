@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,13 +29,13 @@ namespace Gloson.Threading {
 
       var registration = ThreadPool.RegisterWaitForSingleObject(
         handle,
-       (state, timedOut) => { 
+       (state, timedOut) => {
          if (timedOut)
            (state as TaskCompletionSource<object>).TrySetCanceled();
          else
            (state as TaskCompletionSource<object>).TrySetResult(null);
-        }, 
-        ts, 
+       },
+        ts,
         timeout,
         true
       );

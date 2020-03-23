@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gloson.Consoles;
+using Gloson.Data;
+using System;
 using System.Data;
 using System.Data.Common;
-using System.Text;
-
-using Gloson.Consoles;
-using Gloson.Data;
 
 namespace Gloson.UI.Dialogs.CommandLine {
 
@@ -66,7 +63,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
           connection.Open();
           connection.Close();
 
-          return cs.ConnectionString; 
+          return cs.ConnectionString;
         }
         catch (DbException e) {
           Console.WriteLine();

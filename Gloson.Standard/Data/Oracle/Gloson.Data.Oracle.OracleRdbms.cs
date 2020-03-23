@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Versioning;
-using System.Threading;
-using System.Text;
 
 namespace Gloson.Data.Oracle {
 
@@ -79,7 +75,7 @@ namespace Gloson.Data.Oracle {
         }
       }
       catch (FileNotFoundException) {; }
-      catch (IOException) { ; }
+      catch (IOException) {; }
       catch (BadImageFormatException) {; }
     }
 
@@ -92,11 +88,11 @@ namespace Gloson.Data.Oracle {
     /// </summary>
     public static void Register(string connectionString) {
       Dependencies.RegisterService(
-        typeof(IConnectionStringBuilder), 
+        typeof(IConnectionStringBuilder),
         typeof(OracleConnectionStringBuilder));
 
       Dependencies.TryRegisterService(
-        typeof(IRdbmsConnectionDialog), 
+        typeof(IRdbmsConnectionDialog),
         typeof(Gloson.UI.Dialogs.CommandLine.RdbmsConnectionDialog));
 
       Rdbms.Register(ConnectionType(), connectionString);
@@ -110,7 +106,7 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// Access Assembly Name
     /// </summary>
-    public static string AccessAssemblyName {get;}
+    public static string AccessAssemblyName { get; }
 
     /// <summary>
     /// Access Assembly
@@ -119,8 +115,8 @@ namespace Gloson.Data.Oracle {
       AppDomain
         .CurrentDomain
         .GetAssemblies()
-        .FirstOrDefault(asm => string.Equals(asm.GetName().Name, 
-                                             AccessAssemblyName, 
+        .FirstOrDefault(asm => string.Equals(asm.GetName().Name,
+                                             AccessAssemblyName,
                                              StringComparison.OrdinalIgnoreCase));
 
     #endregion Public

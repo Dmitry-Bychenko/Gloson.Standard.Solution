@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -83,7 +82,7 @@ namespace Gloson.Linq {
           T[] record = new T[enums.Length];
 
           for (int i = 0; i < enums.Length; ++i) {
-            if (enums[i] != null && !enums[i].MoveNext()) 
+            if (enums[i] != null && !enums[i].MoveNext())
               yield break;
 
             record[i] = enums[i].Current;

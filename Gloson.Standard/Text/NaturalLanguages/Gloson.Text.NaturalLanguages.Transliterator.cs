@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,9 +15,9 @@ namespace Gloson.Text.NaturalLanguages {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public enum TransliterationCase { 
+  public enum TransliterationCase {
     Lower = 0,
-    Name  = 1,
+    Name = 1,
     Upper = 2,
   }
 
@@ -182,7 +181,7 @@ namespace Gloson.Text.NaturalLanguages {
 
       int maxLength = SubstitutionLength;
 
-      for (int i = 0; i < value.Length; ) {
+      for (int i = 0; i < value.Length;) {
         bool skip = true;
 
         for (int length = maxLength; length > 0; --length) {
@@ -276,7 +275,7 @@ namespace Gloson.Text.NaturalLanguages {
     #endregion Private Data
 
     #region Algorithm
-    
+
     protected override IReadOnlyDictionary<string, string> Substitutions => m_Correspondence;
 
     protected override int SubstitutionLength { get; }
@@ -288,9 +287,9 @@ namespace Gloson.Text.NaturalLanguages {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public StandardTransliterator(CultureInfo languageFrom, 
-                                  CultureInfo languageTo, 
-                                  IEnumerable<KeyValuePair<string, string>> pairs) 
+    public StandardTransliterator(CultureInfo languageFrom,
+                                  CultureInfo languageTo,
+                                  IEnumerable<KeyValuePair<string, string>> pairs)
       : base(languageFrom, languageTo) {
 
       if (null == pairs)
@@ -299,7 +298,7 @@ namespace Gloson.Text.NaturalLanguages {
       int max = 1;
 
       foreach (var pair in pairs) {
-        m_Correspondence.Add(pair.Key.Normalize(NormalizationForm.FormC), 
+        m_Correspondence.Add(pair.Key.Normalize(NormalizationForm.FormC),
                              pair.Value.Normalize(NormalizationForm.FormC));
 
         if (pair.Key != null)
@@ -318,9 +317,9 @@ namespace Gloson.Text.NaturalLanguages {
     public StandardTransliterator(CultureInfo languageFrom,
                                   CultureInfo languageTo,
                                   IEnumerable<(string, string)> pairs)
-      : this(languageFrom, 
-             languageTo, 
-             pairs != null 
+      : this(languageFrom,
+             languageTo,
+             pairs != null
                ? pairs.Select(item => new KeyValuePair<string, string>(item.Item1, item.Item2))
                : new KeyValuePair<string, string>[0]) { }
 

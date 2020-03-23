@@ -1,16 +1,13 @@
 ﻿using Gloson.Globalization;
+using Gloson.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Json;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-
-using Gloson.Json;
 
 namespace Gloson.Services.Banks {
 
@@ -69,7 +66,7 @@ namespace Gloson.Services.Banks {
       string dateAt = at.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
       return await CoreExchangeRatesAsync(
-        $"https://api.exchangeratesapi.io/history?start_at={dateAt}&end_at={dateAt}", 
+        $"https://api.exchangeratesapi.io/history?start_at={dateAt}&end_at={dateAt}",
           token).ConfigureAwait(false);
     }
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Text {
 
@@ -156,7 +154,9 @@ namespace Gloson.Text {
         }
 
       /* store the length of all substrings */
-      i = n - 1; j = n - 1; c0 = T[n - 1];
+      i = n - 1;
+      j = n - 1;
+      c0 = T[n - 1];
 
       do {
         c1 = c0;
@@ -170,7 +170,8 @@ namespace Gloson.Text {
         while ((0 <= --i) && ((c0 = T[i]) <= c1));
 
         if (0 <= i) {
-          SA[m + ((i + 1) >> 1)] = j - i; j = i + 1;
+          SA[m + ((i + 1) >> 1)] = j - i;
+          j = i + 1;
 
           do {
             c1 = c0;
@@ -305,7 +306,8 @@ namespace Gloson.Text {
 
       b = -1;
       i = n - 1;
-      j = n; m = 0;
+      j = n;
+      m = 0;
       c0 = T[n - 1];
 
       do {

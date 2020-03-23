@@ -1,10 +1,6 @@
 ﻿// https://en.wikipedia.org/wiki/Tajik_alphabet
 
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace Gloson.Text.NaturalLanguages.Library {
 
@@ -151,7 +147,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     /// <summary>
     /// Instance
     /// </summary>
-    public static TajikToEnglishIso9 Instance { get; } 
+    public static TajikToEnglishIso9 Instance { get; }
 
     #endregion Public
   }

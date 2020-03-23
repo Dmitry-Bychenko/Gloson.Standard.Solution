@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
 
@@ -84,7 +83,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
     /// <summary>
     /// To Boolean (not null and IsValid)
     /// </summary>
-    public static implicit operator bool (CheckSumBase<T> value) =>
+    public static implicit operator bool(CheckSumBase<T> value) =>
       (null != value) && value.IsValid;
 
     #endregion Operators

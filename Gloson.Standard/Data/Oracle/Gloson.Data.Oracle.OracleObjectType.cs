@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Data.Oracle {
 
@@ -12,13 +11,13 @@ namespace Gloson.Data.Oracle {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class OracleObjectType 
+  public sealed class OracleObjectType
     : IEquatable<OracleObjectType>,
       IComparable<OracleObjectType> {
 
     #region Private Data
 
-    readonly private static Dictionary<int, OracleObjectType> s_FromId 
+    readonly private static Dictionary<int, OracleObjectType> s_FromId
       = new Dictionary<int, OracleObjectType>();
 
     readonly private static Dictionary<string, OracleObjectType> s_FromName
@@ -81,7 +80,7 @@ namespace Gloson.Data.Oracle {
       new OracleObjectType(69, "WINDOW");
       new OracleObjectType(72, "WINDOW GROUP");
       new OracleObjectType(74, "SCHEDULE");
-      new OracleObjectType(77, "SCHEDULE ATTRIBUTE"); 
+      new OracleObjectType(77, "SCHEDULE ATTRIBUTE");
       new OracleObjectType(79, "CHAIN");
       new OracleObjectType(81, "FILE GROUP");
       new OracleObjectType(101, "DESTINATION");
@@ -107,7 +106,7 @@ namespace Gloson.Data.Oracle {
     /// </summary>
     public static int Compare(OracleObjectType left, OracleObjectType right) {
       if (ReferenceEquals(left, right))
-        return 0; 
+        return 0;
       else if (null == right)
         return -1;
       else if (left == null)
@@ -173,21 +172,21 @@ namespace Gloson.Data.Oracle {
     public static bool operator <(OracleObjectType left, OracleObjectType right) => Compare(left, right) < 0;
 
     #endregion Compare
-     
+
     #region Cast
 
     /// <summary>
     /// To Int32 (Id)
     /// </summary>
-    public static implicit operator int(OracleObjectType value) => null == value 
-      ? -1 
+    public static implicit operator int(OracleObjectType value) => null == value
+      ? -1
       : value.Id;
 
     /// <summary>
     /// To String (Name)
     /// </summary>
     public static implicit operator string(OracleObjectType value) => value?.Name;
-      
+
     /// <summary>
     /// Try Parse
     /// </summary>
@@ -223,7 +222,7 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// From Id
     /// </summary>
-    public static implicit operator OracleObjectType(int id) => 
+    public static implicit operator OracleObjectType(int id) =>
       TryParse(id, out OracleObjectType value) ? value : null;
 
     /// <summary>

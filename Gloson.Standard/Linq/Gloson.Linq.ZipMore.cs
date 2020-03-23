@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -41,14 +39,14 @@ namespace Gloson.Linq {
       using var enFirst = left.GetEnumerator();
       using var enSecond = right.GetEnumerator();
 
-       while (enFirst.MoveNext())
-          if (enSecond.MoveNext())
-            yield return map(enFirst.Current, true, enSecond.Current, true);
-          else
-            yield return map(enFirst.Current, true, default, false);
+      while (enFirst.MoveNext())
+        if (enSecond.MoveNext())
+          yield return map(enFirst.Current, true, enSecond.Current, true);
+        else
+          yield return map(enFirst.Current, true, default, false);
 
-        while (enSecond.MoveNext())
-          yield return map(default, false, enSecond.Current, true);
+      while (enSecond.MoveNext())
+        yield return map(default, false, enSecond.Current, true);
     }
 
     #endregion Public

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Gloson;
-
 namespace Gloson.Linq {
 
   //-------------------------------------------------------------------------------------------------------------------

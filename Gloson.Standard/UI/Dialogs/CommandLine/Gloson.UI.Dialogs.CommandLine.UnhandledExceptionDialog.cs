@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Gloson.Text;
+using System;
 using System.Text;
-
-using Gloson.Consoles;
-using Gloson.Data;
-using Gloson.Text;
 
 namespace Gloson.UI.Dialogs.CommandLine {
 

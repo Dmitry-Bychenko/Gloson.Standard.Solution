@@ -13,7 +13,7 @@ namespace Gloson.Text {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class StringNaturalComparer 
+  public sealed class StringNaturalComparer
     : IComparer<String> {
 
     #region Private Data
@@ -72,8 +72,8 @@ namespace Gloson.Text {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public StringNaturalComparer() 
-      : this((IComparer<string>) null) { }
+    public StringNaturalComparer()
+      : this((IComparer<string>)null) { }
 
     /// <summary>
     /// Standard constructor
@@ -93,7 +93,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public StringNaturalComparer(CultureInfo culture) 
+    public StringNaturalComparer(CultureInfo culture)
       : this(culture, false) { }
 
     #endregion Create
@@ -213,7 +213,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Standard Constructor (ordinal)
     /// </summary>
-    public StringStandardComparer() 
+    public StringStandardComparer()
       : this(null) { }
 
     #endregion Create
@@ -287,7 +287,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Natural Ordinal Comparer
     /// </summary>
-    public static IComparer<String> NaturalOrdinalComparer { get; } = 
+    public static IComparer<String> NaturalOrdinalComparer { get; } =
       new StringNaturalComparer(StringComparer.Ordinal);
 
     /// <summary>
@@ -311,7 +311,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Standard Ordinal Comparer
     /// </summary>
-    public static IComparer<String> StandardOrdinalComparer { get; } = 
+    public static IComparer<String> StandardOrdinalComparer { get; } =
       new StringStandardComparer();
 
     /// <summary>
@@ -323,7 +323,7 @@ namespace Gloson.Text {
     /// <summary>
     /// Natural Comparer based on comparer
     /// </summary>
-    public static IComparer<String> NaturalComparer(IComparer<String> source) => 
+    public static IComparer<String> NaturalComparer(IComparer<String> source) =>
       new StringNaturalComparer(source);
 
     /// <summary>

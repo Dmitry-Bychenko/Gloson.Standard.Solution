@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Diagnostics {
 
@@ -14,7 +13,7 @@ namespace Gloson.Diagnostics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class ValidationEventArgs<T> 
+  public class ValidationEventArgs<T>
     : EventArgs,
       IEnumerable<string> {
 
@@ -33,7 +32,7 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public ValidationEventArgs(T valueUnderTest) 
+    public ValidationEventArgs(T valueUnderTest)
       : base() {
 
       if (null == valueUnderTest)
@@ -63,7 +62,7 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Errors
     /// </summary>
-    public IReadOnlyList<string> Errors { 
+    public IReadOnlyList<string> Errors {
       get {
         if (null != m_Errors)
           return m_Errors;

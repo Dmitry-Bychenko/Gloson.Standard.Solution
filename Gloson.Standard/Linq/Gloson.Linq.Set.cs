@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -19,8 +18,8 @@ namespace Gloson.Linq {
     /// <summary>
     /// Symmetric Except
     /// </summary>
-    public static IEnumerable<T> SymmetricExcept<T>(this IEnumerable<T> source, 
-                                                         IEnumerable<T> other, 
+    public static IEnumerable<T> SymmetricExcept<T>(this IEnumerable<T> source,
+                                                         IEnumerable<T> other,
                                                          IEqualityComparer<T> comparer) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
@@ -31,7 +30,7 @@ namespace Gloson.Linq {
         comparer = EqualityComparer<T>.Default;
 
       if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer), 
+        throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
       HashSet<T> hs = new HashSet<T>(source, comparer);
@@ -119,11 +118,11 @@ namespace Gloson.Linq {
           if (v == 0)
             dict.Remove(item);
           else
-            dict[item] = v; 
+            dict[item] = v;
         }
       }
 
-      foreach (var pair in dict) 
+      foreach (var pair in dict)
         for (int i = 0; i < pair.Value; ++i)
           yield return pair.Key;
     }
@@ -212,7 +211,7 @@ namespace Gloson.Linq {
       foreach (var pair in dict1) {
         int v = pair.Value;
 
-        if (dict2.TryGetValue(pair.Key, out int v2)) 
+        if (dict2.TryGetValue(pair.Key, out int v2))
           v = Math.Min(v, v2);
 
         for (int i = 0; i < v; ++i)

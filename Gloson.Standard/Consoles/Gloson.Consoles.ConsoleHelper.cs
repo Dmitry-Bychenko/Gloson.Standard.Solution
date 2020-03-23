@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Consoles {
 
@@ -19,7 +18,7 @@ namespace Gloson.Consoles {
     /// Read Lines
     /// </summary>
     public static IEnumerable<string> ReadLines() {
-      while (Console.KeyAvailable) 
+      while (Console.KeyAvailable)
         yield return Console.ReadLine();
     }
 

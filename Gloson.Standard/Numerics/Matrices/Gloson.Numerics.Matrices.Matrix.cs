@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Numerics.Matrices {
 
@@ -18,7 +17,7 @@ namespace Gloson.Numerics.Matrices {
   public sealed class Matrix
     : ICloneable,
       IEquatable<Matrix>,
-      IFormattable, 
+      IFormattable,
       IEnumerable<double> {
 
     #region Private Data
@@ -43,7 +42,7 @@ namespace Gloson.Numerics.Matrices {
     private Matrix() { }
 
     // Low level constructor
-    private Matrix(double[][] items) 
+    private Matrix(double[][] items)
       : this() {
       m_Items = items;
     }
@@ -268,7 +267,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Determinant
     /// </summary>
-    public double Determinant { 
+    public double Determinant {
       get {
         if (double.IsNaN(m_Determinant))
           m_Determinant = MatrixLowLevel.Determinant(m_Items);
@@ -370,7 +369,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Unary +
     /// </summary>
-    public static Matrix operator + (Matrix value) {
+    public static Matrix operator +(Matrix value) {
       if (null == value)
         throw new ArgumentNullException(nameof(value));
 
@@ -380,13 +379,13 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Unary -
     /// </summary>
-    public static Matrix operator - (Matrix value) {
+    public static Matrix operator -(Matrix value) {
       if (null == value)
         throw new ArgumentNullException(nameof(value));
 
       Matrix result = value.Clone();
 
-      foreach (double[] line in result.m_Items) 
+      foreach (double[] line in result.m_Items)
         for (int i = line.Length; i >= 0; --i)
           line[i] = -line[i];
 
@@ -396,7 +395,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Multiplication by number
     /// </summary>
-    public static Matrix operator * (Matrix matrix, double value) {
+    public static Matrix operator *(Matrix matrix, double value) {
       if (null == matrix)
         throw new ArgumentNullException(nameof(matrix));
 
@@ -415,12 +414,12 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Multiplication by number
     /// </summary>
-    public static Matrix operator * (double value, Matrix matrix) => matrix * value;
+    public static Matrix operator *(double value, Matrix matrix) => matrix * value;
 
     /// <summary>
     /// Division by number
     /// </summary>
-    public static Matrix operator / (Matrix matrix, double value) {
+    public static Matrix operator /(Matrix matrix, double value) {
       if (null == matrix)
         throw new ArgumentNullException(nameof(matrix));
 
@@ -439,7 +438,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Matrix Addition
     /// </summary>
-    public static Matrix operator + (Matrix left, Matrix right) {
+    public static Matrix operator +(Matrix left, Matrix right) {
       if (null == left)
         throw new ArgumentNullException(nameof(left));
       else if (null == right)
@@ -462,7 +461,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Matrix Subtractions
     /// </summary>
-    public static Matrix operator - (Matrix left, Matrix right) {
+    public static Matrix operator -(Matrix left, Matrix right) {
       if (null == left)
         throw new ArgumentNullException(nameof(left));
       else if (null == right)
@@ -485,7 +484,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Matrix Mutiplication
     /// </summary>
-    public static Matrix operator * (Matrix left, Matrix right) {
+    public static Matrix operator *(Matrix left, Matrix right) {
       if (null == left)
         throw new ArgumentNullException(nameof(left));
       else if (null == right)
@@ -506,13 +505,13 @@ namespace Gloson.Numerics.Matrices {
           result.m_Items[r][c] = v;
         }
 
-          return result;
+      return result;
     }
 
     /// <summary>
     /// Matrix Division
     /// </summary>
-    public static Matrix operator / (Matrix left, Matrix right) {
+    public static Matrix operator /(Matrix left, Matrix right) {
       if (null == left)
         throw new ArgumentNullException(nameof(left));
       else if (null == right)
@@ -529,7 +528,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Matrix Division
     /// </summary>
-    public static Matrix operator / (double left, Matrix right) {
+    public static Matrix operator /(double left, Matrix right) {
       if (null == right)
         throw new ArgumentNullException(nameof(right));
 
@@ -561,10 +560,10 @@ namespace Gloson.Numerics.Matrices {
       return new Matrix() {
         m_Items = m_Items
                     .Select(line => {
-                       double[] result = new double[line.Length];
-                       Array.Copy(line, 0, result, 0, line.Length);
-                       return result;
-                     })
+                      double[] result = new double[line.Length];
+                      Array.Copy(line, 0, result, 0, line.Length);
+                      return result;
+                    })
                     .ToArray()
       };
     }

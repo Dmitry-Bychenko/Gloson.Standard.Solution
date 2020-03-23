@@ -22,8 +22,8 @@ namespace Gloson.Data {
     /// <param name="sql">SQL</param>
     /// <param name="parameters">Parameters</param>
     /// <returns>Rows Affected</returns>
-    public static int ExecuteNonQuery(this IDbConnection connection, 
-                                           string sql, 
+    public static int ExecuteNonQuery(this IDbConnection connection,
+                                           string sql,
                                    params (string, object)[] parameters) {
       if (null == connection)
         throw new ArgumentNullException(nameof(connection));

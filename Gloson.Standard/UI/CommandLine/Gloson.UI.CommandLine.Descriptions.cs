@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Gloson.Diagnostics;
+using Gloson.Text.RegularExpressions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-
-using Gloson.Diagnostics;
-using Gloson.Text.RegularExpressions;
 
 namespace Gloson.UI.CommandLine {
 
@@ -109,7 +107,7 @@ namespace Gloson.UI.CommandLine {
     /// Owner
     /// </summary>
     public CommandLineArgumentDescriptions Owner {
-      get => m_Owner; 
+      get => m_Owner;
       private set {
         if (ReferenceEquals(m_Owner, value))
           return;
@@ -138,7 +136,7 @@ namespace Gloson.UI.CommandLine {
           value = "";
         else
           value = value.Trim();
-        
+
         m_Name = value;
         m_OrderName = string.Concat(m_Name.Select(c => char.IsLetterOrDigit(c) && c == '_'));
         m_RegularExpression = null;
@@ -150,8 +148,8 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Type
     /// </summary>
-    public CommandLineType ValueType { 
-      get => m_ValueType; 
+    public CommandLineType ValueType {
+      get => m_ValueType;
       set {
         if (m_ValueType != value) {
           m_ValueType = value;
@@ -329,7 +327,7 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Validation Errors
     /// </summary>
-    public IEnumerable<string> ValidationErrors { 
+    public IEnumerable<string> ValidationErrors {
       get {
         if (m_MinCount > m_MaxCount)
           yield return $"Min Count {m_MinCount} exceeds max count {m_MaxCount}";
@@ -462,7 +460,7 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Default Description
     /// </summary>
-    public static CommandLineArgumentDescriptions Default { get; }  = new CommandLineArgumentDescriptions();
+    public static CommandLineArgumentDescriptions Default { get; } = new CommandLineArgumentDescriptions();
 
     /// <summary>
     /// Options
@@ -496,10 +494,10 @@ namespace Gloson.UI.CommandLine {
     /// <summary>
     /// Add
     /// </summary>
-    public CommandLineArgumentDescription Add(string name, 
+    public CommandLineArgumentDescription Add(string name,
                                               CommandLineType valueType,
                                               string description) {
-      return new CommandLineArgumentDescription(this) { 
+      return new CommandLineArgumentDescription(this) {
         Name = name,
         ValueType = valueType,
         Description = description
@@ -574,7 +572,7 @@ namespace Gloson.UI.CommandLine {
     /// Validation Errors
     /// </summary>
     public IEnumerable<string> ValidationErrors {
-      get { 
+      get {
         foreach (var item in m_Items) {
           foreach (string line in item.ValidationErrors)
             yield return line;

@@ -188,7 +188,7 @@ namespace Gloson.Text.Parsing {
         throw new ArgumentNullException(nameof(source));
 
       if (null == rules)
-        rules = Dependencies.GetService<ITokenDescriptionRules>(); 
+        rules = Dependencies.GetService<ITokenDescriptionRules>();
 
       if (null == rules)
         throw new ArgumentNullException(nameof(rules));

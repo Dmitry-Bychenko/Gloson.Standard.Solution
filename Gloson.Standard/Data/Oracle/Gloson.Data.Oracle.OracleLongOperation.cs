@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
-using System.Text;
 
 namespace Gloson.Data.Oracle {
 
@@ -20,7 +18,7 @@ namespace Gloson.Data.Oracle {
     private int m_CurrentStep;
 
     private int m_Index = -1;
-    private int m_Id    = -1;
+    private int m_Id = -1;
 
     #endregion Private Data
 
@@ -90,7 +88,7 @@ namespace Gloson.Data.Oracle {
         q.Parameters.Add(prmFinalStep);
         q.Parameters.Add(prmrIndex);
         q.Parameters.Add(prmrSlno);
-        
+
         q.ExecuteNonQuery();
 
         m_Index = Convert.ToInt32(prmrIndex.Value);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq.Solvers.Pareto {
 
@@ -22,7 +21,7 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     private readonly List<ObjectiveItem<T>> m_Items = new List<ObjectiveItem<T>>();
 
-    private readonly Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers = 
+    private readonly Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers =
       new Dictionary<int, IReadOnlyList<ObjectiveItem<T>>>();
 
     #endregion Private Data
@@ -124,7 +123,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// <param name="breed">Breed function</param>
     /// <param name="comparer">Comparer (best fit), NSGA II on default</param>
     /// <returns></returns>
-    public ObjectivesScope<T> Evolve(int generation, 
+    public ObjectivesScope<T> Evolve(int generation,
                                      Func<T, T, T> breed,
                                      IComparer<ObjectiveItem<T>> comparer) {
       if (generation < 0)
@@ -278,7 +277,7 @@ namespace Gloson.Linq.Solvers.Pareto {
         double v2 = right.ObjectiveValue(description);
 
         if (v1 > v2 && description.Goal == ObjectiveGoal.Min)
-          canBeBetter = false; 
+          canBeBetter = false;
         else if (v1 < v2 && description.Goal == ObjectiveGoal.Max)
           canBeBetter = false;
 
@@ -440,7 +439,7 @@ namespace Gloson.Linq.Solvers.Pareto {
           weights[i] = Math.Abs(list[list.Count - 1].ObjectiveValue(Owner.ObjectiveDescriptions[i]) -
                                 list[0].ObjectiveValue(Owner.ObjectiveDescriptions[i]));
         }
-        
+
         // distance computation
         for (int i = 1; i < list.Count - 1; ++i) {
           double distance = 0.0;

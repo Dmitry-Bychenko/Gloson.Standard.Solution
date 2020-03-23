@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -122,7 +121,7 @@ namespace Gloson.Text.RegularExpressions {
       double to = 0;
 
       foreach (char c in value) {
-        if (c == manyJoker) 
+        if (c == manyJoker)
           to = double.PositiveInfinity;
         else if (c == oneJoker) {
           from += 1;
@@ -177,7 +176,7 @@ namespace Gloson.Text.RegularExpressions {
       if (null == value)
         throw new ArgumentNullException(nameof(value));
 
-      return $"^{FromWildCardPattern(value, manyJoker, oneJoker)}$"; 
+      return $"^{FromWildCardPattern(value, manyJoker, oneJoker)}$";
     }
 
     /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Globalization {
 
@@ -14,7 +13,7 @@ namespace Gloson.Globalization {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class CurrencyInfo 
+  public sealed class CurrencyInfo
     : IEquatable<CurrencyInfo>,
       IComparable<CurrencyInfo> {
 

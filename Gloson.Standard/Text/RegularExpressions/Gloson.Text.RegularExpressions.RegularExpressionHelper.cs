@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Gloson.Text.RegularExpressions {
@@ -36,7 +34,7 @@ namespace Gloson.Text.RegularExpressions {
   public static class RegexHelper {
     #region Private Data
 
-    private static readonly HashSet<char> s_ExtraSymbols = new HashSet<char>() { '-', ']'};
+    private static readonly HashSet<char> s_ExtraSymbols = new HashSet<char>() { '-', ']' };
 
     #endregion Private Data
 

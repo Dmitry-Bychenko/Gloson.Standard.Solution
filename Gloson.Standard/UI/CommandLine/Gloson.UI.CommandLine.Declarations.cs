@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.UI.CommandLine {
 
@@ -88,5 +86,5 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     Help = 1
   }
-  
+
 }

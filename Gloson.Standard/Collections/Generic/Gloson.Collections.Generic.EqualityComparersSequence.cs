@@ -12,7 +12,7 @@ namespace Gloson.Collections.Generic {
   // 
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class EqualityComparerSequence<T> 
+  public sealed class EqualityComparerSequence<T>
     : IEqualityComparer<IEnumerable<T>> {
 
     #region Algorithm
@@ -85,7 +85,7 @@ namespace Gloson.Collections.Generic {
         return false;
 
       if (OrderMatters) {
-        if (CountMatters) 
+        if (CountMatters)
           return Enumerable.SequenceEqual(left, right, ItemComparer);
 
         // Ordered, not counted

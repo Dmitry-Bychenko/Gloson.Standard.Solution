@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Numerics.Logic {
 
@@ -73,7 +72,7 @@ namespace Gloson.Numerics.Logic {
     /// <summary>
     /// Generate Truth table for given delegate
     /// </summary>
-    public static IEnumerable<(bool[] data, bool result)> Generate(Func<bool, bool, bool, bool, bool> function) 
+    public static IEnumerable<(bool[] data, bool result)> Generate(Func<bool, bool, bool, bool, bool> function)
       => Generate(function as Delegate);
 
     /// <summary>
@@ -147,7 +146,7 @@ namespace Gloson.Numerics.Logic {
     /// </summary>
     public static IEnumerable<(bool[] data, bool result)> Generate(Func<bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool, bool> function)
       => Generate(function as Delegate);
-    
+
     #endregion Public
   }
 }

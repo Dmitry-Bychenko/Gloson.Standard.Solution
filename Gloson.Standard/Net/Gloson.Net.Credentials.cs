@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Gloson.UI.Dialogs;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-
-using Gloson;
-using Gloson.UI.Dialogs;
 
 namespace Gloson.Net {
 
@@ -183,7 +180,7 @@ namespace Gloson.Net {
       if (!dialog.ShowDialog(title, ref result))
         return false;
 
-      return Add(uri, authType, result);  
+      return Add(uri, authType, result);
     }
 
     /// <summary>

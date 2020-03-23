@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gloson.Text;
+using System;
 using System.Linq;
-using System.Text;
-
-using Gloson.Text;
 
 namespace Gloson.Ini {
 
@@ -45,10 +42,11 @@ namespace Gloson.Ini {
     /// To Prefix
     /// </summary>
     public static string ToPrefix(this IniFileCommentKind value) {
-      return value switch { 
+      return value switch
+      {
         IniFileCommentKind.Windows => ";",
-        IniFileCommentKind.Unix    => "#",
-        _                          => "", 
+        IniFileCommentKind.Unix => "#",
+        _ => "",
       };
     }
 
@@ -100,7 +98,7 @@ namespace Gloson.Ini {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public IniFileComment(string value) 
+    public IniFileComment(string value)
       : this(value, IniFileCommentKind.Standard) { }
 
     /// <summary>
@@ -265,8 +263,8 @@ namespace Gloson.Ini {
     /// <param name="name">Name</param>
     /// <param name="value">Value</param>
     public IniFileRecord(string name, string value) {
-      Name = name == null 
-        ? "" 
+      Name = name == null
+        ? ""
         : string.Concat(name.Where(c => !char.IsControl(c)));
 
       Value = value == null
@@ -314,7 +312,7 @@ namespace Gloson.Ini {
 
           continue;
         }
-                              
+
         if (value[i] == '"') {
           inQuot = true;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Gloson.Text {
@@ -24,10 +23,10 @@ namespace Gloson.Text {
     /// <param name="closeQuotation"></param>
     /// <param name="closeEscapement"></param>
     /// <returns></returns>
-    public static string QuotationAdd(this string value, 
-                                           char openQuotation, 
-                                           char openEscapement, 
-                                           char closeQuotation, 
+    public static string QuotationAdd(this string value,
+                                           char openQuotation,
+                                           char openEscapement,
+                                           char closeQuotation,
                                            char closeEscapement) {
       if (null == value)
         throw new ArgumentNullException(nameof(value));
@@ -90,7 +89,7 @@ namespace Gloson.Text {
     /// <param name="closeQuotation"></param>
     /// <param name="closeEscapement"></param>
     /// <returns></returns>
-    public static bool TryQuotationRemove(this string value, 
+    public static bool TryQuotationRemove(this string value,
                                            out string result,
                                                char openQuotation,
                                                char openEscapement,
@@ -120,7 +119,7 @@ namespace Gloson.Text {
           if (ch != openEscapement && ch != openQuotation)
             return false;
         }
-        else if (ch == openQuotation) 
+        else if (ch == openQuotation)
           return false;
         else if (ch == closeEscapement) {
           if (i == value.Length - 2)
@@ -132,7 +131,7 @@ namespace Gloson.Text {
           if (ch != closeEscapement && ch != closeQuotation)
             return false;
         }
-        else if (ch == closeQuotation) 
+        else if (ch == closeQuotation)
           return false;
 
         sb.Append(ch);
@@ -218,7 +217,7 @@ namespace Gloson.Text {
           throw new FormatException($"Dangling quotation '{openQuotation}'.");
         else if (ch == closeEscapement) {
           if (i == value.Length - 2)
-            throw new FormatException($"Dangling escapement '{closeEscapement}'."); 
+            throw new FormatException($"Dangling escapement '{closeEscapement}'.");
 
           i += 1;
           ch = value[i];

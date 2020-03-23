@@ -51,5 +51,5 @@ namespace Gloson.Standard {
 
     #endregion Public
   }
- 
+
 }

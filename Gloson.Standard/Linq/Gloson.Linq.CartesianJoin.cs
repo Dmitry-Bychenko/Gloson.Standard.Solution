@@ -23,7 +23,7 @@ namespace Gloson.Linq {
     /// <returns></returns>
     public static IEnumerable<Result> CartesianJoin<Result, Left, Right>(
       IEnumerable<Left> left,
-      IEnumerable<Right> right, 
+      IEnumerable<Right> right,
       Func<Left, Right, Result> map) {
 
       if (null == left)
@@ -32,7 +32,7 @@ namespace Gloson.Linq {
         throw new ArgumentNullException(nameof(right));
       else if (null == map)
         throw new ArgumentNullException(nameof(map));
-      
+
       if (right is ICollection<Right>) {
         // right is a materialized collection
 

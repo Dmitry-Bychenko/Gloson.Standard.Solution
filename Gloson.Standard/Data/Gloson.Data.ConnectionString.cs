@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data;
-using System.Text;
 
 namespace Gloson.Data {
 
@@ -53,7 +51,7 @@ namespace Gloson.Data {
     #region Private
 
     // Items
-    private readonly Dictionary<string, string> m_Items = 
+    private readonly Dictionary<string, string> m_Items =
       new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     #endregion Private
@@ -77,7 +75,7 @@ namespace Gloson.Data {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public ConnectionStringBuilder() 
+    public ConnectionStringBuilder()
       : this(null) { }
 
     #endregion Create
@@ -111,7 +109,7 @@ namespace Gloson.Data {
 
       return this;
     }
-    
+
     /// <summary>
     /// With Server
     /// </summary>
@@ -168,7 +166,7 @@ namespace Gloson.Data {
           .Select(pair => $"{pair.Key}={pair.Value}")
         );
 
-        return string.Join(";", new string[] { basic, advanced}
+        return string.Join(";", new string[] { basic, advanced }
           .Where(item => !string.IsNullOrWhiteSpace(item)));
       }
     }

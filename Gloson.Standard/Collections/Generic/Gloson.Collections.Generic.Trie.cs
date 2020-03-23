@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Collections.Generic {
 
@@ -76,7 +75,7 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Terminations (how many sequencies ends on this node)
       /// </summary>
-      public int Terminations { 
+      public int Terminations {
         get {
           if (m_Items.Count <= 0)
             return Occurrences;
@@ -172,7 +171,7 @@ namespace Gloson.Collections.Generic {
     public Trie(IEqualityComparer<T> comparer) {
       if (null == comparer)
         comparer = EqualityComparer<T>.Default;
-      
+
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No default equality comparer for {typeof(T).Name}");
       Root = new Node(this, null, default);
     }

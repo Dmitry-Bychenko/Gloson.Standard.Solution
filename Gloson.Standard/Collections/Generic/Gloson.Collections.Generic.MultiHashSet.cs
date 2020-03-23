@@ -13,8 +13,8 @@ namespace Gloson.Collections.Generic {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class MultiHashSet<T> 
-    : IEquatable<MultiHashSet<T>>, 
+  public sealed class MultiHashSet<T>
+    : IEquatable<MultiHashSet<T>>,
       IEnumerable<T> {
 
     #region Private Data
@@ -38,7 +38,7 @@ namespace Gloson.Collections.Generic {
         comparer = EqualityComparer<T>.Default;
 
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
-          $"No default equality comparer is found for {typeof(T).Name}."); 
+          $"No default equality comparer is found for {typeof(T).Name}.");
 
       m_Items = new Dictionary<T, long>(Comparer);
     }
@@ -46,7 +46,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Standard constructor with default comparer
     /// </summary>
-    public MultiHashSet() : this(comparer : null) { }
+    public MultiHashSet() : this(comparer: null) { }
 
     /// <summary>
     /// Standard constructor
@@ -56,7 +56,7 @@ namespace Gloson.Collections.Generic {
     public MultiHashSet(IEnumerable<T> source, IEqualityComparer<T> comparer) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
-      
+
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
           $"No default equality comparer is found for {typeof(T).Name}.");
 
@@ -190,10 +190,10 @@ namespace Gloson.Collections.Generic {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
 
-      foreach (var item in source) 
-        if (m_Items.TryGetValue(item, out long count)) 
+      foreach (var item in source)
+        if (m_Items.TryGetValue(item, out long count))
           m_Items[item] = count + 1;
-        else 
+        else
           m_Items.Add(item, 1);
     }
 
@@ -465,7 +465,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Intersect
     /// </summary>
-    public static MultiHashSet<T> Intersect<T> (this MultiHashSet<T> left, MultiHashSet<T> right) {
+    public static MultiHashSet<T> Intersect<T>(this MultiHashSet<T> left, MultiHashSet<T> right) {
       if (null == left)
         throw new ArgumentNullException(nameof(left));
       else if (null == right)
@@ -582,7 +582,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// If sequencies are equal as multisets
     /// </summary>
-    public static bool MultiSetEqual<T>(this IEnumerable<T> source, 
+    public static bool MultiSetEqual<T>(this IEnumerable<T> source,
                                              IEnumerable<T> other,
                                              IEqualityComparer<T> comparer) {
       if (ReferenceEquals(source, other))

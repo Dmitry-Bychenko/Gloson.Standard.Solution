@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,7 +48,7 @@ namespace Gloson.Services.Git {
       Location = location;
 
       var result = GitController.Default.TryExecute(GitCommandBuilder.Format(Location, "%H"));
-        
+
       Hash = result ? "" : result.Out.ToLowerInvariant();
     }
 
@@ -65,7 +63,7 @@ namespace Gloson.Services.Git {
         return false;
 
       var result = GitController.Default.TryExecute(GitCommandBuilder.Format(path, "%H"));
-        
+
       return !string.IsNullOrEmpty(result.Out) &&
               result.Out.All(c => c >= '0' && c <= '9' || c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F');
     }
@@ -98,10 +96,10 @@ namespace Gloson.Services.Git {
       if (string.IsNullOrEmpty(path))
         path = Environment.CurrentDirectory;
 
-      if (Directory.Exists(path)) 
+      if (Directory.Exists(path))
         if (Directory.EnumerateDirectories(path).Any() || Directory.EnumerateFiles(path).Any())
           throw new ArgumentException($"Directory {path} already exist.", nameof(path));
-      
+
       Directory.CreateDirectory(path);
 
       var result = GitController.Default.TryExecute(GitCommandBuilder.Clone(ssh, branch, path, true));
@@ -149,7 +147,7 @@ namespace Gloson.Services.Git {
     /// <summary>
     /// SSH
     /// </summary>
-    public Uri Ssh { 
+    public Uri Ssh {
       get {
         if (null != m_Ssh)
           return m_Ssh;
@@ -163,7 +161,7 @@ namespace Gloson.Services.Git {
     /// <summary>
     /// Author
     /// </summary>
-    public GitPerson Author { 
+    public GitPerson Author {
       get {
         if (null != m_Author)
           return m_Author;
@@ -171,9 +169,9 @@ namespace Gloson.Services.Git {
         CoreUpdateAuthorAndCommiter();
 
         return m_Author;
-      } 
+      }
     }
-    
+
     /// <summary>
     /// Commiter
     /// </summary>
@@ -193,11 +191,11 @@ namespace Gloson.Services.Git {
     /// </summary>
     public Task<GitResult> TryExecuteAsync(string command, CancellationToken token) =>
       GitController.Default.TryExecuteAsync(GitCommandBuilder.WithDirectory(command, Location), token);
-    
+
     /// <summary>
     /// Try Execute Async
     /// </summary>
-    public Task<GitResult> TryExecuteAsync(string command) => 
+    public Task<GitResult> TryExecuteAsync(string command) =>
       TryExecuteAsync(command, CancellationToken.None);
 
     /// <summary>

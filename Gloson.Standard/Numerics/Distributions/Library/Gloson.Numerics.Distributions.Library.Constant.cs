@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson.Numerics.Distributions;
 
 namespace Gloson.Numerics.Distributions.Library {
 

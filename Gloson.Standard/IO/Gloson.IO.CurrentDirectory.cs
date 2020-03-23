@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Gloson.IO {
 
@@ -53,7 +50,7 @@ namespace Gloson.IO {
     /// </summary>
     public override string ToString() =>
       $"Current: {CurrentDefaultDirectory} Saved: ({PreviousDefaultDirectory})";
-    
+
     #endregion Public
 
     #region IDisposable

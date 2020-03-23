@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Gloson.Services.Git {
 
@@ -41,7 +39,7 @@ namespace Gloson.Services.Git {
 
     private readonly static GitResult s_GitNotFound = new GitResult(
       "",
-      Environment.OSVersion.Platform == PlatformID.Win32NT 
+      Environment.OSVersion.Platform == PlatformID.Win32NT
         ? @"Git not found. Ensure path in the registry [HKEY_LOCAL_MACHINE\Software\GitForWindows] [InstallPath] is in %PATH%" :
           @"Git Not found.",
       int.MinValue);

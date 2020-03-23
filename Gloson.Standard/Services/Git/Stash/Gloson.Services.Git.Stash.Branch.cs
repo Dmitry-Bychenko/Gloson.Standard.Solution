@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using Gloson.Json;
+using System;
 using System.Json;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
-
-using Gloson;
-using Gloson.Json;
 
 namespace Gloson.Services.Git.Stash {
 
@@ -28,16 +20,16 @@ namespace Gloson.Services.Git.Stash {
     private static readonly Regex s_VersionRegex = new Regex(@"[0-9]+(\.[0-9]+)+");
 
     #endregion Private Data
-       
+
     #region Create
 
     internal StashBranch(StashRepository repository, JsonValue json) {
       Repository = repository;
 
-      Id             = json.Value("id");
-      Name           = json.Value("displayId");
-      IsDefault      = json.Value("isDefault");
-      Kind           = json.Value("type");
+      Id = json.Value("id");
+      Name = json.Value("displayId");
+      IsDefault = json.Value("isDefault");
+      Kind = json.Value("type");
 
       LatestChangeId = json.Value("latestChangeset");
       LatestCommitId = json.Value("latestCommit");
