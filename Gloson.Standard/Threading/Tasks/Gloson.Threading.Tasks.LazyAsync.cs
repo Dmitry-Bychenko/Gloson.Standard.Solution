@@ -71,7 +71,9 @@ namespace Gloson.Threading.Tasks {
     /// Start if required
     /// </summary>
     public void Start() {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
       var _value = m_Instance.Value;
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
     }
 
     #endregion Public

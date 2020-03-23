@@ -31,11 +31,8 @@ namespace Gloson.Linq {
 
       DataTable result = new DataTable();
 
-      for (int i = 0; i < columns.Length; ++i) {
-        var map = columns[i];
-
+      for (int i = 0; i < columns.Length; ++i) 
         result.Columns.Add(columns[i].Item1 ?? $"Column #{i + 1}", columns[i].Item2 ?? typeof(object));
-      }
 
       foreach (var item in source) {
         DataRow row = result.NewRow();

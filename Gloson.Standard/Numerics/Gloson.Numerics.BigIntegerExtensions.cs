@@ -16,7 +16,7 @@ namespace Gloson.Numerics {
   public static partial class BigIntegerExtensions {
     #region Algorithm
 
-    private static Boolean isSqrt(BigInteger n, BigInteger root) {
+    private static Boolean CoreIsSqrt(BigInteger n, BigInteger root) {
       BigInteger lowerBound = root * root;
       BigInteger upperBound = (root + 1) * (root + 1);
 
@@ -59,7 +59,7 @@ namespace Gloson.Numerics {
 
         BigInteger root = BigInteger.One << (bitLength / 2);
 
-        while (!isSqrt(value, root)) {
+        while (!CoreIsSqrt(value, root)) {
           root += value / root;
           root /= 2;
         }

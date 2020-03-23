@@ -22,7 +22,10 @@ namespace Gloson.Text {
       if (null == value)
         yield break;
 
-      for (int i = 0; i < value.Length; ++i)
+      if (addEmpty)
+        yield return "";
+
+      for (int i = 1; i < value.Length; ++i)
         yield return value.Substring(0, i);
     }
 
@@ -38,8 +41,11 @@ namespace Gloson.Text {
       if (null == value)
         yield break;
 
-      for (int i = 0; i < value.Length; ++i)
+      for (int i = 0; i < value.Length - 1; ++i)
         yield return value.Substring(i);
+
+      if (addEmpty)
+        yield return "";
     }
 
     /// <summary>

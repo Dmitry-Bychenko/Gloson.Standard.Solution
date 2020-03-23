@@ -37,6 +37,7 @@ namespace Gloson.Collections.Generic {
       if (null == items)
         throw new ArgumentNullException(nameof(items));
 
+      Key = key;
       m_Items = new List<V>(items);
     }
 

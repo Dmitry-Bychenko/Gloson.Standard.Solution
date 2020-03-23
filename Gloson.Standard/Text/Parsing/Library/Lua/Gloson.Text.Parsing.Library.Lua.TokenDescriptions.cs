@@ -43,7 +43,7 @@ namespace Gloson.Text.Parsing.Library.Lua {
     private static readonly TokenDescription s_String = TokenDescription.Create(TryStartString, TryStopString);
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       HardKeyword,
       Integer,
@@ -61,7 +61,7 @@ namespace Gloson.Text.Parsing.Library.Lua {
     // Extract simple string
     private static string CoreExtractSimpleString(string value) {
       StringBuilder sb = new StringBuilder();
-      String num = "";
+      String num;
 
       StringBuilder hsb = new StringBuilder();
 

@@ -119,7 +119,7 @@ namespace Gloson.Linq {
 
       bool wasCompleted = IsCompleted;
 
-      Optional<T> itemRemoved = new Optional<T>();
+      Optional<T> itemRemoved;
 
       if (m_Buffer.Count < m_Buffer.Capacity) {
         m_Buffer.Add(value);

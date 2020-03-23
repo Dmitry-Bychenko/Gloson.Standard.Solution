@@ -44,7 +44,7 @@ namespace Gloson.Text.Parsing.Library.Java {
     private static readonly TokenDescription s_IdentifierAttribute = TokenDescription.Create(@"@[A-Za-z]+[A-Za-z0-9_]*");
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       HardKeyword,
       SoftKeyword,

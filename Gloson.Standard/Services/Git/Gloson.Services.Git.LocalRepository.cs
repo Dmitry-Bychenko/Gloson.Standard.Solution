@@ -107,12 +107,10 @@ namespace Gloson.Services.Git {
       var result = GitController.Default.TryExecute(GitCommandBuilder.Clone(ssh, branch, path, true));
 
       if (result) {
-        GitLocalRepository repo = new GitLocalRepository(path);
-
-        repo.m_Ssh = ssh;
-        repo.m_Branch = branch;
-
-        return repo;
+        return new GitLocalRepository(path) {
+          m_Ssh = ssh,
+          m_Branch = branch,
+        };
       }
       else
         result.ThrowIfError();

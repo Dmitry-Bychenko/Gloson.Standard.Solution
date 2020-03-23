@@ -59,11 +59,9 @@ namespace Gloson.Collections.Generic {
     protected BaseHeap(IComparer<T> comparer, int capacity) {
       if (null == comparer)
         comparer = Comparer<T>.Default;
-
-      if (null == comparer)
-        throw new ArgumentNullException(nameof(comparer), $"No comparer provided when {typeof(T).Name} doesn't provide default one");
-
-      Comparer = comparer;
+                  
+      Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No comparer provided when {typeof(T).Name} doesn't provide default one");
+      
       m_Items = capacity < 0 ? new List<T>() : new List<T>(capacity);
     }
 
@@ -123,7 +121,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Items.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -156,7 +154,7 @@ namespace Gloson.Collections.Generic {
     /// <returns>true if value returned</returns>
     public bool TryPop(out T value) {
       if (m_Items.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -654,7 +652,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -669,7 +667,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryDequeue(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -722,7 +720,7 @@ namespace Gloson.Collections.Generic {
   public sealed class PriorityQueue<T> {
     #region Private Data
 
-    private MinHeap<T> m_Heap;
+    private readonly MinHeap<T> m_Heap;
 
     #endregion Private Data
 
@@ -735,11 +733,8 @@ namespace Gloson.Collections.Generic {
       if (null == comparer)
         comparer = Comparer<T>.Default;
 
-      if (null == comparer)
-        throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
-
       Capacity = capacity < 0 ? -1 : capacity;
-      Comparer = comparer;
+      Comparer = comparer ?? throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
       m_Heap = new MinHeap<T>(comparer, capacity);
     }
 
@@ -804,7 +799,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryPeek(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }
@@ -819,7 +814,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryDequeue(out T value) {
       if (m_Heap.Count <= 0) {
-        value = default(T);
+        value = default;
 
         return false;
       }

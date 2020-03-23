@@ -22,11 +22,11 @@ namespace Gloson.Data.Oracle.Client {
   public sealed class OracleHome {
     #region Private Data
 
-    private Lazy<TnsNames> m_TnsNames;
+    private readonly Lazy<TnsNames> m_TnsNames;
 
-    private Lazy<IReadOnlyDictionary<string, string>> m_Ldap;
+    private readonly Lazy<IReadOnlyDictionary<string, string>> m_Ldap;
 
-    private Lazy<IReadOnlyDictionary<string, string>> m_SqlNet;
+    private readonly Lazy<IReadOnlyDictionary<string, string>> m_SqlNet;
 
     #endregion Private Data
 
@@ -58,10 +58,7 @@ namespace Gloson.Data.Oracle.Client {
     /// </summary>
     /// <param name="directoryName"></param>
     public OracleHome(string directoryName) {
-      if (null == directoryName)
-        throw new ArgumentNullException(nameof(directoryName));
-
-      ClientPath = directoryName;
+      ClientPath = directoryName ?? throw new ArgumentNullException(nameof(directoryName));
 
       string netWork = Path.Combine(ClientPath, "network", "admin");
 

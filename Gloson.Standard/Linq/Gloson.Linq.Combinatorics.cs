@@ -248,7 +248,7 @@ namespace Gloson.Linq {
 
           for (int j = 0; j < i; ++j) {
             if (indexes[j] == v) {
-              v = v + 1;
+              v += 1;
 
               j = -1;
             }
@@ -346,9 +346,10 @@ namespace Gloson.Linq {
         var tar = targets.Where((v, index) => index != i);
 
         foreach (var record in Assignments(sources.Skip(1), tar)) {
-          List<Tuple<T1, T2>> result = new List<Tuple<T1, T2>>(Math.Min(sources.Length, targets.Length));
+          List<Tuple<T1, T2>> result = new List<Tuple<T1, T2>>(Math.Min(sources.Length, targets.Length)) {
+            new Tuple<T1, T2>(sources[0], targets[i]),
+          };
 
-          result.Add(new Tuple<T1, T2>(sources[0], targets[i]));
           result.AddRange(record);
 
           yield return result.ToArray();

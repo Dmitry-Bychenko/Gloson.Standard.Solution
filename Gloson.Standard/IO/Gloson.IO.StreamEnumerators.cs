@@ -22,11 +22,11 @@ namespace Gloson.IO {
   public sealed class StreamByteEnumerator : IEnumerator<byte> {
     #region Private Data
 
-    private long m_SavedPosition;
+    private readonly long m_SavedPosition;
 
     private int m_Current = -1;
 
-    private bool m_DisposeStream;
+    private readonly bool m_DisposeStream;
 
     #endregion Private Data
 
@@ -146,15 +146,15 @@ namespace Gloson.IO {
 
     private const int BufferSize = 8192;
 
-    private long m_SavedPosition;
+    private readonly long m_SavedPosition;
 
     private StreamReader m_Reader;
 
-    private Encoding m_Encoding;
+    private readonly Encoding m_Encoding;
 
-    private bool m_UseBOM;
+    private readonly bool m_UseBOM;
 
-    private bool m_DisposeStream;
+    private readonly bool m_DisposeStream;
 
     #endregion Private Data
 
@@ -312,17 +312,17 @@ namespace Gloson.IO {
 
     private const int BufferSize = 8192;
 
-    private long m_SavedPosition;
+    private readonly long m_SavedPosition;
 
     private StreamReader m_Reader;
 
-    private Encoding m_Encoding;
+    private readonly Encoding m_Encoding;
 
-    private bool m_UseBOM;
+    private readonly bool m_UseBOM;
 
     private string m_CurrentLine;
 
-    private bool m_DisposeStream;
+    private readonly bool m_DisposeStream;
 
     #endregion Private Data
 
@@ -402,9 +402,7 @@ namespace Gloson.IO {
       get {
         ValidateIfNotDisposed();
 
-        return m_CurrentLine != null 
-          ? m_CurrentLine
-          : throw new InvalidOperationException("Current Item doesn't exist.");
+        return m_CurrentLine ?? throw new InvalidOperationException("Current Item doesn't exist.");
       }
     }
 
@@ -489,11 +487,11 @@ namespace Gloson.IO {
 
     #region Private Data
 
-    private Encoding m_Encoding;
+    private readonly Encoding m_Encoding;
 
-    private bool m_DetectEncoding;
+    private readonly bool m_DetectEncoding;
 
-    private bool m_DisposeStream;
+    private readonly bool m_DisposeStream;
 
     #endregion Private Data
 

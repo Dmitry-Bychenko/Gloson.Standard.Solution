@@ -134,7 +134,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
     private static readonly TokenDescription s_RegexStandard = new RegexTokenDescription();
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       HardKeyword,
       Integer,
@@ -395,8 +395,6 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
         return value;
       else if (value[0] != '/' && value[value.Length - 1] != '/')
         return value;
-
-      StringBuilder hsb = new StringBuilder();
 
       StringBuilder sb = new StringBuilder(value.Length);
 

@@ -134,13 +134,13 @@ namespace Gloson.ComponentModel {
         .Where(rs => rs.BaseName == fileName);
 
       foreach (var manager in managers) {
-        using (var rs = manager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)) {
-          foreach (DictionaryEntry entry in rs) {
-            if (string.Equals(entry.Key as String, name)) {
-              value = entry.Value as string;
+        using var rs = manager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
 
-              return true;
-            }
+        foreach (DictionaryEntry entry in rs) {
+          if (string.Equals(entry.Key as String, name)) {
+            value = entry.Value as string;
+
+            return true;
           }
         }
       }

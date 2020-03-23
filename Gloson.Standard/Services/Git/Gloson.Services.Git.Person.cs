@@ -23,8 +23,8 @@ namespace Gloson.Services.Git {
     #region Create
 
     internal GitPerson(string name, string email, string date) : base() {
-      Name = name == null ? "" : name;
-      EMail = email == null ? "" : email;
+      Name = name ?? "";
+      EMail = email ?? "";
 
       if (string.IsNullOrWhiteSpace(date))
         At = DateTime.MinValue;

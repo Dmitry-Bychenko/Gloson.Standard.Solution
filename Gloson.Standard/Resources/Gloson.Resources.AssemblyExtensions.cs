@@ -72,7 +72,9 @@ namespace Gloson.Resources {
         yield break;
 
       if (null == culture)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
         culture = CultureInfo.CurrentUICulture;
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
       if (null == comparer)
         comparer = StringComparer.Ordinal;

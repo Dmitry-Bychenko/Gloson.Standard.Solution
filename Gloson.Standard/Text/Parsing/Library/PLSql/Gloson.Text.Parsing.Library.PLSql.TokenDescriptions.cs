@@ -50,7 +50,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       classification: TokenClassification.Operation);
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       HardKeyword,
       Integer,
@@ -98,8 +98,6 @@ namespace Gloson.Text.Parsing.Library.PLSql {
     // Stop Quotation
     private static Tuple<int, int> TryStopQuotation(string source, int startPosition, string prefix) {
       for (int i = startPosition; i < source.Length; ++i) {
-        char ch = source[i];
-
         if (IsLineBreak(source, '"', i, startPosition))
           return new Tuple<int, int>(i, i + 1);
       }
@@ -137,8 +135,6 @@ namespace Gloson.Text.Parsing.Library.PLSql {
 
       if (!special) {
         for (int i = startPosition; i < source.Length; ++i) {
-          char ch = source[i];
-
           if (IsLineBreak(source, '\'', i, startPosition))
             return new Tuple<int, int>(i, i + 1);
         }
@@ -317,9 +313,9 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       if (value[value.Length - 1] != '\'')
         return value;
 
-      bool special = false;
-      int start = 1;
-      char esc = '\0';
+      bool special;
+      int start;
+      char esc;
 
       if (value.StartsWith("'", StringComparison.OrdinalIgnoreCase)) {
         start = 1;

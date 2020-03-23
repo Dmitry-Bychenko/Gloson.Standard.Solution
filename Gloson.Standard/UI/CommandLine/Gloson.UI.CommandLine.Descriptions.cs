@@ -563,7 +563,11 @@ namespace Gloson.UI.CommandLine {
 
       return string.Join(Environment.NewLine, m_Items
         .OrderBy(item => item)
+#pragma warning disable IDE0071 // Simplify interpolation
+#pragma warning disable IDE0071WithoutSuggestion // Simplify interpolation
         .Select(item => $"{item.Name.PadRight(max)} {(item.IsRequired ? "(+)" : "   ")} {item.Description}"));
+#pragma warning restore IDE0071WithoutSuggestion // Simplify interpolation
+#pragma warning restore IDE0071 // Simplify interpolation
     }
 
     /// <summary>

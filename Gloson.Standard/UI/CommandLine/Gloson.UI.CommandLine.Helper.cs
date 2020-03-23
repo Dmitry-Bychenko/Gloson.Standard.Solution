@@ -16,9 +16,9 @@ namespace Gloson.UI.CommandLine {
   public static class CommandLineArgumentHelper {
     #region Private Data
 
-    private static char[] s_Prefixes = new char[] { '/', '\\', '-', ':', '=', '@' };
+    private static readonly char[] s_Prefixes = new char[] { '/', '\\', '-', ':', '=', '@' };
 
-    private static char[] s_Suffixes = new char[] { ':', '=' };
+    private static readonly char[] s_Suffixes = new char[] { ':', '=' };
 
     #endregion Private Data
 

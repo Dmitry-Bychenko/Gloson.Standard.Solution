@@ -163,7 +163,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Algorithm
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       Keyword,
       Integer,
@@ -410,18 +410,6 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     // Identifier
     private static readonly TokenDescription s_Identifier = TokenDescription.Create(@"[A-Za-z_]+[A-Za-z0-9_]*", options: TokenDescriptionOptions.IgnoreCase);
 
-    // Line Comment
-    private static readonly TokenDescription s_CommentLineComment = TokenDescription.Create(@"//.*$");
-    // Multiline Comment
-    private static readonly TokenDescription s_CommentMultilineComment = TokenDescription.Create(@"\(\*", @"\*\)");
-    // Multiline Comment (2)
-    private static readonly TokenDescription s_CommentMultilineComment2 = TokenDescription.Create(@"\{(?!\$)", Regex.Escape(@"}"));
-
-    // Directive
-    private static readonly TokenDescription s_Directive = TokenDescription.Create(@"\{\$", Regex.Escape(@"}"));
-    // Directive 2
-    private static readonly TokenDescription s_Directive2 = TokenDescription.Create(@"\(\*\$", @"\*\)");
-
     // Operators
     private static readonly TokenDescription s_Operators = TokenDescription.Create(new string[] {
       ">=", "<=", "<>", ">", "<", "=", ":=", "+", "-", "*", "/" }, 900);
@@ -440,7 +428,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Algorithm
 
     // Rules
-    private static TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
       Default,
       Keyword,
       Integer,

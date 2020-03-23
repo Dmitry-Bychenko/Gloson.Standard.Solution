@@ -271,7 +271,7 @@ namespace Gloson.Text.NaturalLanguages {
   public class StandardTransliterator : BaseTransliterator {
     #region Private Data
 
-    private Dictionary<string, string> m_Correspondence = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string> m_Correspondence = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
     #endregion Private Data
 

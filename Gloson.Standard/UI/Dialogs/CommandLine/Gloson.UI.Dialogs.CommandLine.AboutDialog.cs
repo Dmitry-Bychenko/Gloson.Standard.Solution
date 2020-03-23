@@ -30,9 +30,6 @@ namespace Gloson.UI.Dialogs.CommandLine {
     /// Show
     /// </summary>
     public void Show(int level) {
-      if (level < 0)
-        level = 0;
-
       Console.WriteLine(BasicInfo());
 
       string st = CommandLineInfo();

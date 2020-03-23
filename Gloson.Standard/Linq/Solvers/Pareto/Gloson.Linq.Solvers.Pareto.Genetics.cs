@@ -18,11 +18,11 @@ namespace Gloson.Linq.Solvers.Pareto {
     #region Private Data
 
     // Scope
-    private ObjectivesScope<T> m_Scope;
+    private readonly ObjectivesScope<T> m_Scope;
     // Comparer
-    private IComparer<ObjectiveItem<T>> m_Comparer;
+    private readonly IComparer<ObjectiveItem<T>> m_Comparer;
     // Breed method
-    private Func<T, T, T> m_Breed;
+    private readonly Func<T, T, T> m_Breed;
 
     #endregion Private Data
 
@@ -127,15 +127,13 @@ namespace Gloson.Linq.Solvers.Pareto {
       while (offsprings.Count < m_Scope.Items.Count)
         offsprings.Add(m_Breed(list[0], list[list.Count - 1]));
 
-      var result = new ParetoGeneticsSolver<T>(
-        offsprings, 
-        m_Scope.ObjectiveDescriptions, 
-        m_Breed, 
-        m_Comparer);
-
-      result.Step = Step + 1;
-
-      return result;
+      return new ParetoGeneticsSolver<T>(
+        offsprings,
+        m_Scope.ObjectiveDescriptions,
+        m_Breed,
+        m_Comparer) {
+        Step = Step + 1
+      };
     }
 
     /// <summary>

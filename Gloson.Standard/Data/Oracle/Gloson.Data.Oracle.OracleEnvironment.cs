@@ -42,35 +42,33 @@ namespace Gloson.Data.Oracle {
       String.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
 
     private string Query(string name) {
-      string result;
-
       if (string.IsNullOrWhiteSpace(name))
         return "";
 
       name = name?.Trim();
 
-      if (m_Cached.TryGetValue(name, out result))
+      if (m_Cached.TryGetValue(name, out string result))
         return result;
 
-      using (IDbCommand q = Connection.CreateCommand()) {
-        q.CommandText =
-          @"select SYS_CONTEXT('USERENV', :prm_Name)
-              from Dual";
+      using IDbCommand q = Connection.CreateCommand();
 
-        var prm = q.CreateParameter();
+      q.CommandText =
+        @"select SYS_CONTEXT('USERENV', :prm_Name)
+            from Dual";
 
-        prm.Direction = ParameterDirection.Input;
-        prm.Value = name;
-        prm.DbType = DbType.AnsiString;
+      var prm = q.CreateParameter();
 
-        q.Parameters.Add(prm);
+      prm.Direction = ParameterDirection.Input;
+      prm.Value = name;
+      prm.DbType = DbType.AnsiString;
 
-        result = Convert.ToString(q.ExecuteScalar());
+      q.Parameters.Add(prm);
 
-        m_Cached.Add(name, result);
+      result = Convert.ToString(q.ExecuteScalar());
 
-        return result;
-      }
+      m_Cached.Add(name, result);
+
+      return result;
     }
 
     #endregion Algorithm
@@ -136,17 +134,17 @@ namespace Gloson.Data.Oracle {
         if (null != m_Version)
           return m_Version;
 
-        using (IDbCommand q = Connection.CreateCommand()) {
-          q.CommandText =
-            @"SELECT Banner
-                FROM v$version
-               WHERE Banner LIKE 'Oracle%'";
+        using IDbCommand q = Connection.CreateCommand();
 
-          if (!Version.TryParse(q.ExecuteScalar()?.ToString(), out m_Version))
-            m_Version = new Version(0, 0);
+        q.CommandText =
+          @"SELECT Banner
+              FROM v$version
+             WHERE Banner LIKE 'Oracle%'";
 
-          return m_Version;
-        }
+        if (!Version.TryParse(q.ExecuteScalar()?.ToString(), out m_Version))
+          m_Version = new Version(0, 0);
+
+        return m_Version;
       }
     }
 

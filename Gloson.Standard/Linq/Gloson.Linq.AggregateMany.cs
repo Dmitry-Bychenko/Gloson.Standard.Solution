@@ -18,11 +18,11 @@ namespace Gloson.Linq {
   public class Aggregator<S, V> {
     #region Private Data
 
-    private Func<V, S, int, V> m_UpdateWithIndex;
+    private readonly Func<V, S, int, V> m_UpdateWithIndex;
 
-    private Func<V, S, V> m_Update;
+    private readonly Func<V, S, V> m_Update;
 
-    private bool m_Initialized;
+    private readonly bool m_Initialized;
 
     private V m_Current;
 
@@ -55,12 +55,9 @@ namespace Gloson.Linq {
     /// Standard constructor
     /// </summary>
     public Aggregator(V seed, Func<V, S, int, V> update) {
-      if (null == update)
-        throw new ArgumentNullException(nameof(update));
-
       Index             = -1;
       m_Current         = seed;
-      m_UpdateWithIndex = update;
+      m_UpdateWithIndex = update ?? throw new ArgumentNullException(nameof(update));
       m_Initialized     = true;
     }
 
@@ -68,12 +65,9 @@ namespace Gloson.Linq {
     /// Standard constructor
     /// </summary>
     public Aggregator(V seed, Func<V, S, V> update) {
-      if (null == update)
-        throw new ArgumentNullException(nameof(update));
-
       Index         = -1;
       m_Current     = seed;
-      m_Update      = update;
+      m_Update      = update ?? throw new ArgumentNullException(nameof(update));
       m_Initialized = true;
     }
 

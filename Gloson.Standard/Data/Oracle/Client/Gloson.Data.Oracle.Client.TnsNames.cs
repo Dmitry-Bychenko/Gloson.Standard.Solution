@@ -23,7 +23,7 @@ namespace Gloson.Data.Oracle.Client {
     private string m_Name;
 
     // Items
-    private List<TnsNames> m_Items = new List<TnsNames>();
+    private readonly List<TnsNames> m_Items = new List<TnsNames>();
 
     #endregion Private Data
 

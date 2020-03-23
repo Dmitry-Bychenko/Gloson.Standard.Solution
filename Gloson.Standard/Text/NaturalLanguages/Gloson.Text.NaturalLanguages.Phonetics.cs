@@ -15,12 +15,12 @@ namespace Gloson.Text.NaturalLanguages {
   public static class Phonetics {
     #region Private Data
 
-    private static HashSet<char> s_Vowels = new HashSet<char>() {
+    private static readonly HashSet<char> s_Vowels = new HashSet<char>() {
       'a', 'e', 'i', 'o', 'u', 'y',
       'A', 'E', 'I', 'O', 'U', 'Y',
     };
 
-    private static HashSet<char> s_Consonants = new HashSet<char>() {
+    private static readonly HashSet<char> s_Consonants = new HashSet<char>() {
       'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Z',
       'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z',
     };

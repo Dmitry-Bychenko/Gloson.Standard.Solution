@@ -16,7 +16,7 @@ namespace Gloson.Drawing {
   public static partial class ConsoleColorExtensions {
     #region Private Data
 
-    private static Color[] s_Colors = new Color[] {
+    private static readonly Color[] s_Colors = new Color[] {
       Color.FromArgb(0x000000), // Black
       Color.FromArgb(0x000080), // Dark Blue
       Color.FromArgb(0x008000), // Dark Green

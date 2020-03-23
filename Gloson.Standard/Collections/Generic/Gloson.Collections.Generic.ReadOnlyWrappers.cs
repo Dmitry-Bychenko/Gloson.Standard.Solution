@@ -39,7 +39,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private HashSet<T> m_HashSet;
+    private readonly HashSet<T> m_HashSet;
 
     #endregion Private Data
 
@@ -49,10 +49,7 @@ namespace Gloson.Collections.Generic {
     /// Standard Constructor
     /// </summary>
     public ReadOnlyHashSetWrapper(HashSet<T> value) {
-      if (null == value)
-        throw new ArgumentNullException(nameof(value));
-
-      m_HashSet = value;
+      m_HashSet = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     #endregion Create
@@ -95,7 +92,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private T[] m_Array;
+    private readonly T[] m_Array;
 
     #endregion Private Data
 
@@ -105,10 +102,7 @@ namespace Gloson.Collections.Generic {
     /// Standard collection
     /// </summary>
     public ReadOnlyArrayWrapper(T[] value) {
-      if (null == value)
-        throw new ArgumentNullException(nameof(value));
-
-      m_Array = value;
+      m_Array = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     #endregion Create
@@ -149,7 +143,7 @@ namespace Gloson.Collections.Generic {
   public sealed class ReadOnlyCorrespondenceWrapper<K, V> : IReadOnlyCorrespondence<K, V> {
     #region Private Data
 
-    private Correspondence<K, V> m_Correspondence;
+    private readonly Correspondence<K, V> m_Correspondence;
 
     #endregion Private Data
 
@@ -159,10 +153,7 @@ namespace Gloson.Collections.Generic {
     /// Standard Constructor
     /// </summary>
     public ReadOnlyCorrespondenceWrapper(Correspondence<K, V> value) {
-      if (null == value)
-        throw new ArgumentNullException(nameof(value));
-
-      m_Correspondence = value;
+      m_Correspondence = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     #endregion Create

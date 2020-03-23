@@ -36,9 +36,9 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private Dictionary<K, V> m_Direct;
+    private readonly Dictionary<K, V> m_Direct;
 
-    private Dictionary<V, K> m_Reverse;
+    private readonly Dictionary<V, K> m_Reverse;
 
     #endregion Private Data
 

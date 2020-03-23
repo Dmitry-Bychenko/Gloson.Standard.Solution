@@ -32,11 +32,8 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="distribution">Distribution to use</param>
     /// <param name="seed">Seed</param>
     public ContinuousRandom(IContinuousProbabilityDistribution distribution, int seed) {
-      if (null == distribution)
-        throw new ArgumentNullException(nameof(distribution));
-
       m_Random = new ThreadLocal<Random>(() => new Random(seed));
-      Distribution = distribution;
+      Distribution = distribution ?? throw new ArgumentNullException(nameof(distribution));
     }
 
     /// <summary>
@@ -44,9 +41,6 @@ namespace Gloson.Numerics.Distributions {
     /// </summary>
     /// <param name="distribution">Distribution to use</param>
     public ContinuousRandom(IContinuousProbabilityDistribution distribution) {
-      if (null == distribution)
-        throw new ArgumentNullException(nameof(distribution));
-
       m_Random = new ThreadLocal<Random>(() => {
         int seed;
 
@@ -61,7 +55,7 @@ namespace Gloson.Numerics.Distributions {
         return new Random(seed);
       });
 
-      Distribution = distribution;
+      Distribution = distribution ?? throw new ArgumentNullException(nameof(distribution));
     }
 
     #endregion Create
