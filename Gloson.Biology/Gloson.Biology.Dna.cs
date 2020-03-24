@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Biology {
 
@@ -14,8 +13,8 @@ namespace Gloson.Biology {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Dna : 
-    IReadOnlyList<DnaNuclearbase>, 
+  public sealed class Dna :
+    IReadOnlyList<DnaNuclearbase>,
     IEquatable<Dna> {
 
     #region Private Data
@@ -104,7 +103,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (Dna left, Dna right) {
+    public static bool operator ==(Dna left, Dna right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)
@@ -189,7 +188,7 @@ namespace Gloson.Biology {
 
         int result = 0;
 
-        for (int i = 0; i < n; ++i) 
+        for (int i = 0; i < n; ++i)
           result ^= ((byte)m_Items[i] << (i * 8));
 
         return result ^ m_Items.Count;

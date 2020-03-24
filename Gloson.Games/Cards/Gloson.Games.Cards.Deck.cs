@@ -306,7 +306,7 @@ namespace Gloson.Games.Cards {
   public sealed class CardValue : IEquatable<CardValue>, IComparable<CardValue> {
     #region Private Data
 
-    private readonly static List<CardValue> s_Items;
+    private static readonly List<CardValue> s_Items;
 
     #endregion Private Data
 

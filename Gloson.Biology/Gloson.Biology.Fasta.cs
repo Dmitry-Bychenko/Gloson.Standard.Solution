@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-
-using Gloson;
-using Gloson.Text;
 
 namespace Gloson.Biology {
 
@@ -18,8 +15,8 @@ namespace Gloson.Biology {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Fasta : 
-    IEquatable<Fasta>, 
+  public sealed class Fasta :
+    IEquatable<Fasta>,
     IFormattable {
 
     #region Private Data
@@ -94,7 +91,7 @@ namespace Gloson.Biology {
       string description = null;
 
       foreach (string line in lines) {
-        if (line.StartsWith(";") || line.StartsWith("#")) 
+        if (line.StartsWith(";") || line.StartsWith("#"))
           comments.Add(line.Substring(1));
         else if (line.StartsWith(">")) {
           if (null != description)
@@ -125,8 +122,8 @@ namespace Gloson.Biology {
         return false;
 
       result = new Fasta(
-        description, 
-        sequence, 
+        description,
+        sequence,
         string.Join(Environment.NewLine, comments));
 
       return true;
@@ -170,7 +167,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (Fasta left, Fasta right) {
+    public static bool operator ==(Fasta left, Fasta right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == right || null == left)
@@ -182,7 +179,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// Not Equals
     /// </summary>
-    public static bool operator != (Fasta left, Fasta right) {
+    public static bool operator !=(Fasta left, Fasta right) {
       if (ReferenceEquals(left, right))
         return false;
       else if (null == right || null == left)
