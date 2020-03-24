@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Gloson.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-
-using Gloson.Linq;
 
 namespace Gloson.Games.Cards {
 
@@ -344,7 +342,7 @@ namespace Gloson.Games.Cards {
           ? s_Items[v]
           : s_Items[0];
 
-          return true;
+        return true;
       }
 
       value = value.Trim();
@@ -573,7 +571,7 @@ namespace Gloson.Games.Cards {
           value.Equals("any", StringComparison.OrdinalIgnoreCase)) {
         result = new Card(0, CardSuit.None);
 
-        return true; 
+        return true;
       }
 
       HashSet<char> suitsMarks = new HashSet<char>() {
@@ -619,7 +617,7 @@ namespace Gloson.Games.Cards {
     /// Create Joker
     /// </summary>
     public static Card CreateJoker() => new Card(0, CardSuit.None);
-    
+
     #endregion Create
 
     #region Public
@@ -629,11 +627,11 @@ namespace Gloson.Games.Cards {
     /// </summary>
     public static int Compare(Card left, Card right) {
       if (ReferenceEquals(left, right))
-        return  0;
+        return 0;
       else if (null == left)
         return -1;
       else if (null == right)
-        return  1;
+        return 1;
 
       int result = left.Suit.CompareTo(right.Suit);
 
@@ -662,7 +660,7 @@ namespace Gloson.Games.Cards {
     /// ToString
     /// </summary>
     public override string ToString() {
-      return IsJoker ? "Joker" : $"{Suit.Symbol}{Value.Symbol}"; 
+      return IsJoker ? "Joker" : $"{Suit.Symbol}{Value.Symbol}";
     }
 
     #endregion Public
@@ -703,7 +701,7 @@ namespace Gloson.Games.Cards {
     /// Compare To
     /// </summary>
     public int CompareTo(Card other) => Compare(this, other);
-    
+
     #endregion IComparable<Card>
   }
 
@@ -757,7 +755,7 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Hand
     /// </summary>
-    public CardHand(IEnumerable<Card> cards, bool isOrdered) 
+    public CardHand(IEnumerable<Card> cards, bool isOrdered)
       : this(isOrdered) {
 
       if (null == cards)
@@ -875,7 +873,7 @@ namespace Gloson.Games.Cards {
       if (IsOrdered)
         return string.Join(" ", m_Items);
 
-      CardSuit[] suits = new CardSuit[] { 
+      CardSuit[] suits = new CardSuit[] {
         CardSuit.Spades, CardSuit.Hearts, CardSuit.Diamonds, CardSuit.Clubs
       };
 
@@ -1010,9 +1008,9 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Indexer
     /// </summary>
-    public Card this[int index] { 
+    public Card this[int index] {
       get => m_Items[index];
-      set { 
+      set {
         if (null == value) {
           RemoveAt(index);
 
@@ -1052,7 +1050,7 @@ namespace Gloson.Games.Cards {
         m_Items.RemoveAt(old);
 
         m_Items[index] = value;
-      } 
+      }
     }
 
     /// <summary>

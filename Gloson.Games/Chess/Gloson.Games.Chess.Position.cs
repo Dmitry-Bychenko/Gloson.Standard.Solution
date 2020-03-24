@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Gloson.Games.Chess {
+﻿namespace Gloson.Games.Chess {
 
   //-------------------------------------------------------------------------------------------------------------------
   //

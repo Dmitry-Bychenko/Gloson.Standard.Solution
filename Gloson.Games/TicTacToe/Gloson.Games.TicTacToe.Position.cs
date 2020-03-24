@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Gloson.Games;
 
 namespace Gloson.Games.TicTacToe {
 
@@ -34,7 +31,8 @@ namespace Gloson.Games.TicTacToe {
     /// To Char
     /// </summary>
     public static char ToChar(this Mark mark) {
-      return mark switch {
+      return mark switch
+      {
         Mark.Cross => 'X',
         Mark.Nought => 'O',
         Mark.None => '.',
@@ -131,7 +129,7 @@ namespace Gloson.Games.TicTacToe {
     /// </summary>
     public static IEnumerable<TicTacToePosition> AllLegalPositions() {
       HashSet<TicTacToePosition> agenda = new HashSet<TicTacToePosition>() { Empty };
- 
+
       while (agenda.Count > 0) {
         HashSet<TicTacToePosition> next = new HashSet<TicTacToePosition>();
 
@@ -176,7 +174,7 @@ namespace Gloson.Games.TicTacToe {
 
         if (c == n)
           return Mark.Cross;
-        else if (c  == n + 1 && c + n < m_Marks.Length)
+        else if (c == n + 1 && c + n < m_Marks.Length)
           return Mark.Nought;
         else
           return Mark.None;
@@ -286,7 +284,7 @@ namespace Gloson.Games.TicTacToe {
       if (mark == Mark.None)
         yield break;
 
-      for (int i = 0; i < m_Marks.Length; ++i) 
+      for (int i = 0; i < m_Marks.Length; ++i)
         if (m_Marks[i] == Mark.None) {
           TicTacToePosition result = Clone();
 
@@ -337,7 +335,7 @@ namespace Gloson.Games.TicTacToe {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (TicTacToePosition left, TicTacToePosition right) {
+    public static bool operator ==(TicTacToePosition left, TicTacToePosition right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)

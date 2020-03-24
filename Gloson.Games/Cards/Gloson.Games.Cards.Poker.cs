@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using Gloson.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-
-using Gloson.Linq;
 
 namespace Gloson.Games.Cards {
 
@@ -43,34 +39,20 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Name
     /// </summary>
-    public static String Name(this PokerCombination value) {
-      switch (value) {
-        case PokerCombination.Flush:
-          return "Flush";
-        case PokerCombination.Four:
-          return "Four";
-        case PokerCombination.FullHouse:
-          return "Full House";
-        case PokerCombination.None:
-          return "Single";
-        case PokerCombination.Pair:
-          return "Pair";
-        case PokerCombination.Poker:
-          return "Poker";
-        case PokerCombination.RoyalFlush:
-          return "Flush Royal";
-        case PokerCombination.Straight:
-          return "Straight";
-        case PokerCombination.StraitFlush:
-          return "Straight Flush";
-        case PokerCombination.Three:
-          return "Three";
-        case PokerCombination.TwoPairs:
-          return "Two Pairs";
-        default:
-          return "???";
-      }
-    }
+    public static String Name(this PokerCombination value) => value switch
+    {
+      PokerCombination.Flush => "Flush",
+      PokerCombination.Four => "Four",
+      PokerCombination.FullHouse => "Full House",
+      PokerCombination.None => "Single",
+      PokerCombination.Pair => "Pair",
+      PokerCombination.RoyalFlush => "Flush Royal",
+      PokerCombination.Straight => "Straight",
+      PokerCombination.StraitFlush => "Straight Flush",
+      PokerCombination.Three => "Three",
+      PokerCombination.TwoPairs => "Two Pairs",
+      _ => "???",
+    };
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -81,7 +63,7 @@ namespace Gloson.Games.Cards {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class PokerBestScore 
+  public sealed class PokerBestScore
     : IComparable<PokerBestScore>,
       IEquatable<PokerBestScore> {
 
@@ -241,7 +223,7 @@ namespace Gloson.Games.Cards {
 
         return;
       }
-      
+
       if (Hand.All(card => card.IsJoker)) {
         MajorValue = 14;
 
@@ -476,7 +458,7 @@ namespace Gloson.Games.Cards {
     /// </summary>
     public override int GetHashCode() {
       unchecked {
-        return (((int) Combination) << 24) ^ (MajorValue << 8) ^ MinorValue;
+        return (((int)Combination) << 24) ^ (MajorValue << 8) ^ MinorValue;
       }
     }
 
