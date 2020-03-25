@@ -189,7 +189,7 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// To String (debug only)
     /// </summary>
-    public override abstract string ToString(); // <- We force developers to implement it
+    public abstract override string ToString(); // <- We force developers to implement it
 
     #endregion Public
   }

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Gloson.Text;
-using Gloson.Collections.Generic;
 
 namespace Gloson.Biology {
 
@@ -16,10 +13,10 @@ namespace Gloson.Biology {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class AminoAcid 
-    : IComparable<AminoAcid>, 
+  public sealed class AminoAcid
+    : IComparable<AminoAcid>,
       IEquatable<AminoAcid> {
-    
+
     #region Private Data
 
     private static readonly List<AminoAcid> s_Items = new List<AminoAcid>();
@@ -69,7 +66,7 @@ namespace Gloson.Biology {
 
       RegisterAminoCodon('U', "UGA");
       RegisterAminoCodon('O', "UAG");
-      RegisterAminoCodon('*', "UAA"); 
+      RegisterAminoCodon('*', "UAA");
     }
 
     #endregion Algorithm
@@ -152,7 +149,7 @@ namespace Gloson.Biology {
 
       s_DictThreeLetter.Add(IsoCode, this);
       s_DictThreeLetter.Add(Code.ToString(), this);
-      
+
       s_DictThreeLetter.Add(title, this);
     }
 
@@ -259,7 +256,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// From Char
     /// </summary>
-    public static implicit operator AminoAcid (char value) {
+    public static implicit operator AminoAcid(char value) {
       return s_DictOneLetter.TryGetValue(value, out var result)
         ? result
         : throw new FormatException($"Unknown amino acid '{value}'");

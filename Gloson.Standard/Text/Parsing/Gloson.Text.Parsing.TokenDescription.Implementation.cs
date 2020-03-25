@@ -12,7 +12,7 @@ namespace Gloson.Text.Parsing {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  class TokenDescriptionRegex : TokenDescription {
+  internal class TokenDescriptionRegex : TokenDescription {
     #region Private Data
 
     // Start expression
@@ -151,7 +151,7 @@ namespace Gloson.Text.Parsing {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  class TokenDescriptionFunc : TokenDescription {
+  internal class TokenDescriptionFunc : TokenDescription {
     #region Private Data
 
     // Start match

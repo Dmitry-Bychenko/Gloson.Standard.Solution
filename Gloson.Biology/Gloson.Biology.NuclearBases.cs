@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Biology {
 
@@ -47,7 +45,7 @@ namespace Gloson.Biology {
     /// </summary>
     public static DnaNuclearbase Complement(this DnaNuclearbase value) {
       switch (value) {
-        case DnaNuclearbase.A :
+        case DnaNuclearbase.A:
           return DnaNuclearbase.T;
         case DnaNuclearbase.C:
           return DnaNuclearbase.G;

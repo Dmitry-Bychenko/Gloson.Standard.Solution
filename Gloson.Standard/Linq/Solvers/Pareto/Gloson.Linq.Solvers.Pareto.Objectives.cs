@@ -231,8 +231,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     internal List<ObjectiveItem<T>> m_WorseThan = new List<ObjectiveItem<T>>();
 
     internal int m_FrontierLevel = -1;
-
-    double m_CrowdingDistance = double.NaN;
+    private double m_CrowdingDistance = double.NaN;
 
     #endregion Private Data
 

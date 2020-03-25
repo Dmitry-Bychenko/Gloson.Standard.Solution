@@ -22,7 +22,7 @@ namespace Gloson.UI.CommandLine {
 
     #region Private Data
 
-    CommandLineArgumentDescriptions m_Owner;
+    private CommandLineArgumentDescriptions m_Owner;
     private string m_Name = "";
     private string m_OrderName = "";
 

@@ -20,10 +20,10 @@ namespace Gloson.Consoles {
   public sealed class ConsoleAppearance : IDisposable {
     #region Private Data
 
-    readonly private ConsoleColor m_SavedBackgroundColor;
-    readonly private ConsoleColor m_SavedForegroundColor;
-    readonly private int m_SavedCursorSize;
-    readonly private bool m_SavedCursorVisible;
+    private readonly ConsoleColor m_SavedBackgroundColor;
+    private readonly ConsoleColor m_SavedForegroundColor;
+    private readonly int m_SavedCursorSize;
+    private readonly bool m_SavedCursorVisible;
 
     #endregion Private Data
 
