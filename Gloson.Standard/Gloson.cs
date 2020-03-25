@@ -6,6 +6,9 @@
 // https://stackoverflow.com/questions/49572079/net-core-dependency-injection-backwards-compatibility-with-net-framework
 // https://github.com/App-vNext/Polly 
 //
+// https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&datatype=csv&apikey=9W0A3V9JHMAY5XWW
+// https://www.alphavantage.co/documentation/
+//
 // Install-Package Microsoft.Extensions.DependencyInjection -Version 3.0.0 -ProjectName Gloson.Standard
 // Install-Package Microsoft.Extensions.DependencyInjection.Abstractions -Version 3.0.0 -ProjectName Gloson.Standard
 //
