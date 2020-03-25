@@ -32,18 +32,18 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbCommand q = connection.CreateCommand()) {
-        q.CommandText = sql;
+      using IDbCommand q = connection.CreateCommand();
 
-        foreach (var item in parameters) {
-          IDbDataParameter prm = q.CreateParameter();
+      q.CommandText = sql;
 
-          prm.ParameterName = item.Item1;
-          prm.Value = item.Item2;
-        }
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-        return q.ExecuteNonQuery();
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
       }
+
+      return q.ExecuteNonQuery();
     }
 
     /// <summary>
@@ -62,18 +62,18 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbCommand q = connection.CreateCommand()) {
-        q.CommandText = sql;
+      using IDbCommand q = connection.CreateCommand();
 
-        foreach (var item in parameters) {
-          IDbDataParameter prm = q.CreateParameter();
+      q.CommandText = sql;
 
-          prm.ParameterName = item.Item1;
-          prm.Value = item.Item2;
-        }
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-        return q.ExecuteScalar();
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
       }
+
+      return q.ExecuteScalar();
     }
 
     /// <summary>
@@ -92,22 +92,21 @@ namespace Gloson.Data {
       else if (null == parameters)
         throw new ArgumentNullException(nameof(parameters));
 
-      using (IDbCommand q = connection.CreateCommand()) {
-        q.CommandText = sql;
+      using IDbCommand q = connection.CreateCommand();
 
-        foreach (var item in parameters) {
-          IDbDataParameter prm = q.CreateParameter();
+      q.CommandText = sql;
 
-          prm.ParameterName = item.Item1;
-          prm.Value = item.Item2;
-        }
+      foreach (var item in parameters) {
+        IDbDataParameter prm = q.CreateParameter();
 
-        using (var reader = q.ExecuteReader()) {
-          while (reader.Read()) {
-            yield return reader;
-          }
-        }
+        prm.ParameterName = item.Item1;
+        prm.Value = item.Item2;
       }
+
+      using var reader = q.ExecuteReader();
+
+      while (reader.Read())
+        yield return reader;
     }
 
     #endregion Public

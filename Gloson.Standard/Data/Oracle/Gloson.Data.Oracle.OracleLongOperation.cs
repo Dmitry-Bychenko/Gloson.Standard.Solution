@@ -25,9 +25,9 @@ namespace Gloson.Data.Oracle {
     #region Algorithm
 
     private void CoreStartLongProcess() {
-      using (var q = Connection.CreateCommand()) {
-        q.CommandText =
-          @"declare
+      using var q = Connection.CreateCommand();
+      q.CommandText =
+        @"declare
               rIndex BINARY_INTEGER;
               Slno   BINARY_INTEGER;
             begin 
@@ -48,58 +48,57 @@ namespace Gloson.Data.Oracle {
              :Slno := Slno;
             end;";
 
-        var prmTitle = q.CreateParameter();
+      var prmTitle = q.CreateParameter();
 
-        prmTitle.ParameterName = ":prm_Title";
-        prmTitle.Direction = ParameterDirection.Input;
-        prmTitle.DbType = DbType.String;
-        prmTitle.Value = Title;
+      prmTitle.ParameterName = ":prm_Title";
+      prmTitle.Direction = ParameterDirection.Input;
+      prmTitle.DbType = DbType.String;
+      prmTitle.Value = Title;
 
-        var prmCurrentStep = q.CreateParameter();
+      var prmCurrentStep = q.CreateParameter();
 
-        prmCurrentStep.ParameterName = ":prm_CurrentStep";
-        prmCurrentStep.Direction = ParameterDirection.Input;
-        prmCurrentStep.DbType = DbType.Int32;
-        prmCurrentStep.Value = CurrentStep;
+      prmCurrentStep.ParameterName = ":prm_CurrentStep";
+      prmCurrentStep.Direction = ParameterDirection.Input;
+      prmCurrentStep.DbType = DbType.Int32;
+      prmCurrentStep.Value = CurrentStep;
 
-        var prmFinalStep = q.CreateParameter();
+      var prmFinalStep = q.CreateParameter();
 
-        prmFinalStep.ParameterName = ":prm_FinalStep";
-        prmFinalStep.Direction = ParameterDirection.Input;
-        prmFinalStep.DbType = DbType.Int32;
-        prmFinalStep.Value = CurrentStep;
+      prmFinalStep.ParameterName = ":prm_FinalStep";
+      prmFinalStep.Direction = ParameterDirection.Input;
+      prmFinalStep.DbType = DbType.Int32;
+      prmFinalStep.Value = CurrentStep;
 
-        //---
+      //---
 
-        var prmrIndex = q.CreateParameter();
+      var prmrIndex = q.CreateParameter();
 
-        prmrIndex.ParameterName = ":rIndex";
-        prmrIndex.Direction = ParameterDirection.Output;
-        prmrIndex.DbType = DbType.Int32;
+      prmrIndex.ParameterName = ":rIndex";
+      prmrIndex.Direction = ParameterDirection.Output;
+      prmrIndex.DbType = DbType.Int32;
 
-        var prmrSlno = q.CreateParameter();
+      var prmrSlno = q.CreateParameter();
 
-        prmrSlno.ParameterName = ":Slno";
-        prmrSlno.Direction = ParameterDirection.Output;
-        prmrSlno.DbType = DbType.Int32;
+      prmrSlno.ParameterName = ":Slno";
+      prmrSlno.Direction = ParameterDirection.Output;
+      prmrSlno.DbType = DbType.Int32;
 
-        q.Parameters.Add(prmTitle);
-        q.Parameters.Add(prmCurrentStep);
-        q.Parameters.Add(prmFinalStep);
-        q.Parameters.Add(prmrIndex);
-        q.Parameters.Add(prmrSlno);
+      q.Parameters.Add(prmTitle);
+      q.Parameters.Add(prmCurrentStep);
+      q.Parameters.Add(prmFinalStep);
+      q.Parameters.Add(prmrIndex);
+      q.Parameters.Add(prmrSlno);
 
-        q.ExecuteNonQuery();
+      q.ExecuteNonQuery();
 
-        m_Index = Convert.ToInt32(prmrIndex.Value);
-        m_Id = Convert.ToInt32(prmrSlno.Value);
-      }
+      m_Index = Convert.ToInt32(prmrIndex.Value);
+      m_Id = Convert.ToInt32(prmrSlno.Value);
     }
 
     private void CoreNextStep() {
-      using (var q = Connection.CreateCommand()) {
-        q.CommandText =
-         @"begin
+      using var q = Connection.CreateCommand();
+      q.CommandText =
+       @"begin
             dbms_Application_Info.Set_Session_LongOps(
               :rIndex,
               :Slno,
@@ -111,49 +110,48 @@ namespace Gloson.Data.Oracle {
                null);
            end;";
 
-        var prmrIndex = q.CreateParameter();
+      var prmrIndex = q.CreateParameter();
 
-        prmrIndex.ParameterName = ":rIndex";
-        prmrIndex.Direction = ParameterDirection.Input;
-        prmrIndex.DbType = DbType.Int32;
-        prmrIndex.Value = m_Index;
+      prmrIndex.ParameterName = ":rIndex";
+      prmrIndex.Direction = ParameterDirection.Input;
+      prmrIndex.DbType = DbType.Int32;
+      prmrIndex.Value = m_Index;
 
-        var prmrSlno = q.CreateParameter();
+      var prmrSlno = q.CreateParameter();
 
-        prmrSlno.ParameterName = ":Slno";
-        prmrSlno.Direction = ParameterDirection.Input;
-        prmrSlno.DbType = DbType.Int32;
-        prmrSlno.Value = m_Id;
+      prmrSlno.ParameterName = ":Slno";
+      prmrSlno.Direction = ParameterDirection.Input;
+      prmrSlno.DbType = DbType.Int32;
+      prmrSlno.Value = m_Id;
 
-        var prmTitle = q.CreateParameter();
+      var prmTitle = q.CreateParameter();
 
-        prmTitle.ParameterName = ":prm_Title";
-        prmTitle.Direction = ParameterDirection.Input;
-        prmTitle.DbType = DbType.String;
-        prmTitle.Value = Title;
+      prmTitle.ParameterName = ":prm_Title";
+      prmTitle.Direction = ParameterDirection.Input;
+      prmTitle.DbType = DbType.String;
+      prmTitle.Value = Title;
 
-        var prmCurrentStep = q.CreateParameter();
+      var prmCurrentStep = q.CreateParameter();
 
-        prmCurrentStep.ParameterName = ":prm_CurrentStep";
-        prmCurrentStep.Direction = ParameterDirection.Input;
-        prmCurrentStep.DbType = DbType.Int32;
-        prmCurrentStep.Value = CurrentStep;
+      prmCurrentStep.ParameterName = ":prm_CurrentStep";
+      prmCurrentStep.Direction = ParameterDirection.Input;
+      prmCurrentStep.DbType = DbType.Int32;
+      prmCurrentStep.Value = CurrentStep;
 
-        var prmFinalStep = q.CreateParameter();
+      var prmFinalStep = q.CreateParameter();
 
-        prmFinalStep.ParameterName = ":prm_FinalStep";
-        prmFinalStep.Direction = ParameterDirection.Input;
-        prmFinalStep.DbType = DbType.Int32;
-        prmFinalStep.Value = CurrentStep;
+      prmFinalStep.ParameterName = ":prm_FinalStep";
+      prmFinalStep.Direction = ParameterDirection.Input;
+      prmFinalStep.DbType = DbType.Int32;
+      prmFinalStep.Value = CurrentStep;
 
-        q.Parameters.Add(prmrIndex);
-        q.Parameters.Add(prmrSlno);
-        q.Parameters.Add(prmTitle);
-        q.Parameters.Add(prmCurrentStep);
-        q.Parameters.Add(prmFinalStep);
+      q.Parameters.Add(prmrIndex);
+      q.Parameters.Add(prmrSlno);
+      q.Parameters.Add(prmTitle);
+      q.Parameters.Add(prmCurrentStep);
+      q.Parameters.Add(prmFinalStep);
 
-        q.ExecuteNonQuery();
-      }
+      q.ExecuteNonQuery();
     }
 
     #endregion Algorithm

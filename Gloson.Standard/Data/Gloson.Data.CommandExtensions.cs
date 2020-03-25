@@ -24,10 +24,10 @@ namespace Gloson.Data {
       if (null == command)
         throw new ArgumentNullException(nameof(command));
 
-      using (IDataReader reader = command.ExecuteReader()) {
-        while (reader.Read())
-          yield return reader;
-      }
+      using IDataReader reader = command.ExecuteReader();
+
+      while (reader.Read())
+        yield return reader;
     }
 
     #endregion Public 

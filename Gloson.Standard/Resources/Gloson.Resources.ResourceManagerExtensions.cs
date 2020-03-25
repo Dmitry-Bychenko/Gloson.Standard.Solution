@@ -37,11 +37,10 @@ namespace Gloson.Resources {
       if (null == culture)
         culture = CultureInfo.CurrentUICulture;
 
-      using (ResourceSet rs = manager.GetResourceSet(culture, true, true)) {
-        foreach (DictionaryEntry entry in rs) {
-          yield return new KeyValuePair<string, object>(entry.Key as String, entry.Value);
-        }
-      }
+      using ResourceSet rs = manager.GetResourceSet(culture, true, true);
+
+      foreach (DictionaryEntry entry in rs)
+        yield return new KeyValuePair<string, object>(entry.Key as String, entry.Value);
     }
 
     /// <summary>
@@ -69,12 +68,12 @@ namespace Gloson.Resources {
       else if (null == resourceName)
         throw new ArgumentNullException(nameof(resourceName));
 
-      byte[] bytes = manager.GetObject(resourceName) as byte[];
+      //if (manager.GetObject(resourceName) is byte[] bytes)
+      //  return Assembly.Load(bytes);
 
-      if (null == bytes)
-        throw new ArgumentException($"Resource {resourceName} is not found.", nameof(resourceName));
-
-      return Assembly.Load(bytes);
+      return manager.GetObject(resourceName) is byte[] bytes
+        ? Assembly.Load(bytes)
+        : throw new ArgumentException($"Resource {resourceName} is not found.", nameof(resourceName));
     }
 
     #endregion Public

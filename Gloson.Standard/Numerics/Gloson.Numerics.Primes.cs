@@ -178,7 +178,7 @@ namespace Gloson.Numerics {
           return -1;
 
         count += 1;
-        value = value / 2;
+        value /= 2;
 
         if (value % 2 == 0)
           return 0;

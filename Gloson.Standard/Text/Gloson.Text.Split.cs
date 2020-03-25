@@ -93,7 +93,7 @@ namespace Gloson.Text {
       }
 
       int index = 0;
-      int postion = 0;
+      int position = 0;
 
       for (int i = 0; i < source.Length; ++i) {
         char current = source[i];
@@ -101,30 +101,29 @@ namespace Gloson.Text {
         if (current == '\n' || current == '\r') {
           char next = i < source.Length - 1 ? source[i + 1] : '\0';
 
-          if (postion > i || splitOptions != StringSplitOptions.RemoveEmptyEntries) {
+          if (position > i || splitOptions != StringSplitOptions.RemoveEmptyEntries) {
             index += 1;
 
-            yield return source.Substring(postion, i - postion);
+            yield return source.Substring(position, i - position);
           }
 
           if (next != current && (next == '\n' || next == '\r'))
             i += 1;
 
-          postion = i + 1;
+          position = i + 1;
 
-          if (count > 0 || index >= count - 1)
+          if (count > 0 && index >= count - 1)
             break;
         }
       }
 
       // Tail if any
-      if (postion >= source.Length) {
+      if (position >= source.Length) {
         if (splitOptions != StringSplitOptions.RemoveEmptyEntries)
           yield return "";
       }
       else
-        yield return source.Substring(postion);
-
+        yield return source.Substring(position);
     }
 
     #endregion Algorithm
@@ -136,6 +135,7 @@ namespace Gloson.Text {
     /// </summary>
     /// <param name="source"></param>
     /// <param name="newLine"></param>
+    /// <param name="count"></param>
     /// <returns></returns>
     public static IEnumerable<string> SplitToLines(this string source,
                                                    NewLine newLine,

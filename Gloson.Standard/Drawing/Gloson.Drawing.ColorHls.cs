@@ -177,11 +177,7 @@ namespace Gloson.Drawing {
       else if (b < 0 || b > byte.MaxValue)
         throw new ArgumentOutOfRangeException(nameof(b));
 
-      int h;
-      int l;
-      int s;
-
-      RgbToHls(r, g, b, out h, out l, out s, byte.MaxValue);
+      RgbToHls(r, g, b, out int h, out int l, out int s, byte.MaxValue);
 
       return new ColorHsl(a, h, l, s);
     }
@@ -197,11 +193,7 @@ namespace Gloson.Drawing {
       else if (b < 0 || b > byte.MaxValue)
         throw new ArgumentOutOfRangeException(nameof(b));
 
-      int h;
-      int l;
-      int s;
-
-      RgbToHls(r, g, b, out h, out s, out l, byte.MaxValue);
+      RgbToHls(r, g, b, out int h, out int s, out int l, byte.MaxValue);
 
       return new ColorHsl(0, h, l, s);
     }
@@ -210,11 +202,7 @@ namespace Gloson.Drawing {
     /// From Color
     /// </summary>
     public ColorHsl(Color color) {
-      int h;
-      int l;
-      int s;
-
-      RgbToHls(color.R, color.G, color.B, out h, out l, out s, byte.MaxValue);
+      RgbToHls(color.R, color.G, color.B, out int h, out int l, out int s, byte.MaxValue);
 
       A = color.A;
       H = (byte)h;
@@ -285,11 +273,7 @@ namespace Gloson.Drawing {
     /// To Color
     /// </summary>
     public Color ToColor() {
-      int r;
-      int g;
-      int b;
-
-      HlsToRgb(H, L, S, out r, out g, out b, byte.MaxValue);
+      HlsToRgb(H, L, S, out int r, out int g, out int b, byte.MaxValue);
 
       return Color.FromArgb(A, r, g, b);
     }
