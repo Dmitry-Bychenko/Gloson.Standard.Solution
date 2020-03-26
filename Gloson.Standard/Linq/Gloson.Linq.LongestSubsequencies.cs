@@ -132,38 +132,29 @@ namespace Gloson.Linq {
           else
             data[i][j] = Math.Max(data[i - 1][j], data[i][j - 1]);
 
-      int y = left.Length;
-      int x = right.Length;
-      int v = data[y][x];
-
       List<T> result = new List<T>();
 
-      for (; x > 0 && y > 0 && v > 0;) {
+      for (int y = left.Length, x = right.Length, v = data[y][x]; x > 0 && y > 0 && v > 0;) {
         int dd = data[y - 1][x - 1];
         int dy = data[y - 1][x];
         int dx = data[y][x - 1];
 
-        if (dd >= dx) {
+        if (dd >= dx)
           if (dd >= dy) {
             x -= 1;
             y -= 1;
           }
-          else {
+          else
             y -= 1;
-          }
-        }
-        else if (dy >= dx) {
-          if (dy >= dd) {
+        else if (dy >= dx)
+          if (dy >= dd)
             y -= 1;
-          }
           else {
             x -= 1;
             y -= 1;
           }
-        }
-        else {
+        else
           x -= 1;
-        }
 
         int newV = data[y][x];
 
