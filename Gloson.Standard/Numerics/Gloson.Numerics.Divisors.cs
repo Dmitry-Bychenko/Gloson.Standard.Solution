@@ -14,6 +14,10 @@ namespace Gloson.Numerics {
   //-------------------------------------------------------------------------------------------------------------------
 
   public static partial class Divisors {
+    #region Algorithm
+
+    #endregion Algorithm
+
     #region Public
 
     /// <summary>
@@ -109,6 +113,42 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Prime divisors
+    /// </summary>
+    public static IEnumerable<BigInteger> PrimeDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+      if (value <= 1)
+        yield break;
+      else if (null == primes) {
+        foreach (BigInteger div in PrimeDivisors(value))
+          yield return div;
+
+        yield break;
+      }
+      
+      BigInteger threshold = value.Sqrt() + 1;
+
+      foreach (BigInteger p in primes) {
+        if (p > threshold)
+          break;
+
+        bool found = false;
+
+        while (value % p == 0) {
+          yield return p;
+
+          value /= p;
+          found = true;
+        }
+
+        if (found)
+          threshold = value.Sqrt() + 1;
+      }
+
+      if (value > 1)
+        yield return value;
+    }
+
+    /// <summary>
     /// Distinct Prime divisors
     /// </summary>
     public static IEnumerable<BigInteger> DistinctPrimeDivisors(this BigInteger value) {
@@ -170,6 +210,107 @@ namespace Gloson.Numerics {
       if (value > 1 && last != value)
         yield return value;
     }
+
+    /// <summary>
+    /// Prime divisors
+    /// </summary>
+    public static IEnumerable<BigInteger> DistinctPrimeDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+      if (value <= 1)
+        yield break;
+      else if (null == primes) {
+        foreach (BigInteger div in DistinctPrimeDivisors(value))
+          yield return div;
+
+        yield break;
+      }
+
+      BigInteger threshold = value.Sqrt() + 1;
+
+      foreach (BigInteger p in primes) {
+        if (p > threshold)
+          break;
+
+        bool found = false;
+
+        while (value % p == 0) {
+          if (!found)
+            yield return p;
+          
+          value /= p;
+          found = true;
+        }
+
+        if (found)
+          threshold = value.Sqrt() + 1;
+      }
+
+      if (value > 1)
+        yield return value;
+    }
+
+    /// <summary>
+    /// Proper Divisors
+    /// </summary>
+    public static BigInteger[] ProperDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+      if (value <= 1)
+        return new BigInteger[0];
+
+      HashSet<BigInteger> hs = new HashSet<BigInteger>();
+      List<BigInteger> divisors = new List<BigInteger>(PrimeDivisors(value, primes));
+
+      BigInteger n = BigInteger.Pow(2, divisors.Count);
+
+      for (BigInteger i = 1; i < n; ++i) {
+        BigInteger v = i;
+        BigInteger p = 1;
+
+        for (int j = 0; j < divisors.Count; ++j) {
+          if ((v % 2) != 0)
+            p *= divisors[j];
+
+          v /= 2;
+        }
+
+        hs.Add(p);
+      }
+
+      hs.Remove(value);
+      hs.Add(1);
+
+      BigInteger[] result = new BigInteger[hs.Count];
+
+      int index = 1;
+
+      foreach (BigInteger item in hs) 
+        result[index++] = item;
+
+      Array.Sort(result);
+      
+      return result;
+    }
+
+    /// <summary>
+    /// Proper Divisors
+    /// </summary>
+    public static BigInteger[] ProperDivisors(this BigInteger value) => ProperDivisors(value, null);
+
+    /// <summary>
+    /// Euler totient (fi) function
+    /// </summary>
+    public static BigInteger Totient(this BigInteger value, IEnumerable<BigInteger> primes) {
+      BigInteger result = value;
+
+      foreach (BigInteger div in DistinctPrimeDivisors(value, primes))
+        result = (result / div) * (div - 1);
+
+      return result;
+    }
+
+    /// <summary>
+    /// Euler totient (fi) function
+    /// </summary>
+    public static BigInteger Totient(this BigInteger value) =>
+      Totient(value, null);
 
     #endregion Public
   }
