@@ -166,7 +166,7 @@ namespace Gloson.Numerics {
     /// </summary>
     public static int Moebius(this BigInteger value) {
       if (value <= 0)
-        throw new ArgumentOutOfRangeException(nameof(value), 
+        throw new ArgumentOutOfRangeException(nameof(value),
           "value must be a positive number.");
 
       if (value == 1)

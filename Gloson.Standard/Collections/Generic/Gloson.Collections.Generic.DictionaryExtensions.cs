@@ -61,6 +61,26 @@ namespace Gloson.Collections.Generic {
            K key,
            V value) => TryAddOrUpdate(dictionary, key, value, null);
 
+    /// <summary>
+    /// Value Or Default
+    /// </summary>
+    public static V ValueOrDefault<K, V>(
+      this IDictionary<K, V> dictionary,
+           K key,
+           V defaultValue) {
+      if (null == dictionary)
+        throw new ArgumentNullException(nameof(dictionary));
+
+      return dictionary.TryGetValue(key, out V value) ? value : defaultValue;
+    }
+
+    /// <summary>
+    /// Value Or Default
+    /// </summary>
+    public static V ValueOrDefault<K, V>(
+      this IDictionary<K, V> dictionary,
+           K key) => ValueOrDefault(dictionary, key, default);
+
     #endregion Public
   }
 

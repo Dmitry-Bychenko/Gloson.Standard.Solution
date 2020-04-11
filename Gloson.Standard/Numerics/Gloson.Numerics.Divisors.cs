@@ -124,7 +124,7 @@ namespace Gloson.Numerics {
 
         yield break;
       }
-      
+
       BigInteger threshold = value.Sqrt() + 1;
 
       foreach (BigInteger p in primes) {
@@ -235,7 +235,7 @@ namespace Gloson.Numerics {
         while (value % p == 0) {
           if (!found)
             yield return p;
-          
+
           value /= p;
           found = true;
         }
@@ -281,11 +281,11 @@ namespace Gloson.Numerics {
 
       int index = 1;
 
-      foreach (BigInteger item in hs) 
+      foreach (BigInteger item in hs)
         result[index++] = item;
 
       Array.Sort(result);
-      
+
       return result;
     }
 
