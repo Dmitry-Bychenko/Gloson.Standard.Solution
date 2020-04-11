@@ -65,7 +65,7 @@ namespace Gloson.Collections.Generic {
     /// Value Or Default
     /// </summary>
     public static V ValueOrDefault<K, V>(
-      this IDictionary<K, V> dictionary,
+      this IReadOnlyDictionary<K, V> dictionary,
            K key,
            V defaultValue) {
       if (null == dictionary)
@@ -78,7 +78,7 @@ namespace Gloson.Collections.Generic {
     /// Value Or Default
     /// </summary>
     public static V ValueOrDefault<K, V>(
-      this IDictionary<K, V> dictionary,
+      this IReadOnlyDictionary<K, V> dictionary,
            K key) => ValueOrDefault(dictionary, key, default);
 
     #endregion Public
