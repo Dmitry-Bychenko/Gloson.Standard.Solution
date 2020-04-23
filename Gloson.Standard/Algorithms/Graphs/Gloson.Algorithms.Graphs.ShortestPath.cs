@@ -1,7 +1,5 @@
-﻿using Gloson.Collections.Generic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Algorithms.Graphs {
 
@@ -15,7 +13,7 @@ namespace Gloson.Algorithms.Graphs {
 
   public static class GraphShortestPath {
     #region Public
-        
+
     /// <summary>
     /// Bellman-
     /// </summary>
@@ -23,7 +21,7 @@ namespace Gloson.Algorithms.Graphs {
     /// <param name="neighbors">neighbors func</param>
     /// <returns>Shortest paths for all reachable vertexes from start; empty if contains negative loop</returns>
     public static IDictionary<V, (double length, V prior)> BellmanFord<V>(
-      V start, 
+      V start,
       Func<V, IEnumerable<(V vertex, double length)>> neighbors) {
 
       if (null == neighbors)
@@ -35,13 +33,13 @@ namespace Gloson.Algorithms.Graphs {
 
       // All reachable nodes, BFS
       HashSet<V> agenda = new HashSet<V>() { start };
-      
+
       while (agenda.Count > 0) {
         HashSet<V> next = new HashSet<V>();
 
         foreach (V vertex in agenda) {
           double priorLength = result[vertex].length;
-          
+
           foreach (var edge in neighbors(vertex)) {
             if (result.ContainsKey(edge.vertex))
               continue;

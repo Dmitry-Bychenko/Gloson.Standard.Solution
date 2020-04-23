@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace Gloson.Collections.Generic {
 
@@ -25,7 +23,7 @@ namespace Gloson.Collections.Generic {
 
       using (enumerator) {
         while (enumerator.MoveNext())
-          yield return enumerator.Current; 
+          yield return enumerator.Current;
       }
     }
 
