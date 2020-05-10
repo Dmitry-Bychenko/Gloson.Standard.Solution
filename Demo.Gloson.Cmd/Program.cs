@@ -16,6 +16,17 @@ using Gloson.UI.CommandLine;
 
 namespace Demo.Gloson.Cmd {
 
+  public interface ITest {
+    int MyInt { get; set; }
+    int GetItNow() => MyInt * 2;
+  }
+
+  public class MyClass : ITest {
+    public int MyInt { get; set; }
+
+    public int GetItNow() => MyInt * 3;
+  }
+
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
@@ -31,9 +42,13 @@ namespace Demo.Gloson.Cmd {
     /// Entry Point
     /// </summary>
     static void Main() {
-      Configuration.Apply();
+      ITest xxx = new MyClass() { MyInt = 1};
 
-      Console.WriteLine(TicTacToePosition.Empty.MoveNumber);
+      Console.Write(xxx.GetItNow());
+
+      //Configuration.Apply();
+
+      //Console.WriteLine(TicTacToePosition.Empty.MoveNumber);
 
       //var data = Transliterations.GetTransliterations().Length;
 

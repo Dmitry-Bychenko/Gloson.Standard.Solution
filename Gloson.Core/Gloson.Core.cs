@@ -15,4 +15,5 @@ namespace Gloson.Core {
 
   public static class GlosonCore {
   }
+ 
 }
