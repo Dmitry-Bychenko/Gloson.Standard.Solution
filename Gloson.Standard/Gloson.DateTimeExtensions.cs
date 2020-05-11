@@ -47,13 +47,22 @@ namespace Gloson {
       WeekStart(date, CultureInfo.CurrentCulture.DateTimeFormat);
 
     /// <summary>
-    /// Next day of week starting from a iven date
+    /// Next day of week starting from a given date
     /// </summary>
     /// <param name="fromDate">Date to start from</param>
     /// <param name="dayOfWeek">Day Of Week</param>
     /// <returns>The current of future date of day of week</returns>
     public static DateTime NextDayOfWeek(this DateTime fromDate, DayOfWeek dayOfWeek) =>
       fromDate.Date.AddDays((7 + (int)dayOfWeek - (int)fromDate.DayOfWeek) % 7);
+
+    /// <summary>
+    /// Previous day of week starting from a given date
+    /// </summary>
+    /// <param name="fromDate">Date to start from</param>
+    /// <param name="dayOfWeek">Day Of Week</param>
+    /// <returns>The current of past date of day of week</returns>
+    public static DateTime PreviousDayOfWeek(this DateTime fromDate, DayOfWeek dayOfWeek) =>
+      fromDate.Date.AddDays(-(fromDate.DayOfWeek - dayOfWeek + 7) % 7);
 
     #endregion Public
   }
