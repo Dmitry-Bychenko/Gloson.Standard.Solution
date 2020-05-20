@@ -286,7 +286,7 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
-    /// Proper Divisors
+    /// All Divisors
     /// </summary>
     public static BigInteger[] AllDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value <= 1)
@@ -296,7 +296,7 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
-    /// Proper Divisors
+    /// All Divisors
     /// </summary>
     public static BigInteger[] AllDivisors(this BigInteger value) => AllDivisors(value, null);
 
