@@ -101,7 +101,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Prime divisors
     /// </summary>
-    public static IEnumerable<BigInteger> PrimeDivisors(this BigInteger value) {
+    public static IEnumerable<BigInteger> PrimeDivisorsFlat(this BigInteger value) {
       if (value <= 1)
         yield break;
 
@@ -152,11 +152,11 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Prime divisors
     /// </summary>
-    public static IEnumerable<BigInteger> PrimeDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+    public static IEnumerable<BigInteger> PrimeDivisorsFlat(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value <= 1)
         yield break;
       else if (null == primes) {
-        foreach (BigInteger div in PrimeDivisors(value))
+        foreach (BigInteger div in PrimeDivisorsFlat(value))
           yield return div;
 
         yield break;
@@ -184,6 +184,35 @@ namespace Gloson.Numerics {
       if (value > 1)
         yield return value;
     }
+
+    /// <summary>
+    /// Prime Divisors
+    /// </summary>
+    public static IEnumerable<(BigInteger prime, int power)> PrimeDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+      BigInteger prior = 0;
+      int count = 0;
+
+      foreach (BigInteger p in PrimeDivisorsFlat(value, primes)) {
+        if (p == prior)
+          count += 1;
+        else {
+          if (prior > 1)
+            yield return (prior, count);
+
+          prior = p;
+          count = 1;
+        }
+      }
+
+      if (count > 1)
+        yield return (prior, count);
+    }
+
+    /// <summary>
+    /// Prime Divisors
+    /// </summary>
+    public static IEnumerable<(BigInteger prime, int power)> PrimeDivisors(this BigInteger value) =>
+      PrimeDivisors(value, null);
 
     /// <summary>
     /// Distinct Prime divisors
@@ -292,7 +321,7 @@ namespace Gloson.Numerics {
       if (value <= 1)
         return new BigInteger[0];
 
-      return CoreAllDivisors(PrimeDivisors(value, primes));
+      return CoreAllDivisors(PrimeDivisorsFlat(value, primes));
     }
 
     /// <summary>
@@ -308,10 +337,10 @@ namespace Gloson.Numerics {
         return 0;
       else if (value == 1)
         return 1;
-      
+
       int result = 1;
 
-      foreach (var group in PrimeDivisors(value, primes).GroupBy(x => x))
+      foreach (var group in PrimeDivisorsFlat(value, primes).GroupBy(x => x))
         result *= (1 + group.Count());
 
       return result;
@@ -333,8 +362,8 @@ namespace Gloson.Numerics {
 
       BigInteger result = 1;
 
-      foreach (var group in PrimeDivisors(value, primes).GroupBy(x => x))
-        result *= (BigInteger.Pow(group.Key, group.Count() + 1) - 1) / (group.Key - 1); 
+      foreach (var group in PrimeDivisorsFlat(value, primes).GroupBy(x => x))
+        result *= (BigInteger.Pow(group.Key, group.Count() + 1) - 1) / (group.Key - 1);
 
       return result;
     }
@@ -345,10 +374,10 @@ namespace Gloson.Numerics {
     public static BigInteger SumOfDivisors(BigInteger value) => SumOfDivisors(value, null);
 
 
-      /// <summary>
-      /// Euler totient (fi) function
-      /// </summary>
-      public static BigInteger Totient(this BigInteger value, IEnumerable<BigInteger> primes) {
+    /// <summary>
+    /// Euler totient (fi) function
+    /// </summary>
+    public static BigInteger Totient(this BigInteger value, IEnumerable<BigInteger> primes) {
       BigInteger result = value;
 
       foreach (BigInteger div in DistinctPrimeDivisors(value, primes))
