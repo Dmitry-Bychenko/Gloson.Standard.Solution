@@ -301,9 +301,54 @@ namespace Gloson.Numerics {
     public static BigInteger[] AllDivisors(this BigInteger value) => AllDivisors(value, null);
 
     /// <summary>
-    /// Euler totient (fi) function
+    /// Number of all divisors
     /// </summary>
-    public static BigInteger Totient(this BigInteger value, IEnumerable<BigInteger> primes) {
+    public static int NumberOfDivisors(BigInteger value, IEnumerable<BigInteger> primes) {
+      if (value < 0)
+        return 0;
+      else if (value == 1)
+        return 1;
+      
+      int result = 1;
+
+      foreach (var group in PrimeDivisors(value, primes).GroupBy(x => x))
+        result *= (1 + group.Count());
+
+      return result;
+    }
+
+    /// <summary>
+    /// Number of all divisors
+    /// </summary>
+    public static int NumberOfDivisors(BigInteger value) => NumberOfDivisors(value, null);
+
+    /// <summary>
+    /// Sum of all divisors
+    /// </summary>
+    public static BigInteger SumOfDivisors(BigInteger value, IEnumerable<BigInteger> primes) {
+      if (value < 0)
+        return 0;
+      else if (value == 1)
+        return 1;
+
+      BigInteger result = 1;
+
+      foreach (var group in PrimeDivisors(value, primes).GroupBy(x => x))
+        result *= (BigInteger.Pow(group.Key, group.Count() + 1) - 1) / (group.Key - 1); 
+
+      return result;
+    }
+
+    /// <summary>
+    /// Sum of all divisors
+    /// </summary>
+    public static BigInteger SumOfDivisors(BigInteger value) => SumOfDivisors(value, null);
+
+
+      /// <summary>
+      /// Euler totient (fi) function
+      /// </summary>
+      public static BigInteger Totient(this BigInteger value, IEnumerable<BigInteger> primes) {
       BigInteger result = value;
 
       foreach (BigInteger div in DistinctPrimeDivisors(value, primes))
