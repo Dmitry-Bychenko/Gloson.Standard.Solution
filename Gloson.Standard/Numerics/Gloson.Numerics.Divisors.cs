@@ -16,6 +16,43 @@ namespace Gloson.Numerics {
   public static partial class Divisors {
     #region Algorithm
 
+    private static BigInteger[] CoreAllDivisors(IEnumerable<BigInteger> divisors) {
+      var divs = divisors
+        .GroupBy(x => x)
+        .Select(group => (key: group.Key, count: group.Count()))
+        .ToArray();
+
+      int[] indexes = new int[divs.Length];
+
+      List<BigInteger> result = new List<BigInteger>();
+
+      do {
+        BigInteger value = 1;
+
+        for (int i = 0; i < indexes.Length; ++i) {
+          for (int k = 0; k < indexes[i]; ++k)
+            value *= divs[i].key;
+        }
+
+        result.Add(value);
+
+        for (int i = 0; i < indexes.Length; ++i)
+          if (indexes[i] < divs[i].count) {
+            indexes[i] += 1;
+
+            break;
+          }
+          else
+            indexes[i] = 0;
+
+      }
+      while (!indexes.All(idx => idx == 0));
+
+      result.Sort();
+
+      return result.ToArray();
+    }
+
     #endregion Algorithm
 
     #region Public
@@ -33,9 +70,9 @@ namespace Gloson.Numerics {
     /// <example>BigInteger x = Modular.Crt(new BigInteger[] { 1, 2, 6}, new BigInteger[] { 2, 3, 7});</example>
     public static BigInteger Crt(IEnumerable<BigInteger> values, IEnumerable<BigInteger> mods) {
       if (null == values)
-        throw new ArgumentNullException("values");
+        throw new ArgumentNullException(nameof(values));
       else if (null == mods)
-        throw new ArgumentNullException("mods");
+        throw new ArgumentNullException(nameof(mods));
 
       BigInteger[] r = values.ToArray();
 
@@ -251,48 +288,17 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Proper Divisors
     /// </summary>
-    public static BigInteger[] ProperDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
+    public static BigInteger[] AllDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value <= 1)
         return new BigInteger[0];
 
-      HashSet<BigInteger> hs = new HashSet<BigInteger>();
-      List<BigInteger> divisors = new List<BigInteger>(PrimeDivisors(value, primes));
-
-      BigInteger n = BigInteger.Pow(2, divisors.Count);
-
-      for (BigInteger i = 1; i < n; ++i) {
-        BigInteger v = i;
-        BigInteger p = 1;
-
-        for (int j = 0; j < divisors.Count; ++j) {
-          if ((v % 2) != 0)
-            p *= divisors[j];
-
-          v /= 2;
-        }
-
-        hs.Add(p);
-      }
-
-      hs.Remove(value);
-      hs.Add(1);
-
-      BigInteger[] result = new BigInteger[hs.Count];
-
-      int index = 1;
-
-      foreach (BigInteger item in hs)
-        result[index++] = item;
-
-      Array.Sort(result);
-
-      return result;
+      return CoreAllDivisors(PrimeDivisors(value, primes));
     }
 
     /// <summary>
     /// Proper Divisors
     /// </summary>
-    public static BigInteger[] ProperDivisors(this BigInteger value) => ProperDivisors(value, null);
+    public static BigInteger[] AllDivisors(this BigInteger value) => AllDivisors(value, null);
 
     /// <summary>
     /// Euler totient (fi) function
