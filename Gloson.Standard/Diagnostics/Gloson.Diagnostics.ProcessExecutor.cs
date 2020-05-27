@@ -300,7 +300,7 @@ namespace Gloson.Diagnostics {
     /// To Boolean (is valid)
     /// </summary>
     public static implicit operator bool(ProcessExecutionResult value) {
-      return (null == value) ? false : value.IsValid;
+      return value?.IsValid ?? false;
     }
 
     #endregion Cast

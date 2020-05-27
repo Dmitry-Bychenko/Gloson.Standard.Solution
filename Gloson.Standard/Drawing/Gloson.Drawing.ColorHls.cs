@@ -303,7 +303,7 @@ namespace Gloson.Drawing {
     /// Equals
     /// </summary>
     public override bool Equals(object obj) =>
-      (obj is ColorHsl other) ? Equals(other) : false;
+      (obj is ColorHsl other) && Equals(other);
 
     /// <summary>
     /// Get Hash Code

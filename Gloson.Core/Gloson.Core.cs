@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Gloson.Core {
+﻿namespace Gloson.Core {
 
   //-------------------------------------------------------------------------------------------------------------------
   //
@@ -15,5 +13,5 @@ namespace Gloson.Core {
 
   public static class GlosonCore {
   }
- 
+
 }

@@ -83,9 +83,7 @@ namespace Gloson.Diagnostics {
     /// </summary>
     public bool ComVisible {
       get {
-        var attr = Master.GetCustomAttribute<ComVisibleAttribute>();
-
-        return attr == null ? false : attr.Value;
+        return Master.GetCustomAttribute<ComVisibleAttribute>()?.Value ?? false;
       }
     }
 

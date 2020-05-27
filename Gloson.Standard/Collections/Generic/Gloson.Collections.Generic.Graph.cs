@@ -253,11 +253,8 @@ namespace Gloson.Collections.Generic {
     #region Algorithm
 
     // Add Vertex (always possible)
-    private bool CoreAddVertex(Vertex value) {
-      return null == value
-        ? false
-        : m_Vertexes.Add(value);
-    }
+    private bool CoreAddVertex(Vertex value) =>
+      (null != value) && m_Vertexes.Add(value);
 
     // If Edge allowed
     private bool IsEdgeAllowed(Vertex from, Vertex to) {

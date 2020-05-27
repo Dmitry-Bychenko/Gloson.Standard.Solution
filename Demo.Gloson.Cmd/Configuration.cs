@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson;
-using Gloson.Data;
-using Gloson.Data.Oracle;
-using Gloson.Text;
-using Gloson.UI.Dialogs;
+﻿using Gloson.Data.Oracle;
 using Gloson.UI.Dialogs.CommandLine;
-using Gloson.UI.CommandLine;
 
 namespace Demo.Gloson.Cmd {
 

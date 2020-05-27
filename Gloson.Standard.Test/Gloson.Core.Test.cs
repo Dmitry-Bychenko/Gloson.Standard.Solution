@@ -1,7 +1,6 @@
 // https://gigi.nullneuron.net/gigilabs/data-driven-tests-with-nunit/
 // https://github.com/nunit/docs/wiki/TestCaseSource-Attribute
 
-using System;
 using NUnit.Framework;
 
 namespace Tests {

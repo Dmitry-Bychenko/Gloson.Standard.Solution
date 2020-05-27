@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Gloson.Text.NaturalLanguages;
-
+﻿using Gloson.Text.NaturalLanguages;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Gloson.Standard.Test.Text.NaturalLanguages {
 

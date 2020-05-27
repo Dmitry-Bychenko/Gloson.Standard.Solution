@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using NUnit.Framework;
-
+﻿
 using Gloson.Text.NaturalLanguages;
+using NUnit.Framework;
 
 namespace Gloson.Standard.Test.Text.NaturalLanguages {
   public class TestPhonetics {

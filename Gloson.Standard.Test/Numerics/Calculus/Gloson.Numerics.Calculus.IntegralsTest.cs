@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Gloson.Numerics.Calculus;
 using NUnit.Framework;
-
-using Gloson.Numerics.Calculus;
 
 namespace Gloson.Standard.Test.Numerics.Calculus {
   public class IntegralsTest {

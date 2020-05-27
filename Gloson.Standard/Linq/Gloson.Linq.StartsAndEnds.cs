@@ -41,11 +41,11 @@ namespace Gloson.Linq {
       int count = -1;
 
       if (source is IList<T> list)
-        return (count = list.Count) <= 0 ? false : predicate(list[count - 1]);
+        return (count = list.Count) > 0 && predicate(list[count - 1]);
       else if (source is T[] arr)
-        return (count = arr.Length) <= 0 ? false : predicate(arr[count - 1]);
+        return (count = arr.Length) > 0 && predicate(arr[count - 1]);
       else if (source is IReadOnlyList<T> rl)
-        return (count = rl.Count) <= 0 ? false : predicate(rl[count - 1]);
+        return (count = rl.Count) > 0 && predicate(rl[count - 1]);
 
       T last = default;
 
@@ -54,7 +54,7 @@ namespace Gloson.Linq {
         last = item;
       }
 
-      return count <= 0 ? false : predicate(last);
+      return count > 0 && predicate(last);
     }
 
     #endregion Public

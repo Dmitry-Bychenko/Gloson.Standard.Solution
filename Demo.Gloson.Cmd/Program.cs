@@ -1,18 +1,4 @@
 ﻿using System;
-using System.Data;
-
-using Gloson;
-using Gloson.Data;
-using Gloson.Data.Oracle;
-
-using Gloson.Games.TicTacToe;
-
-using Gloson.Text;
-using Gloson.Text.NaturalLanguages;
-using Gloson.Text.NaturalLanguages.Library;
-using Gloson.UI.Dialogs;
-using Gloson.UI.Dialogs.CommandLine;
-using Gloson.UI.CommandLine;
 
 namespace Demo.Gloson.Cmd {
 
@@ -35,14 +21,14 @@ namespace Demo.Gloson.Cmd {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  class Program {
+  internal class Program {
     #region Entry Point
 
     /// <summary>
     /// Entry Point
     /// </summary>
-    static void Main() {
-      ITest xxx = new MyClass() { MyInt = 1};
+    private static void Main() {
+      ITest xxx = new MyClass() { MyInt = 1 };
 
       Console.Write(xxx.GetItNow());
 

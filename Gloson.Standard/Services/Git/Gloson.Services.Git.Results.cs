@@ -191,7 +191,7 @@ namespace Gloson.Services.Git {
     /// To Boolean (no failure)
     /// </summary>
     public static implicit operator bool(GitResult value) {
-      return (null == value) ? false : value.ErrorLevel < GitResultLevel.Error;
+      return (null != value) && value.ErrorLevel < GitResultLevel.Error;
     }
 
     /// <summary>

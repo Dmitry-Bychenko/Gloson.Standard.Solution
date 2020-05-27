@@ -312,11 +312,8 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Equals
     /// </summary>
-    public override bool Equals(object obj) {
-      return obj is ErrorRecord other
-        ? Equals(other)
-        : false;
-    }
+    public override bool Equals(object obj) =>
+      obj is ErrorRecord other && Equals(other);
 
     /// <summary>
     /// Get Hash Code

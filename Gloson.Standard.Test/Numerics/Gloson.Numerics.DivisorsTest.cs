@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
+﻿using Gloson.Numerics;
 using NUnit.Framework;
-
-using Gloson.Numerics;
 
 namespace Gloson.Standard.Test.Numerics {
   public class DivisorsTest {
