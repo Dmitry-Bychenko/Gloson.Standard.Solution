@@ -203,7 +203,6 @@ namespace Gloson.Linq {
     /// <summary>
     /// Edit price (positive) 
     /// </summary>
-    /// <param name="from"></param>
     double EditPrice(T from, T to);
   }
 
@@ -220,32 +219,20 @@ namespace Gloson.Linq {
 
     // Uniform
     private class UniformEditCost : IEditCost<T> {
-      public double DeletionPrice(T value) {
-        return 1.0;
-      }
+      public double DeletionPrice(T value) => 1.0;
+        
+      public double EditPrice(T from, T to) => object.Equals(from, to) ? 0 : 1.0;
 
-      public double EditPrice(T from, T to) {
-        return object.Equals(from, to) ? 0 : 1.0;
-      }
-
-      public double InsertionPrice(T value) {
-        return 1.0;
-      }
+      public double InsertionPrice(T value) => 1.0;
     }
 
     // Double cost for edit
     private class InsertDeleteEditCost : IEditCost<T> {
-      public double DeletionPrice(T value) {
-        return 1.0;
-      }
+      public double DeletionPrice(T value) => 1.0;
+      
+      public double EditPrice(T from, T to) => object.Equals(from, to) ? 0 : 2.0;
 
-      public double EditPrice(T from, T to) {
-        return object.Equals(from, to) ? 0 : 2.0;
-      }
-
-      public double InsertionPrice(T value) {
-        return 1.0;
-      }
+      public double InsertionPrice(T value) => 1.0;
     }
 
     #endregion Inner classes
@@ -447,12 +434,8 @@ namespace Gloson.Linq {
     /// <summary>
     /// Edit Sequence
     /// </summary>
-    public IReadOnlyList<EditOperation<T>> EditSequence {
-      get {
-        return m_Sequence;
-      }
-    }
-
+    public IReadOnlyList<EditOperation<T>> EditSequence => m_Sequence;
+    
     /// <summary>
     /// To String 
     /// </summary>
