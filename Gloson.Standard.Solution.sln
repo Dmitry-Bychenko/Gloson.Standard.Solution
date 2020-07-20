@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Gloson.WinForms", "Dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Gloson.Wpf", "Demo.Gloson.Wpf\Demo.Gloson.Wpf.csproj", "{11D7C4AF-031C-46CE-A12C-391348E81DB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gloson.Astronomy", "Gloson.Astronomy\Gloson.Astronomy.csproj", "{7C87B939-0346-4109-A08E-84023B6108C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gloson.Astronomy", "Gloson.Astronomy\Gloson.Astronomy.csproj", "{7C87B939-0346-4109-A08E-84023B6108C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gloson.Core.Wpf", "Gloson.Core.Wpf\Gloson.Core.Wpf.csproj", "{96679B01-37E0-42BE-B8D5-8AC32B7FDCED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{7C87B939-0346-4109-A08E-84023B6108C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C87B939-0346-4109-A08E-84023B6108C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C87B939-0346-4109-A08E-84023B6108C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96679B01-37E0-42BE-B8D5-8AC32B7FDCED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96679B01-37E0-42BE-B8D5-8AC32B7FDCED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96679B01-37E0-42BE-B8D5-8AC32B7FDCED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96679B01-37E0-42BE-B8D5-8AC32B7FDCED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
