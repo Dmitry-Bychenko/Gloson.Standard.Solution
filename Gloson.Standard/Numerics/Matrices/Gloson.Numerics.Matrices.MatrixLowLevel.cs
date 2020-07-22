@@ -76,7 +76,7 @@ namespace Gloson.Numerics.Matrices {
       int rightCols = right[0].Length;
 
       if (leftCols != rightRows)
-        throw new ArgumentOutOfRangeException("right");
+        throw new ArgumentOutOfRangeException(nameof(right));
 
       double[][] result = new Double[leftRows][];
 
@@ -266,7 +266,7 @@ namespace Gloson.Numerics.Matrices {
           }
 
           if (!found)
-            throw new ArgumentException("Matrix is degenerated and can't be inverted.", "value");
+            throw new ArgumentException("Matrix is degenerated and can't be inverted.", nameof(value));
         }
 
         // Elimination

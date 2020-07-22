@@ -219,7 +219,7 @@ namespace Gloson.Linq.Expressions {
         else if (token.Kind == ExpressionTokenKind.Delimiter) {
           while (true) {
             if (funcs.Count <= 0)
-              throw new ArgumentException($"Either delimiter or opening parenthesis missed.");
+              throw new ArgumentException($"Either delimiter or opening parenthesis missed.", nameof(source));
 
             if (funcs.Peek().Kind == ExpressionTokenKind.BraceOpen)
               break;
@@ -230,11 +230,11 @@ namespace Gloson.Linq.Expressions {
         else if (token.Kind == ExpressionTokenKind.BraceClose) {
           while (true) {
             if (funcs.Count <= 0)
-              throw new ArgumentException($"Opening parenthesis missed.");
+              throw new ArgumentException($"Opening parenthesis missed.", nameof(source));
 
             if (funcs.Peek().Kind == ExpressionTokenKind.BraceOpen) {
               if (!string.Equals(token.Name, funcs.Peek().Name.ParenthesesReversed()))
-                throw new ArgumentException($"Mismatch parentheses for {token.Name}");
+                throw new ArgumentException($"Mismatch parentheses for {token.Name}", nameof(source));
 
               funcs.Pop();
 
@@ -259,15 +259,15 @@ namespace Gloson.Linq.Expressions {
         else if (token.Kind == ExpressionTokenKind.None || token.Kind == ExpressionTokenKind.WhiteSpace)
           continue;
         else
-          throw new ArgumentException($"Unknown token {token.Name} with {token.Kind} kind");
+          throw new ArgumentException($"Unknown token {token.Name} with {token.Kind} kind", nameof(source));
       }
 
       // Tail
       while (funcs.Count > 0) {
         if (funcs.Peek().Kind == ExpressionTokenKind.BraceOpen)
-          throw new ArgumentException($"Closing parenthesis missed.");
+          throw new ArgumentException($"Closing parenthesis missed.", nameof(source));
         else if (funcs.Peek().Kind == ExpressionTokenKind.BraceClose)
-          throw new ArgumentException($"Opeing parenthesis missed.");
+          throw new ArgumentException($"Opening parenthesis missed.", nameof(source));
 
         yield return funcs.Pop();
       }

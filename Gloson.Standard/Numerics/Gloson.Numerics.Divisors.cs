@@ -77,12 +77,12 @@ namespace Gloson.Numerics {
       BigInteger[] r = values.ToArray();
 
       if (r.Length <= 0)
-        throw new ArgumentOutOfRangeException("values", "values must not be empty.");
+        throw new ArgumentOutOfRangeException(nameof(values), "values must not be empty.");
 
       BigInteger[] a = mods.ToArray();
 
       if (r.Length != a.Length)
-        throw new ArgumentOutOfRangeException("mods", "mods must be of the same length as values.");
+        throw new ArgumentOutOfRangeException(nameof(mods), "mods must be of the same length as values.");
 
       BigInteger M = a.Aggregate(BigInteger.One, (ss, item) => ss * item);
 

@@ -84,7 +84,7 @@ namespace Gloson.Numerics {
         return false;
 
       if (certainty <= 0)
-        throw new ArgumentOutOfRangeException("certainty", "certainty should be a positive number.");
+        throw new ArgumentOutOfRangeException(nameof(certainty), "certainty should be a positive number.");
 
       if ((value % 2) == 0)
         return (value == 2);

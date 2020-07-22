@@ -19,7 +19,7 @@ namespace Gloson.Numerics {
     /// </summary>
     public static BigInteger Mod(this BigInteger value, BigInteger mod) {
       if (mod <= 0)
-        throw new ArgumentOutOfRangeException("mod", $"mod == {mod} must be positive.");
+        throw new ArgumentOutOfRangeException(nameof(mod), $"mod == {mod} must be positive.");
 
       if (value >= 0 && value < mod)
         return value;
@@ -93,7 +93,7 @@ namespace Gloson.Numerics {
       var egcd = Egcd(value, modulo);
 
       if (egcd.Gcd != 1)
-        throw new ArgumentException("Invalid modulo", "modulo");
+        throw new ArgumentException("Invalid modulo", nameof(modulo));
 
       BigInteger result = egcd.LeftFactor;
 
