@@ -86,11 +86,11 @@ namespace Gloson.Numerics.SpecialFunctions {
         case 22:
           return 854513.0 / 138.0;
         default: {
-          if (value % 2 == 1)
-            return 0;
-          else
-            break;
-        }
+            if (value % 2 == 1)
+              return 0;
+            else
+              break;
+          }
       }
 
       // Explicit calculation

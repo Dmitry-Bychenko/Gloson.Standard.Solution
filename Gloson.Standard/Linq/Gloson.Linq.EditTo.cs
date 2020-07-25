@@ -220,7 +220,7 @@ namespace Gloson.Linq {
     // Uniform
     private class UniformEditCost : IEditCost<T> {
       public double DeletionPrice(T value) => 1.0;
-        
+
       public double EditPrice(T from, T to) => object.Equals(from, to) ? 0 : 1.0;
 
       public double InsertionPrice(T value) => 1.0;
@@ -229,7 +229,7 @@ namespace Gloson.Linq {
     // Double cost for edit
     private class InsertDeleteEditCost : IEditCost<T> {
       public double DeletionPrice(T value) => 1.0;
-      
+
       public double EditPrice(T from, T to) => object.Equals(from, to) ? 0 : 2.0;
 
       public double InsertionPrice(T value) => 1.0;
@@ -435,7 +435,7 @@ namespace Gloson.Linq {
     /// Edit Sequence
     /// </summary>
     public IReadOnlyList<EditOperation<T>> EditSequence => m_Sequence;
-    
+
     /// <summary>
     /// To String 
     /// </summary>
