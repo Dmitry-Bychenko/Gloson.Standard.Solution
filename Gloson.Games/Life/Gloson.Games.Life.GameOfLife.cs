@@ -189,6 +189,21 @@ namespace Gloson.Games.Life {
       }
     }
 
+    /// <summary>
+    /// Indexer
+    /// </summary>
+    public bool this[(int y, int x) cell] {
+      get {
+        return m_Cells.Contains(cell);
+      }
+      set {
+        if (value)
+          m_Cells.Add(cell);
+        else
+          m_Cells.Remove(cell);
+      }
+    }
+
     #endregion Public
 
     #region Operators
