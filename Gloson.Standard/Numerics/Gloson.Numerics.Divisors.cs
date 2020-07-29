@@ -318,8 +318,10 @@ namespace Gloson.Numerics {
     /// All Divisors
     /// </summary>
     public static BigInteger[] AllDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
-      if (value <= 1)
+      if (value < 1)
         return new BigInteger[0];
+      else if (value == 1)
+        return new BigInteger[] { 1 };
 
       return CoreAllDivisors(PrimeDivisorsFlat(value, primes));
     }
