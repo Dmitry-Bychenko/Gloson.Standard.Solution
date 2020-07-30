@@ -312,4 +312,108 @@ namespace Gloson.Text {
 
     #endregion Public 
   }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Balanced Ternary
+  /// </summary>
+  /// <seealso cref="https://en.wikipedia.org/wiki/Balanced_ternary"/>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+  public static class BalancedTernary {
+    #region Private Data
+
+    private static readonly List<long> s_Powers3;
+
+    #endregion Private Data
+
+    #region Create
+
+    static BalancedTernary() {
+      s_Powers3 = new List<long>(40);
+
+      s_Powers3.Add(1);
+
+      for (int i = 1; i < 40; ++i)
+        s_Powers3.Add(s_Powers3[s_Powers3.Count - 1] * 3);
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// From Balanced Ternary to Decimal
+    /// up to 6078832729528464400
+    /// </summary>
+    public static long From(string value) {
+      long result = 0;
+
+      for (int i = 0; i < value.Length; ++i) {
+        char c = value[value.Length - 1 - i];
+
+        if (c == '1')
+          result += s_Powers3[i];
+        else if (c == 't' || c == 'T')
+          result -= s_Powers3[i];
+        else if (c == '0')
+          continue;
+        else
+          throw new FormatException();
+      }
+
+      return result;
+    }
+
+    /// <summary>
+    /// From Decimal To Balanced Ternary
+    /// up to 6078832729528464400
+    /// </summary>
+    public static String To(long value) {
+      if (value == 0)
+        return "0";
+
+      StringBuilder sb = new StringBuilder(40);
+
+      int lastIndex = -1;
+
+      for (long current = value; current != 0;) {
+        int index = s_Powers3.BinarySearch(Math.Abs(current));
+
+        if (index >= 0) {
+          if (lastIndex >= 0)
+            sb.Append(new string('0', lastIndex - index - 1));
+
+          sb.Append(current > 0 ? '1' : 'T');
+
+          sb.Append(new string('0', index));
+
+          return sb.ToString();
+        }
+
+        int left = ~index;
+        int right = ~index - 1;
+
+        if (s_Powers3[left] - Math.Abs(current) <= (s_Powers3[left] - 1) / 2)
+          index = left;
+        else
+          index = right;
+
+        if (lastIndex >= 0)
+          sb.Append(new string('0', lastIndex - index - 1));
+
+        sb.Append(current < 0 ? 'T' : '1');
+
+        current = current < 0 ? current + s_Powers3[index] : current - s_Powers3[index];
+
+        lastIndex = index;
+      }
+
+      return sb.ToString();
+    }
+
+    #endregion Public
+  }
+
 }
