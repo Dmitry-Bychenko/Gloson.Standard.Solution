@@ -317,6 +317,7 @@ namespace Gloson.Text {
   //
   /// <summary>
   /// Balanced Ternary
+  /// -1 (T), 0, 1 
   /// </summary>
   /// <seealso cref="https://en.wikipedia.org/wiki/Balanced_ternary"/>
   //
