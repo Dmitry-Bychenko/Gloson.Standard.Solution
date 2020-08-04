@@ -332,9 +332,7 @@ namespace Gloson.Text {
     #region Create
 
     static BalancedTernary() {
-      s_Powers3 = new List<long>(40);
-
-      s_Powers3.Add(1);
+      s_Powers3 = new List<long>(40) { 1 };
 
       for (int i = 1; i < 40; ++i)
         s_Powers3.Add(s_Powers3[s_Powers3.Count - 1] * 3);

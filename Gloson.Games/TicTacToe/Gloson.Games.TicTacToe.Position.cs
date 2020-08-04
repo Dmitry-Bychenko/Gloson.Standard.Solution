@@ -460,7 +460,7 @@ namespace Gloson.Games.TicTacToe {
   public static class TicTacToeStrategy {
     #region Private Data
 
-    // Expected outcome
+    // Expected outcome 
     private static Dictionary<TicTacToePosition, GameOutcome> s_Outcomes;
 
     #endregion Private Data
