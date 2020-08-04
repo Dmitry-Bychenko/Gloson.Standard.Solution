@@ -113,7 +113,7 @@ namespace Gloson.Games.TicTacToe {
     /// </summary>
     public static TicTacToePosition Parse(string value) => TryParse(value, out var result)
       ? result
-      : throw new FormatException("Not a tic-tac-toe postion");
+      : throw new FormatException("Not a tic-tac-toe position");
 
     #endregion Create
 
@@ -153,6 +153,46 @@ namespace Gloson.Games.TicTacToe {
         string.Concat(m_Marks.Skip(3).Take(3).Select(m => m.ToChar())),
         string.Concat(m_Marks.Skip(6).Take(3).Select(m => m.ToChar()))
      );
+    }
+
+    /// <summary>
+    /// Make move
+    /// </summary>
+    public TicTacToePosition MakeMove(int line, int column) {
+      if (line < 0 || line > 2)
+        throw new ArgumentOutOfRangeException(nameof(line));
+      else if (column < 0 || column > 2)
+        throw new ArgumentOutOfRangeException(nameof(column));
+
+      if (m_Marks[line * 3 + column] != Mark.None)
+        throw new InvalidOperationException("Illegal move");
+      else if (Outcome != GameOutcome.None)
+        throw new InvalidOperationException("The game is over");
+
+      TicTacToePosition result = Clone();
+
+      result.m_Marks[line * 3 + column] = WhoIsOnMove;
+
+      return result;
+    }
+
+    /// <summary>
+    /// Make move
+    /// </summary>
+    public TicTacToePosition MakeMove(int index) {
+      if (index < 1 || index > 9)
+        throw new ArgumentOutOfRangeException(nameof(index));
+
+      if (m_Marks[index - 1] != Mark.None)
+        throw new InvalidOperationException("Illegal move");
+      else if (Outcome != GameOutcome.None)
+        throw new InvalidOperationException("The game is over");
+
+      TicTacToePosition result = Clone();
+
+      result.m_Marks[index - 1] = WhoIsOnMove;
+
+      return result;
     }
 
     /// <summary>
@@ -256,6 +296,23 @@ namespace Gloson.Games.TicTacToe {
         ? Mark.None
         : m_Marks[line * 3 + column];
     }
+
+    /// <summary>
+    /// Board
+    /// </summary>
+    /// <param name="line">Line</param>
+    /// <param name="column">Column</param>
+    /// <returns>Mark</returns>
+    public Mark this[int index] {
+      get => (index < 1 || index > 9)
+        ? Mark.None
+        : m_Marks[index - 1];
+    }
+
+    /// <summary>
+    /// NUmber of crosses or naughts
+    /// </summary>
+    public int MarkCount => m_Marks.Count(item => item != Mark.None);
 
     /// <summary>
     /// Horizontals, Verticals, Diagonals
@@ -391,4 +448,154 @@ namespace Gloson.Games.TicTacToe {
 
     #endregion IEquatable<TicTacToePosition>
   }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Tic Tac Toe Strategy 
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class TicTacToeStrategy {
+    #region Private Data
+
+    // Expected outcome
+    private static Dictionary<TicTacToePosition, GameOutcome> s_Outcomes;
+
+    #endregion Private Data
+
+    #region Algorithm
+
+    private static void CoreUpdate() {
+      s_Outcomes = TicTacToePosition
+        .AllLegalPositions()
+        .ToDictionary(p => p, p => GameOutcome.None);
+
+      var data = s_Outcomes
+        .Keys
+        .OrderByDescending(key => key.MarkCount);
+
+      foreach (var position in data) {
+        if (position.Outcome != GameOutcome.None) {
+          s_Outcomes[position] = position.Outcome;
+
+          continue;
+        }
+
+        var onMove = position.WhoIsOnMove;
+
+        GameOutcome bestOutcome = onMove == Mark.Cross 
+          ? GameOutcome.SecondWin 
+          : GameOutcome.FirstWin;
+
+        foreach (var next in position.AvailableMoves()) {
+          GameOutcome outcome = s_Outcomes[next];
+
+          bestOutcome = onMove == Mark.Cross
+            ? bestOutcome.BestForFirst(outcome)
+            : bestOutcome.BestForSecond(outcome);
+        }
+
+        s_Outcomes[position] = bestOutcome;
+      }
+    }
+
+    #endregion Algorithm
+
+    #region Create
+
+    static TicTacToeStrategy() {
+      CoreUpdate();
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Expected Winner
+    /// </summary>
+    public static GameOutcome ExpectedWinner(this TicTacToePosition position) {
+      if (null == position)
+        return GameOutcome.Illegal;
+
+      return s_Outcomes.TryGetValue(position, out var result)
+        ? result
+        : GameOutcome.Illegal;
+    }  
+    
+    /// <summary>
+    /// Move Expectation
+    /// </summary>
+    public static GameOutcome MoveExpectation(this TicTacToePosition position, int line, int column) {
+      if (null == position)
+        return GameOutcome.Illegal;
+
+      if (position[line, column] != Mark.None)
+        return GameOutcome.Illegal;
+      else if (line < 0 || line > 2 || column < 0 || column > 2)
+        return GameOutcome.Illegal;
+
+      return ExpectedWinner(position.MakeMove(line, column));
+    }
+
+    /// <summary>
+    /// Move Expectation
+    /// </summary>
+    public static GameOutcome MoveExpectation(this TicTacToePosition position, int index) {
+      if (null == position)
+        return GameOutcome.Illegal;
+
+      if (position[index] != Mark.None)
+        return GameOutcome.Illegal;
+      else if (index < 1 || index > 9)
+        return GameOutcome.Illegal;
+
+      return ExpectedWinner(position.MakeMove(index));
+    }
+
+    /// <summary>
+    /// Move quality
+    ///   -1 worsed move
+    ///    0 illegal move
+    ///   +1 best move
+    /// </summary>
+    public static int MoveQuality(this TicTacToePosition position, int line, int column) {
+      var actual = MoveExpectation(position, line, column);
+
+      if (actual == GameOutcome.Illegal)
+        return 0;
+
+      var best = ExpectedWinner(position);
+
+      if (best == actual)
+        return 1;
+      else
+        return -1;
+    }
+
+    /// <summary>
+    /// Move quality
+    ///   -1 worsed move
+    ///    0 illegal move
+    ///   +1 best move
+    /// </summary>
+    public static int MoveQuality(this TicTacToePosition position, int index) {
+      var actual = MoveExpectation(position, index);
+
+      if (actual == GameOutcome.Illegal)
+        return 0;
+
+      var best = ExpectedWinner(position);
+
+      if (best == actual)
+        return 1;
+      else
+        return -1;
+    }
+
+    #endregion Public
+  }
+
 }
