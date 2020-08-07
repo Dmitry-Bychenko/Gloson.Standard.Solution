@@ -485,8 +485,8 @@ namespace Gloson.Games.TicTacToe {
 
         var onMove = position.WhoIsOnMove;
 
-        GameOutcome bestOutcome = onMove == Mark.Cross 
-          ? GameOutcome.SecondWin 
+        GameOutcome bestOutcome = onMove == Mark.Cross
+          ? GameOutcome.SecondWin
           : GameOutcome.FirstWin;
 
         foreach (var next in position.AvailableMoves()) {
@@ -523,8 +523,8 @@ namespace Gloson.Games.TicTacToe {
       return s_Outcomes.TryGetValue(position, out var result)
         ? result
         : GameOutcome.Illegal;
-    }  
-    
+    }
+
     /// <summary>
     /// Move Expectation
     /// </summary>

@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using Gloson.Text;
 
 namespace Gloson.Games.Rubik {
   //-------------------------------------------------------------------------------------------------------------------
@@ -246,7 +245,7 @@ namespace Gloson.Games.Rubik {
       var comms = Regex
         .Matches(command, @"(?<face>[A-Za-z])(?<count>\-?[0-9]*)?")
         .Cast<Match>()
-        .Select(m => (face : m.Groups["face"].Value, count : m.Groups["count"].Value));
+        .Select(m => (face: m.Groups["face"].Value, count: m.Groups["count"].Value));
 
       List<(char face, int count)> rotates = new List<(char face, int count)>();
 
@@ -336,13 +335,13 @@ namespace Gloson.Games.Rubik {
       shift = Math.Max(shift, Line("l7l4l1").Length);
       shift = Math.Max(shift, Line("l8l5l2").Length);
 
-      string pad = new string(' ', shift + 1); 
+      string pad = new string(' ', shift + 1);
 
-      return string.Join(Environment.NewLine, 
+      return string.Join(Environment.NewLine,
         pad + Line("b8b7b6"),
         pad + Line("b5b4b3"),
         pad + Line("b2b1b0"),
-        
+
         Line("l6l3l0-u0u1u2-r2r5r8"),
         Line("l7l4l1-u3u4u5-r1r4r7"),
         Line("l8l5l2-u6u7u8-r0r3r6"),

@@ -1,5 +1,4 @@
-﻿using Gloson.Text.NaturalLanguages.Library;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace Gloson.Games.Life {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class LifeGeneration 
+  public sealed class LifeGeneration
     : IEnumerable<(int y, int x)>,
       IEquatable<LifeGeneration>,
       ICloneable {
@@ -225,7 +224,7 @@ namespace Gloson.Games.Life {
         if (sb.Length > 0)
           sb.AppendLine();
 
-        for (int x = minX; x <= maxX; ++x) 
+        for (int x = minX; x <= maxX; ++x)
           if (m_Cells.Contains((y, x)))
             sb.Append('X');
           else
