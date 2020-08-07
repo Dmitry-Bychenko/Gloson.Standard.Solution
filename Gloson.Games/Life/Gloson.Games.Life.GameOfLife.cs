@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Gloson.Text.NaturalLanguages.Library;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Gloson.Games.Life {
 
@@ -13,7 +15,7 @@ namespace Gloson.Games.Life {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class LifeGeneration
+  public sealed class LifeGeneration 
     : IEnumerable<(int y, int x)>,
       IEquatable<LifeGeneration>,
       ICloneable {
@@ -202,6 +204,35 @@ namespace Gloson.Games.Life {
         else
           m_Cells.Remove(cell);
       }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public string DrawField() {
+      if (m_Cells.Count <= 0)
+        return "";
+
+      int minY = m_Cells.Min(p => p.y);
+      int maxY = m_Cells.Max(p => p.y);
+
+      int minX = m_Cells.Min(p => p.x);
+      int maxX = m_Cells.Max(p => p.x);
+
+      StringBuilder sb = new StringBuilder((maxY - minY + 1) * (maxX - minX + 3));
+
+      for (int y = maxY; y >= minY; --y) {
+        if (sb.Length > 0)
+          sb.AppendLine();
+
+        for (int x = minX; x <= maxX; ++x) 
+          if (m_Cells.Contains((y, x)))
+            sb.Append('X');
+          else
+            sb.Append('.');
+      }
+
+      return sb.ToString();
     }
 
     #endregion Public
