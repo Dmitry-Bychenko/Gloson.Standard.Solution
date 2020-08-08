@@ -77,10 +77,11 @@ namespace Gloson.Algorithms.Graphs {
             else if (double.IsNaN(edge.length) || double.IsPositiveInfinity(edge.length))
               continue;
 
-            if (baseLength + edge.length < result[edge.vertex].length) {
-              relaxed = false;
-              result[edge.vertex] = (baseLength + edge.length, edge.vertex);
-            }
+            if (result.ContainsKey(edge.vertex))
+              if (baseLength + edge.length < result[edge.vertex].length) {
+                relaxed = false;
+                result[edge.vertex] = (baseLength + edge.length, edge.vertex);
+              }
           }
         }
 
