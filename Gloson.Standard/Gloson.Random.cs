@@ -118,4 +118,145 @@ namespace Gloson {
     #endregion IDisposable
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Random Linear Congruent Generator 
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class RandomLinearCongruent : IEquatable<RandomLinearCongruent> {
+    #region Create
+    
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    /// <param name="a">A parameter</param>
+    /// <param name="c">C parameter</param>
+    /// <param name="m">M parameter</param>
+    /// <param name="seed">Seed</param>
+    public RandomLinearCongruent(long a, long c, long m, long seed) {
+      A = a >= 1 ? a : throw new ArgumentOutOfRangeException(nameof(a));
+      C = c >= 0 ? c : throw new ArgumentOutOfRangeException(nameof(c));
+      M = m >= 2 ? m : throw new ArgumentOutOfRangeException(nameof(m));
+      Seed = seed >= 0 ? seed : throw new ArgumentOutOfRangeException(nameof(seed));
+    }
+
+    /// <summary>
+    /// Standard construcor
+    /// </summary>
+    /// <param name="seed">Seed</param>
+    public RandomLinearCongruent(long seed)
+      : this(445, 700001, 2097152, seed) { }
+
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    public RandomLinearCongruent()
+      : this(DateTime.Now.Ticks) { }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// A parameter
+    /// </summary>
+    public long A { get; }
+
+    /// <summary>
+    /// C parameter
+    /// </summary>
+    public long C { get; }
+
+    /// <summary>
+    /// M parameter
+    /// </summary>
+    public long M { get; }
+
+    /// <summary>
+    /// Seed
+    /// </summary>
+    public long Seed { get; private set; }
+
+    /// <summary>
+    /// Next
+    /// </summary>
+    public long Next() {
+      Seed = (A * Seed + C) % M;
+
+      return Seed;
+    }
+
+    /// <summary>
+    /// Next double
+    /// </summary>
+    public double NextDouble() => ((double)Next()) / M; 
+
+    /// <summary>
+    /// To String
+    /// </summary>
+    public override string ToString() =>
+      $"({A} * {Seed} + {C}) mod {M}";
+
+    #endregion Public
+
+    #region Operators
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public static bool operator ==(RandomLinearCongruent left, RandomLinearCongruent right) {
+      if (ReferenceEquals(left, right))
+        return true;
+      else if (null == left || null == right)
+        return false;
+
+      return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Not Equals
+    /// </summary>
+    public static bool operator !=(RandomLinearCongruent left, RandomLinearCongruent right) {
+      if (ReferenceEquals(left, right))
+        return false;
+      else if (null == left || null == right)
+        return true;
+
+      return !left.Equals(right);
+    }
+
+    #endregion Operators
+
+    #region IEquatable<RandomLinearCongruent>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(RandomLinearCongruent other) {
+      if (null == other)
+        return false;
+
+      return A == other.A &&
+             C == other.C &&
+             M == other.M &&
+             Seed == other.Seed;
+    }
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public override bool Equals(object obj) => Equals(obj as RandomLinearCongruent);
+
+    /// <summary>
+    /// Hash Code
+    /// </summary>
+    public override int GetHashCode() {
+      return unchecked((int)(A ^ C ^ M ^ Seed));
+    }
+
+    #endregion IEquatable<RandomLinearCongruent>
+  }
 }
