@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Gloson.Geometry.Hexagonal {
 
@@ -80,6 +81,12 @@ namespace Gloson.Geometry.Hexagonal {
     #endregion Public
 
     #region Operators
+
+    /// <summary>
+    /// To PointF
+    /// </summary>
+    public static implicit operator PointF(HexagonalPoint value) =>
+      new PointF((float)(value.CartesianX), (float)(value.CartesianY));
 
     /// <summary>
     /// Equals
