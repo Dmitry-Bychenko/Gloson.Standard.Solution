@@ -128,7 +128,7 @@ namespace Gloson {
 
   public sealed class RandomLinearCongruent : IEquatable<RandomLinearCongruent> {
     #region Create
-    
+
     /// <summary>
     /// Standard constructor
     /// </summary>
@@ -192,7 +192,7 @@ namespace Gloson {
     /// <summary>
     /// Next double
     /// </summary>
-    public double NextDouble() => ((double)Next()) / M; 
+    public double NextDouble() => ((double)Next()) / M;
 
     /// <summary>
     /// To String

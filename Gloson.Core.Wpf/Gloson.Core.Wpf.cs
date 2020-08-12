@@ -1,5 +1,3 @@
-﻿using System;
+﻿namespace Gloson.Core.Wpf {
 
-namespace Gloson.Core.Wpf {
-  
 }
