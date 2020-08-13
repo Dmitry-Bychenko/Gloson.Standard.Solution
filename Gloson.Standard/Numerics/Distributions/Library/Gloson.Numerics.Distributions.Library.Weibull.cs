@@ -1,70 +1,58 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Gloson.Numerics.Distributions.Library {
+
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
   /// Normal Probability Distribution
   /// </summary>
-  /// <seealso cref="https://en.wikipedia.org/wiki/Cauchy_distribution"/>
+  /// <seealso cref="https://en.wikipedia.org/wiki/Weibull_distribution"/>
   //
   //-------------------------------------------------------------------------------------------------------------------
-  public sealed class CauchyProbabilityDistribution : ContinuousProbabilityDistribution {
+  public sealed class WeibullProbabilityDistribution : ContinuousProbabilityDistribution {
     #region Create
 
     /// <summary>
     /// Standard constructor
     /// </summary>
-    /// <param name="x0">Offset</param>
-    /// <param name="Gamma">Gamma parameter</param>
-    public CauchyProbabilityDistribution(double x0, double gamma) {
-      if (gamma <= 0)
-        throw new ArgumentOutOfRangeException(nameof(gamma), "gamma parameter must be positive");
-
-      X0 = x0;
-      Gamma = gamma;
+    public WeibullProbabilityDistribution(double scale, double shape) {
+      Scale = scale > 0 ? scale : throw new ArgumentOutOfRangeException(nameof(scale));
+      Shape = shape > 0 ? shape : throw new ArgumentOutOfRangeException(nameof(shape));
     }
-
-    /// <summary>
-    /// Standard constructor for Mean (mu) = 0.0, Standard Error (sigma) = 1.0
-    /// </summary>
-    public CauchyProbabilityDistribution()
-      : this(0.0, 1.0) { }
 
     #endregion Create
 
     #region Public
 
     /// <summary>
+    /// Scale
+    /// </summary>
+    public double Scale { get; }
+
+    /// <summary>
+    /// Scale
+    /// </summary>
+    public double Shape { get; }
+
+    /// <summary>
     /// Mean (mu)
     /// </summary>
-    public double X0 { get; }
+    public override double Mean => Scale * SpecialFunctions.GammaFunctions.Gamma(1 + 1 / Shape);
 
     /// <summary>
     /// Standard Error (sigma)
     /// </summary>
-    public double Gamma { get; }
-
-    /// <summary>
-    /// Mean
-    /// </summary>
-    public override double Mean => double.PositiveInfinity;
-
-    /// <summary>
-    /// Variance
-    /// </summary>
-    public override double Variance => double.PositiveInfinity;
-
-    /// <summary>
-    /// Standard Error
-    /// </summary>
-    public override double StandardError => double.PositiveInfinity;
+    public override double StandardError =>
+      Scale * Math.Sqrt(SpecialFunctions.GammaFunctions.Gamma(1 + 2 / Shape) -
+               Math.Pow(SpecialFunctions.GammaFunctions.Gamma(1 + 1 / Shape), 2));
 
     /// <summary>
     /// To String (debug only)
     /// </summary>
-    public override string ToString() =>
-      $"Normal Probability Distribution with offset = {X0}; gamma = {Gamma}";
+    public override string ToString() => $"Weibull Probability Distribution with shape = {Shape}; scale = {Scale}";
 
     #endregion Public
 
@@ -75,7 +63,9 @@ namespace Gloson.Numerics.Distributions.Library {
     /// </summary>
     /// <see cref="https://en.wikipedia.org/wiki/Cumulative_distribution_function"/>
     public override double Cdf(double x) {
-      return 0.5 + Math.Atan((x - X0) / Gamma) / Math.PI;
+      return x < 0
+        ? 0.0
+        : 1 - Math.Exp(-Math.Pow(x / Scale, Shape));
     }
 
     /// <summary>
@@ -83,7 +73,9 @@ namespace Gloson.Numerics.Distributions.Library {
     /// </summary>
     /// <see cref="https://en.wikipedia.org/wiki/Probability_density_function"/>
     public override double Pdf(double x) {
-      return 1.0 / (Math.PI * Gamma * (1 + (x - X0) * (x - X0) / Gamma / Gamma));
+      return x < 0
+        ? 0.0
+        : Shape / Scale * Math.Pow(x / Scale, Shape - 1) * Math.Exp(-Math.Pow(-x / Scale, Shape));
     }
 
     /// <summary>
@@ -92,13 +84,13 @@ namespace Gloson.Numerics.Distributions.Library {
     /// <see cref="https://en.wikipedia.org/wiki/Quantile_function"/>
     public override double Qdf(double x) {
       if (x == 0)
-        return double.NegativeInfinity;
+        return 0;
       else if (x == 1)
         return double.PositiveInfinity;
       else if (x < 0 || x > 1)
         throw new ArgumentOutOfRangeException(nameof(x));
 
-      return X0 + Gamma * Math.Tan(Math.PI * (x - 0.5));
+      return Scale * Math.Pow(Math.Abs(1 - x), 1 / Shape);
     }
 
     #endregion IContinuousProbabilityDistribution
