@@ -74,6 +74,25 @@ namespace Gloson.Geometry.Hexagonal {
     public double CartesianY => Math.Sqrt(3) * Y / 2.0;
 
     /// <summary>
+    /// Shape (Hexagon)
+    /// </summary>
+    public PointF[] Shape() {
+      double x = CartesianX;
+      double y = CartesianY;
+
+      double d = Math.Sqrt(3) / 4;
+
+      return new PointF[] {
+        new PointF((float) x, (float) (y + 1)),
+        new PointF((float) (x + d), (float) (y + 0.25)),
+        new PointF((float) (x + d), (float) (y - 0.25)),
+        new PointF((float) x, (float) (y - 1)),
+        new PointF((float) (x - d), (float) (y - 0.25)),
+        new PointF((float) (x - d), (float) (y + 0.25)),
+      };
+    }
+
+    /// <summary>
     /// To String
     /// </summary>
     public override string ToString() => $"({X}, {Y}, {Z})";
@@ -83,10 +102,14 @@ namespace Gloson.Geometry.Hexagonal {
     #region Operators
 
     /// <summary>
+    /// To PointF 
+    /// </summary>
+    public PointF ToPointF() => new PointF((float)CartesianX, (float)CartesianY);
+
+    /// <summary>
     /// To PointF
     /// </summary>
-    public static implicit operator PointF(HexagonalPoint value) =>
-      new PointF((float)(value.CartesianX), (float)(value.CartesianY));
+    public static implicit operator PointF(HexagonalPoint value) => value.ToPointF();
 
     /// <summary>
     /// Equals
