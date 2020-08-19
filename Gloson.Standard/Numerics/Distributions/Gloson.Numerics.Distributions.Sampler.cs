@@ -93,7 +93,7 @@ namespace Gloson.Numerics.Distributions {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class SamplerLatinHypercube {
+  public sealed class SamplerLatinHypercube : ISampler {
     #region Private Data
 
     private readonly Random m_Random;
@@ -166,7 +166,7 @@ namespace Gloson.Numerics.Distributions {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class SamplerOrthogonal {
+  public sealed class SamplerOrthogonal : ISampler {
     #region Private Data
 
     private readonly Random m_Random;
