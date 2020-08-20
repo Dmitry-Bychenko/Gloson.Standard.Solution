@@ -31,7 +31,7 @@ namespace Gloson.Numerics.Distributions {
   /// Monte Carlo Sampler
   /// </summary>
   //
-  //-------------------------------------------------------------------------------------------------------------------  public sealed class SamplerMonteCarlo : ISampler {
+  //-------------------------------------------------------------------------------------------------------------------  
 
   public sealed class SamplerMonteCarlo : ISampler {
     #region Private Data
