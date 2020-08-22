@@ -23,6 +23,52 @@ namespace Gloson.Numerics.Distributions {
     IEnumerable<double[]> Generate(int dimensions, int count);
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Sampler Extensions
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+  
+  public static class SamplerExtensions {
+    #region Public
+
+    /// <summary>
+    /// Generate samples for the distributions provided
+    /// </summary>
+    /// <param name="sampler">Sampler</param>
+    /// <param name="count">Number (approximate) of samples to create</param>
+    /// <param name="distributions">Distributions</param>
+    public static IEnumerable<double[]> GenerateSamples(this ISampler sampler, 
+      int count, 
+      IEnumerable<IContinuousProbabilityDistribution> distributions) {
+
+      if (null == sampler)
+        throw new ArgumentNullException(nameof(sampler));
+      else if (count < 0)
+        throw new ArgumentOutOfRangeException(nameof(count));
+      else if (null == distributions)
+        throw new ArgumentNullException(nameof(distributions));
+
+      IContinuousProbabilityDistribution[] dist = distributions.ToArray();
+
+      if (dist.Length <= 0)
+        throw new ArgumentOutOfRangeException(nameof(distributions));
+      else if (dist.Any(d => d == null))
+        throw new ArgumentException("nulls are not allowed within distributions", nameof(distributions));
+
+      foreach (double[] points in sampler.Generate(dist.Length, count)) {
+        for (int i = 0; i < points.Length; ++i)
+          points[i] = dist[i].Qdf(points[i]);
+
+        yield return points;
+      }
+    }
+
+    #endregion Public
+  }
+
   #region Standard Samplers
 
   //-------------------------------------------------------------------------------------------------------------------
