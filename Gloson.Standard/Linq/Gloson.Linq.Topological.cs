@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Linq {
 
@@ -15,8 +14,34 @@ namespace Gloson.Linq {
   //-------------------------------------------------------------------------------------------------------------------
 
   public static partial class EnumerableExtensions {
-    #region Algorithm
+    #region Internal classes
 
+    private class TopologicallyOrdered<T> : IOrderedEnumerable<T>, IEnumerable<T> {
+      readonly List<List<T>> m_List;
+      internal TopologicallyOrdered(List<List<T>> list) {
+        m_List = list;
+      }
+
+      public IOrderedEnumerable<T> CreateOrderedEnumerable<TKey>(Func<T, TKey> keySelector, IComparer<TKey> comparer, bool descending) {
+        return descending
+          ? m_List
+             .Select(list => list.OrderByDescending(item => item))
+             .SelectMany(item => item)
+             .OrderBy(item => 1)
+          : m_List
+             .Select(list => list.OrderBy(item => item))
+             .SelectMany(item => item)
+             .OrderBy(item => 1);
+      }
+
+      public IEnumerator<T> GetEnumerator() => m_List.SelectMany(item => item).GetEnumerator();
+
+      System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => this.GetEnumerator();
+    }
+
+    #endregion Internal classes
+
+    #region Algorithm
     private static List<List<T>> TopologicalList<T>(IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
       List<List<T>> result = new List<List<T>>();
 
@@ -31,10 +56,10 @@ namespace Gloson.Linq {
 
         Queue<T> nextAgenda = new Queue<T>();
 
-        for (int i = agenda.Count - 1; i >=0; --i) {
+        for (int i = agenda.Count - 1; i >= 0; --i) {
           T item = agenda.Dequeue();
 
-          if (!cache.TryGetValue(item, out List<T> req)) 
+          if (!cache.TryGetValue(item, out List<T> req))
             req = required(item)?.ToList() ?? new List<T>();
 
           if (req.All(r => completed.Contains(r)))
@@ -66,17 +91,15 @@ namespace Gloson.Linq {
     /// </summary>
     /// <param name="source">Items to sort</param>
     /// <param name="required">Items required to be before the current item</param>
-    public static IEnumerable<T> TopologicalSort<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
+    public static IOrderedEnumerable<T> TopologicalOrderBy<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (null == required)
         throw new ArgumentNullException(nameof(required));
 
-      var list = TopologicalList(source, required);
+      List<List<T>> list = TopologicalList(source, required);
 
-      foreach (var line in list)
-        foreach (var item in line)
-          yield return item;
+      return new TopologicallyOrdered<T>(list);
     }
 
     /// <summary>
@@ -84,20 +107,17 @@ namespace Gloson.Linq {
     /// </summary>
     /// <param name="source">Items to sort</param>
     /// <param name="required">Items required to be before the current item</param>
-    public static IEnumerable<T> TopologicalSortDescending<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
+    public static IOrderedEnumerable<T> TopologicalOrderByDescending<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
       else if (null == required)
         throw new ArgumentNullException(nameof(required));
 
-      var list = TopologicalList(source, required);
+      List<List<T>> list = TopologicalList(source, required);
 
-      for (int i = list.Count - 1; i >= 0; --i) {
-        var line = list[i];
+      list.Reverse();
 
-        foreach (var item in line)
-          yield return item;
-      }
+      return new TopologicallyOrdered<T>(list);
     }
 
     /// <summary>

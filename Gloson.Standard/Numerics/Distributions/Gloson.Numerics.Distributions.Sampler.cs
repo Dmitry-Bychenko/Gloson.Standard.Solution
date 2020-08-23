@@ -30,7 +30,7 @@ namespace Gloson.Numerics.Distributions {
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
-  
+
   public static class SamplerExtensions {
     #region Public
 
@@ -40,8 +40,8 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="sampler">Sampler</param>
     /// <param name="count">Number (approximate) of samples to create</param>
     /// <param name="distributions">Distributions</param>
-    public static IEnumerable<double[]> GenerateSamples(this ISampler sampler, 
-      int count, 
+    public static IEnumerable<double[]> GenerateSamples(this ISampler sampler,
+      int count,
       IEnumerable<IContinuousProbabilityDistribution> distributions) {
 
       if (null == sampler)
