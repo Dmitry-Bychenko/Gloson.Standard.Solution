@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gloson.Geometry.Norms.Library {
 
@@ -19,7 +18,7 @@ namespace Gloson.Geometry.Norms.Library {
     protected override double CoreDistance(IEnumerable<(double x, double y)> points) {
       double result = 0.0;
 
-      foreach (var (x, y) in points) 
+      foreach (var (x, y) in points)
         result += (x - y) * (x - y);
 
       return Math.Sqrt(result);
