@@ -16,7 +16,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       (n10 + n01) / (double)left.Count;
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -33,7 +32,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       (n01 + n10) / (double)(n01 + n10 + n11);
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -50,7 +48,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       (n00 + n10 + n01) / (double)left.Count;
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -67,7 +64,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       2.0 * (n01 + n10) / (n11 + 2.0 * (n01 + n10));
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -84,7 +80,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       2.0 * (n10 + n01) / (n00 + n11 + 2.0 * (n10 + n01));
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -101,7 +96,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       (n10 + n01) / (2.0 * n11 + n10 + n01);
-
   }
 
   //-------------------------------------------------------------------------------------------------------------------
@@ -118,7 +112,6 @@ namespace Gloson.Geometry.Similarity.Library {
     /// </summary>
     protected override double CoreDissimilarity(List<bool> left, List<bool> right, int n00, int n01, int n10, int n11) =>
       2.0 * n10 * n01 / (n11 * n00 + n10 * n01);
-
   }
 
 }
