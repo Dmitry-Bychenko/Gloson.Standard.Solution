@@ -18,6 +18,20 @@ namespace Gloson {
     /// Week Start 
     /// </summary>
     /// <param name="date">date</param>
+    /// <param name="firstDayOfWeek">First Day Of week</param>
+    /// <returns>week start</returns>
+    public static DateTime WeekStart(this DateTime date, DayOfWeek firstDayOfWeek) {
+      DayOfWeek current = date.DayOfWeek;
+
+      return (current >= firstDayOfWeek)
+        ? date.Date.AddDays(firstDayOfWeek - current)
+        : date.Date.AddDays(-7 + (int)firstDayOfWeek - (int)current);
+    }
+
+    /// <summary>
+    /// Week Start 
+    /// </summary>
+    /// <param name="date">date</param>
     /// <param name="format">date format</param>
     /// <returns>week start</returns>
     public static DateTime WeekStart(this DateTime date, DateTimeFormatInfo format) {
