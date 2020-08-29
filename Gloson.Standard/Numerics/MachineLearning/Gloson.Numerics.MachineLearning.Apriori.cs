@@ -188,4 +188,103 @@ namespace Gloson.Numerics.MachineLearning {
 
     #endregion Public
   }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Apriori
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static class Apriori {
+    #region Public
+
+    /// <summary>
+    /// Frequent Subsets 
+    /// </summary>
+    /// <param name="transactions">Transactions to analyze</param>
+    /// <param name="minSupport">Minimum Support</param>
+    /// <param name="maxSubsetSize">Maximum Subset size (-1 for all subsets)</param>
+    /// <param name="comparer">Comparer</param>
+    /// <returns>(seubset, support) pairs</returns>
+    public static IEnumerable<(HashSet<T> subset, double support)> FrequentSubsets<T>(
+      IEnumerable<IEnumerable<T>> transactions,
+      double minSupport,
+      int maxSubsetSize = -1,
+      IEqualityComparer<T> comparer = null) {
+
+      if (null == transactions)
+        throw new ArgumentNullException(nameof(transactions));
+      else if (minSupport < 0 || minSupport > 1)
+        throw new ArgumentOutOfRangeException(nameof(minSupport));
+
+      if (maxSubsetSize == 0)
+        yield break;
+
+      comparer ??= EqualityComparer<T>.Default;
+
+      List<HashSet<T>> data = transactions
+        .Select(transaction => new HashSet<T>(transaction ?? new T[0], comparer))
+        .ToList();
+
+      double Compute(IEnumerable<T> subset) {
+        double count = data.Count(transaction => subset.All(s => transaction.Contains(s)));
+
+        return count / data.Count;
+      };
+
+      var list = data
+        .SelectMany(transaction => transaction)
+        .Distinct(comparer)
+        .Select(item => new HashSet<T>(comparer) { item })
+        .Select(items => (subset: items, support: Compute(items)))
+        .Where(item => item.support >= minSupport)
+        .ToList();
+
+      List<List<(HashSet<T> subset, double support)>> frequent =
+        new List<List<(HashSet<T> subset, double support)>>() { list };
+
+      while (true) {
+        var prior = frequent[frequent.Count - 1];
+
+        if (prior.Count <= 0)
+          break;
+
+        foreach (var record in prior)
+          yield return record;
+
+        if (maxSubsetSize > 0 && prior.Count >= maxSubsetSize)
+          break;
+
+        List<(HashSet<T> subset, double support)> next = new List<(HashSet<T> subset, double support)>();
+
+        frequent.Add(next);
+
+        for (int i = 0; i < prior.Count; ++i) {
+          for (int j = i + 1; j < prior.Count; ++j) {
+            HashSet<T> hs = new HashSet<T>(prior[i].subset, comparer);
+
+            hs.UnionWith(prior[j].subset);
+
+            if (hs.Count != prior[i].subset.Count + 1)
+              continue;
+
+            if (next.Any(z => !z.subset.Except(hs).Any()))
+              continue;
+
+            double s = Compute(hs);
+
+            if (s < minSupport)
+              continue;
+
+            next.Add((hs, s));
+          }
+        }
+      }
+    }
+
+    #endregion Public
+  }
+
 }
