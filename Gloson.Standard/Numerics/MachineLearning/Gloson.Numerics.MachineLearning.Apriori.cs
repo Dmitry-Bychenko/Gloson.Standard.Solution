@@ -141,6 +141,17 @@ namespace Gloson.Numerics.MachineLearning {
       : LeftAndRightSupport / LeftSupport / RightSupport;
 
     /// <summary>
+    /// Left Conviction
+    /// </summary>
+    public double LeftConviction => (1 - RightSupport) / (1 - LeftConfidence);
+
+    /// <summary>
+    /// Right Conviction
+    /// </summary>
+    public double RightConviction => (1 - LeftSupport) / (1 - RightConfidence);
+
+
+    /// <summary>
     /// Left items
     /// </summary>
     public IReadOnlyList<T> Left => m_Left;
@@ -273,6 +284,11 @@ namespace Gloson.Numerics.MachineLearning {
     public double Lift => LeftSupport == 0 || RightSupport == 0
       ? 1.0
       : LeftAndRightSupport / LeftSupport / RightSupport;
+
+    /// <summary>
+    /// Conviction
+    /// </summary>
+    public double Conviction => (1 - RightSupport) / (1 - Confidence);
 
     /// <summary>
     /// To String (debug)
