@@ -328,6 +328,16 @@ namespace Gloson.Numerics.Matrices {
 
     #endregion Standard
 
+    #region Decomposition
+
+    /// <summary>
+    /// Cholesky Decomposition
+    /// </summary>
+    /// <seealso cref="https://en.wikipedia.org/wiki/Cholesky_decomposition"/>
+    public Matrix Cholesky() => new Matrix(MatrixLowLevel.Cholesky(m_Items));
+
+    #endregion Decomposition
+
     #endregion Public
 
     #region Operators

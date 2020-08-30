@@ -13,15 +13,27 @@ namespace Gloson.Numerics.Matrices {
   internal static partial class MatrixLowLevel {
     #region Public
 
+    #region Standard
+
     // Unit square matrix
     internal static Double[][] Unit(int size) {
-      Double[][] result = new Double[size][];
+      double[][] result = new double[size][];
 
       for (int i = size - 1; i >= 0; --i)
         result[i] = new Double[size];
 
       for (int i = size - 1; i >= 0; --i)
         result[i][i] = 1;
+
+      return result;
+    }
+    
+    // Zero Square Matrix
+    internal static double[][] Zero(int size) {
+      double[][] result = new double[size][];
+
+      for (int i = size - 1; i >= 0; --i)
+        result[i] = new double[size];
 
       return result;
     }
@@ -483,6 +495,39 @@ namespace Gloson.Numerics.Matrices {
 
       return true;
     }
+
+    #endregion Standard
+
+    #region Decomposition
+
+    internal static double[][] Cholesky(double[][] value) {
+      int n = value.Length;
+
+      double[][] result = Zero(n); 
+
+      for (int r = 0; r < n; r++)
+        for (int c = 0; c <= r; c++)
+          if (c == r) {
+            double sum = 0;
+
+            for (int j = 0; j < c; j++)
+              sum += result[c][j] * result[c][j];
+
+            result[c][c] = Math.Sqrt(value[c][c] - sum);
+          }
+          else {
+            double sum = 0;
+
+            for (int j = 0; j < c; j++)
+              sum += result[r][j] * result[c][j];
+
+            result[r][c] = 1.0 / result[c][c] * (value[r][c] - sum);
+          }
+
+      return result;
+    }
+
+    #endregion Decomposition 
 
     #endregion Public
   }
