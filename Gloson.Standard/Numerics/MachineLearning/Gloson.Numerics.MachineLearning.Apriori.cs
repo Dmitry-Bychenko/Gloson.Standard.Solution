@@ -192,6 +192,109 @@ namespace Gloson.Numerics.MachineLearning {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
+  /// Apriori Rule
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class AprioriRule<T> {
+    #region Create
+
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    /// <param name="left">Left subset (cause)</param>
+    /// <param name="right">Right subset (outcome)</param>
+    /// <param name="leftSupport">Left Support</param>
+    /// <param name="rightSupport">Right Support</param>
+    /// <param name="leftAndRightSupport">Left and Right Support</param>
+    public AprioriRule(
+      IEnumerable<T> left,
+      IEnumerable<T> right,
+      double leftSupport,
+      double rightSupport,
+      double leftAndRightSupport) {
+
+      Left = left?.ToList() ?? throw new ArgumentNullException(nameof(left));
+      Right = right?.ToList() ?? throw new ArgumentNullException(nameof(right));
+
+      LeftSupport = leftSupport >= 0 && leftSupport <= 1
+        ? leftSupport
+        : throw new ArgumentOutOfRangeException(nameof(leftSupport));
+
+      RightSupport = rightSupport >= 0 && rightSupport <= 1
+        ? rightSupport
+        : throw new ArgumentOutOfRangeException(nameof(rightSupport));
+
+      LeftAndRightSupport = leftAndRightSupport >= 0 && leftAndRightSupport <= Math.Min(leftSupport, rightSupport)
+        ? leftAndRightSupport
+        : throw new ArgumentOutOfRangeException(nameof(leftAndRightSupport));
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Left subset (cause)
+    /// </summary>
+    public IReadOnlyList<T> Left { get; }
+
+    /// <summary>
+    /// Right subset (outcome)
+    /// </summary>
+    public IReadOnlyList<T> Right { get; }
+
+    /// <summary>
+    /// Left Support
+    /// </summary>
+    public double LeftSupport { get; }
+
+    /// <summary>
+    /// Right Support
+    /// </summary>
+    public double RightSupport { get; }
+
+    /// <summary>
+    /// Left And Right Support
+    /// </summary>
+    public double LeftAndRightSupport { get; }
+
+    /// <summary>
+    /// Confidence
+    /// </summary>
+    public double Confidence => LeftSupport == 0
+      ? 0.0
+      : LeftAndRightSupport / LeftSupport;
+
+    /// <summary>
+    /// Lift
+    /// </summary>
+    public double Lift => LeftSupport == 0 || RightSupport == 0
+      ? 1.0
+      : LeftAndRightSupport / LeftSupport / RightSupport;
+
+    /// <summary>
+    /// To String (debug)
+    /// </summary>
+    public override string ToString() {
+      return string.Concat(
+        $"{{{string.Join(", ", Left)}}} (Support = {LeftSupport * 100:G4}%)",
+        $" -> ",
+        $"{{{string.Join(", ", Right)}}} (Support = {RightSupport * 100:G4}%)",
+        $" With",
+        $" Support = {LeftAndRightSupport * 100:G4}%",
+        $" Confidence = {Confidence * 100:G4}%",
+        $" Lift = {Lift:G4}"
+      );
+    }
+
+    #endregion Public
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
   /// Apriori
   /// </summary>
   //
@@ -207,9 +310,9 @@ namespace Gloson.Numerics.MachineLearning {
     /// <param name="minSupport">Minimum Support</param>
     /// <param name="maxSubsetSize">Maximum Subset size (-1 for all subsets)</param>
     /// <param name="comparer">Comparer</param>
-    /// <returns>(seubset, support) pairs</returns>
+    /// <returns>(subset, support) pairs</returns>
     public static IEnumerable<(HashSet<T> subset, double support)> FrequentSubsets<T>(
-      IEnumerable<IEnumerable<T>> transactions,
+      this IEnumerable<IEnumerable<T>> transactions,
       double minSupport,
       int maxSubsetSize = -1,
       IEqualityComparer<T> comparer = null) {
@@ -279,6 +382,67 @@ namespace Gloson.Numerics.MachineLearning {
               continue;
 
             next.Add((hs, s));
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Apriori Rules
+    /// </summary>
+    /// <param name="transactions">Transactions to analyze</param>
+    /// <param name="minSupport">Minimum Support</param>
+    /// <param name="minConfidence">Minimum Confidence</param>
+    /// <param name="minLift">Min Lift (1 by default)</param>
+    /// <param name="maxLevel">Maximum Subset size (-1 for all subsets)</param>
+    /// <param name="comparer">Comparer</param>
+    /// <returns></returns>
+    public static IEnumerable<AprioriRule<T>> AprioriRules<T>(
+      this IEnumerable<IEnumerable<T>> transactions,
+      double minSupport,
+      double minConfidence,
+      double minLift = 1,
+      int maxLevel = -1,
+      IEqualityComparer<T> comparer = null) {
+
+      var data = FrequentSubsets(transactions, minSupport, maxLevel, comparer)
+        .GroupBy(item => item.subset.Count)
+        .ToDictionary(group => group.Key, group => group);
+
+      double Support(HashSet<T> value) {
+        if (null == value)
+          return 0;
+
+        if (!data.TryGetValue(value.Count, out var records))
+          return 0;
+
+        foreach (var (subset, support) in records)
+          if (subset.SetEquals(value))
+            return support;
+
+        return 0;
+      }
+
+      foreach (var pair in data) {
+        if (pair.Key <= 1)
+          continue;
+
+        foreach (var subset in pair.Value) {
+          for (int i = 1; i < subset.subset.Count; ++i) {
+            HashSet<T> left = new HashSet<T>(subset.subset.Take(i), comparer);
+            HashSet<T> right = new HashSet<T>(subset.subset.Skip(i), comparer);
+
+            double leftAndRightSupport = subset.support;
+            double leftSupport = Support(left);
+            double rightSupport = Support(right);
+
+            double confidence = leftAndRightSupport / leftSupport;
+            double lift = confidence / rightSupport;
+
+            if (confidence < minConfidence || lift < minLift)
+              continue;
+
+            yield return new AprioriRule<T>(left, right, leftSupport, rightSupport, leftAndRightSupport);
           }
         }
       }
