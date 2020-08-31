@@ -336,6 +336,17 @@ namespace Gloson.Numerics.Matrices {
     /// <seealso cref="https://en.wikipedia.org/wiki/Cholesky_decomposition"/>
     public Matrix Cholesky() => new Matrix(MatrixLowLevel.Cholesky(m_Items));
 
+    /// <summary>
+    /// Householder factors (QR-decomposition)
+    /// H1, H2, ..., Hn, R
+    /// Q = H1 * H2 * ... * Hn
+    /// </summary>
+    /// <see cref="http://www.seas.ucla.edu/~vandenbe/133A/lectures/qr.pdf"/>
+    public IEnumerable<Matrix> HouseholderFactors() {
+      foreach (var item in MatrixLowLevel.HouseholderFactors(m_Items))
+        yield return new Matrix(item);
+    }
+
     #endregion Decomposition
 
     #endregion Public

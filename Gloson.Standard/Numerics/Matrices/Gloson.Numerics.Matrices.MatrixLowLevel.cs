@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gloson.Numerics.Matrices {
 
@@ -525,6 +526,78 @@ namespace Gloson.Numerics.Matrices {
           }
 
       return result;
+    }
+
+    //http://www.seas.ucla.edu/~vandenbe/133A/lectures/qr.pdf
+    // H1, H2, ..., Hn, R
+    internal static IEnumerable<double[][]> HouseholderFactors(double[][] value) {
+      double[][] A = new double[value.Length][];
+
+      for (int r = 0; r < value.Length; ++r) {
+        A[r] = new double[value[r].Length];
+
+        Array.Copy(value[r], A[r], A[r].Length);
+      }
+
+      int columns = A[0].Length;
+      int rows = A.Length;
+
+      for (int c = 0; c < Math.Min(columns, rows); ++c) {
+        double[] y = new double[A.Length - c];
+        double norm = 0.0;
+
+        for (int r = c; r < A.Length; ++r) {
+          double v = A[r][c];
+          norm += v * v;
+
+          y[r - c] = v;
+        }
+
+        double was = y[0];
+
+        y[0] += (was < 0 ? -1 : 1) * Math.Sqrt(norm);
+
+        norm = norm - was * was + y[0] * y[0];
+
+        double[][] result = new double[y.Length + c][];
+
+        for (int r = 0; r < y.Length + c; ++r)
+          result[r] = new double[y.Length + c];
+
+        for (int r = 0; r < result.Length; ++r)
+          result[r][r] = 1;
+
+        for (int i = 0; i < y.Length; ++i)
+          for (int j = 0; j < y.Length; ++j)
+            result[i + c][j + c] = result[i + c][j + c] - 2 / norm * y[i] * y[j];
+
+        double[][] B = new double[A.Length][];
+
+        for (int r = 0; r < A.Length; ++r) {
+          double[] line = new double[columns];
+
+          if (r < columns)
+            Array.Copy(A[r], line, line.Length);
+
+          B[r] = line;
+        }
+
+        for (int i = c; i < B[0].Length; ++i)
+          for (int j = c; j < B.Length; ++j) {
+            double s = 0.0;
+
+            for (int k = c; k < y.Length + c; ++k)
+              s += result[j][k] * A[k][i];
+
+            B[j][i] = s;
+          }
+
+        A = B;
+
+        yield return result;
+      }
+
+      yield return A;
     }
 
     #endregion Decomposition 
