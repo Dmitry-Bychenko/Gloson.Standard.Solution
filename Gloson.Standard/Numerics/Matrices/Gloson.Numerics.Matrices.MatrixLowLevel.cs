@@ -600,6 +600,47 @@ namespace Gloson.Numerics.Matrices {
       yield return A;
     }
 
+    // QR
+    internal static void QR(double[][] value, out double[][] q, out double[][] r) {
+      int rows = value.Length;
+
+      q = new double[rows][];
+
+      for (int i = 0; i < q.Length; ++i) {
+        q[i] = new double[q.Length];
+
+        q[i][i] = 1.0;
+      }
+
+      r = value;
+
+      double[][] f = null;
+
+      foreach (var factor in HouseholderFactors(value)) {
+        if (f != null) {
+          double[][] z = new double[f.Length][];
+
+          for (int j = 0; j < f.Length; ++j)
+            z[j] = new double[f.Length];
+
+          for (int y = 0; y < f.Length; ++y)
+            for (int x = 0; x < f.Length; ++x) {
+              double s = 0;
+
+              for (int k = 0; k < f.Length; ++k)
+                s += q[y][k] * f[k][x];
+
+              z[y][x] = s;
+            }
+
+          q = z;
+        }
+
+        r = factor;
+        f = factor;
+      }
+    }
+
     #endregion Decomposition 
 
     #endregion Public

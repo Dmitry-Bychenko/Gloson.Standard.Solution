@@ -347,6 +347,17 @@ namespace Gloson.Numerics.Matrices {
         yield return new Matrix(item);
     }
 
+    /// <summary>
+    /// QR Decomposition
+    /// </summary>
+    /// <see cref="https://en.wikipedia.org/wiki/QR_decomposition"/>
+    public void QR(out Matrix q, out Matrix r) {
+      MatrixLowLevel.QR(m_Items, out var qq, out var rr);
+
+      q = new Matrix(qq);
+      r = new Matrix(rr);
+    }
+
     #endregion Decomposition
 
     #endregion Public
