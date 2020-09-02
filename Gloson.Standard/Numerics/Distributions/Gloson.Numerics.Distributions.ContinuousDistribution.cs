@@ -162,7 +162,7 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// Mean
     /// </summary>
-    public virtual double Mean { 
+    public virtual double Mean {
       get {
         if (!double.IsNaN(m_Mean))
           return m_Mean;
@@ -175,14 +175,14 @@ namespace Gloson.Numerics.Distributions {
         m_Mean = Integrals.SimpsonAt((x) => x * Pdf(x), left, right);
 
         return m_Mean;
-      } 
+      }
     }
 
     /// <summary>
     /// Standard Error
     /// </summary>
-    public virtual double StandardError => Math.Sqrt(Variance); 
-    
+    public virtual double StandardError => Math.Sqrt(Variance);
+
     /// <summary>
     /// Variance
     /// </summary>

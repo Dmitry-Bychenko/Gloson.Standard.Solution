@@ -28,7 +28,7 @@ namespace Gloson.Numerics.Matrices {
 
       return result;
     }
-    
+
     // Zero Square Matrix
     internal static double[][] Zero(int size) {
       double[][] result = new double[size][];
@@ -504,7 +504,7 @@ namespace Gloson.Numerics.Matrices {
     internal static double[][] Cholesky(double[][] value) {
       int n = value.Length;
 
-      double[][] result = Zero(n); 
+      double[][] result = Zero(n);
 
       for (int r = 0; r < n; r++)
         for (int c = 0; c <= r; c++)
