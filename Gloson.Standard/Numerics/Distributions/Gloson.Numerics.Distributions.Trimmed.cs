@@ -5,19 +5,17 @@ namespace Gloson.Numerics.Distributions {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// Trimmed (Original) distribution which now defined in [LeftBorder..RightBorder]
+  /// Trimmed Distribution (Original distribution within [LeftBorder..RightBoreder] only)
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ElevatedTrimContinuousDistribution : ContinuousProbabilityDistribution {
+  public abstract class BaseTrimmedContinuousDistribution : ContinuousProbabilityDistribution {
     #region Private Data
 
-    private readonly double m_Shift;
+    protected readonly double m_CdfLeft;
 
-    private readonly double m_CdfLeft;
-
-    private readonly double m_CdfRight;
+    protected readonly double m_CdfRight;
 
     #endregion Private Data
 
@@ -29,9 +27,9 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="origin">Original Distribution</param>
     /// <param name="leftBorder">Left Border</param>
     /// <param name="rightBorder">Right Border</param>
-    public ElevatedTrimContinuousDistribution(IContinuousProbabilityDistribution origin,
-                                              double leftBorder,
-                                              double rightBorder) {
+    public BaseTrimmedContinuousDistribution(IContinuousProbabilityDistribution origin,
+                                             double leftBorder,
+                                             double rightBorder) {
       Origin = origin ?? throw new ArgumentNullException(nameof(origin));
 
       if (leftBorder <= rightBorder) {
@@ -49,11 +47,6 @@ namespace Gloson.Numerics.Distributions {
 
       if (leftBorder != rightBorder && (m_CdfRight - m_CdfLeft <= 0))
         throw new ArgumentOutOfRangeException(nameof(rightBorder), "Zero density region");
-
-      if (LeftBorder != RightBorder)
-        m_Shift = (1 - (m_CdfRight - m_CdfLeft)) / (RightBorder - LeftBorder);
-      else
-        m_Shift = double.NaN;
     }
 
     #endregion Create
@@ -74,6 +67,73 @@ namespace Gloson.Numerics.Distributions {
     /// Right Border
     /// </summary>
     public double RightBorder { get; }
+
+    /// <summary>
+    /// Quantile Function
+    /// </summary>
+    public override double Qdf(double x) {
+      if (x == 0)
+        return LeftBorder;
+      else if (x == 1)
+        return RightBorder;
+
+      return base.Qdf(x);
+    }
+
+    /// <summary>
+    /// Mean
+    /// </summary>
+    public override double Mean => LeftBorder == RightBorder
+      ? LeftBorder
+      : base.Mean;
+
+    /// <summary>
+    /// Variance
+    /// </summary>
+    public override double Variance => LeftBorder == RightBorder
+      ? 0
+      : base.Variance;
+
+    #endregion Public
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Trimmed (Original) distribution which now defined in [LeftBorder..RightBorder]
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class ElevatedTrimmedContinuousDistribution : BaseTrimmedContinuousDistribution {
+    #region Private Data
+
+    private readonly double m_Shift;
+
+    #endregion Private Data
+
+    #region Create
+
+    /// <summary>
+    /// Standard 
+    /// </summary>
+    /// <param name="origin">Original Distribution</param>
+    /// <param name="leftBorder">Left Border</param>
+    /// <param name="rightBorder">Right Border</param>
+    public ElevatedTrimmedContinuousDistribution(IContinuousProbabilityDistribution origin,
+                                              double leftBorder,
+                                              double rightBorder)
+      : base(origin, leftBorder, rightBorder) {
+
+      if (LeftBorder != RightBorder)
+        m_Shift = (1 - (m_CdfRight - m_CdfLeft)) / (RightBorder - LeftBorder);
+      else
+        m_Shift = double.NaN;
+    }
+
+    #endregion Create
+
+    #region Public
 
     /// <summary>
     /// Cumulative Density Function
@@ -104,18 +164,6 @@ namespace Gloson.Numerics.Distributions {
     }
 
     /// <summary>
-    /// Quantile Function
-    /// </summary>
-    public override double Qdf(double x) {
-      if (x == 0)
-        return LeftBorder;
-      else if (x == 1)
-        return RightBorder;
-
-      return base.Qdf(x);
-    }
-
-    /// <summary>
     /// To String
     /// </summary>
     public override string ToString() =>
@@ -132,12 +180,8 @@ namespace Gloson.Numerics.Distributions {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class ProportionalTrimContinuousDistribution : ContinuousProbabilityDistribution {
+  public sealed class ProportionalTrimmedContinuousDistribution : BaseTrimmedContinuousDistribution {
     #region Private Data
-
-    private readonly double m_CdfLeft;
-
-    private readonly double m_CdfRight;
 
     private readonly double m_Multiplicator;
 
@@ -151,48 +195,16 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="origin">Original Distribution</param>
     /// <param name="leftBorder">Left Border</param>
     /// <param name="rightBorder">Right Border</param>
-    public ProportionalTrimContinuousDistribution(IContinuousProbabilityDistribution origin,
+    public ProportionalTrimmedContinuousDistribution(IContinuousProbabilityDistribution origin,
                                                   double leftBorder,
-                                                  double rightBorder) {
-      Origin = origin ?? throw new ArgumentNullException(nameof(origin));
-
-      if (leftBorder <= rightBorder) {
-        LeftBorder = leftBorder;
-        RightBorder = rightBorder;
-      }
-      else
-        throw new ArgumentOutOfRangeException(nameof(leftBorder), "Empty region");
-
-      m_CdfRight = Origin.Cdf(RightBorder);
-      m_CdfLeft = Origin.Cdf(LeftBorder);
-
-      if (m_CdfRight <= 0)
-        throw new ArgumentOutOfRangeException(nameof(rightBorder), "Zero density region");
-
-      if (leftBorder != rightBorder && (m_CdfRight - m_CdfLeft <= 0))
-        throw new ArgumentOutOfRangeException(nameof(rightBorder), "Zero density region");
-
+                                                  double rightBorder)
+      : base(origin, leftBorder, rightBorder) {
       m_Multiplicator = 1.0 / (m_CdfRight - m_CdfLeft);
     }
 
     #endregion Create
 
     #region Public
-
-    /// <summary>
-    /// Original Distribution
-    /// </summary>
-    public IContinuousProbabilityDistribution Origin { get; }
-
-    /// <summary>
-    /// Left Border
-    /// </summary>
-    public double LeftBorder { get; }
-
-    /// <summary>
-    /// Right Border
-    /// </summary>
-    public double RightBorder { get; }
 
     /// <summary>
     /// Cumulative Density Function
@@ -219,18 +231,6 @@ namespace Gloson.Numerics.Distributions {
         return 0.0;
       else
         return Origin.Pdf(x) * m_Multiplicator;
-    }
-
-    /// <summary>
-    /// Quantile Function
-    /// </summary>
-    public override double Qdf(double x) {
-      if (x == 0)
-        return LeftBorder;
-      else if (x == 1)
-        return RightBorder;
-
-      return base.Qdf(x);
     }
 
     /// <summary>
