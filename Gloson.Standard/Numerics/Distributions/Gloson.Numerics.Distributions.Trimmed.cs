@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gloson.Numerics.Calculus;
+using System;
 
 namespace Gloson.Numerics.Distributions {
 
@@ -77,7 +78,7 @@ namespace Gloson.Numerics.Distributions {
       else if (x == 1)
         return RightBorder;
 
-      return base.Qdf(x);
+      return Operators.InverseAt(Cdf, x, LeftBorder, RightBorder);
     }
 
     /// <summary>
