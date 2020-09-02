@@ -110,6 +110,9 @@ namespace Gloson.Numerics.Distributions {
       return new Random(seed);
     });
 
+    protected double m_Mean = double.NaN;
+    protected double m_Variance = double.NaN;
+
     #endregion Private Data
 
     #region IContinuousProbabilityDistribution
@@ -159,21 +162,43 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// Mean
     /// </summary>
-    public abstract double Mean { get; }
+    public virtual double Mean { 
+      get {
+        if (!double.IsNaN(m_Mean))
+          return m_Mean;
+
+        double tolearnce = 1e-7;
+
+        double left = Qdf(tolearnce);
+        double right = Qdf(1 - tolearnce);
+
+        m_Mean = Integrals.SimpsonAt((x) => x * Pdf(x), left, right);
+
+        return m_Mean;
+      } 
+    }
 
     /// <summary>
     /// Standard Error
     /// </summary>
-    public abstract double StandardError { get; }
-
+    public virtual double StandardError => Math.Sqrt(Variance); 
+    
     /// <summary>
-    /// Standard Error
+    /// Variance
     /// </summary>
     public virtual double Variance {
       get {
-        double se = StandardError;
+        if (!double.IsNaN(m_Variance))
+          return m_Variance;
 
-        return se * se;
+        double tolearnce = 1e-7;
+
+        double left = Qdf(tolearnce);
+        double right = Qdf(1 - tolearnce);
+
+        m_Variance = Integrals.SimpsonAt((x) => x * x * Pdf(x), left, right) - Mean * Mean;
+
+        return m_Variance;
       }
     }
 
