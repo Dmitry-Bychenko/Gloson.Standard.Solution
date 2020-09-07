@@ -12,7 +12,7 @@ namespace Gloson.Algorithms.Solvers {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class DynamicKnapsackSolver {
+  public sealed class DynamicKnapsackSolver : IEquatable<DynamicKnapsackSolver> {
     #region Private Data
 
     // Items
@@ -32,26 +32,26 @@ namespace Gloson.Algorithms.Solvers {
         .ToArray();
 
       for (int k = 1; k <= m_Items.Count; ++k)
-        for (int s = 1; s <= Weight; ++s)
-          if (s >= m_Items[k - 1].weight)
-            A[k][s] = Math.Max(A[k - 1][s], A[k - 1][s - m_Items[k - 1].weight] + m_Items[k - 1].value);
+        for (int w = 1; w <= Weight; ++w)
+          if (w >= m_Items[k - 1].weight)
+            A[k][w] = Math.Max(A[k - 1][w], A[k - 1][w - m_Items[k - 1].weight] + m_Items[k - 1].value);
           else
-            A[k][s] = A[k - 1][s];
+            A[k][w] = A[k - 1][w];
 
       // Backtrack
       int kk = m_Items.Count;
-      int ss = Weight;
+      int ww = Weight;
 
       m_Indexes.Clear();
 
-      while (A[kk][ss] != 0) {
-        if (A[kk - 1][ss] == A[kk][ss])
+      while (A[kk][ww] != 0) {
+        if (A[kk - 1][ww] == A[kk][ww])
           kk -= 1;
         else {
           m_Indexes.Add(kk - 1);
 
           kk -= 1;
-          ss -= m_Items[kk].weight;
+          ww -= m_Items[kk].weight;
         }
       }
 
@@ -117,6 +117,69 @@ namespace Gloson.Algorithms.Solvers {
       $"{m_Indexes.Count} items [{string.Join(", ", m_Indexes)}] with {ActualValue} total value and {ActualWeight} total weight";
 
     #endregion Public
+
+    #region Operators
+
+    /// <summary>
+    /// Equal 
+    /// </summary>
+    public static bool operator == (DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
+      if (ReferenceEquals(left, right))
+        return true;
+      else if (null == left || null == right)
+        return false;
+      else
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Not Equal
+    /// </summary>
+    public static bool operator !=(DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
+      if (ReferenceEquals(left, right))
+        return false;
+      else if (null == left || null == right)
+        return true;
+      else
+        return !left.Equals(right);
+    }
+
+    #endregion Operators
+
+    #region IEquatable<DynamicKnapsackSolver>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(DynamicKnapsackSolver other) {
+      if (null == other)
+        return false;
+
+      if (Weight != other.Weight)
+        return false;
+      else if (m_Items.Count != other.m_Items.Count)
+        return false;
+
+      return m_Items
+        .OrderBy(x => x.weight)
+        .ThenBy(x => x.value)
+        .SequenceEqual(other
+           .m_Items
+           .OrderBy(x => x.weight)
+           .ThenBy(x => x.value));
+    }
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public override bool Equals(object obj) => obj is DynamicKnapsackSolver other && Equals(other);
+
+    /// <summary>
+    /// Hash Code
+    /// </summary>
+    public override int GetHashCode() => unchecked((Weight << 10) ^ m_Items.Count);
+
+    #endregion IEquatable<DynamicKnapsackSolver>
   }
 
 }
