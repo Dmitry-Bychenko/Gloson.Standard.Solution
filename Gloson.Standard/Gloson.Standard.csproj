@@ -19,7 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Numerics\Statistics\" />
+    <Compile Remove="Numerics\Statistics\**" />
+    <EmbeddedResource Remove="Numerics\Statistics\**" />
+    <None Remove="Numerics\Statistics\**" />
   </ItemGroup>
 
   <ItemGroup>

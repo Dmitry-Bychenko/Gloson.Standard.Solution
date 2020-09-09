@@ -38,6 +38,16 @@ namespace Gloson.Numerics {
     #region Public
 
     /// <summary>
+    /// Zero
+    /// </summary>
+    public static Polynom Zero { get; } = new Polynom(new double[0]);
+
+    /// <summary>
+    /// Zero
+    /// </summary>
+    public static Polynom One { get; } = new Polynom(new double[] { 1 });
+
+    /// <summary>
     /// Compute At point x 
     /// </summary>
     public double At(double x) {
@@ -112,6 +122,74 @@ namespace Gloson.Numerics {
       }
 
       return sb.ToString();
+    }
+
+    /// <summary>
+    /// Divide and find Remainder
+    /// </summary>
+    public Polynom DivRem(Polynom value, out Polynom remainder) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+      else if (value.Count <= 0)
+        throw new DivideByZeroException();
+
+      if (value.Count > Count) {
+        remainder = this;
+
+        return Zero;
+      }
+
+      List<double> quotinent = new List<double>();
+      List<double> rem = m_Items.ToList();
+
+      for (int i = 0; i <= Count - value.Count; ++i) {
+        double coef = rem[rem.Count - i - 1] / value[value.m_Items.Count - 1];
+
+        quotinent.Add(coef);
+
+        for (int j = 0; j < value.m_Items.Count; ++j)
+          rem[rem.Count - i - j - 1] -= value.m_Items[value.m_Items.Count - j - 1] * coef;
+      }
+
+      remainder = new Polynom(rem.Take(value.Count - 1));
+
+      quotinent.Reverse();
+
+      return new Polynom(quotinent);
+    }
+
+    /// <summary>
+    /// Derivative
+    /// </summary>
+    public Polynom Derivative(int count = 1) {
+      if (count < 0)
+        throw new ArgumentOutOfRangeException(nameof(count));
+      else if (count == 0)
+        return this;
+      else if (count >= Count)
+        return Zero;
+
+      List<double> list = new List<double>(m_Items.Count - count);
+
+      double coef = Gloson.Numerics.SpecialFunctions.GammaFunctions.Factorial(count);
+
+      if (coef > long.MaxValue)
+        for (int i = count; i < m_Items.Count; ++i) {
+          list.Add(coef * m_Items[i]);
+
+          coef = coef / (i - count + 1) * (i + 1);
+        }
+      else {
+        long cc = (long)(coef + 0.5);
+
+        for (int i = count; i < m_Items.Count; ++i) {
+          list.Add(cc * m_Items[i]);
+
+          cc = cc / (i - count + 1) * (i + 1);
+        }
+      }
+
+      return new Polynom(list);
     }
 
     #endregion Public
@@ -234,7 +312,7 @@ namespace Gloson.Numerics {
         throw new ArgumentNullException(nameof(right));
 
       if (left.Count <= 0 || right.Count <= 0)
-        return new Polynom(new double[0]);
+        return Zero;
 
       List<double> list = new List<double>(left.Count + right.Count + 1);
 
@@ -253,6 +331,32 @@ namespace Gloson.Numerics {
       }
 
       return new Polynom(list);
+    }
+
+    /// <summary>
+    /// Division /
+    /// </summary>
+    public static Polynom operator /(Polynom left, Polynom right) {
+      if (null == left)
+        throw new ArgumentNullException(nameof(left));
+      else if (null == right)
+        throw new ArgumentNullException(nameof(right));
+
+      return left.DivRem(right, out var _);
+    }
+
+    /// <summary>
+    /// Remainder %
+    /// </summary>
+    public static Polynom operator %(Polynom left, Polynom right) {
+      if (null == left)
+        throw new ArgumentNullException(nameof(left));
+      else if (null == right)
+        throw new ArgumentNullException(nameof(right));
+
+      left.DivRem(right, out var remainder);
+
+      return remainder;
     }
 
     #endregion Arithmetics
