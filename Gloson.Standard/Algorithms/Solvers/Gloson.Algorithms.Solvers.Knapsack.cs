@@ -123,7 +123,7 @@ namespace Gloson.Algorithms.Solvers {
     /// <summary>
     /// Equal 
     /// </summary>
-    public static bool operator == (DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
+    public static bool operator ==(DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
       if (ReferenceEquals(left, right))
         return true;
       else if (null == left || null == right)
