@@ -47,12 +47,8 @@ namespace Gloson.Numerics.Matrices {
       m_Items = items;
     }
 
-    /// <summary>
-    /// Standard Constructor
-    /// </summary>
-    /// <param name="lines">Lines</param>
-    /// <param name="columns">Columns</param>
-    public Matrix(int lines, int columns)
+    // Standard Constructor
+    private Matrix(int lines, int columns)
       : this() {
 
       if (lines <= 0)
@@ -66,14 +62,11 @@ namespace Gloson.Numerics.Matrices {
         .ToArray();
     }
 
-    /// <summary>
-    /// Standard Constructor (square matrix)
-    /// </summary>
-    /// <param name="size">Size</param>
-    public Matrix(int size) : this(size, size) { }
+    // Standard Constructor (square matrix)
+    private Matrix(int size) : this(size, size) { }
 
     /// <summary>
-    /// Union matgrix
+    /// Union matrix
     /// </summary>
     /// <param name="size">Size</param>
     public static Matrix Union(int size) {
@@ -85,6 +78,12 @@ namespace Gloson.Numerics.Matrices {
       return result;
     }
 
+    /// <summary>
+    /// Zero matrix
+    /// </summary>
+    /// <param name="size">Size</param>
+    public static Matrix Zero(int size) => new Matrix(size);
+ 
     /// <summary>
     /// Create Matrix
     /// </summary>
@@ -116,6 +115,20 @@ namespace Gloson.Numerics.Matrices {
     /// <param name="createItem">Item at line and column</param>
     /// <returns></returns>
     public static Matrix Create(int size, Func<int, int, double> createItem) => Create(size, size, createItem);
+
+    /// <summary>
+    /// Create
+    /// </summary>
+    public static Matrix Create(IEnumerable<IEnumerable<double>> data) {
+      if (null == data)
+        throw new ArgumentNullException(nameof(data));
+
+      var copy = data
+        .Select(line => line.ToArray())
+        .ToArray();
+
+      return new Matrix(copy);
+    }
 
     #endregion Create
 
