@@ -81,7 +81,7 @@ namespace Gloson.Numerics {
         }
       }
 
-      return new Polynom(Matrix.Create(data).LinearSoution);
+      return new Polynom(MatrixLowLevel.Solve(data));
     }
 
     #endregion Public
