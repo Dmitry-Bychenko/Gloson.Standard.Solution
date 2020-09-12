@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Gloson.Numerics.Matrices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Gloson.Numerics.Matrices;
 
 namespace Gloson.Numerics {
 

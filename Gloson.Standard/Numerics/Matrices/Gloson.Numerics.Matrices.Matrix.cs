@@ -83,7 +83,7 @@ namespace Gloson.Numerics.Matrices {
     /// </summary>
     /// <param name="size">Size</param>
     public static Matrix Zero(int size) => new Matrix(size);
- 
+
     /// <summary>
     /// Create Matrix
     /// </summary>
