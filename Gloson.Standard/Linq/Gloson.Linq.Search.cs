@@ -17,9 +17,9 @@ namespace Gloson.Linq {
     #region Public
 
     /// <summary>
-    /// Binary Serach At
+    /// Binary Search At
     /// </summary>
-    /// <param name="source">Source (must be sorted my map(intem))</param>
+    /// <param name="source">Source (must be sorted by map(item))</param>
     /// <param name="value">Value to find</param>
     /// <param name="map">Map function</param>
     /// <param name="comparer">Comparer</param>
@@ -114,4 +114,5 @@ namespace Gloson.Linq {
 
     #endregion Public
   }
+
 }
