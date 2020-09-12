@@ -13,7 +13,6 @@ namespace Gloson.Numerics {
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
-
   public static class Interpolation {
     #region Public
 
@@ -82,6 +81,39 @@ namespace Gloson.Numerics {
       }
 
       return new Polynom(MatrixLowLevel.Solve(data));
+    }
+
+    /// <summary>
+    /// Linear Interpolation
+    /// </summary>
+    public static double InterpolationLinear<T>(this IEnumerable<T> source, Func<T, (double x, double y)> map, double at) {
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (null == map)
+        throw new ArgumentNullException(nameof(map));
+
+      (double x, double y) first = (double.NaN, double.NaN);
+      (double x, double y) second = (double.NaN, double.NaN);
+
+      foreach (var (x, y) in source.Select(point => map(point))) {
+        if (double.IsNaN(first.x) || Math.Abs(first.x - at) > Math.Abs(x - at)) {
+          second = first;
+          first = (x, y);
+        }
+        else if (double.IsNaN(second.x) || Math.Abs(second.x - at) > Math.Abs(x - at))
+          if (x != first.x)
+            second = (x, y);
+      }
+
+      if (double.IsNaN(first.x))
+        throw new ArgumentException("source must not be empty", nameof(source));
+      else if (double.IsNaN(second.x))
+        throw new ArgumentException("source must have at least 2 different points", nameof(source));
+
+      double k = (second.y - first.y) / (second.x - first.x);
+      double b = (first.y * second.x - second.y * first.x) / (second.x - first.x);
+
+      return k * at + b;
     }
 
     #endregion Public
