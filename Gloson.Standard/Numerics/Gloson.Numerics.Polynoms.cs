@@ -33,6 +33,45 @@ namespace Gloson.Numerics {
         ?.ToList() ?? throw new ArgumentNullException(nameof(items));
     }
 
+    /// <summary>
+    /// Reconstruct polynom from its values
+    /// for P(0) = 1, P(1) = ?, P(2) = 9, P(3) = 16, P(4) = 25, P(5) = ?
+    /// var result = Reconstruct(0, new double[] {1, double.NaN, 9, 16, 25, double.NaN});
+    /// </summary>
+    /// <param name="startAt">starting point</param>
+    /// <param name="values">values (put double.NaN for abscent points)</param>
+    /// <returns></returns>
+    public static Polynom Reconstruct(int startAt, IEnumerable<double> values) {
+      if (null == values)
+        throw new ArgumentNullException(nameof(values));
+
+      var points = values
+        .Select((v, i) => (x: (double)i + startAt, y: v))
+        .Where(item => !double.IsNaN(item.y));
+
+      return Interpolation.InterpolatonPolynom(points, p => (p.x, p.y));
+    }
+
+    /// <summary>
+    /// Reconstruct polynom from its values
+    /// for P(0) = 1, P(1) = ?, P(2) = 9, P(3) = 16, P(4) = 25, P(5) = ?
+    /// var result = Reconstruct(1, double.NaN, 9, 16, 25, double.NaN);
+    /// </summary>
+    /// <param name="values">values (put double.NaN for abscent points)</param>
+    /// <returns></returns>
+    public static Polynom ReconstructZeroStarting(params double[] values) =>
+      Reconstruct(0, values);
+
+    /// <summary>
+    /// Reconstruct polynom from its values
+    /// for P(1) = 1, P(2) = ?, P(3) = 9, P(4) = 16, P(5) = 25, P(6) = ?
+    /// var result = Reconstruct(1, double.NaN, 9, 16, 25, double.NaN);
+    /// </summary>
+    /// <param name="values">values (put double.NaN for abscent points)</param>
+    /// <returns></returns>
+    public static Polynom ReconstructOneStarting(params double[] values) =>
+      Reconstruct(1, values);
+
     #endregion Create
 
     #region Public
