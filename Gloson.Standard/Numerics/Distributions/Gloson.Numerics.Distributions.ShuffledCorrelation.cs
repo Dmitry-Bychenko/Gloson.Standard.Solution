@@ -18,6 +18,7 @@ namespace Gloson.Numerics.Distributions {
     #region Private Data
 
     private readonly List<double> m_Items;
+    private readonly List<(double value, int index)> m_X;
 
     private double m_XY;
 
@@ -32,13 +33,19 @@ namespace Gloson.Numerics.Distributions {
     }
 
     private double TryToSwap(int i, int j) {
-      double s = m_XY - X[i] * Y[i] - X[j] * Y[j] + X[i] * Y[j] + X[j] * Y[i];
+      double s = m_XY - m_X[i].value * m_Items[i]
+                      - m_X[j].value * m_Items[j]
+                      + m_X[i].value * m_Items[j]
+                      + m_X[j].value * m_Items[i];
 
       return (s / m_Items.Count - MeanX * MeanY) / Math.Sqrt(VarianceX) / Math.Sqrt(VarianceY);
     }
 
     private double Swap(int i, int j) {
-      m_XY = m_XY - X[i] * Y[i] - X[j] * Y[j] + X[i] * Y[j] + X[j] * Y[i];
+      m_XY = m_XY - m_X[i].value * m_Items[i]
+                  - m_X[j].value * m_Items[j]
+                  + m_X[i].value * m_Items[j]
+                  + m_X[j].value * m_Items[i];
 
       double h = m_Items[i];
       m_Items[i] = m_Items[j];
@@ -108,8 +115,8 @@ namespace Gloson.Numerics.Distributions {
       int N = m_Items.Count;
 
       for (int i = 0; i < N; ++i) {
-        double x = X[i];
-        double y = Y[i];
+        double x = m_X[i].value;
+        double y = m_Items[i];
 
         sumX += x;
         sumX2 += x * x;
@@ -151,8 +158,9 @@ namespace Gloson.Numerics.Distributions {
 
       DesiredR = desiredR;
 
-      X = source
+      m_X = source
         .Where(x => !double.IsNaN(x))
+        .Select((value, index) => (value, index))
         .OrderBy(x => x)
         .ToList();
 
@@ -161,12 +169,33 @@ namespace Gloson.Numerics.Distributions {
         .OrderBy(y => y)
         .ToList();
 
-      if (X.Count <= 0)
+      if (m_X.Count <= 0)
         throw new ArgumentException("No valid items in source", nameof(source));
-      else if (X.Count != m_Items.Count)
+      else if (m_X.Count != m_Items.Count)
         throw new ArgumentException("Both (source and dependent) sequencies must of the same length", nameof(dependent));
 
       CoreUpdate();
+
+      var data = m_X
+        .Zip(m_Items, (x, y) => (i: x.index, x: x.value, y))
+        .OrderBy(record => record.i);
+
+      List<double> listX = new List<double>(m_X.Count);
+      List<double> listY = new List<double>(m_X.Count);
+
+      foreach (var (i, x, y) in data) {
+        listX.Add(x);
+        listY.Add(y);
+      }
+
+      X = listX;
+      Y = listY;
+
+      m_Items.Clear();
+      m_Items = null;
+
+      m_X.Clear();
+      m_X = null;
     }
 
     #endregion Create
@@ -186,7 +215,7 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// Dependent (correlated) source
     /// </summary>
-    public IReadOnlyList<double> Y => m_Items;
+    public IReadOnlyList<double> Y { get; }
 
     /// <summary>
     /// Actual Correlation (R) 
@@ -217,7 +246,7 @@ namespace Gloson.Numerics.Distributions {
     /// To String (debug)
     /// </summary>
     public override string ToString() =>
-      $"{X.Count} items with R = {ActualR} correlation";
+      $"{Count} items with R = {ActualR:G4} ({ActualR * 100:G4}%) correlation";
 
     /// <summary>
     /// To String
@@ -225,15 +254,15 @@ namespace Gloson.Numerics.Distributions {
     public string ToReport() {
       StringBuilder sb = new StringBuilder();
 
-      sb.AppendLine($"{X.Count} items with R = {ActualR} correlation");
+      sb.AppendLine($"{Count} items with R = {ActualR:G4} ({ActualR * 100:G4}%) correlation");
 
       sb.AppendLine();
-      sb.AppendLine($"     ## :                    X :                    Y");
-      sb.Append($"-----------------------------------------------------");
+      sb.AppendLine($"     ## :                         X :                         Y");
+      sb.Append($"---------------------------------------------------------------");
 
-      for (int i = 0; i < m_Items.Count; ++i) {
+      for (int i = 0; i < Count; ++i) {
         sb.AppendLine();
-        sb.Append($"{i,7} : {X[i],20} : {Y[i],20}");
+        sb.Append($"{i,7} : {X[i],25} : {Y[i],25}");
       }
 
       return sb.ToString();
@@ -246,7 +275,7 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// Count
     /// </summary>
-    public int Count => m_Items.Count;
+    public int Count => X.Count;
 
     /// <summary>
     /// Indexer
