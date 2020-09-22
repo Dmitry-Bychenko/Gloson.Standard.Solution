@@ -107,7 +107,7 @@ namespace Gloson.Numerics {
     public override string ToString() => $"Do nothing smoothing";
 
     #endregion Public
-        
+
     #region IEquatable<SmootherNone>
 
     /// <summary>
@@ -192,7 +192,7 @@ namespace Gloson.Numerics {
     public override string ToString() => $"Moving Average Smoothing with {Window} window";
 
     #endregion Public
-        
+
     #region IEquatable<SmootherSimpleMovingAverage>
 
     /// <summary>
