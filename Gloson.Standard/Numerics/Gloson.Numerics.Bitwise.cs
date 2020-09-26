@@ -29,6 +29,12 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    [CLSCompliant(false)]
+    public static int HammingDistanceTo(this sbyte left, sbyte right) => BitsSet(left ^ right);
+
+    /// <summary>
     /// Number of bits sets
     /// </summary>
     public static int BitsSet(this byte value) {
@@ -39,6 +45,11 @@ namespace Gloson.Numerics {
 
       return result;
     }
+
+    /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    public static int HammingDistanceTo(this byte left, byte right) => BitsSet(left ^ right);
 
     /// <summary>
     /// Number of bits sets
@@ -55,6 +66,11 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    public static int HammingDistanceTo(this Int16 left, Int16 right) => BitsSet(left ^ right);
+
+    /// <summary>
     /// Number of bits sets
     /// </summary>
     [CLSCompliant(false)]
@@ -66,6 +82,12 @@ namespace Gloson.Numerics {
 
       return result;
     }
+
+    /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    [CLSCompliant(false)]
+    public static int HammingDistanceTo(this UInt16 left, UInt16 right) => BitsSet(left ^ right);
 
     /// <summary>
     /// Number of bits sets
@@ -82,6 +104,11 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    public static int HammingDistanceTo(this int left, int right) => BitsSet(left ^ right);
+
+    /// <summary>
     /// Number of bits sets
     /// </summary>
     [CLSCompliant(false)]
@@ -93,6 +120,12 @@ namespace Gloson.Numerics {
 
       return result;
     }
+
+    /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    [CLSCompliant(false)]
+    public static int HammingDistanceTo(this uint left, uint right) => BitsSet(left ^ right);
 
     /// <summary>
     /// Number of bits sets
@@ -109,6 +142,12 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    [CLSCompliant(false)]
+    public static int HammingDistanceTo(this long left, long right) => BitsSet(left ^ right);
+
+    /// <summary>
     /// Number of bits sets
     /// </summary>
     [CLSCompliant(false)]
@@ -120,6 +159,12 @@ namespace Gloson.Numerics {
 
       return result;
     }
+
+    /// <summary>
+    /// Hamming Distance To 
+    /// </summary>
+    [CLSCompliant(false)]
+    public static int HammingDistanceTo(this ulong left, ulong right) => BitsSet(left ^ right);
 
     #endregion Public
   }

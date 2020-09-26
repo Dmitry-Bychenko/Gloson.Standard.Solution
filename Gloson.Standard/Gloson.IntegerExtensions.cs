@@ -122,20 +122,6 @@ namespace Gloson {
     public static long ModDivision(this long left, long right, long modulo) =>
       (left * ModInversion(right, modulo)) % modulo;
 
-    /// <summary>
-    /// Count bits set
-    /// </summary>
-    public static int CountSetBits(this long value) {
-      unchecked {
-        int count = 0;
-
-        for (ulong v = (ulong)value; v > 0; v &= (v - 1))
-          count++;
-
-        return count;
-      }
-    }
-
     #endregion public
   }
 
@@ -259,78 +245,7 @@ namespace Gloson {
     public static int ModDivision(this int left, int right, int modulo) =>
       (left * ModInversion(right, modulo)) % modulo;
 
-    /// <summary>
-    /// Count bits set
-    /// </summary>
-    public static int CountSetBits(this int value) {
-      unchecked {
-        int count = 0;
-
-        for (uint v = (uint)value; v > 0; v &= (v - 1))
-          count++;
-
-        return count;
-      }
-    }
-
     #endregion public
   }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  //
-  /// <summary>
-  /// Int16 Extensions
-  /// </summary>
-  //
-  //-------------------------------------------------------------------------------------------------------------------
-
-  public static partial class Int16Extensions {
-    #region Public
-
-    /// <summary>
-    /// Count bits set
-    /// </summary>
-    public static int CountSetBits(this Int16 value) {
-      unchecked {
-        int count = 0;
-
-        for (int v = (UInt16)value; v > 0; v &= (v - 1))
-          count++;
-
-        return count;
-      }
-    }
-
-    #endregion Public
-  }
-
-  //-------------------------------------------------------------------------------------------------------------------
-  //
-  /// <summary>
-  /// Int8 Extensions
-  /// </summary>
-  //
-  //-------------------------------------------------------------------------------------------------------------------
-
-  public static partial class Int8Extensions {
-    #region Public
-
-    /// <summary>
-    /// Count bits set
-    /// </summary>
-    public static int CountSetBits(this Byte value) {
-      unchecked {
-        int count = 0;
-
-        for (int v = value; v > 0; v &= (v - 1))
-          count++;
-
-        return count;
-      }
-    }
-
-    #endregion Public
-  }
-
 
 }
