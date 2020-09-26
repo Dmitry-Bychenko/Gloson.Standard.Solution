@@ -49,6 +49,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Hamming Distance To 
     /// </summary>
+    [CLSCompliant(false)]
     public static int HammingDistanceTo(this byte left, byte right) => BitsSet(left ^ right);
 
     /// <summary>
@@ -68,6 +69,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Hamming Distance To 
     /// </summary>
+    [CLSCompliant(false)]
     public static int HammingDistanceTo(this Int16 left, Int16 right) => BitsSet(left ^ right);
 
     /// <summary>
@@ -106,6 +108,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Hamming Distance To 
     /// </summary>
+    [CLSCompliant(false)]
     public static int HammingDistanceTo(this int left, int right) => BitsSet(left ^ right);
 
     /// <summary>
