@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Gloson.Linq.Solvers.Generic {
+namespace Gloson.Algorithms.Solvers {
 
   //-------------------------------------------------------------------------------------------------------------------
   //

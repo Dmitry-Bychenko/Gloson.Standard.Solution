@@ -454,8 +454,7 @@ namespace Gloson.Diagnostics {
       if (null == processPath)
         throw new ArgumentNullException(nameof(processPath));
 
-      if (null == encoding)
-        encoding = Encoding.UTF8;
+      encoding ??= Encoding.UTF8;
 
       ProcessStartInfo info = new ProcessStartInfo() {
         UseShellExecute = false,
@@ -517,8 +516,7 @@ namespace Gloson.Diagnostics {
       if (null == processPath)
         throw new ArgumentNullException(nameof(processPath));
 
-      if (null == encoding)
-        encoding = Encoding.UTF8;
+      encoding ??= Encoding.UTF8;
 
       TaskCompletionSource<ProcessExecutionResult> cs = new TaskCompletionSource<ProcessExecutionResult>();
 
