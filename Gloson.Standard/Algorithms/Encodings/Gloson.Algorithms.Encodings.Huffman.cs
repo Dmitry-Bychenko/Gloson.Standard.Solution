@@ -7,6 +7,14 @@ using Gloson.Collections.Generic;
 
 namespace Gloson.Algorithms.Encodings {
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Huffman encoding
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
   public static class HuffmanCodes {
     #region Internal classes
 
