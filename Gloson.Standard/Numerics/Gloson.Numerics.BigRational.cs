@@ -60,6 +60,65 @@ namespace Gloson.Numerics {
     public BigRational(BigInteger value) : this(value, 1) { }
 
     /// <summary>
+    /// Try Parse
+    /// </summary>
+    public static bool TryParse(string value, out BigRational result) {
+      result = BigRational.NaN;
+
+      if (string.IsNullOrWhiteSpace(value))
+        return false;
+
+      value = value.Trim();
+
+      if ("NaN".Equals(value, StringComparison.OrdinalIgnoreCase)) {
+        result = BigRational.NaN;
+
+        return true;
+      }
+      else if ("+Inf".Equals(value, StringComparison.OrdinalIgnoreCase)) {
+        result = BigRational.PositiveInfinity;
+
+        return true;
+      }
+      else if ("-Inf".Equals(value, StringComparison.OrdinalIgnoreCase)) {
+        result = BigRational.NegativeInfinity;
+
+        return true;
+      }
+
+      string[] parts = value.Split(new char[] { '/', '\\' });
+
+      if (parts.Length > 2)
+        return false;
+
+      if (parts.Length == 1) {
+        if (BigInteger.TryParse(value, out BigInteger v)) {
+          result = new BigRational(v);
+
+          return true;
+        }
+        else
+          return false;
+      }
+
+      if (BigInteger.TryParse(parts[0], out BigInteger a) &&
+          BigInteger.TryParse(parts[1], out BigInteger b)) {
+        result = new BigRational(a, b);
+
+        return true;
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Parse
+    /// </summary>
+    public static BigRational Parse(string value) => TryParse(value, out var result)
+      ? result
+      : throw new FormatException("Not a valid fraction");
+
+    /// <summary>
     /// Zero
     /// </summary>
     public static BigRational Zero => new BigRational(0, 1);
