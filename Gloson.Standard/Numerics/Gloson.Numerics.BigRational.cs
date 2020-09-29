@@ -86,7 +86,7 @@ namespace Gloson.Numerics {
         return true;
       }
 
-      string[] parts = value.Split(new char[] { '/', '\\' });
+      string[] parts = value.Split(new char[] { '/', '\\', ':' });
 
       if (parts.Length > 2)
         return false;
@@ -122,6 +122,11 @@ namespace Gloson.Numerics {
     /// Zero
     /// </summary>
     public static BigRational Zero => new BigRational(0, 1);
+
+    /// <summary>
+    /// One
+    /// </summary>
+    public static BigRational One => new BigRational(1, 1);
 
     /// <summary>
     /// NaN
@@ -185,6 +190,11 @@ namespace Gloson.Numerics {
     /// Is Negative Infinity 
     /// </summary>
     public bool IsNegativeInfinity => Numerator < 0 && Denominator == 0;
+
+    /// <summary>
+    /// Is Integer (no fractional part)
+    /// </summary>
+    public bool IsInteger => Denominator == 1;
 
     /// <summary>
     /// Absolute Value 
