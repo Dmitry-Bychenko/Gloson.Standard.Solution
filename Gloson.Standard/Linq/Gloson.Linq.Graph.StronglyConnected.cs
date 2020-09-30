@@ -48,7 +48,7 @@ namespace Gloson.Linq {
     /// <summary>
     /// Strongly Connected Components
     /// </summary>
-    /// <param name="source">Node of the graph</param>
+    /// <param name="source">Nodes of the graph</param>
     /// <param name="children">Children for a given node</param>
     /// <returns>Strongly Connected Components</returns>
     public static IEnumerable<T[]> StronglyConnectedComponents<T>(
@@ -83,6 +83,64 @@ namespace Gloson.Linq {
         T[] component = direct.ToArray();
 
         foreach (T cn in component)
+          completed.Add(cn);
+
+        yield return component;
+      }
+    }
+
+    /// <summary>
+    /// Strongly Connected Components
+    /// </summary>
+    /// <param name="source">Source</param>
+    /// <param name="vertex">Vertex from source item</param>
+    /// <param name="children">Children from source item</param>
+    /// <returns>Strongly Connected Components</returns>
+    public static IEnumerable<N[]> StronglyConnectedComponents<T,N>(
+      this IEnumerable<T> source,
+           Func<T, N> vertex,
+           Func<T, IEnumerable<N>> children) {
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (null == vertex)
+        throw new ArgumentNullException(nameof(vertex));
+      else if (null == children)
+        throw new ArgumentNullException(nameof(children));
+
+      Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph = 
+        new Dictionary<N, (HashSet<N> to, HashSet<N> from)>(); 
+
+      foreach (T record in source) {
+        N node = vertex(record);
+        IEnumerable<N> tos = children(record).ToList();
+
+        if (!graph.ContainsKey(node))
+          graph.Add(node, (new HashSet<N>(), new HashSet<N>()));
+
+        foreach (var item in tos) {
+          graph[node].to.Add(item);
+
+          if (!graph.ContainsKey(item))
+            graph.Add(item, (new HashSet<N>(), new HashSet<N>()));
+
+          graph[item].from.Add(node);
+        }
+      } 
+
+      HashSet<N> completed = new HashSet<N>();
+
+      foreach (N node in graph.Keys) {
+        if (completed.Contains(node))
+          continue;
+
+        var direct = WeakComponent(node, n => graph[n].to, completed);
+        var reverse = WeakComponent(node, n => graph[n].from, completed);
+
+        direct.IntersectWith(reverse);
+
+        N[] component = direct.ToArray();
+
+        foreach (N cn in component)
           completed.Add(cn);
 
         yield return component;
