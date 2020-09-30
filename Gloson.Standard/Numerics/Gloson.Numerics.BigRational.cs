@@ -204,6 +204,25 @@ namespace Gloson.Numerics {
       : this;
 
     /// <summary>
+    /// Power
+    /// </summary>
+    public BigRational Pow(int exponent) {
+      if (Denominator == 0)
+        return this;
+      else if (0 == exponent)
+        return One;
+      else if (0 == Numerator)
+        return Zero;
+
+      if (exponent > 0)
+        return new BigRational(BigInteger.Pow(Numerator, exponent), BigInteger.Pow(Denominator, exponent));
+      else if (exponent == int.MinValue)
+        throw new ArgumentOutOfRangeException(nameof(exponent));
+      else
+        return new BigRational(BigInteger.Pow(Denominator, -exponent), BigInteger.Pow(Numerator, -exponent));
+    }
+
+    /// <summary>
     /// Truncate (integer part) 
     /// </summary>
     public BigRational Trunc() => Denominator == 0
@@ -216,6 +235,82 @@ namespace Gloson.Numerics {
     public BigRational Frac() => Denominator == 0
       ? this
       : new BigRational(Numerator % Denominator, 1);
+
+    public BigRational Floor() {
+      if (Denominator == 0)
+        return this;
+
+      if (Numerator >= 0)
+        return Numerator / Denominator;
+
+      return Numerator / Denominator - (Numerator % Denominator == 0 ? 0 : 1);
+    }
+
+    /// <summary>
+    /// Ceiling
+    /// </summary>
+    public BigRational Ceiling() {
+      if (Denominator == 0)
+        return this;
+
+      if (Numerator <= 0)
+        return Numerator / Denominator;
+
+      return Numerator / Denominator + (Numerator % Denominator == 0 ? 0 : 1);
+    }
+
+    /// <summary>
+    /// Round
+    /// </summary>
+    public BigRational Round(MidpointRounding mode) {
+      if (Denominator == 0)
+        return this;
+
+      BigInteger integer = Numerator / Denominator;
+      BigInteger frac = 2 * ((Numerator < 0 ? -Numerator : Numerator) % Denominator);
+
+      int sign = Numerator < 0 ? -1 : 1;
+
+      if (frac < Denominator)
+        return integer;
+      else if (frac > Denominator)
+        return sign < 0 ? integer - 1 : integer + 1;
+     
+      if (mode == MidpointRounding.AwayFromZero)
+        return sign < 0 ? integer - 1 : integer + 1;
+
+      //TODO: uncomment on future version
+      //else if (mode == MidpointRounding.ToZero)
+      //  return integer;
+      //else if (mode == MidpointRounding.ToNegativeInfinity)
+      //  return integer - 1;
+      //else if (mode == MidpointRounding.ToPositiveInfinity)
+      //  return integer + 1;
+
+      if (integer % 2 == 0)
+        return integer;
+      else
+        return sign < 0 ? integer - 1 : integer + 1;
+    }
+
+    /// <summary>
+    /// Round
+    /// </summary>
+    public BigRational Round() => Round(MidpointRounding.ToEven);
+
+    /// <summary>
+    /// Fractional digits
+    /// e.g. 1/7 returns 1, 4, 2, 8, 5, 7, 1, 4 ,2 ...
+    /// </summary>
+    public IEnumerable<int> FractionalDigits() {
+      if (Denominator <= 1)
+        yield break;
+
+      for (BigInteger value = ((Numerator < 0 ? -Numerator : Numerator) % Denominator) * 10;
+           value != 0;
+           value = (value % Denominator) * 10)
+        yield return (int)(value / Denominator);
+    }
 
     /// <summary>
     /// To String
