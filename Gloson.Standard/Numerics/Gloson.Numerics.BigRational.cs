@@ -422,6 +422,12 @@ namespace Gloson.Numerics {
     public static BigRational operator /(BigRational left, BigRational right) =>
       new BigRational(left.Numerator * right.Denominator, left.Denominator * right.Numerator);
 
+    /// <summary>
+    /// Remainder
+    /// </summary>
+    public static BigRational operator %(BigRational left, BigRational right) =>
+      new BigRational((left.Numerator * right.Denominator) % (right.Numerator * left.Denominator),
+                       left.Denominator * right.Denominator);
 
     #endregion Arithmetics
 
