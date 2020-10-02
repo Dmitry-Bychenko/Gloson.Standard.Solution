@@ -61,8 +61,8 @@ namespace Gloson.Algorithms.Graphs {
 
       // --- Solution ---
 
-      foreach (var record in list)
-        W[dict[record.from]][dict[record.to]] = record.length;
+      foreach (var (from, to, length) in list)
+        W[dict[from]][dict[to]] = length;
 
       for (int k = 0; k < n; ++k)
         for (int i = 0; i < n; ++i)
