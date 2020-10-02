@@ -15,11 +15,11 @@ namespace Gloson.Algorithms.Graphs {
     #region Public
 
     /// <summary>
-    /// Bellman-
+    /// Bellman-Ford shortest path
     /// </summary>
     /// <param name="start">vertex to start from</param>
     /// <param name="neighbors">neighbors func</param>
-    /// <returns>Shortest paths for all reachable vertexes from start; empty if contains negative loop</returns>
+    /// <returns>Shortest paths for all reachable vertexes from start</returns>
     public static IDictionary<V, (double length, V prior)> BellmanFord<V>(
       V start,
       Func<V, IEnumerable<(V vertex, double length)>> neighbors) {
@@ -59,8 +59,10 @@ namespace Gloson.Algorithms.Graphs {
       for (int step = 0; ; ++step) {
         bool relaxed = true;
 
+        // Is negative loop found? 
         if (step > result.Count) {
-          result.Clear();
+          foreach (var key in result.Keys) 
+            result[key] = (double.NegativeInfinity, result[key].prior);
 
           return result;
         }
