@@ -260,6 +260,15 @@ namespace Gloson.Collections.Generic {
     IEnumerable<V> IReadOnlyDictionary<K, V>.Values => m_Reverse.Keys;
 
     #endregion #region IReadOnlyCorrespondence<K, V>
+
+    #region Public
+
+    /// <summary>
+    /// Key from Value 
+    /// </summary>
+    public K Key(V value) => m_Reverse[value];
+
+    #endregion Public
   }
 
   //-------------------------------------------------------------------------------------------------------------------
