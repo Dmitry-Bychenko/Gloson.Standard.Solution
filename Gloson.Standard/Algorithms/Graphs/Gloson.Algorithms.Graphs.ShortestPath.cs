@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Gloson.Algorithms.Graphs {
 
@@ -12,83 +13,141 @@ namespace Gloson.Algorithms.Graphs {
   //-------------------------------------------------------------------------------------------------------------------
 
   public static class GraphShortestPath {
+    #region Algorithm
+
+    private static Dictionary<V, Dictionary<V, double>> BuildGraph<T, V>(
+      IEnumerable<T> source,
+      Func<T, (V from, V to, double length)> edgeMap,
+      bool biDirect,
+      IEqualityComparer<V> comparer = null,
+      Func<(V from, V to, double oldLength, double length), double> collision = null) {
+
+      if (null == source)
+        throw new ArgumentNullException(nameof(source));
+      else if (null == edgeMap)
+        throw new ArgumentNullException(nameof(edgeMap));
+
+      if (null == comparer)
+        comparer = EqualityComparer<V>.Default;
+
+      if (collision == null)
+        collision = r => Math.Min(r.oldLength, r.length);
+
+      Dictionary<V, Dictionary<V, double>> result =
+        new Dictionary<V, Dictionary<V, double>>(comparer);
+
+      void AddToGraph((V from, V to, double length) edge) {
+        if (double.IsNaN(edge.length) || double.IsPositiveInfinity(edge.length))
+          return;
+
+        if (comparer.Equals(edge.from, edge.to))
+          return;
+
+        if (!result.TryGetValue(edge.from, out var inner)) {
+          inner = new Dictionary<V, double>(comparer);
+
+          result.Add(edge.from, inner);
+        }
+
+        if (inner.TryGetValue(edge.to, out var old))
+          inner[edge.to] = collision((edge.from, edge.to, old, edge.length));
+        else
+          inner.Add(edge.to, edge.length);
+      }
+
+      foreach (T record in source) {
+        var edge = edgeMap(record);
+
+        AddToGraph(edge);
+
+        if (biDirect)
+          AddToGraph((edge.to, edge.from, edge.length));
+      }
+
+      return result;
+    }
+
+    #endregion Algorithm
+
     #region Public
 
     /// <summary>
-    /// Bellman-Ford shortest path
+    /// Bellman-Ford shortest paths
     /// </summary>
-    /// <param name="start">vertex to start from</param>
-    /// <param name="neighbors">neighbors func</param>
-    /// <returns>Shortest paths for all reachable vertexes from start</returns>
-    public static IDictionary<V, (double length, V prior)> BellmanFord<V>(
-      V start,
-      Func<V, IEnumerable<(V vertex, double length)>> neighbors) {
+    /// <param name="source">Edges</param>
+    /// <param name="startVertex">Starting vertex</param>
+    /// <param name="edgeMap">Edges to (vertex, vertex, length) mapping</param>
+    /// <param name="biDirect">is graph bi direct one</param>
+    /// <param name="comparer">vertex comparer</param>
+    /// <param name="collision">collision function (for parallel edges)</param>
+    /// <returns></returns>
+    public static IDictionary<V, (double length, V prior, bool hasPrior)> BellmanFord<T, V>(
+      this IEnumerable<T> source,
+      V startVertex,
+      Func<T, (V from, V to, double length)> edgeMap,
+      bool biDirect = false,
+      IEqualityComparer<V> comparer = null,
+      Func<(V from, V to, double oldLength, double length), double> collision = null) {
 
-      if (null == neighbors)
-        throw new ArgumentNullException(nameof(neighbors));
+      if (null == comparer)
+        comparer = EqualityComparer<V>.Default;
 
-      Dictionary<V, (double length, V prior)> result = new Dictionary<V, (double length, V prior)>() {
-        { start, (0, default)}
-      };
+      Dictionary<V, Dictionary<V, double>> graph = BuildGraph(source, edgeMap, biDirect, comparer, collision);
 
-      // All reachable nodes, BFS
-      HashSet<V> agenda = new HashSet<V>() { start };
+      Dictionary<V, (double length, V prior, bool hasPrior)> result =
+        new Dictionary<V, (double length, V prior, bool hasPrior)>(comparer);
+
+      Queue<V> agenda = new Queue<V>();
+      agenda.Enqueue(startVertex);
 
       while (agenda.Count > 0) {
-        HashSet<V> next = new HashSet<V>();
+        V vertex = agenda.Dequeue();
 
-        foreach (V vertex in agenda) {
-          double priorLength = result[vertex].length;
+        if (result.ContainsKey(vertex))
+          continue;
 
-          foreach (var edge in neighbors(vertex)) {
-            if (result.ContainsKey(edge.vertex))
+        result.Add(vertex, (double.PositiveInfinity, default(V), false));
+
+        if (graph.TryGetValue(vertex, out var edges)) {
+          foreach (var edge in edges) {
+            if (result.ContainsKey(edge.Key))
               continue;
-            else if (double.IsNaN(edge.length) || double.IsPositiveInfinity(edge.length))
-              continue;
 
-            result.Add(edge.vertex, (edge.length + priorLength, vertex));
-
-            next.Add(vertex);
+            agenda.Enqueue(edge.Key);
           }
         }
-
-        agenda = next;
       }
 
-      // Relax
-      for (int step = 0; ; ++step) {
-        bool relaxed = true;
+      result[startVertex] = (0, default(V), false);
 
-        // Is negative loop found? 
-        if (step > result.Count) {
-          foreach (var key in result.Keys) 
-            result[key] = (double.NegativeInfinity, result[key].prior);
+      // Relax
+      bool relaxed = true;
+
+      var keys = result.Keys.ToList();
+
+      for (int iteration = 0; relaxed; ++iteration) {
+        relaxed = false;
+
+        // Negative loop
+        if (iteration > result.Count) {
+          foreach (var key in result.Keys)
+            result[key] = (double.NegativeInfinity, result[key].prior, result[key].hasPrior);
 
           return result;
         }
 
-        foreach (V vertex in result.Keys) {
-          if (Equals(vertex, start))
-            continue;
+        foreach (V v in keys) {
+          foreach (var e in graph[v]) {
+            V u = e.Key;
+            double d = e.Value;
 
-          double baseLength = result[vertex].length;
+            if (result[u].length > result[v].length + d) {
+              result[u] = (result[v].length + d, u, true);
 
-          foreach (var edge in neighbors(vertex)) {
-            if (result.ContainsKey(edge.vertex))
-              continue;
-            else if (double.IsNaN(edge.length) || double.IsPositiveInfinity(edge.length))
-              continue;
-
-            if (result.ContainsKey(edge.vertex))
-              if (baseLength + edge.length < result[edge.vertex].length) {
-                relaxed = false;
-                result[edge.vertex] = (baseLength + edge.length, edge.vertex);
-              }
+              relaxed = true;
+            }
           }
         }
-
-        if (relaxed)
-          break;
       }
 
       return result;
