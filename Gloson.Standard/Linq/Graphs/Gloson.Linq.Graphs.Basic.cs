@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Gloson.Linq {
+namespace Gloson.Linq.Graphs {
   
   //-------------------------------------------------------------------------------------------------------------------
   //
