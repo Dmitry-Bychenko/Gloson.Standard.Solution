@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Gloson.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Gloson.Collections.Generic;
 
 namespace Gloson.Algorithms.Graphs {
 
@@ -39,7 +37,7 @@ namespace Gloson.Algorithms.Graphs {
         edgeComparer = Comparer<E>.Default;
 
         if (null == edgeComparer)
-          throw new ArgumentNullException(nameof(edgeComparer), 
+          throw new ArgumentNullException(nameof(edgeComparer),
                                         $"Type {typeof(E).Name} doesn't provide default IComparer<{typeof(E).Name}>");
       }
 

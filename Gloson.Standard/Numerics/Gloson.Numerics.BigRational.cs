@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace Gloson.Numerics {
 
@@ -275,7 +274,7 @@ namespace Gloson.Numerics {
         return integer;
       else if (frac > Denominator)
         return sign < 0 ? integer - 1 : integer + 1;
-     
+
       if (mode == MidpointRounding.AwayFromZero)
         return sign < 0 ? integer - 1 : integer + 1;
 

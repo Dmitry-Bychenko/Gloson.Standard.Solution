@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Gloson.Collections.Generic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using Gloson.Collections.Generic;
 
 namespace Gloson.Algorithms.Encodings {
 

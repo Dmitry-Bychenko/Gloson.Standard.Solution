@@ -96,7 +96,7 @@ namespace Gloson.Linq.Graphs {
     /// <param name="vertex">Vertex from source item</param>
     /// <param name="children">Children from source item</param>
     /// <returns>Strongly Connected Components</returns>
-    public static IEnumerable<N[]> StronglyConnectedComponents<T,N>(
+    public static IEnumerable<N[]> StronglyConnectedComponents<T, N>(
       this IEnumerable<T> source,
            Func<T, N> vertex,
            Func<T, IEnumerable<N>> children) {
@@ -107,8 +107,8 @@ namespace Gloson.Linq.Graphs {
       else if (null == children)
         throw new ArgumentNullException(nameof(children));
 
-      Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph = 
-        new Dictionary<N, (HashSet<N> to, HashSet<N> from)>(); 
+      Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph =
+        new Dictionary<N, (HashSet<N> to, HashSet<N> from)>();
 
       foreach (T record in source) {
         N node = vertex(record);
@@ -125,7 +125,7 @@ namespace Gloson.Linq.Graphs {
 
           graph[item].from.Add(node);
         }
-      } 
+      }
 
       HashSet<N> completed = new HashSet<N>();
 
