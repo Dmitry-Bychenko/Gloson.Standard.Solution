@@ -142,4 +142,35 @@ namespace Gloson.Collections.Generic {
     #endregion IEqualityComparer<ISet<T>>
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Set Equality Comparer
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class HashSetEqualityComparer<T> : IEqualityComparer<HashSet<T>> {
+     #region IEqualityComparer<ISet<T>>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(HashSet<T> x, HashSet<T> y) {
+      if (ReferenceEquals(x, y))
+        return true;
+      else if (null == x || null == y)
+        return false;
+
+      return x.SetEquals(y);
+    }
+
+    /// <summary>
+    /// Hash Code
+    /// </summary>
+    public int GetHashCode(HashSet<T> obj) => null == obj ? -1 : obj.Count;
+
+    #endregion IEqualityComparer<ISet<T>>
+  }
+
 }
