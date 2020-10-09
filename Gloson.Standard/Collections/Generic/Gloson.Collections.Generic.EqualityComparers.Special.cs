@@ -151,7 +151,7 @@ namespace Gloson.Collections.Generic {
   //-------------------------------------------------------------------------------------------------------------------
 
   public sealed class HashSetEqualityComparer<T> : IEqualityComparer<HashSet<T>> {
-     #region IEqualityComparer<ISet<T>>
+    #region IEqualityComparer<ISet<T>>
 
     /// <summary>
     /// Equals
