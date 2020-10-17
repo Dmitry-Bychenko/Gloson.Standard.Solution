@@ -20,6 +20,28 @@ namespace Gloson.Numerics {
 
     #endregion Private Data
 
+    #region Algorithm
+
+    private static double C(int n, int k) {
+      if (n == k || k == 0)
+        return 1;
+
+      double result = 1;
+
+      if (k > n / 2)
+        k = n - k;
+
+      for (int i = n; i > n - k; --i)
+        result *= i;
+
+      for (int i = 1; i <= k; ++i)
+        result /= i;
+
+      return result;
+    }
+
+    #endregion Algorithm
+
     #region Create
 
     /// <summary>
@@ -122,6 +144,34 @@ namespace Gloson.Numerics {
         else
           return m_Items[index];
       }
+    }
+
+    /// <summary>
+    /// Add Shift
+    /// (x) => (x + shift)
+    /// e.g. for shift = 2 we have 4 * (x + 2)**2 + 3 * (x + 2) + 1 => 4x**2 + 19x + 23
+    /// </summary>
+    /// <param name="shift"></param>
+    /// <returns></returns>
+    public Polynom WithShift(double shift) {
+      if (0 == shift)
+        return this;
+
+      double[] a = Items.ToArray();
+      double[] r = new double[a.Length];
+
+      int n = a.Length - 1;
+
+      for (int k = 0; k <= n; ++k) {
+        double coef = 0;
+
+        for (int i = 0; i <= n - k; ++i) 
+          coef += a[n - i] * C(n - i, k) * Math.Pow(shift, n - k - i);
+
+        r[k] = coef;
+      }
+
+      return new Polynom(r);
     }
 
     /// <summary>
