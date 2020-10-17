@@ -156,8 +156,6 @@ namespace Gloson.Numerics {
     /// (x) => (x + shift)
     /// e.g. for shift = 2 we have 4 * (x + 2)**2 + 3 * (x + 2) + 1 => 4x**2 + 19x + 23
     /// </summary>
-    /// <param name="shift"></param>
-    /// <returns></returns>
     public Polynom WithShift(double shift) {
       if (0 == shift)
         return this;
@@ -172,6 +170,32 @@ namespace Gloson.Numerics {
 
         for (int i = 0; i <= n - k; ++i) 
           coef += a[n - i] * C(n - i, k) * Math.Pow(shift, n - k - i);
+
+        r[k] = coef;
+      }
+
+      return new Polynom(r);
+    }
+
+    /// <summary>
+    /// Add Shift
+    /// (x) => (coefficient * x + shift)
+    /// e.g. for shift = 2 we have 4 * (x + 2)**2 + 3 * (x + 2) + 1 => 4x**2 + 19x + 23
+    /// </summary>
+    public Polynom WithLinear(double coefficient, double shift) {
+      if (1 == coefficient && 0 == shift)
+        return this;
+
+      double[] a = Items.ToArray();
+      double[] r = new double[a.Length];
+
+      int n = a.Length - 1;
+
+      for (int k = 0; k <= n; ++k) {
+        double coef = 0;
+
+        for (int i = 0; i <= n - k; ++i)
+          coef += a[n - i] * C(n - i, k) * Math.Pow(coefficient, k) * Math.Pow(shift, n - k - i);
 
         r[k] = coef;
       }
