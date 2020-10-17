@@ -109,6 +109,11 @@ namespace Gloson.Numerics {
     public static Polynom One { get; } = new Polynom(new double[] { 1 });
 
     /// <summary>
+    /// NaN
+    /// </summary>
+    public static Polynom NaN { get; } = new Polynom(new double[] { double.NaN});
+
+    /// <summary>
     /// Compute At point x 
     /// </summary>
     public double At(double x) {
