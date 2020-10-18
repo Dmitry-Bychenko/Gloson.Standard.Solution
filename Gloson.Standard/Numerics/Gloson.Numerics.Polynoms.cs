@@ -310,6 +310,27 @@ namespace Gloson.Numerics {
       return new Polynom(list);
     }
 
+    /// <summary>
+    /// GCD (Greatest Common Divisor)
+    /// </summary>
+    public Polynom Gcd(Polynom other) {
+      if (null == other)
+        throw new ArgumentNullException(nameof(other));
+
+      Polynom left = this;
+      Polynom right = other;
+      Polynom rem = left % right;
+
+      while (rem.Count >= 1) {
+        left = right;
+        right = rem;
+
+        rem = left % right;
+      }
+
+      return right;
+    }
+
     #endregion Public
 
     #region Operators
