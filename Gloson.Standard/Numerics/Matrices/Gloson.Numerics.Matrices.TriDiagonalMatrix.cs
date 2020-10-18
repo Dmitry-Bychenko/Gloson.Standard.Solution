@@ -50,10 +50,15 @@ namespace Gloson.Numerics.Matrices {
 
     #region Create
 
+    // Standard constructor for inner use
+    private TriDiagonalMatrix() { }
+
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public TriDiagonalMatrix(IEnumerable<(double a, double b, double c)> lines) {
+    public TriDiagonalMatrix(IEnumerable<(double a, double b, double c)> lines) 
+      : this() {
+      
       if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
@@ -162,9 +167,49 @@ namespace Gloson.Numerics.Matrices {
       return result;
     }
 
+    /// <summary>
+    /// Multiply Matrix * x
+    /// </summary>
+    public double[] Apply(IEnumerable<double> x) {
+      if (null == x)
+        throw new ArgumentNullException(nameof(x));
+
+      double[] v = x.Take(Count + 1).ToArray();
+
+      if (v.Length < Count || v.Length > Count)
+        throw new ArgumentOutOfRangeException(nameof(x));
+
+      double[] result = new double[Count];
+
+      if (result.Length <= 0)
+        return result;
+      else if (result.Length == 1) {
+        result[0] = m_B[0] * v[0];
+
+        return result;
+      }
+      else if (result.Length == 2) {
+        result[0] = m_B[0] * v[0] + m_C[0] * v[1];
+        result[1] = m_A[1] * v[0] + m_B[1] * v[1];
+
+        return result;
+      }
+      
+      result[0] = m_B[0] * v[0] + m_C[0] * v[1];
+      result[result.Length - 1] = m_B[result.Length - 2] * v[result.Length - 2] + 
+                                  m_C[result.Length - 1] * v[result.Length - 1];
+
+      for (int r = 1; r < result.Length - 1; ++r) 
+        result[r] = m_A[r] * v[r - 1] + m_B[r] * v[r] + m_C[r] * v[r + 1];
+
+      return result;
+    }
+
     #endregion Public
 
     #region Operators
+
+    #region Comparison
 
     /// <summary>
     /// Equals 
@@ -189,6 +234,126 @@ namespace Gloson.Numerics.Matrices {
       else
         return !left.Equals(right);
     }
+
+    #endregion Comparison
+
+    #region Arithmetics
+
+    /// <summary>
+    /// Unary + 
+    /// </summary>
+    public static TriDiagonalMatrix operator +(TriDiagonalMatrix value) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      return value;
+    }
+
+    /// <summary>
+    /// Unary - 
+    /// </summary>
+    public static TriDiagonalMatrix operator -(TriDiagonalMatrix value) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(value.m_A.Select(x => -x));
+      result.m_B.AddRange(value.m_B.Select(x => -x));
+      result.m_C.AddRange(value.m_C.Select(x => -x));
+
+      return result;
+    }
+
+    /// <summary>
+    /// Multiplication
+    /// </summary>
+    public static TriDiagonalMatrix operator *(TriDiagonalMatrix value, double coefficient) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(value.m_A.Select(x => x * coefficient));
+      result.m_B.AddRange(value.m_B.Select(x => x * coefficient));
+      result.m_C.AddRange(value.m_C.Select(x => x * coefficient));
+
+      return result;
+    }
+
+    /// <summary>
+    /// Division
+    /// </summary>
+    public static TriDiagonalMatrix operator /(TriDiagonalMatrix value, double coefficient) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(value.m_A.Select(x => x / coefficient));
+      result.m_B.AddRange(value.m_B.Select(x => x / coefficient));
+      result.m_C.AddRange(value.m_C.Select(x => x / coefficient));
+
+      return result;
+    }
+
+    /// <summary>
+    /// Multiplication
+    /// </summary>
+    public static TriDiagonalMatrix operator *(double coefficient, TriDiagonalMatrix value) {
+      if (null == value)
+        throw new ArgumentNullException(nameof(value));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(value.m_A.Select(x => x * coefficient));
+      result.m_B.AddRange(value.m_B.Select(x => x * coefficient));
+      result.m_C.AddRange(value.m_C.Select(x => x * coefficient));
+
+      return result;
+    }
+
+    /// <summary>
+    /// Addition
+    /// </summary>
+    public static TriDiagonalMatrix operator +(TriDiagonalMatrix left, TriDiagonalMatrix right) {
+      if (null == left)
+        throw new ArgumentNullException(nameof(left));
+      else if (null == right)
+        throw new ArgumentNullException(nameof(right));
+      else if (left.Count != right.Count)
+        throw new ArgumentOutOfRangeException(nameof(right));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(left.m_A.Zip(right.m_A, (l, r) => l + r));
+      result.m_B.AddRange(left.m_B.Zip(right.m_B, (l, r) => l + r));
+      result.m_C.AddRange(left.m_C.Zip(right.m_C, (l, r) => l + r));
+
+      return result;
+    }
+
+    /// <summary>
+    /// Subtraction
+    /// </summary>
+    public static TriDiagonalMatrix operator -(TriDiagonalMatrix left, TriDiagonalMatrix right) {
+      if (null == left)
+        throw new ArgumentNullException(nameof(left));
+      else if (null == right)
+        throw new ArgumentNullException(nameof(right));
+      else if (left.Count != right.Count)
+        throw new ArgumentOutOfRangeException(nameof(right));
+
+      TriDiagonalMatrix result = new TriDiagonalMatrix();
+
+      result.m_A.AddRange(left.m_A.Zip(right.m_A, (l, r) => l - r));
+      result.m_B.AddRange(left.m_B.Zip(right.m_B, (l, r) => l - r));
+      result.m_C.AddRange(left.m_C.Zip(right.m_C, (l, r) => l - r));
+
+      return result;
+    }
+
+    #endregion Arithmentics
 
     #endregion Operators
 
