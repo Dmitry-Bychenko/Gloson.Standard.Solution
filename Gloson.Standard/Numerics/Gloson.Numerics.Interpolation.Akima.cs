@@ -9,12 +9,13 @@ namespace Gloson.Numerics {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// Cubic Spline  
+  /// Akima Spline (cubic) 
   /// </summary>
+  /// <see cref="https://en.wikipedia.org/wiki/Akima_spline"/>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class CubicSpline {
+  public sealed class AkimaSpline {
     #region Private Data
 
     private readonly List<double> m_X = new List<double>();
@@ -80,61 +81,46 @@ namespace Gloson.Numerics {
       return true;
     }
 
-    // http://www.astro.tsu.ru/OsChMet/7_7.html
+    // http://web.snauka.ru/issues/2015/05/53846
+    // https://en.wikipedia.org/wiki/Akima_spline
     private void CoreBuild() {
       if (CoreBuildSpecial())
         return;
-      
+
       int N = m_X.Count - 1;
 
-      m_A = new double[N + 1];
-
-      for (int i = 0; i < m_A.Length; ++i)
-        m_A[i] = m_Y[i];
-
-      double[] h = new double[N];
+      Dictionary<int, double> m = new Dictionary<int, double>();
 
       for (int i = 0; i < N; ++i)
-        h[i] = m_X[i + 1] - m_X[i];
+        m.Add(i, (m_Y[i + 1] - m_Y[i]) / (m_X[i + 1] - m_X[i]));
 
-      double[] delta = new double[N - 1];
+      m.Add(-2, 3 * m[0] - 2 * m[1]);
+      m.Add(-1, 2 * m[0] - 2 * m[1]);
+      m.Add(N, 2 * m[N - 1] - 2 * m[N - 2]);
+      m.Add(N + 1, 3 * m[N - 1] - 2 * m[N - 2]);
 
-      for (int i = 0; i < delta.Length; ++i)
-        delta[i] = 6 * ((m_Y[i + 2] - m_Y[i + 1]) / h[i + 1] - (m_Y[i + 1] - m_Y[i]) / h[i]);
+      double[] s = new double[N + 1];
 
-      (double a, double b, double c)[] data = new (double a, double b, double c)[N - 1];
+      for (int i = 0; i <= N; ++i)
+        s[i] = (Math.Abs(m[i + 1] - m[i]) * m[i - 1] +
+                Math.Abs(m[i - 1] - m[i - 2]) * m[i]) /
+                (Math.Abs(m[i + 1] - m[i]) + Math.Abs(m[i - 1] - m[i - 2]));
 
-      for (int i = 0; i < data.Length; ++i)
-        data[i] = (h[i], 2 * (h[i] + h[i + 1]), h[i + 1]);
+      for (int i = 0; i < N; ++i) {
+        double[][] mt = new double[][] {
+          new double[] { 1, m_X[i], m_X[i] * m_X[i], m_X[i] * m_X[i] * m_X[i], m_Y[i]},
+          new double[] { 1, m_X[i + 1], m_X[i + 1] * m_X[i + 1], m_X[i + 1] * m_X[i + 1] * m_X[i + 1], m_Y[i + 1]},
+          new double[] { 0, 1, 2 * m_X[i], 3 * m_X[i] * m_X[i], s[i]},
+          new double[] { 0, 1, 2 * m_X[i + 1], 3 * m_X[i + 1] * m_X[i + 1], s[i + 1]},
+        };
 
-      TriDiagonalMatrix matrix = new TriDiagonalMatrix(data);
+        double[] z = MatrixLowLevel.Solve(mt);
 
-      double[] s = matrix.Solve(delta);
-
-      m_C = new double[N + 1];
-
-      for (int i = 0; i < s.Length; ++i)
-        m_C[i + 1] = s[i];
-
-      m_D = new double[N + 1];
-
-      for (int i = 0; i < N; ++i)
-        m_D[i] = (m_C[i + 1] - m_C[i]) / h[i];
-
-      m_B = new double[N + 1];
-
-      for (int i = 0; i < N; ++i)
-        m_B[i] = (m_Y[i + 1] - m_Y[i]) / h[i] - m_C[i] * h[i] / 2 - (m_C[i + 1] - m_C[i]) * h[i] / 6;
-
-      for (int i = 0; i < m_C.Length; ++i)
-        m_C[i] /= 2;
-
-      for (int i = 0; i < m_D.Length; ++i)
-        m_D[i] /= 6;
-
-      double x = m_X[N] - m_X[N - 1];
-
-      m_B[N] = m_B[N - 1] + 2 * m_C[N - 1] * x + 3 * m_D[N - 1] * x * x;
+        m_A[i] = z[0];
+        m_B[i] = z[1];
+        m_C[i] = z[2];
+        m_D[i] = z[3];
+      }
     }
 
     #endregion Algorithm
@@ -144,7 +130,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public CubicSpline(IEnumerable<(double x, double y)> source) {
+    public AkimaSpline(IEnumerable<(double x, double y)> source) {
       if (null == source)
         throw new ArgumentNullException(nameof(source));
 
@@ -152,6 +138,11 @@ namespace Gloson.Numerics {
         m_X.Add(x);
         m_Y.Add(y);
       }
+
+      m_A = new double[m_Y.Count];
+      m_B = new double[m_Y.Count];
+      m_C = new double[m_Y.Count];
+      m_D = new double[m_Y.Count];
 
       CoreBuild();
     }
@@ -205,33 +196,6 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
-    /// Polynom At 
-    /// </summary>
-    public Polynom PolynomAt(double x) {
-      if (m_X.Count <= 4)
-        return new Polynom(new double[] { m_A[0], m_B[0], m_C[0], m_D[0] });
-
-      int index = Index(x);
-
-      Polynom poly;
-
-      if (index < 0) {
-        poly = new Polynom(new double[] { m_A[0], m_B[0] });
-
-        return poly.WithShift(-m_X[0]);
-      }
-      else if (index >= m_X.Count - 1) {
-        poly = new Polynom(new double[] { m_A[m_X.Count - 1], m_B[m_X.Count - 1] });
-
-        return poly.WithShift(-m_X[m_X.Count - 1]);
-      }
-
-      poly = new Polynom(new double[] { m_A[index], m_B[index], m_C[index], m_D[index] });
-
-      return poly.WithShift(-m_X[index]);
-    }
-
-    /// <summary>
     /// Compute At 
     /// </summary>
     public double At(double x) {
@@ -241,13 +205,28 @@ namespace Gloson.Numerics {
       int index = Index(x);
 
       if (index < 0)
-        return m_A[0] + (x - m_X[0]) * (m_B[0]);
-      else if (index >= m_X.Count)
-        return m_A[m_A.Length - 1] + (x - m_X[m_A.Length - 1]) * (m_B[m_A.Length - 1]);
+        index = 0;
+      else if (index >= m_X.Count - 1)
+        index = m_X.Count - 2;
 
-      double v = (x - m_X[index]);
+      return m_A[index] + x * (m_B[index] + x * (m_C[index] + x * m_D[index]));
+    }
 
-      return m_A[index] + v * (m_B[index] + v * (m_C[index] + v * m_D[index]));
+    /// <summary>
+    /// Polynom At 
+    /// </summary>
+    public Polynom PolynomAt(double x) {
+      if (m_X.Count <= 4)
+        return new Polynom(new double[] { m_A[0], m_B[0], m_C[0], m_D[0] });
+
+      int index = Index(x);
+
+      if (index < 0)
+        index = 0;
+      else if (index >= m_X.Count - 1)
+        index = m_X.Count - 2;
+
+      return new Polynom(new double[] { m_A[index], m_B[index], m_C[index], m_D[index] });
     }
 
     /// <summary>
@@ -260,13 +239,11 @@ namespace Gloson.Numerics {
       int index = Index(x);
 
       if (index < 0)
-        return m_B[0];
-      else if (index >= m_X.Count)
-        return m_B[m_A.Length - 1];
+        index = 0;
+      else if (index >= m_X.Count - 1)
+        index = m_X.Count - 2;
 
-      double v = (x - m_X[index]);
-
-      return m_B[index] + 2 * v * m_C[index] + 3 * v * v * m_D[index];
+      return m_B[index] + 2 * x * m_C[index] + 3 * x * x * m_D[index];
     }
 
     #endregion Public

@@ -334,9 +334,7 @@ namespace Gloson.Numerics {
     /// </summary>
     /// <param name="C">Integrating constant</param>
     public Polynom Integral(double c) {
-      List<double> coefs = new List<double>(m_Items.Count + 1);
-
-      coefs.Add(c);
+      List<double> coefs = new List<double>(m_Items.Count + 1) { c };
 
       for (int i = 0; i < m_Items.Count; ++i)
         coefs.Add(m_Items[i] / (i + 1));
