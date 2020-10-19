@@ -311,6 +311,40 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
+    /// Integral
+    /// </summary>
+    public double Integral(double from, double to) {
+      double result = 0;
+
+      double x1 = from;
+      double x2 = to;
+
+      for (int i = 0; i < m_Items.Count; ++i) {
+        result += m_Items[i] * (x2 - x1) / (i + 1);
+
+        x1 *= from;
+        x2 *= to;
+      }
+
+      return result;
+    }
+
+    /// <summary>
+    /// Integral (indefinite)
+    /// </summary>
+    /// <param name="C">Integrating constant</param>
+    public Polynom Integral(double c) {
+      List<double> coefs = new List<double>(m_Items.Count + 1);
+
+      coefs.Add(c);
+
+      for (int i = 0; i < m_Items.Count; ++i)
+        coefs.Add(m_Items[i] / (i + 1));
+
+      return new Polynom(coefs);
+    }
+
+    /// <summary>
     /// GCD (Greatest Common Divisor)
     /// </summary>
     public Polynom Gcd(Polynom other) {
