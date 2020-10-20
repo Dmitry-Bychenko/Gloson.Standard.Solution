@@ -119,6 +119,44 @@ namespace Gloson.Numerics {
     public static Polynom ReconstructOneStarting(params double[] values) =>
       Reconstruct(1, values);
 
+    /// <summary>
+    /// Reconstruct from (x, y) pairs by Lagrange interpolation
+    /// </summary>
+    public static Polynom Reconstruct(IEnumerable<(double x, double y)> points) {
+      if (null == points)
+        throw new ArgumentNullException(nameof(points));
+
+      var data = points
+        .Where(p => !double.IsNaN(p.x) && !double.IsNaN(p.y))
+        .ToList();
+
+      if (data.Count <= 0)
+        return NaN;
+      else if (data.Count == 1)
+        return new Polynom(new double[] { data[0].x});
+
+      double[][] matrix = new double[data.Count][];
+      
+      for (int r = 0; r < matrix.Length; ++r) {
+        double[] row = new double[matrix.Length + 1];
+
+        matrix[r] = row;
+
+        row[row.Length - 1] = data[r].y;
+
+        double v = 1.0;
+        double x = data[r].x;
+
+        for (int c = 0; c < row.Length - 1; ++c) {
+          row[c] = v;
+
+          v *= x;
+        }
+      }
+
+      return new Polynom(MatrixLowLevel.Solve(matrix));
+    }
+
     #endregion Create
 
     #region Public
