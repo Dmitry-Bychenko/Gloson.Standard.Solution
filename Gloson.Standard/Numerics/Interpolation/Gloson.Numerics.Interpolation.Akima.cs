@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Gloson.Numerics.Interpolation;
 using Gloson.Numerics.Matrices;
 
 namespace Gloson.Numerics {
@@ -15,11 +15,8 @@ namespace Gloson.Numerics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class AkimaSpline {
+  public sealed class AkimaSpline : BaseSpline {
     #region Private Data
-
-    private readonly List<double> m_X = new List<double>();
-    private readonly List<double> m_Y = new List<double>();
 
     private double[] m_A;
     private double[] m_B;
@@ -130,14 +127,8 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public AkimaSpline(IEnumerable<(double x, double y)> source) {
-      if (null == source)
-        throw new ArgumentNullException(nameof(source));
-
-      foreach (var (x, y) in source.OrderBy(p => p.x)) {
-        m_X.Add(x);
-        m_Y.Add(y);
-      }
+    public AkimaSpline(IEnumerable<(double x, double y)> source) 
+      : base(source) {
 
       m_A = new double[m_Y.Count];
       m_B = new double[m_Y.Count];
@@ -152,36 +143,9 @@ namespace Gloson.Numerics {
     #region Public
 
     /// <summary>
-    /// Count
-    /// </summary>
-    public int Count => m_X.Count;
-
-    /// <summary>
-    /// X
-    /// </summary>
-    public IReadOnlyList<double> X => m_X;
-
-    /// <summary>
-    /// Y
-    /// </summary>
-    public IReadOnlyList<double> Y => m_Y;
-
-    /// <summary>
-    /// Index [result..result + 1]
-    /// </summary>
-    public int Index(double x) {
-      int result = m_X.BinarySearch(x);
-
-      if (result < 0)
-        result = ~result - 1;
-
-      return result;
-    }
-
-    /// <summary>
     /// Range
     /// </summary>
-    public (double from, double to) Range(double x) {
+    public override (double from, double to) Range(double x) {
       if (m_X.Count <= 4)
         return (double.NegativeInfinity, double.PositiveInfinity);
 
@@ -198,7 +162,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Compute At 
     /// </summary>
-    public double At(double x) {
+    public override double At(double x) {
       if (m_X.Count <= 4)
         return m_A[0] + x * (m_B[0] + x * (m_C[0] + x * m_D[0]));
 
@@ -215,7 +179,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Polynom At 
     /// </summary>
-    public Polynom PolynomAt(double x) {
+    public override Polynom PolynomAt(double x) {
       if (m_X.Count <= 4)
         return new Polynom(new double[] { m_A[0], m_B[0], m_C[0], m_D[0] });
 
@@ -232,7 +196,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Derivative At
     /// </summary>
-    public double DerivativeAt(double x) {
+    public override double DerivativeAt(double x) {
       if (m_X.Count <= 4)
         return m_B[0] + 2 * x * m_C[0] + 3 * x * x * m_D[0];
 

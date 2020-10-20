@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gloson.Numerics.Matrices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,9 +70,33 @@ namespace Gloson.Numerics {
 
       var points = values
         .Select((v, i) => (x: (double)i + startAt, y: v))
-        .Where(item => !double.IsNaN(item.y));
+        .Where(item => !double.IsNaN(item.y))
+        .ToArray();
 
-      return Interpolation.InterpolatonPolynom(points, p => (p.x, p.y));
+      if (points.Length == 0)
+        return NaN;
+
+      double[][] M = new double[points.Length][];
+
+      for (int r = 0; r < M.Length; ++r) {
+        double[] row = new double[M.Length + 1];
+        M[r] = row;
+
+        row[M.Length] = points[r].y;
+
+        double x = points[r].x;
+        double v = 1;
+
+        for (int c = 0; c < M.Length; ++c) {
+          row[c] = v;
+
+          v *= x;
+        }
+      }
+
+      return new Polynom(MatrixLowLevel.Solve(M));
+
+      //return OldInterpolation.InterpolatonPolynom(points, p => (p.x, p.y));
     }
 
     /// <summary>
