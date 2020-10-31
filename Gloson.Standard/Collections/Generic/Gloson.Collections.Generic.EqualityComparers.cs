@@ -36,10 +36,7 @@ namespace Gloson.Collections.Generic {
       }
 
       public int GetHashCode(T obj) {
-        if (null == obj)
-          return 0;
-
-        return m_Hash(obj);
+        return null == obj ? 0 : m_Hash(obj);
       }
     }
 
@@ -131,7 +128,7 @@ namespace Gloson.Collections.Generic {
       #region Public
 
       /// <summary>
-      /// Items (inner comparers)
+      /// Items (inner comparer(s))
       /// </summary>
       public IReadOnlyList<IEqualityComparer<T>> Items => m_Items;
 

@@ -310,9 +310,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public Graph(GraphOptions options)
-      : base() {
-
+    public Graph(GraphOptions options) {
       Options = options;
     }
 

@@ -12,6 +12,7 @@
     <Win32Resource />
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</RepositoryUrl>
+    <UserSecretsId>3105a925-cc1f-49c2-8551-a0715980bca8</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

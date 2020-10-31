@@ -57,8 +57,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="comparer">Comparer (null for default)</param>
     /// <param name="capacity">Expected capacity (-1 for default)</param>
     protected BaseHeap(IComparer<T> comparer, int capacity) {
-      if (null == comparer)
-        comparer = Comparer<T>.Default;
+      comparer ??= Comparer<T>.Default;
 
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No comparer provided when {typeof(T).Name} doesn't provide default one");
 
@@ -570,12 +569,11 @@ namespace Gloson.Collections.Generic {
   //-------------------------------------------------------------------------------------------------------------------
 
   public sealed class QueueWithPriority<T>
-    : IEnumerable<T>,
-      IReadOnlyCollection<T> {
+    : IReadOnlyCollection<T> {
 
     #region Internal Classes 
 
-    private struct QueueItem : IComparable<QueueItem> {
+    private readonly struct QueueItem : IComparable<QueueItem> {
       internal QueueItem(T value, double priority) {
         Value = value;
         Priority = priority;
@@ -584,7 +582,7 @@ namespace Gloson.Collections.Generic {
       public T Value { get; }
       public double Priority { get; }
 
-      public int CompareTo(QueueWithPriority<T>.QueueItem other) {
+      public int CompareTo(QueueItem other) {
         return Priority.CompareTo(other.Priority);
       }
     }
@@ -730,11 +728,10 @@ namespace Gloson.Collections.Generic {
     /// Standard Constructor
     /// </summary>
     public PriorityQueue(IComparer<T> comparer, int capacity) {
-      if (null == comparer)
-        comparer = Comparer<T>.Default;
+      Comparer ??= Comparer<T>.Default 
+               ?? throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
 
       Capacity = capacity < 0 ? -1 : capacity;
-      Comparer = comparer ?? throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
       m_Heap = new MinHeap<T>(comparer, capacity);
     }
 

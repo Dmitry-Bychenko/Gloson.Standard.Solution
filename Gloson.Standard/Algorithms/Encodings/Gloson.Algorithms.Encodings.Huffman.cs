@@ -117,13 +117,13 @@ namespace Gloson.Algorithms.Encodings {
         else {
           if (node.Left != null) {
 
-            node.Left.Code.Append(node.Code.ToString());
+            node.Left.Code.Append(node.Code);
             node.Left.Code.Append('1');
             agenda.Enqueue(node.Left);
           }
 
           if (node.Right != null) {
-            node.Right.Code.Append(node.Code.ToString());
+            node.Right.Code.Append(node.Code);
             node.Right.Code.Append('0');
             agenda.Enqueue(node.Right);
           }
@@ -146,7 +146,7 @@ namespace Gloson.Algorithms.Encodings {
 
       var root = BuildHuffmanTree(source, weight);
 
-      foreach (var (value, code, index) in CoreBuildCodes(root).OrderBy(x => x.index))
+      foreach (var (value, code, _) in CoreBuildCodes(root).OrderBy(x => x.index))
         yield return (value, code);
     }
 
