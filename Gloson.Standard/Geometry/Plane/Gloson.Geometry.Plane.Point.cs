@@ -23,13 +23,21 @@ namespace Gloson.Geometry.Plane {
       (source.x + delta.x, source.y + delta.y);
 
     /// <summary>
-    /// Rotate
+    /// Scale (stretch)
+    /// </summary>
+    /// <param name="source">Source point</param>
+    /// <param name="factor">Factor</param>
+    /// <returns>New point</returns>
+    public static (double x, double y) Scale(this (double x, double y) source, (double x, double y) factor) =>
+      (source.x * factor.x, source.y * factor.y);
+
+    /// <summary>
+    /// Mirror (reflection), Line Symmetry
     /// </summary>
     /// <param name="source">Initial Point</param>
     /// <param name="mirror">Line a * y + b * x + c = 0 to reflect in</param>
     /// <returns>New point</returns>
     /// <see cref="http://nasweb2.dscloud.me/wordpress/2017/05/06/how-to-find-the-coordinates-of-a-reflected-point-in-a-general-line/"/>
-
     public static (double x, double y) Mirror(this (double x, double y) source, (double a, double b, double c) mirror) {
       if (mirror.a == 0 && mirror.b == 0)
         throw new ArgumentException($"Both a and b coefficients of {nameof(mirror)} 0.", nameof(mirror));
@@ -42,6 +50,15 @@ namespace Gloson.Geometry.Plane {
       return ((p * (a * a - b * b) - 2 * b * (a * q + c)) / d, (q * (b * b - a * a) - 2 * a * (b * p + c)) / d);
     }
 
+    /// <summary>
+    /// Center Symmetry 
+    /// </summary>
+    /// <param name="source">Initial Point</param>
+    /// <param name="center">Center of the Symmetry</param>
+    /// <returns>New point</returns>
+    public static (double x, double y) Mirror(this (double x, double y) source, (double x, double y) center) =>
+      (2 * center.x - source.x, 2 * center.y - source.y);
+    
     /// <summary>
     /// Rotate 
     /// </summary>
