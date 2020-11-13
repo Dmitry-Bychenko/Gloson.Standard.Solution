@@ -17,8 +17,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Standard error integral
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1709")]
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public static Double Fi(Double value) {
       Double result = value;
       Double Add = value;
@@ -42,8 +40,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Static version of error integral
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1709")]
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public static Double FiStat(Double value) {
       return (1.0 + Fi(value / Math.Sqrt(2.0))) / 2.0;
     }
@@ -51,8 +47,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Erfectum (Erf)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1709")]
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public static Double Erf(Double value) {
       if (value > 7)
         return 1.0;
@@ -67,8 +61,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Complimentary erfectum (ErfC)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1709")]
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public static Double ErfC(Double value) {
       return 1.0 - Erf(value);
     }

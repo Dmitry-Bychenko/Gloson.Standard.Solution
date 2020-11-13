@@ -82,7 +82,6 @@ namespace Gloson.Games.Sudoku {
     /// <summary>
     /// Items
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1023:IndexersShouldNotBeMultidimensional")]
     public int this[int line, int column] {
       get {
         if ((line < 0) || (line >= 9))

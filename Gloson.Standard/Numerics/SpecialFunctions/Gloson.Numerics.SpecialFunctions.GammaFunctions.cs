@@ -52,7 +52,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Bernulli coefficients
     /// </summary>
-    [SuppressMessage("Microsoft.Maintainability", "CA1502")]
     public static Double BernoulliCoefficient(int value) {
       if (value < 0)
         return 0;
@@ -217,9 +216,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete Beta function
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
     public static Double BetaIncomplete(Double x, Double a, Double b) {
       Double p = 1.0;
       Double s = p / (a);
@@ -241,9 +237,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete regularized Beta function
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
     public static Double BetaIncompleteRegular(Double x, Double a, Double b) {
       return BetaIncomplete(x, a, b) / BetaFunc(a, b);
     }
@@ -251,8 +244,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete Gamma function (gamma)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "s")]
     public static Double GammaLow(Double s, Double x) {
       if (x == 0)
         return 0.0;
@@ -293,8 +284,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete Gamma function (gamma), regularized
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "s")]
     public static Double GammaLowRegular(Double s, Double x) {
       if (x == 0)
         return 0.0;
@@ -338,8 +327,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete Gamma function (Gamma)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "s")]
     public static Double GammaHigh(Double s, Double x) {
       return Gamma(s) - GammaLow(s, x);
     }
@@ -347,8 +334,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// <summary>
     /// Incomplete Gamma function (Gamma)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "x")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "s")]
     public static Double GammaHighRegular(Double s, Double x) {
       return (Gamma(s) - GammaLow(s, x)) / Gamma(x);
     }
@@ -358,8 +343,6 @@ namespace Gloson.Numerics.SpecialFunctions {
     /// </summary>
     /// <param name="value">Value</param>
     /// <param name="n">Degree</param>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pochhammer")]
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "n")]
     public static Double Pochhammer(Double value, Double n) {
       return Gamma(value + n) / Gamma(n);
     }

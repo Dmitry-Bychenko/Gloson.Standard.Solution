@@ -17,32 +17,27 @@ namespace Gloson {
     /// <summary>
     /// Euler constant (E)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public const double E = 2.7182818284590452356028747;
 
     /// <summary>
     /// Euler constant (C)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
-    public const double C = 0.577215664901532860606512090082;
+   public const double C = 0.577215664901532860606512090082;
 
     /// <summary>
     /// Euler constant (Gamma)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public const double Gamma = 1.7810724179901979852365041031065;
 
     /// <summary>
     /// Gold ratio
     /// (sqrt(5) + 1) / 2
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public const double FI = 1.6180339887498948482045868343656;
 
     /// <summary>
     /// Katalan number (G)
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1704")]
     public const double G = 0.915965594177219015054603514932384110774;
 
     #endregion Constants
