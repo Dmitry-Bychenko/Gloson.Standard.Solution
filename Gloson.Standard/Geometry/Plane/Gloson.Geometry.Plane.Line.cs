@@ -7,12 +7,12 @@ namespace Gloson.Geometry.Plane {
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
-  /// 
+  /// Line2D
   /// </summary>
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public struct Line2D {
+  public struct Line2D : IEquatable<Line2D> {
     #region Create
 
     /// <summary>
@@ -78,6 +78,23 @@ namespace Gloson.Geometry.Plane {
     }
 
     /// <summary>
+    /// Two line Intersection  
+    /// </summary>
+    public (double x, double y) Intersect(Line2D other) =>
+      ((A * other.C - other.A * C) / (A * other.B - other.A * B),
+       (B * other.C - other.B * C) / (A * other.B - other.A * B));
+
+    /// <summary>
+    /// Is other line Parallel
+    /// </summary>
+    public bool IsParallel(Line2D other) => A * other.B == other.A * B;
+
+    /// <summary>
+    /// At
+    /// </summary>
+    public double At(double x) => (-B * x - C) / A;
+
+    /// <summary>
     /// To String
     /// </summary>
     public override string ToString() {
@@ -119,6 +136,43 @@ namespace Gloson.Geometry.Plane {
     }
 
     #endregion Public
+
+    #region Operators
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public static bool operator ==(Line2D left, Line2D right) => left.Equals(right);
+
+    /// <summary>
+    /// Not Equals
+    /// </summary>
+    public static bool operator !=(Line2D left, Line2D right) => !left.Equals(right);
+
+    #endregion Operators
+
+    #region IEquatable<Line2D>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(Line2D other) =>
+      A * other.B == other.A * B &&
+      A * other.C == other.A * C &&
+      B * other.C == other.B * C;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public override bool Equals(object obj) =>
+      (obj is Line2D other) && Equals(other);
+
+    /// <summary>
+    /// HasCode 
+    /// </summary>
+    public override int GetHashCode() => ((A == 0) ? B : (B / A)).GetHashCode(); 
+      
+    #endregion IEquatable<Line2D>
   }
 
 }
