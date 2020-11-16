@@ -27,6 +27,46 @@ namespace Gloson.Geometry.Plane {
       C = c;
     }
 
+    /// <summary>
+    /// Standard constructor for y = slope * x + intersept
+    /// </summary>
+    /// <param name="slope"></param>
+    /// <param name="interpect"></param>
+    public Line2D(double slope, double interpect) {
+      A = 1;
+      B = -slope;
+      C = -interpect;
+    }
+
+    /// <summary>
+    /// Standard constructor for y - y0 = k * (x - x0)
+    /// </summary>
+    /// <param name="slope"></param>
+    /// <param name="point"></param>
+    public Line2D(double slope, (double x, double y) point) {
+      A = 1;
+      B = -slope;
+      C = slope * point.x - point.y;
+    }
+
+    /// <summary>
+    /// Line from 2 points
+    /// </summary>
+    /// <param name="point1">point #1</param>
+    /// <param name="point2">point #2</param>
+    public Line2D((double x, double y) point1, (double x, double y) point2) {
+      if (point1.x == point2.x) {
+        A = 0;
+        B = 1;
+        C = -point1.x;
+      }
+      else {
+        A = point2.x - point1.x;
+        B = point1.y - point2.y;
+        C = point1.y * (point1.x - point2.x) + point1.x * (point2.y - point1.y);
+      }
+    }
+
     #endregion Create
 
     #region Public
