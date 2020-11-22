@@ -48,7 +48,8 @@ namespace Gloson.IO {
     #region Create
 
     static ByteOrderMark() {
-      new ByteOrderMark("None", new byte[] { }, Encoding.ASCII);
+#pragma warning disable CA1806 // Do not ignore method results
+      new ByteOrderMark("None", Array.Empty<byte>(), Encoding.ASCII);
 
       new ByteOrderMark("UTF-8", new byte[] { 0xEF, 0xBB, 0xBF }, Encoding.UTF8);
       new ByteOrderMark("UTF-16 Big Endian", new byte[] { 0xFE, 0xFF }, Encoding.BigEndianUnicode);
@@ -57,12 +58,6 @@ namespace Gloson.IO {
       new ByteOrderMark("UTF-32 Big Endian", new byte[] { 0x00, 0x00, 0xFF, 0xFE }, Encoding.UTF32);
       new ByteOrderMark("UTF-32 Little Endian", new byte[] { 0xFF, 0xFE, 0x00, 0x00 }, Encoding.UTF32);
 
-      new ByteOrderMark("UTF-7", new byte[][] {
-        new byte[]{ 0x2B, 0x2F, 0x76, 0x38 },
-        new byte[]{ 0x2B, 0x2F, 0x76, 0x39 },
-        new byte[]{ 0x2B, 0x2F, 0x76, 0x2B },
-        new byte[]{ 0x2B, 0x2F, 0x76, 0x2F },
-      }, Encoding.UTF7);
 
       new ByteOrderMark("UTF-1", new byte[] { 0xF7, 0x64, 0x4C }, Encoding.ASCII);
 
@@ -70,6 +65,8 @@ namespace Gloson.IO {
       new ByteOrderMark("SCSU", new byte[] { 0x0E, 0xFE, 0xFF }, Encoding.ASCII);
       new ByteOrderMark("BOCU-1", new byte[] { 0xFB, 0xEE, 0x28 }, Encoding.ASCII);
       new ByteOrderMark("GB-18030", new byte[] { 0x84, 0x31, 0x95, 0x33 }, Encoding.ASCII);
+
+#pragma warning restore CA1806 // Do not ignore method results
     }
 
     private ByteOrderMark(string name, IEnumerable<IEnumerable<byte>> sequences, Encoding encoding) {

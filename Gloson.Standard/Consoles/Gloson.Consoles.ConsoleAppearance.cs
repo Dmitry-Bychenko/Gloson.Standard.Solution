@@ -22,8 +22,6 @@ namespace Gloson.Consoles {
 
     private readonly ConsoleColor m_SavedBackgroundColor;
     private readonly ConsoleColor m_SavedForegroundColor;
-    private readonly int m_SavedCursorSize;
-    private readonly bool m_SavedCursorVisible;
 
     #endregion Private Data
 
@@ -35,8 +33,6 @@ namespace Gloson.Consoles {
     public ConsoleAppearance() {
       m_SavedBackgroundColor = Console.BackgroundColor;
       m_SavedForegroundColor = Console.ForegroundColor;
-      m_SavedCursorSize = Console.CursorSize;
-      m_SavedCursorVisible = Console.CursorVisible;
     }
 
     #endregion Create
@@ -46,7 +42,7 @@ namespace Gloson.Consoles {
     /// <summary>
     /// Background Color
     /// </summary>
-    public ConsoleColor SavedBackgroundColor {
+    public static ConsoleColor SavedBackgroundColor {
       get => Console.BackgroundColor;
       set => Console.BackgroundColor = value;
     }
@@ -54,25 +50,9 @@ namespace Gloson.Consoles {
     /// <summary>
     /// Foreground Color
     /// </summary>
-    public ConsoleColor ForegroundColor {
+    public static ConsoleColor ForegroundColor {
       get => Console.ForegroundColor;
       set => Console.ForegroundColor = value;
-    }
-
-    /// <summary>
-    /// Cursor Size
-    /// </summary>
-    public int CursorSize {
-      get => Console.CursorSize;
-      set => Console.CursorSize = value;
-    }
-
-    /// <summary>
-    /// Is Cursor Visible
-    /// </summary>
-    public bool CursorVisible {
-      get => Console.CursorVisible;
-      set => Console.CursorVisible = value;
     }
 
     #endregion Public
@@ -93,8 +73,6 @@ namespace Gloson.Consoles {
       if (disposing) {
         Console.BackgroundColor = m_SavedBackgroundColor;
         Console.ForegroundColor = m_SavedForegroundColor;
-        Console.CursorSize = m_SavedCursorSize;
-        Console.CursorVisible = m_SavedCursorVisible;
       }
     }
 

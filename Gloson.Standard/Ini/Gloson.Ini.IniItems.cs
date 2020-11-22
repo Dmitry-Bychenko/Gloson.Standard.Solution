@@ -110,12 +110,12 @@ namespace Gloson.Ini {
       if (null == value)
         return false;
       else if (value.StartsWith("#")) {
-        result = new IniFileComment(value.Substring(1), IniFileCommentKind.Unix);
+        result = new IniFileComment(value[1..], IniFileCommentKind.Unix);
 
         return true;
       }
       else if (value.StartsWith(";")) {
-        result = new IniFileComment(value.Substring(1), IniFileCommentKind.Windows);
+        result = new IniFileComment(value[1..], IniFileCommentKind.Windows);
 
         return true;
       }
@@ -193,7 +193,7 @@ namespace Gloson.Ini {
       else if (!value.StartsWith("[") || !value.EndsWith("]"))
         return false;
 
-      result = new IniFileSection(value.Substring(1, value.Length - 2));
+      result = new IniFileSection(value[1..(value.Length - 2)]);
 
       return true;
     }
@@ -292,7 +292,7 @@ namespace Gloson.Ini {
         if (p < 0)
           return false;
 
-        result = new IniFileRecord(value.Substring(0, p).Trim(), value.Substring(p + 1).Trim());
+        result = new IniFileRecord(value.Substring(0, p).Trim(), value[(p + 1)..].Trim());
         return true;
       }
 
@@ -336,7 +336,7 @@ namespace Gloson.Ini {
               return false;
           }
 
-          string v = value.Substring(i + 1);
+          string v = value[(i + 1)..]; // .Substring(i + 1);
 
           if (v.StartsWith("\"")) {
             if (!v.TryQuotationRemove(out v))

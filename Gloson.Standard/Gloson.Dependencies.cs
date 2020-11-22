@@ -24,7 +24,6 @@ namespace Gloson {
     private static void CoreInitialization() {
       try {
         ServicePointManager.SecurityProtocol =
-          SecurityProtocolType.Ssl3 |
           SecurityProtocolType.Tls |
           SecurityProtocolType.Tls11 |
           SecurityProtocolType.Tls12;

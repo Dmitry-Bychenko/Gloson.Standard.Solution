@@ -106,9 +106,9 @@ namespace Gloson.Text {
     public int Compare(string left, string right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, 0))
+      else if (left is null)
         return -1;
-      else if (ReferenceEquals(right, 0))
+      else if (right is null)
         return 1;
 
       var lefts = ToChunks(left);
@@ -235,9 +235,9 @@ namespace Gloson.Text {
     public int Compare(string left, string right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (ReferenceEquals(left, 0))
+      else if (left is null)
         return -1;
-      else if (ReferenceEquals(right, 0))
+      else if (right is null)
         return 1;
 
       var lefts = ToChunks(left);
