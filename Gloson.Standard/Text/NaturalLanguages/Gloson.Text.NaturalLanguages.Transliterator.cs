@@ -232,7 +232,7 @@ namespace Gloson.Text.NaturalLanguages {
         throw new ArgumentNullException(nameof(languageTo));
 
       LanguageFrom = languageFrom;
-      LanguageTo = LanguageTo;
+      LanguageTo = languageTo;
     }
 
     #endregion Create
@@ -321,7 +321,7 @@ namespace Gloson.Text.NaturalLanguages {
              languageTo,
              pairs != null
                ? pairs.Select(item => new KeyValuePair<string, string>(item.Item1, item.Item2))
-               : new KeyValuePair<string, string>[0]) { }
+               : Array.Empty<KeyValuePair<string, string>>()) { } 
 
     #endregion Create
   }

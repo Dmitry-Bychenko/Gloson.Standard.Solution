@@ -312,9 +312,9 @@ namespace Gloson.Linq {
     /// </summary>
     public static IEnumerable<Tuple<T1, T2>[]> Assignments<T1, T2>(this IEnumerable<T1> source, IEnumerable<T2> target) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
       else if (null == target)
-        throw new ArgumentNullException("target");
+        throw new ArgumentNullException(nameof(target));
 
       T1[] sources = source.ToArray();
       T2[] targets = target.ToArray();

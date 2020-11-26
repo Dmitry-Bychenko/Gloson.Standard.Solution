@@ -143,19 +143,19 @@ namespace Gloson.Geometry.Plane {
       if (A == -1)
         sb.Append("-y");
       else if (A == 1)
-        sb.Append("y");
+        sb.Append('y');
       else if (A != 0){
         sb.Append(A);
         sb.Append(" * y");
       }
 
       if (B != 0) {
-        sb.Append(" ");
+        sb.Append(' ');
 
         if (B == -1)
           sb.Append("- x");
         else if (B == 1)
-          sb.Append("x");
+          sb.Append('x');
         else {
           sb.Append(B);
           sb.Append(" * x");

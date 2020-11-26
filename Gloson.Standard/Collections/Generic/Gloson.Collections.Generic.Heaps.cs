@@ -138,7 +138,7 @@ namespace Gloson.Collections.Generic {
         ? m_Items[0]
         : throw new InvalidOperationException("Heap is empty");
 
-      m_Items[0] = m_Items[m_Items.Count - 1];
+      m_Items[0] = m_Items[^1];
       m_Items.RemoveAt(m_Items.Count - 1);
 
       MoveDown(0);
@@ -192,7 +192,7 @@ namespace Gloson.Collections.Generic {
       if (index < 0 || index >= m_Items.Count)
         throw new ArgumentOutOfRangeException(nameof(index));
 
-      m_Items[index] = m_Items[m_Items.Count - 1];
+      m_Items[index] = m_Items[^1];
 
       m_Items.RemoveAt(m_Items.Count - 1);
 
@@ -205,7 +205,7 @@ namespace Gloson.Collections.Generic {
     public bool Remove(T value) {
       for (int i = m_Items.Count - 1; i >= 0; --i)
         if (Comparer.Compare(value, m_Items[i]) == 0) {
-          m_Items[i] = m_Items[m_Items.Count - 1];
+          m_Items[i] = m_Items[^1];
 
           m_Items.RemoveAt(m_Items.Count - 1);
 

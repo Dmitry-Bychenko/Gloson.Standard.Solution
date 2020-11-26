@@ -45,7 +45,7 @@ namespace Gloson.Text.Parsing {
       : base() {
 
       if (null == keyWords)
-        throw new ArgumentNullException("keyWords");
+        throw new ArgumentNullException(nameof(keyWords));
 
       m_IsIdentifierLetter = identifier ?? IsStandardIdentifier;
       m_IsCaseSensitive = isCaseSensitive;
@@ -127,7 +127,7 @@ namespace Gloson.Text.Parsing {
       if ((startAt < 0) || (startAt > source.Length))
         return null;
 
-      string chunk = source.Substring(startAt);
+      string chunk = source[startAt..];
 
       StringComparison comparison = m_IsCaseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
 
@@ -323,7 +323,7 @@ namespace Gloson.Text.Parsing {
     public TokenDescriptionKeyWords(TokenKeyWords keyWords, int priority)
       : base(priority, keyWords.IsCaseSensitive ? TokenDescriptionOptions.None : TokenDescriptionOptions.IgnoreCase) {
 
-      m_KeyWords = keyWords ?? throw new ArgumentNullException("keyWords");
+      m_KeyWords = keyWords ?? throw new ArgumentNullException(nameof(keyWords));
     }
 
     /// <summary>

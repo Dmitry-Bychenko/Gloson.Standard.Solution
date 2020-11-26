@@ -87,7 +87,7 @@ namespace Gloson {
       if (p >= 0) {
         main = value.Substring(0, p);
 
-        value = value.Substring(p + 1);
+        value = value[(p + 1)..];
 
         p = value.IndexOf('+');
 
@@ -159,12 +159,12 @@ namespace Gloson {
       if (!string.IsNullOrWhiteSpace(prerelease))
         m_Prerelease = prerelease.Trim().Split('.');
       else
-        m_Prerelease = new string[0];
+        m_Prerelease = Array.Empty<string>();
 
       if (!string.IsNullOrWhiteSpace(metadata))
         m_BuildMetaData = metadata.Trim().Split('.');
       else
-        m_BuildMetaData = new string[0];
+        m_BuildMetaData = Array.Empty<string>();
     }
 
     /// <summary>

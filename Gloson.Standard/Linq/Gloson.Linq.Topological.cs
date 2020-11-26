@@ -71,7 +71,7 @@ namespace Gloson.Linq {
         if (currentLevel.Count > 0)
           result.Add(currentLevel);
         else
-          throw new ArgumentException("Source has loops, it can't be topologically sorted", "source");
+          throw new ArgumentException("Source has loops, it can't be topologically sorted", nameof(source));
 
         agenda = nextAgenda;
 

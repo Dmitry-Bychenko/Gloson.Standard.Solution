@@ -30,6 +30,7 @@ namespace Gloson.Data.Oracle {
     #region Create
 
     static OracleObjectType() {
+#pragma warning disable CA1806 // Do not ignore method results
       new OracleObjectType(0, "NEXT OBJECT");
       new OracleObjectType(1, "INDEX");
       new OracleObjectType(2, "TABLE");
@@ -84,7 +85,7 @@ namespace Gloson.Data.Oracle {
       new OracleObjectType(79, "CHAIN");
       new OracleObjectType(81, "FILE GROUP");
       new OracleObjectType(101, "DESTINATION");
-
+#pragma warning restore CA1806 // Do not ignore method results
       s_Items.Sort();
     }
 

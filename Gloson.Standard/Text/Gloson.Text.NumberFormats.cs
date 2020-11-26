@@ -52,7 +52,7 @@ namespace Gloson.Text {
 
       if (value >= 500) {
         value -= 500;
-        sb.Append("D");
+        sb.Append('D');
       }
 
       if (value >= 400) {
@@ -74,7 +74,7 @@ namespace Gloson.Text {
 
       if (value >= 50) {
         value -= 50;
-        sb.Append("L");
+        sb.Append('L');
       }
 
       if (value >= 40) {
@@ -97,7 +97,7 @@ namespace Gloson.Text {
 
       if (value >= 5) {
         value -= 5;
-        sb.Append("V");
+        sb.Append('V');
       }
 
       if (value == 4) {

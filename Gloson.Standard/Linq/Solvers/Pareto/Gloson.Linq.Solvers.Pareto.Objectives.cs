@@ -408,7 +408,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     }
 
     /// <summary>
-    /// Croding Distance
+    /// Crowding Distance
     /// </summary>
     public double CrowdingDistance {
       get {
@@ -421,7 +421,7 @@ namespace Gloson.Linq.Solvers.Pareto {
           return m_CrowdingDistance;
         }
 
-        var description = Owner.ObjectiveDescriptions.First();
+        var description = Owner.ObjectiveDescriptions[0];
 
         var list = Owner
           .Frontier(FrontierLevel)
@@ -429,13 +429,13 @@ namespace Gloson.Linq.Solvers.Pareto {
           .ToList();
 
         list[0].m_CrowdingDistance = double.PositiveInfinity;
-        list[list.Count - 1].m_CrowdingDistance = double.PositiveInfinity;
+        list[^1].m_CrowdingDistance = double.PositiveInfinity;
 
         // weights
         double[] weights = new double[Owner.ObjectiveDescriptions.Count];
 
         for (int i = 0; i < weights.Length; ++i) {
-          weights[i] = Math.Abs(list[list.Count - 1].ObjectiveValue(Owner.ObjectiveDescriptions[i]) -
+          weights[i] = Math.Abs(list[^1].ObjectiveValue(Owner.ObjectiveDescriptions[i]) -
                                 list[0].ObjectiveValue(Owner.ObjectiveDescriptions[i]));
         }
 

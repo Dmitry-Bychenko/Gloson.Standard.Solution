@@ -24,7 +24,7 @@ namespace Gloson.Diagnostics {
     /// <param name="token">Cancellation token</param>
     /// <param name="killOnCancel">Kill on cancellation</param>
     /// <returns>Exit code</returns>
-    public static Task<int> WaitForExitAsync(this Process process, CancellationToken token, bool killOnCancel) {
+    public static Task<int> WaitForExitAsync(this Process process, bool killOnCancel, CancellationToken token) {
       if (null == process)
         throw new ArgumentNullException(nameof(process));
 
@@ -64,7 +64,7 @@ namespace Gloson.Diagnostics {
     /// <param name="process">Process to wait</param>
     /// <returns>Exit code</returns>
     public static Task<int> WaitForExitAsync(this Process process) {
-      return WaitForExitAsync(process, CancellationToken.None, true);
+      return WaitForExitAsync(process, true, CancellationToken.None);
     }
 
     #endregion Public

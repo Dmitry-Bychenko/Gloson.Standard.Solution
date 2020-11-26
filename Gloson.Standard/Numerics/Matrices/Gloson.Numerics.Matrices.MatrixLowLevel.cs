@@ -66,7 +66,7 @@ namespace Gloson.Numerics.Matrices {
         return null;
 
       int colCount = value.Length;
-      int rowCount = value[value.Length - 1].Length;
+      int rowCount = value[^1].Length;
 
       Double[][] result = new Double[rowCount][];
 
@@ -320,11 +320,11 @@ namespace Gloson.Numerics.Matrices {
 
     internal static double[] Solve(double[][] value) {
       if (null == value)
-        return new Double[0];
+        return Array.Empty<double>();
       else if (value.Length <= 0)
-        return new Double[0];
+        return Array.Empty<double>();
       else if ((value.Length + 1) != value[0].Length)
-        return new Double[0];
+        return Array.Empty<double>();
 
       Double[][] m = Clone(value);
 
@@ -354,7 +354,7 @@ namespace Gloson.Numerics.Matrices {
           }
 
           if (!found)
-            return new Double[0];
+            return Array.Empty<double>();
         }
 
         // Elimination

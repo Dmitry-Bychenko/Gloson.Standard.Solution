@@ -691,7 +691,7 @@ namespace Gloson.Numerics.Matrices {
       int p = format.IndexOf('|');
 
       string delimiter = p >= 0
-        ? format.Substring(p + 1)
+        ? format[(p + 1)..]
         : "\t";
 
       if (p > 0)

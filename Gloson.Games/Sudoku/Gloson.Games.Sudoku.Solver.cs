@@ -369,7 +369,7 @@ namespace Gloson.Games.Sudoku {
             sb.Append(' ');
 
           if (item.Count <= 0)
-            sb.Append("X");
+            sb.Append('X');
           else {
             sb.Append('[');
             sb.Append(string.Join(", ", item));

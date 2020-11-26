@@ -73,7 +73,7 @@ namespace Gloson.Algorithms.Graphs {
         .Any(i => W[i][i] < 0);
 
       if (negativeLoop)
-        return (new double[0][], new N[0]);
+        return (Array.Empty<double[]>(), Array.Empty<N>());
 
       return (W, dict.OrderBy(i => i).Select(p => p.Key).ToArray());
     }

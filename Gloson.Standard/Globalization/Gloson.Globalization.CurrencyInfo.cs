@@ -32,6 +32,7 @@ namespace Gloson.Globalization {
     #region Algorithm
 
     private static void FeedStandardISO4217Table() {
+#pragma warning disable CA1806 // Do not ignore method results
       new CurrencyInfo("AED", 784, 2, "United Arab Emirates dirham");
       new CurrencyInfo("AFN", 971, 2, "Afghan afghani");
       new CurrencyInfo("ALL", 008, 2, "Albanian lek");
@@ -211,6 +212,7 @@ namespace Gloson.Globalization {
       new CurrencyInfo("ZAR", 710, 2, "South African rand");
       new CurrencyInfo("ZMW", 967, 2, "Zambian kwacha");
       new CurrencyInfo("ZWL", 932, 2, "Zimbabwean dollar");
+#pragma warning restore CA1806 // Do not ignore method results
     }
 
     #endregion Algorithm

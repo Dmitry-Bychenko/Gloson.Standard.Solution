@@ -1,4 +1,6 @@
-﻿namespace Gloson.Text {
+﻿using System;
+
+namespace Gloson.Text {
 
   //-------------------------------------------------------------------------------------------------------------------
   //
@@ -17,7 +19,7 @@
     /// </summary>
     public static int[] ZArray(string value) {
       if (string.IsNullOrEmpty(value))
-        return new int[0];
+        return Array.Empty<int>();
 
       int n = value.Length;
       int L = 0, R = 0;
@@ -62,7 +64,7 @@
     /// </summary>
     public static int[] PrefixFunction(string value) {
       if (string.IsNullOrEmpty(value))
-        return new int[0];
+        return Array.Empty<int>();
 
       int[] result = new int[value.Length];
 

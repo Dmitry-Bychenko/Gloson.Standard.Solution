@@ -106,7 +106,9 @@ namespace Gloson.Data.Oracle.Client {
           }
           else if (c == ')') {
             if (inValue)
+#pragma warning disable CA1806 // Do not ignore method results
               new TnsNames(sb.ToString(), current.Peek());
+#pragma warning restore CA1806 // Do not ignore method results
 
             bracketCount -= 1;
 

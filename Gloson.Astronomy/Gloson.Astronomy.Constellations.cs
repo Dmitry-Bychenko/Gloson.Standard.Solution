@@ -26,8 +26,8 @@ namespace Gloson.Astronomy {
     #region Algorithm
 
     private static void CoreFeed() {
+#pragma warning disable CA1806 // Do not ignore method results
       new Constellation("Unknown", "???", "???", "Unknown");
-
       new Constellation("Andromeda", "And", "Andr", "Andromedae");
       new Constellation("Antlia", "Ant", "Antl", "Antliae");
       new Constellation("Apus", "Aps", "Apus", "Apodis");
@@ -135,6 +135,7 @@ namespace Gloson.Astronomy {
       new Constellation("Virgo", "Vir", "Virg", "Virginis");
       new Constellation("Volans", "Vol", "Voln", "Volantis");
       new Constellation("Vulpecula", "Vul", "Vulp", "Vulpeculae");
+#pragma warning restore CA1806 // Do not ignore method results
     }
 
     #endregion Algorithm

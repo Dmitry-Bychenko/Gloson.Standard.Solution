@@ -526,6 +526,7 @@ namespace Gloson.UI.CommandLine {
       if (m_Items.Any(item => item.Kind == CommandLineDescriptorKind.Help))
         return;
 
+#pragma warning disable CA1806 // Do not ignore method results
       new CommandLineArgumentDescription(this) {
         Name = "H[elp]",
         Kind = CommandLineDescriptorKind.Help,
@@ -543,6 +544,8 @@ namespace Gloson.UI.CommandLine {
         Description = "This help screen",
         HelpInfo = "Provides help for the routine or for the particular command",
       };
+
+#pragma warning restore CA1806 // Do not ignore method results
     }
 
     /// <summary>
@@ -561,11 +564,7 @@ namespace Gloson.UI.CommandLine {
 
       return string.Join(Environment.NewLine, m_Items
         .OrderBy(item => item)
-#pragma warning disable IDE0071 // Simplify interpolation
-#pragma warning disable IDE0071WithoutSuggestion // Simplify interpolation
         .Select(item => $"{item.Name.PadRight(max)} {(item.IsRequired ? "(+)" : "   ")} {item.Description}"));
-#pragma warning restore IDE0071WithoutSuggestion // Simplify interpolation
-#pragma warning restore IDE0071 // Simplify interpolation
     }
 
     /// <summary>

@@ -33,7 +33,7 @@ namespace Gloson.Services.Git.Repository {
         return;
       }
 
-      FileName = Path.Combine(Repo.Location, record.Substring(p + 1));
+      FileName = Path.Combine(Repo.Location, record[(p + 1)..]);
 
       string[] items = record.Substring(0, p).Split(' ');
 

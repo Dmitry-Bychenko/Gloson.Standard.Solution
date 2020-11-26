@@ -252,7 +252,7 @@ namespace Gloson.Text {
         char r = char.ToUpper(match.Groups["digit"].Value[0]);
         radix = RadixFromPrefix(r);
 
-        mantissa = value.Substring(match.Length);
+        mantissa = value[(match.Length)..];
 
         if (value[0] == '-')
           mantissa = "-" + mantissa;
@@ -335,7 +335,7 @@ namespace Gloson.Text {
       s_Powers3 = new List<long>(40) { 1 };
 
       for (int i = 1; i < 40; ++i)
-        s_Powers3.Add(s_Powers3[s_Powers3.Count - 1] * 3);
+        s_Powers3.Add(s_Powers3[^1] * 3);
     }
 
     #endregion Create

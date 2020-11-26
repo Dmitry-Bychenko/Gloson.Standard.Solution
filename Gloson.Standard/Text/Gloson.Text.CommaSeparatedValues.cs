@@ -23,7 +23,7 @@ namespace Gloson.Text {
     public static string ObjectToCsv(object value, char delimiter, char quotation) {
       string item = value?.ToString() ?? "";
 
-      return item.IndexOf(delimiter) >= 0 || item.IndexOf(quotation) >= 0
+      return item.Contains(delimiter) || item.Contains(quotation)
         ? item.QuotationAdd(quotation)
         : item;
     }

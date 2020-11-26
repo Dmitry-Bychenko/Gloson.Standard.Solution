@@ -268,7 +268,7 @@ namespace Gloson.Collections.Generic {
         sb.Append(i.ToString().PadLeft(length));
         sb.Append(" : {");
         sb.Append(string.Join(", ", m_Items[i]));
-        sb.Append("}");
+        sb.Append('}');
       }
 
       return sb.ToString();

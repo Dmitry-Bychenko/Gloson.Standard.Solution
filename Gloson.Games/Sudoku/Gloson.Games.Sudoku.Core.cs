@@ -256,7 +256,7 @@ namespace Gloson.Games.Sudoku {
       IList<String> lines = value.SplitToLines().ToList();
 
       if (lines.Count < 9)
-        throw new ArgumentException("Wrong format of a Sudoku puzzle.", "value");
+        throw new ArgumentException("Wrong format of a Sudoku puzzle.", nameof(value));
 
       int count = 0;
 
@@ -273,7 +273,7 @@ namespace Gloson.Games.Sudoku {
       }
 
       if (lines.Count < 9)
-        throw new ArgumentException("Wrong format of a Sudoku puzzle.", "value");
+        throw new ArgumentException("Wrong format of a Sudoku puzzle.", nameof(value));
 
       SudokuData result = new SudokuData();
 
@@ -292,7 +292,7 @@ namespace Gloson.Games.Sudoku {
         String line = lines[lines.Count - 9 + i].Replace(" ", "");
 
         if (line.Length > 9)
-          throw new ArgumentException("Wrong format of a Sudoku puzzle.", "value");
+          throw new ArgumentException("Wrong format of a Sudoku puzzle.", nameof(value));
 
         for (int j = 0; j < line.Length; ++j) {
           Char Ch = line[j];
@@ -302,7 +302,7 @@ namespace Gloson.Games.Sudoku {
           else if ((Ch == '*') || (Ch == '.') || (Ch == 'x') || (Ch == '?') || (Ch == '_'))
             result.m_Data[i][j] = 0;
           else
-            throw new ArgumentException("Wrong format of a Sudoku puzzle.", "value");
+            throw new ArgumentException("Wrong format of a Sudoku puzzle.", nameof(value));
         }
       }
 

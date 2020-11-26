@@ -79,6 +79,16 @@ namespace Gloson.Enterprise {
         : throw new ArgumentException("Different currencies can be added", nameof(right));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static bool operator ==(Money left, Money right) => left.Equals(right);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static bool operator !=(Money left, Money right) => left.Equals(right);
+
     #endregion Operators
 
     #region IEquatable<Money>
@@ -100,4 +110,5 @@ namespace Gloson.Enterprise {
 
     #endregion IEquatable<Money>
   }
+
 }

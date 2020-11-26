@@ -344,7 +344,7 @@ namespace Gloson.Numerics.MachineLearning {
       comparer ??= EqualityComparer<T>.Default;
 
       List<HashSet<T>> data = transactions
-        .Select(transaction => new HashSet<T>(transaction ?? new T[0], comparer))
+        .Select(transaction => new HashSet<T>(transaction ?? Array.Empty<T>(), comparer))
         .ToList();
 
       double Compute(IEnumerable<T> subset) {
@@ -365,7 +365,7 @@ namespace Gloson.Numerics.MachineLearning {
         new List<List<(HashSet<T> subset, double support)>>() { list };
 
       while (true) {
-        var prior = frequent[frequent.Count - 1];
+        var prior = frequent[^1];
 
         if (prior.Count <= 0)
           break;

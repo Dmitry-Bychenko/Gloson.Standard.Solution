@@ -159,7 +159,7 @@ namespace Gloson.Text.Parsing {
           }
 
           prefix = match.Extract(lineOfSource);
-          sb.Append(lineOfSource.Substring(match.From));
+          sb.Append(lineOfSource[(match.From)..]);
 
           break;
         }

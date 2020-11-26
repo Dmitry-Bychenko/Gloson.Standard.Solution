@@ -322,7 +322,7 @@ namespace Gloson.Collections {
         nodes.Add(next);
       }
 
-      Node leaf = nodes[nodes.Count - 1];
+      Node leaf = nodes[^1];
 
       if (leaf.Terminations <= 0)
         return false;

@@ -53,7 +53,7 @@ namespace Gloson.Geometry.Clustering.Library {
         throw new ArgumentNullException(nameof(source));
 
       List<(T item, double[] point, int cluster)> data = source
-        .Select(item => (item, Point(item)?.ToArray() ?? new double[0], 0))
+        .Select(item => (item, Point(item)?.ToArray() ?? Array.Empty<double>(), 0))
         .ToList();
 
       if (data.Count <= 0)

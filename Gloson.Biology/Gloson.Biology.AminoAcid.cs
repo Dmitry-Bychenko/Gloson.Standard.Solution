@@ -74,6 +74,7 @@ namespace Gloson.Biology {
     #region Create
 
     static AminoAcid() {
+#pragma warning disable CA1806 // Do not ignore method results
       new AminoAcid("Alanine", "Ala", 'A', 71.03711);
       new AminoAcid("Arginine", "Arg", 'R', 156.10111);
       new AminoAcid("Asparagine", "Asn", 'N', 114.04293);
@@ -130,6 +131,8 @@ namespace Gloson.Biology {
         Mandatory = false,
         Residue = false
       };
+
+#pragma warning restore CA1806 // Do not ignore method results
 
       RegisterCodons();
     }

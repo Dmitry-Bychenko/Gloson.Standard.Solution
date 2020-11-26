@@ -123,6 +123,20 @@ namespace Gloson.Drawing {
 
     #endregion Cast
 
+    #region Comparison
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static bool operator ==(ColorF left, ColorF right) => left.Equals(right);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static bool operator !=(ColorF left, ColorF right) => left.Equals(right);
+
+    #endregion Comparison
+
     #endregion Operators
 
     #region IEquatable<ColorF>

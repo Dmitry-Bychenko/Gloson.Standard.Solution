@@ -41,7 +41,7 @@ namespace Gloson.Games.Rubik {
           .Select(i => command.Substring(r * 2 + i * 6, 2))
           .ToArray();
 
-        T h = this[loop[loop.Length - 1]];
+        T h = this[loop[^1]];
 
         for (int i = loop.Length - 1; i >= 1; --i)
           this[loop[i]] = this[loop[i - 1]];

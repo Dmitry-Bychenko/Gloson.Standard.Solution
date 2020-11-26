@@ -145,10 +145,12 @@ namespace Gloson.UI.CommandLine {
         }
 
         if (parametersOnly) {
+#pragma warning disable CA1806 // Do not ignore method results
           new CommandLineArgument(
             this,
             Descriptions.FirstOrDefault(item => string.IsNullOrWhiteSpace(item.Name)),
             arg);
+#pragma warning restore CA1806 // Do not ignore method results
 
           continue;
         }
@@ -163,12 +165,14 @@ namespace Gloson.UI.CommandLine {
           .FirstOrDefault();
 
         if (null == best) {
+#pragma warning disable CA1806 // Do not ignore method results
           new CommandLineArgument(this, null, null);
+#pragma warning restore CA1806 // Do not ignore method results
 
           continue;
         }
 
-        string val = arg.Substring(best.match.Length);
+        string val = arg[(best.match.Length)..];
 
         if (val == "" && best.item.ValueType.WantsValue()) {
           if (i < m_RawArguments.Count - 1) {
@@ -178,7 +182,9 @@ namespace Gloson.UI.CommandLine {
           }
         }
 
+#pragma warning disable CA1806 // Do not ignore method results
         new CommandLineArgument(this, best.item, val);
+#pragma warning restore CA1806 // Do not ignore method results
       }
     }
 

@@ -104,7 +104,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
 
     // Start String
     private static Tuple<int, int> TryStartString(string source, int startPosition) {
-      string prefix = source.Substring(startPosition);
+      string prefix = source[startPosition..];
 
       if (prefix.StartsWith("'", StringComparison.OrdinalIgnoreCase))
         return new Tuple<int, int>(startPosition, startPosition + 1);
@@ -127,7 +127,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
                prefix.StartsWith("nq'", StringComparison.OrdinalIgnoreCase) ||
                prefix.StartsWith("qn'", StringComparison.OrdinalIgnoreCase)) {
         special = true;
-        esc = prefix[prefix.Length - 1];
+        esc = prefix[^1];
       }
 
       if (!special) {
@@ -280,7 +280,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       if (value.Length <= 1)
         return value;
 
-      if (value[0] != '"' && value[value.Length - 1] != '"')
+      if (value[0] != '"' && value[^1] != '"')
         return value;
 
       StringBuilder sb = new StringBuilder(value.Length - 2);
@@ -307,7 +307,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       if (value.Length <= 1)
         return value;
 
-      if (value[value.Length - 1] != '\'')
+      if (value[^1] != '\'')
         return value;
 
       bool special;
@@ -351,7 +351,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       else if (esc == '{')
         esc = '}';
 
-      if (special && value[value.Length - 2] != esc)
+      if (special && value[^2] != esc)
         return value;
 
       if (special)

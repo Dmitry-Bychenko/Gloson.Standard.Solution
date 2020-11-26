@@ -213,14 +213,14 @@ namespace Gloson.Diagnostics {
       sb.Append(Priority.ToString().PadLeft(PriorityMaxLength));
       sb.Append(" : ");
       sb.Append(Severity.ToString().PadLeft(SeverityMaxLength));
-      sb.Append(" ");
+      sb.Append(' ');
 
       if (lines.Length > 0)
         sb.Append(lines[0].Trim());
 
       sb.Append(PathHelper.Subtract(FileName, fileNameRoot));
 
-      sb.Append(" ");
+      sb.Append(' ');
 
       if (Line >= 0 && Column >= 0)
         sb.Append($"{Line:000000}:{Column:0000}");

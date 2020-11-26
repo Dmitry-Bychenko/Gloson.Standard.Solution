@@ -92,12 +92,12 @@ namespace Gloson.Biology {
 
       foreach (string line in lines) {
         if (line.StartsWith(";") || line.StartsWith("#"))
-          comments.Add(line.Substring(1));
+          comments.Add(line[1..]);
         else if (line.StartsWith(">")) {
           if (null != description)
             return false;
 
-          description = line.Substring(1).Trim();
+          description = line[1..].Trim();
 
           if (string.IsNullOrEmpty(description))
             return false;
@@ -237,7 +237,7 @@ namespace Gloson.Biology {
       var body = Enumerable
         .Range(0, Sequence.Length / n + (Sequence.Length % n == 0 ? 0 : 1))
         .Select(i => i >= Sequence.Length / n
-           ? Sequence.Substring(i * n)
+           ? Sequence[(i * n)..]
            : Sequence.Substring(i * n, n));
 
       return string.Join(Environment.NewLine, comments.Concat(descriptions).Concat(body));
@@ -255,7 +255,7 @@ namespace Gloson.Biology {
         return ToString();
 
       if (format.StartsWith("t") || format.StartsWith("s")) {
-        if (int.TryParse(format.Substring(1), out int size))
+        if (int.TryParse(format[1..], out int size))
           return ToString(size);
       }
 

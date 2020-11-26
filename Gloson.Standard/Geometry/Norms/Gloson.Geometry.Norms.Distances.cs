@@ -33,7 +33,7 @@ namespace Gloson.Geometry.Norms {
   public abstract class DistanceAbstract : IDistance {
     #region Algorithm
 
-    private IEnumerable<(double x, double y)> CoreData(IEnumerable<double> left, IEnumerable<double> right) {
+    private static IEnumerable<(double x, double y)> CoreData(IEnumerable<double> left, IEnumerable<double> right) {
       using var eLeft = left.GetEnumerator();
       using var eRight = right.GetEnumerator();
 

@@ -192,7 +192,7 @@ namespace Gloson.Games.Nim {
         if (!CoreIsWin(move))
           return move.ToArray();
 
-      return new int[0];
+      return Array.Empty<int>();
     }
 
     /// <summary>

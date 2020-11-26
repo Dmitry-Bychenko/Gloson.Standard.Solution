@@ -238,7 +238,7 @@ namespace Gloson.Numerics.Distributions {
       if (0 == x)
         return m_RawSample[0];
       else if (1 == x)
-        return m_RawSample[m_RawSample.Count - 1];
+        return m_RawSample[^1];
 
       double index = x * (m_RawSample.Count - 1);
       double frac = index % 1;

@@ -123,7 +123,7 @@ namespace Gloson.Linq.Solvers.Pareto {
         offsprings.Add(m_Breed(list[i - 1], list[i]));
 
       while (offsprings.Count < m_Scope.Items.Count)
-        offsprings.Add(m_Breed(list[0], list[list.Count - 1]));
+        offsprings.Add(m_Breed(list[0], list[^1]));
 
       return new ParetoGeneticsSolver<T>(
         offsprings,

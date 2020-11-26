@@ -319,7 +319,7 @@ namespace Gloson.Numerics {
     /// </summary>
     public static BigInteger[] AllDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value < 1)
-        return new BigInteger[0];
+        return Array.Empty<BigInteger>();
       else if (value == 1)
         return new BigInteger[] { 1 };
 

@@ -159,7 +159,7 @@ namespace Gloson.Text.Parsing {
             sb.Clear();
 
             if (lines.Length > 1)
-              sb.Append(lines[lines.Length - 1]);
+              sb.Append(lines[^1]);
 
             if (lines.Length > 1)
               currentLine = token.StopLine - 1;

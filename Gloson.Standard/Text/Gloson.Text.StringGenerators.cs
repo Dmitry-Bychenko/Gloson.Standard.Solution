@@ -41,7 +41,7 @@ namespace Gloson.Text {
         yield break;
 
       for (int i = 0; i < value.Length - 1; ++i)
-        yield return value.Substring(i);
+        yield return value[i..];
 
       if (addEmpty)
         yield return "";

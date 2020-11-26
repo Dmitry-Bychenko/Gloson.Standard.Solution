@@ -211,7 +211,7 @@ namespace Gloson.Text.Parsing.Library.Java {
 
       if (value.Length <= 1)
         return value;
-      else if (value[0] != '"' && value[value.Length - 1] != '"')
+      else if (value[0] != '"' && value[^1] != '"')
         return value;
 
       String num = "";
@@ -306,10 +306,10 @@ namespace Gloson.Text.Parsing.Library.Java {
 
       if (value.Length <= 1)
         return value;
-      else if (value[0] != '\'' && value[value.Length - 1] != '\'')
+      else if (value[0] != '\'' && value[^1] != '\'')
         return value;
 
-      value = value.Substring(1, value.Length - 2);
+      value = value[1..];
 
       if (value.Length <= 0)
         return "";
@@ -317,7 +317,7 @@ namespace Gloson.Text.Parsing.Library.Java {
       if (value[0] != '\\')
         return value;
 
-      value = value.Substring(1);
+      value = value[1..];
 
       if (value.Length <= 0)
         return "\\";

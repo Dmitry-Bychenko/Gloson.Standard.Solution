@@ -43,56 +43,37 @@ namespace Gloson.Biology {
     /// <summary>
     /// Complement
     /// </summary>
-    public static DnaNuclearbase Complement(this DnaNuclearbase value) {
-      switch (value) {
-        case DnaNuclearbase.A:
-          return DnaNuclearbase.T;
-        case DnaNuclearbase.C:
-          return DnaNuclearbase.G;
-        case DnaNuclearbase.G:
-          return DnaNuclearbase.C;
-        case DnaNuclearbase.T:
-          return DnaNuclearbase.A;
-        default:
-          return value;
-      }
-    }
+    public static DnaNuclearbase Complement(this DnaNuclearbase value) =>
+      value switch {
+        DnaNuclearbase.A => DnaNuclearbase.T,
+        DnaNuclearbase.C => DnaNuclearbase.G,
+        DnaNuclearbase.G => DnaNuclearbase.C,
+        DnaNuclearbase.T => DnaNuclearbase.A,
+        _ => unchecked((DnaNuclearbase)(-1)),
+      };
 
     /// <summary>
     /// RNA Complement
     /// </summary>
-    public static RnaNuclearbase RnaComplement(this DnaNuclearbase value) {
-      switch (value) {
-        case DnaNuclearbase.A:
-          return RnaNuclearbase.U;
-        case DnaNuclearbase.C:
-          return RnaNuclearbase.G;
-        case DnaNuclearbase.G:
-          return RnaNuclearbase.C;
-        case DnaNuclearbase.T:
-          return RnaNuclearbase.A;
-        default:
-          return RnaNuclearbase.A;
-      }
-    }
+    public static RnaNuclearbase RnaComplement(this DnaNuclearbase value) =>
+      value switch {
+        DnaNuclearbase.A => RnaNuclearbase.U,
+        DnaNuclearbase.C => RnaNuclearbase.G,
+        DnaNuclearbase.G => RnaNuclearbase.C,
+        DnaNuclearbase.T => RnaNuclearbase.A,
+        _ => unchecked((RnaNuclearbase)(-1)),
+      };
 
     /// <summary>
     /// To Char
     /// </summary>
-    public static char ToChar(this DnaNuclearbase value) {
-      switch (value) {
-        case DnaNuclearbase.A:
-          return 'A';
-        case DnaNuclearbase.C:
-          return 'C';
-        case DnaNuclearbase.G:
-          return 'G';
-        case DnaNuclearbase.T:
-          return 'T';
-        default:
-          return '?';
-      }
-    }
+    public static char ToChar(this DnaNuclearbase value) => value switch {
+      DnaNuclearbase.A => 'A',
+      DnaNuclearbase.C => 'C',
+      DnaNuclearbase.G => 'G',
+      DnaNuclearbase.T => 'T',
+      _ => '?',
+    };
 
     #endregion Public
   }
@@ -192,57 +173,37 @@ namespace Gloson.Biology {
     /// <summary>
     /// Complement
     /// </summary>
-    public static RnaNuclearbase Complement(this RnaNuclearbase value) {
-      switch (value) {
-        case RnaNuclearbase.A:
-          return RnaNuclearbase.U;
-        case RnaNuclearbase.C:
-          return RnaNuclearbase.G;
-        case RnaNuclearbase.G:
-          return RnaNuclearbase.C;
-        case RnaNuclearbase.U:
-          return RnaNuclearbase.A;
-        default:
-          return value;
-      }
-    }
+    public static RnaNuclearbase Complement(this RnaNuclearbase value) => value switch {
+      RnaNuclearbase.A => RnaNuclearbase.U,
+      RnaNuclearbase.C => RnaNuclearbase.G,
+      RnaNuclearbase.G => RnaNuclearbase.C,
+      RnaNuclearbase.U => RnaNuclearbase.A,
+      _ => unchecked((RnaNuclearbase) (-1)),
+    };
+
 
     /// <summary>
     /// DNA Complement
     /// </summary>
-    public static DnaNuclearbase DnaComplement(this RnaNuclearbase value) {
-      switch (value) {
-        case RnaNuclearbase.A:
-          return DnaNuclearbase.T;
-        case RnaNuclearbase.C:
-          return DnaNuclearbase.G;
-        case RnaNuclearbase.G:
-          return DnaNuclearbase.C;
-        case RnaNuclearbase.U:
-          return DnaNuclearbase.A;
-        default:
-          return DnaNuclearbase.A;
-      }
-    }
+    public static DnaNuclearbase DnaComplement(this RnaNuclearbase value) => value switch {
+      RnaNuclearbase.A => DnaNuclearbase.T,
+      RnaNuclearbase.C => DnaNuclearbase.G,
+      RnaNuclearbase.G => DnaNuclearbase.C,
+      RnaNuclearbase.U => DnaNuclearbase.A,
+      _ => unchecked((DnaNuclearbase) (-1)),
+    };
 
     /// <summary>
     /// To Char
     /// </summary>
-    public static char ToChar(this RnaNuclearbase value) {
-      switch (value) {
-        case RnaNuclearbase.A:
-          return 'A';
-        case RnaNuclearbase.C:
-          return 'C';
-        case RnaNuclearbase.G:
-          return 'G';
-        case RnaNuclearbase.U:
-          return 'U';
-        default:
-          return '?';
-      }
-    }
-
+    public static char ToChar(this RnaNuclearbase value) => value switch {
+      RnaNuclearbase.A => 'A',
+      RnaNuclearbase.C => 'C',
+      RnaNuclearbase.G => 'G',
+      RnaNuclearbase.U => 'U',
+      _ => '?',
+    };
+      
     #endregion Public
   }
 

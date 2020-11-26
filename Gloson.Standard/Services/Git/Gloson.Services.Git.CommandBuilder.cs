@@ -93,7 +93,7 @@ namespace Gloson.Services.Git {
         ? StringComparison.OrdinalIgnoreCase
         : StringComparison.Ordinal;
 
-      if (command.IndexOf(dir, comparison) >= 0)
+      if (command.Contains(dir, comparison))
         return command;
 
       return string.Join(" ", command.TrimEnd(), $"-C \"{directory}\"");

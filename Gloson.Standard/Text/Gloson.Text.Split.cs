@@ -123,7 +123,7 @@ namespace Gloson.Text {
           yield return "";
       }
       else
-        yield return source.Substring(position);
+        yield return source[position..];
     }
 
     #endregion Algorithm
@@ -182,7 +182,7 @@ namespace Gloson.Text {
           break;
       }
 
-      string tail = source.Substring(position);
+      string tail = source[position..];
 
       if (splitOptions != StringSplitOptions.RemoveEmptyEntries || !string.IsNullOrEmpty(tail))
         yield return tail;

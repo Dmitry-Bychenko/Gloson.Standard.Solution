@@ -23,13 +23,13 @@ namespace Gloson.Services.Banks {
   public sealed class EuropeanCentralBank : IExchangeOffice {
     #region Algortithm
 
-    private async Task<IDictionary<CurrencyInfo, decimal>> CoreExchangeRatesAsync(string address, CancellationToken token) {
+    private static async Task<IDictionary<CurrencyInfo, decimal>> CoreExchangeRatesAsync(string address, CancellationToken token) {
       HttpClient httpClient = Dependencies.GetServiceRequired<HttpClient>();
 
       using var response = await httpClient.GetAsync(address, token).ConfigureAwait(false);
       CultureInfo ru = CultureInfo.GetCultureInfo("ru-Ru");
 
-      string data = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+      string data = await response.Content.ReadAsStringAsync(CancellationToken.None).ConfigureAwait(false);
 
       JsonValue json = JsonValue.Parse(data);
 
@@ -73,7 +73,7 @@ namespace Gloson.Services.Banks {
     /// <summary>
     /// Exchange Rates for the latest date
     /// </summary>
-    public async Task<IDictionary<CurrencyInfo, decimal>> ExchangeRatesLatestAsync(CancellationToken token) {
+    public static async Task<IDictionary<CurrencyInfo, decimal>> ExchangeRatesLatestAsync(CancellationToken token) {
       return await CoreExchangeRatesAsync(
         $"https://api.exchangeratesapi.io/latest",
           token).ConfigureAwait(false);

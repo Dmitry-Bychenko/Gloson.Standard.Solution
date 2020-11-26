@@ -201,7 +201,7 @@ namespace Gloson.Collections.Generic {
       m_Root.SuffixEdge = null;
     }
 
-    private void CoreBuildFinals(HashSet<Node> nodes) {
+    private static void CoreBuildFinals(HashSet<Node> nodes) {
       foreach (Node parent in nodes) {
         for (Node node = parent.SuffixEdge; node != null; node = node.SuffixEdge)
           if (node.IsFinal) {

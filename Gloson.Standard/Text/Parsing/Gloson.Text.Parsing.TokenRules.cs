@@ -44,7 +44,7 @@ namespace Gloson.Text.Parsing {
     /// <returns>Tokens</returns>
     public static IEnumerable<Token> Parse(this ITokenDescriptionRules rule, IEnumerable<string> source) {
       if (null == rule)
-        throw new ArgumentNullException("rule");
+        throw new ArgumentNullException(nameof(rule));
 
       return Tokenizer.Parse(source, rule);
     }
@@ -158,7 +158,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public void Add(TokenDescription value) {
       if (null == value)
-        throw new ArgumentNullException("value");
+        throw new ArgumentNullException(nameof(value));
 
       CoreAdd(value);
     }
@@ -168,7 +168,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public void AddRange(IEnumerable<TokenDescription> values) {
       if (null == values)
-        throw new ArgumentNullException("values");
+        throw new ArgumentNullException(nameof(values));
 
       foreach (var value in values)
         CoreAdd(value);

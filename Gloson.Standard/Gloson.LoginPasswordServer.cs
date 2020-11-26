@@ -145,7 +145,7 @@ namespace Gloson {
       string server = "";
 
       if (p >= 0) {
-        server = value.Substring(p + 1);
+        server = value[(p + 1)..];
         value = value.Substring(0, p);
       }
 
@@ -156,7 +156,7 @@ namespace Gloson {
 
       if (p >= 0) {
         login = value.Substring(0, p);
-        password = value.Substring(p + 1);
+        password = value[(p + 1)..];
       }
 
       login = login.TrimStart();

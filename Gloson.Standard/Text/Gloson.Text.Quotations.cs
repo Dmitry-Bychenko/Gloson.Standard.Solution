@@ -101,7 +101,7 @@ namespace Gloson.Text {
         return false;
       else if (value.Length <= 1)
         return false;
-      else if (value[0] != openQuotation || value[value.Length - 1] != closeQuotation)
+      else if (value[0] != openQuotation || value[^1] != closeQuotation)
         return false;
 
       StringBuilder sb = new StringBuilder(value.Length);
@@ -195,7 +195,7 @@ namespace Gloson.Text {
 
       if (value.Length <= 1)
         throw new FormatException("Incorrect value length");
-      else if (value[0] != openQuotation || value[value.Length - 1] != closeQuotation)
+      else if (value[0] != openQuotation || value[^1] != closeQuotation)
         throw new FormatException("Doesn't have start/final quotation marks");
 
       StringBuilder sb = new StringBuilder(value.Length);

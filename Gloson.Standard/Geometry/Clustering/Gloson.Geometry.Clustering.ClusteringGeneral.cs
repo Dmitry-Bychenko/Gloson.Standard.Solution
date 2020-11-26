@@ -106,7 +106,7 @@ namespace Gloson.Geometry.Clustering {
 
     private static IEnumerable<IGrouping<int, T>> ToGroupBy<T>(IClustering<T> engine, IEnumerable<T> source) {
       if (null == engine)
-        throw new ArgumentException(nameof(engine));
+        throw new ArgumentNullException(nameof(engine));
       else if (null == source)
         throw new ArgumentNullException(nameof(source));
 

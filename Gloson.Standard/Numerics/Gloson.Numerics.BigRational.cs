@@ -277,14 +277,12 @@ namespace Gloson.Numerics {
 
       if (mode == MidpointRounding.AwayFromZero)
         return sign < 0 ? integer - 1 : integer + 1;
-
-      //TODO: uncomment on future version
-      //else if (mode == MidpointRounding.ToZero)
-      //  return integer;
-      //else if (mode == MidpointRounding.ToNegativeInfinity)
-      //  return integer - 1;
-      //else if (mode == MidpointRounding.ToPositiveInfinity)
-      //  return integer + 1;
+      else if (mode == MidpointRounding.ToZero)
+        return integer;
+      else if (mode == MidpointRounding.ToNegativeInfinity)
+        return integer - 1;
+      else if (mode == MidpointRounding.ToPositiveInfinity)
+        return integer + 1;
 
       if (integer % 2 == 0)
         return integer;

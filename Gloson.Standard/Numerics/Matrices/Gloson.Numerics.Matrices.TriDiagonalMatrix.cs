@@ -39,11 +39,10 @@ namespace Gloson.Numerics.Matrices {
       f[1] = 1;
       f[2] = m_B[0];
 
-      for (int i = 1; i < m_B.Count; ++i) {
+      for (int i = 1; i < m_B.Count; ++i) 
         f[i + 2] = m_B[i] * f[i - 1 + 2] - m_A[i] * m_C[i - 1] * f[i - 2 + 2];
-      }
-
-      return f[f.Length - 1];
+      
+      return f[^1];
     }
 
     #endregion Algorothm
@@ -70,7 +69,7 @@ namespace Gloson.Numerics.Matrices {
 
       if (m_A.Count > 0) {
         m_A[0] = 0.0;
-        m_C[m_C.Count - 1] = 0.0;
+        m_C[^1] = 0.0;
       }
     }
 
@@ -140,7 +139,7 @@ namespace Gloson.Numerics.Matrices {
       double[] free = f.Take(m_B.Count + 1).ToArray();
 
       if (m_B.Count != free.Length)
-        throw new ArgumentOutOfRangeException(nameof(free));
+        throw new ArgumentOutOfRangeException(nameof(f));
 
       if (null == m_Bs) {
         m_Bs = new double[m_B.Count];
@@ -159,7 +158,7 @@ namespace Gloson.Numerics.Matrices {
 
       double[] result = new double[free.Length];
 
-      result[result.Length - 1] = Fs[Fs.Length - 1] / m_Bs[Fs.Length - 1];
+      result[^1] = Fs[^1] / m_Bs[Fs.Length - 1];
 
       for (int i = free.Length - 2; i >= 0; --i)
         result[i] = (Fs[i] - m_C[i] * result[i + 1]) / m_Bs[i];
@@ -196,7 +195,7 @@ namespace Gloson.Numerics.Matrices {
       }
       
       result[0] = m_B[0] * v[0] + m_C[0] * v[1];
-      result[result.Length - 1] = m_B[result.Length - 2] * v[result.Length - 2] + 
+      result[^1] = m_B[result.Length - 2] * v[result.Length - 2] + 
                                   m_C[result.Length - 1] * v[result.Length - 1];
 
       for (int r = 1; r < result.Length - 1; ++r) 

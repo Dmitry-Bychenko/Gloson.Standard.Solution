@@ -104,12 +104,12 @@ namespace Gloson.Text.NaturalLanguages {
           continue;
 
         if (translation.TryGetValue(c, out int v)) {
-          if (sb[sb.Length - 1] == '0' + v)
+          if (sb[^1] == '0' + v)
             continue;
 
           sb.Append(v);
         }
-        else if (sb[sb.Length - 1] != '0')
+        else if (sb[^1] != '0')
           sb.Append('0');
 
         if (sb.Length >= size * 2 + 1)

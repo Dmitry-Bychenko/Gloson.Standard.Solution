@@ -62,7 +62,7 @@ namespace Gloson.Ini {
         if (p < 0)
           return false;
 
-        result = new NameValueRecord(value.Substring(0, p).Trim(), value.Substring(p + 1).Trim());
+        result = new NameValueRecord(value.Substring(0, p).Trim(), value[(p + 1)..].Trim());
         return true;
       }
 
@@ -106,7 +106,7 @@ namespace Gloson.Ini {
               return false;
           }
 
-          string v = value.Substring(i + 1);
+          string v = value[(i + 1)..];
 
           if (v.StartsWith("\"")) {
             if (!v.TryQuotationRemove(out v))
@@ -327,7 +327,7 @@ namespace Gloson.Ini {
           continue;
 
         if (line.StartsWith(";") || line.StartsWith("#")) {
-          comments.Add(line.Substring(1));
+          comments.Add(line[1..]);
 
           continue;
         }

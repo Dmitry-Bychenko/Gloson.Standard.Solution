@@ -284,11 +284,11 @@ namespace Gloson.Text.Parsing.Library.Lua {
       if (value.Length <= 1)
         return value;
 
-      if ((value[0] == '\'' && value[value.Length - 1] == '\'') ||
-          (value[0] == '"' && value[value.Length - 1] == '"'))
+      if ((value[0] == '\'' && value[^1] == '\'') ||
+          (value[0] == '"' && value[^1] == '"'))
         return CoreExtractSimpleString(value);
 
-      if (value[0] != '[' || value[value.Length - 1] != ']')
+      if (value[0] != '[' || value[^1] != ']')
         return value;
 
       // [[ ... ]]
@@ -299,7 +299,7 @@ namespace Gloson.Text.Parsing.Library.Lua {
         if (value.IndexOf("]]") < value.Length - 2)
           return value;
 
-        return value.Substring(2, value.Length - 4);
+        return value[2..];
       }
 
       // [=...= ???  =...=]

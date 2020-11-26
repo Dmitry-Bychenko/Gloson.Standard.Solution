@@ -68,10 +68,7 @@ namespace Gloson.Resources {
       else if (string.IsNullOrWhiteSpace(address))
         yield break;
 
-      if (null == culture)
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
-        culture = CultureInfo.CurrentUICulture;
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
+      culture ??= CultureInfo.CurrentUICulture;
 
       if (null == comparer)
         comparer = StringComparer.Ordinal;
@@ -79,7 +76,7 @@ namespace Gloson.Resources {
       int index = address.IndexOf('@');
 
       string name = (index < 0 ? address : address.Substring(0, index - 1)).Trim();
-      string baseName = (index < 0 ? "" : address.Substring(index + 1)).Trim();
+      string baseName = (index < 0 ? "" : address[(index + 1)..]).Trim();
 
       foreach (ResourceManager manager in Resources(assembly)) {
         if (string.IsNullOrWhiteSpace(baseName) || comparer.Equals(baseName, manager.BaseName)) {

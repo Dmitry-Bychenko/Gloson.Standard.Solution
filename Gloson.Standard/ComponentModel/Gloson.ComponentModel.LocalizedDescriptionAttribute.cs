@@ -77,7 +77,7 @@ namespace Gloson.ComponentModel {
         if (p <= 0)
           return "";
 
-        return Address.Substring(p + 1);
+        return Address[(p + 1)..];
       }
     }
 
@@ -94,7 +94,7 @@ namespace Gloson.ComponentModel {
         if (p <= 0)
           return "";
 
-        string st = Address.Substring(p + 1);
+        string st = Address[(p + 1)..];
 
         p = st.IndexOf('.');
 

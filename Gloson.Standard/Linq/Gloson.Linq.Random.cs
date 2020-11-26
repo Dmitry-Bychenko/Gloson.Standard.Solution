@@ -68,7 +68,7 @@ namespace Gloson.Linq {
     /// <returns></returns>
     public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, Random generator, params Double[] weights) {
       if (null == source)
-        throw new ArgumentNullException("source");
+        throw new ArgumentNullException(nameof(source));
       else if (null == weights)
         return new IEnumerable<T>[] { source };
       else if (weights.Length <= 0)

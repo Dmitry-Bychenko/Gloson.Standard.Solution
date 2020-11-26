@@ -142,8 +142,8 @@ namespace Gloson.IO {
     /// <returns>bytes written</returns>
     public static async Task<long> WriteAllBytesAsync(this Stream stream,
                                                       IEnumerable<byte> bytes,
-                                                      CancellationToken token,
-                                                      int chunkSize) {
+                                                      int chunkSize,
+                                                      CancellationToken token) {
       if (null == stream)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanWrite)
@@ -173,7 +173,7 @@ namespace Gloson.IO {
 
             token.ThrowIfCancellationRequested();
 
-            await stream.WriteAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
+            await stream.WriteAsync(buffer, CancellationToken.None).ConfigureAwait(false);
 
             count += buffer.Length;
           }
@@ -182,7 +182,7 @@ namespace Gloson.IO {
         if (index > 0) {
           token.ThrowIfCancellationRequested();
 
-          await stream.WriteAsync(buffer, 0, index).ConfigureAwait(false);
+          await stream.WriteAsync(buffer, CancellationToken.None).ConfigureAwait(false);
 
           count += index;
         }
@@ -204,7 +204,7 @@ namespace Gloson.IO {
     /// <param name="bytes">Bytes</param>
     /// <returns>bytes written</returns>
     public static Task<long> WriteAllBytesAsync(this Stream stream, IEnumerable<byte> bytes, CancellationToken token) =>
-      WriteAllBytesAsync(stream, bytes, token, 0);
+      WriteAllBytesAsync(stream, bytes, 0, token);
 
     /// <summary>
     /// Write All Bytes
@@ -213,7 +213,7 @@ namespace Gloson.IO {
     /// <param name="bytes">Bytes</param>
     /// <returns>bytes written</returns>
     public static Task<long> WriteAllBytesAsync(this Stream stream, IEnumerable<byte> bytes) =>
-      WriteAllBytesAsync(stream, bytes, CancellationToken.None, 0);
+      WriteAllBytesAsync(stream, bytes, 0, CancellationToken.None);
 
     #endregion Public
   }

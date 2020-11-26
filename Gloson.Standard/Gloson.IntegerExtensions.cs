@@ -106,7 +106,7 @@ namespace Gloson {
       var egcd = Egcd(value, modulo);
 
       if (egcd.Gcd != 1)
-        throw new ArgumentException("Invalid modulo", "modulo");
+        throw new ArgumentException("Invalid modulo", nameof(modulo));
 
       long result = egcd.LeftFactor;
 
@@ -229,7 +229,7 @@ namespace Gloson {
       var egcd = Egcd(value, modulo);
 
       if (egcd.Gcd != 1)
-        throw new ArgumentException("Invalid modulo", "modulo");
+        throw new ArgumentException("Invalid modulo", nameof(modulo));
 
       int result = egcd.LeftFactor;
 

@@ -58,7 +58,7 @@ namespace Gloson.Text.Formats {
 
   public enum FontModifiers {
     None = 0,
-    Regular = 0,
+    Regular = None,
     Bold = 1,
     Italic = 2,
     Underline = 4,

@@ -299,7 +299,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
       if (quot != '"' && quot != '\'')
         return value;
 
-      if (value[0] != quot && value[value.Length - 1] != quot)
+      if (value[0] != quot && value[^1] != quot)
         return value;
 
       String num = "";
@@ -392,7 +392,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
 
       if (value.Length <= 1)
         return value;
-      else if (value[0] != '/' && value[value.Length - 1] != '/')
+      else if (value[0] != '/' && value[^1] != '/')
         return value;
 
       StringBuilder sb = new StringBuilder(value.Length);

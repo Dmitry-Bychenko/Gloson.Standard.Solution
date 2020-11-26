@@ -142,7 +142,7 @@ namespace Gloson.Numerics {
 
         matrix[r] = row;
 
-        row[row.Length - 1] = data[r].y;
+        row[^1] = data[r].y;
 
         double v = 1.0;
         double x = data[r].x;
@@ -164,7 +164,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Zero
     /// </summary>
-    public static Polynom Zero { get; } = new Polynom(new double[0]);
+    public static Polynom Zero { get; } = new Polynom(Array.Empty<double>());
 
     /// <summary>
     /// Zero

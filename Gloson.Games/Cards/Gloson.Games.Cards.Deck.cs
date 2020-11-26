@@ -199,7 +199,7 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Compare (Standard Bridge Order)
     /// </summary>
-    public int Compare(CardSuit left, CardSuit right) {
+    public static int Compare(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return 0;
       else if (null == left)

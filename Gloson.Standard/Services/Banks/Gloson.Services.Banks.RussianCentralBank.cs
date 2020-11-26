@@ -37,7 +37,7 @@ namespace Gloson.Services.Banks {
       using var response = await httpClient.GetAsync(address, token).ConfigureAwait(false);
       CultureInfo ru = CultureInfo.GetCultureInfo("ru-Ru");
 
-      string data = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+      string data = await response.Content.ReadAsStringAsync(token).ConfigureAwait(false);
 
       XDocument doc = XDocument.Parse(data);
 

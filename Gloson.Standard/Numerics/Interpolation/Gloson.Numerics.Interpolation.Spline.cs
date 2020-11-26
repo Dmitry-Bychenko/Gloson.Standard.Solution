@@ -187,7 +187,7 @@ namespace Gloson.Numerics {
       else if (index >= m_X.Count - 1) {
         poly = new Polynom(new double[] { m_A[m_X.Count - 1], m_B[m_X.Count - 1] });
 
-        return poly.WithShift(-m_X[m_X.Count - 1]);
+        return poly.WithShift(-m_X[^1]);
       }
 
       poly = new Polynom(new double[] { m_A[index], m_B[index], m_C[index], m_D[index] });
@@ -207,7 +207,7 @@ namespace Gloson.Numerics {
       if (index < 0)
         return m_A[0] + (x - m_X[0]) * (m_B[0]);
       else if (index >= m_X.Count)
-        return m_A[m_A.Length - 1] + (x - m_X[m_A.Length - 1]) * (m_B[m_A.Length - 1]);
+        return m_A[^1] + (x - m_X[m_A.Length - 1]) * (m_B[m_A.Length - 1]);
 
       double v = (x - m_X[index]);
 

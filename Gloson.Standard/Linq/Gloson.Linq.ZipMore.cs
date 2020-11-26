@@ -30,11 +30,11 @@ namespace Gloson.Linq {
            Func<TLeft, bool, TRight, bool, TResult> map) {
 
       if (null == left)
-        throw new ArgumentNullException("first");
+        throw new ArgumentNullException(nameof(left));
       else if (null == right)
-        throw new ArgumentNullException("second");
+        throw new ArgumentNullException(nameof(right));
       else if (null == map)
-        throw new ArgumentNullException("map");
+        throw new ArgumentNullException(nameof(map));
 
       using var enFirst = left.GetEnumerator();
       using var enSecond = right.GetEnumerator();

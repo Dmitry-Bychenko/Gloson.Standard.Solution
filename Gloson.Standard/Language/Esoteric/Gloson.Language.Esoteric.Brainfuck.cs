@@ -529,7 +529,7 @@ namespace Gloson.Language.Esoteric {
       if (null == sourceCode)
         throw new ArgumentNullException(nameof(sourceCode));
       else if (null == input)
-        input = new string[0];
+        input = Array.Empty<string>();
 
       using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
 
@@ -549,7 +549,7 @@ namespace Gloson.Language.Esoteric {
       if (null == sourceCode)
         throw new ArgumentNullException(nameof(sourceCode));
       else if (null == input)
-        input = new string[0];
+        input = Array.Empty<string>();
 
       using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
 
