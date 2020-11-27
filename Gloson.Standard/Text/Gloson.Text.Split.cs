@@ -104,7 +104,7 @@ namespace Gloson.Text {
           if (position > i || splitOptions != StringSplitOptions.RemoveEmptyEntries) {
             index += 1;
 
-            yield return source.Substring(position, i - position);
+            yield return source[position .. i]; 
           }
 
           if (next != current && (next == '\n' || next == '\r'))

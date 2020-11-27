@@ -168,10 +168,7 @@ namespace Gloson.Text.Parsing {
         int start = From <= 0 ? 0 : From;
         int stop = To > source.Length ? source.Length : To; // ????
 
-        if (To < 0)
-          return source[start..];
-        else
-          return source.Substring(start, stop - start);
+        return To < 0 ? source[start..] : source[start..stop];
       }
 
       #endregion Public
