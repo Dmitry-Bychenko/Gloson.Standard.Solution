@@ -1,12 +1,15 @@
-﻿using Gloson.Text;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Json;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+
+using Gloson.Text;
 
 namespace Gloson.Net.Http {
 
@@ -74,28 +77,14 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Read Json
     /// </summary>
-    public static JsonValue ReadJson(string address, Encoding encoding = null) {
-      using var reader = null == encoding
-        ? new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult())
-        : new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult(), encoding);
-
-      var text = reader.ReadToEnd();
-
-      return JsonValue.Parse(text);
-    }
+    public static JsonDocument ReadJson(string address, Encoding encoding = null) =>
+      JsonDocument.Parse(ReadText(address, encoding));
 
     /// <summary>
     /// Read XML
     /// </summary>
-    public static XDocument ReadXml(string address, Encoding encoding = null) {
-      using var reader = null == encoding
-        ? new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult())
-        : new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult(), encoding);
-
-      var text = reader.ReadToEnd();
-
-      return XDocument.Parse(text);
-    }
+    public static XDocument ReadXml(string address, Encoding encoding = null) =>
+      XDocument.Parse(ReadText(address, encoding));
 
     #endregion Sync
 
@@ -104,47 +93,150 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Read as Text (async)
     /// </summary>
-    public static async Task<string> ReadTextAsync(string address) {
+    public static async Task<string> ReadTextAsync(string address, CancellationToken token) {
       if (null == address)
         throw new ArgumentNullException(nameof(address));
 
-      var respond = await Client.GetAsync(address).ConfigureAwait(false);
+      var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
 
       respond.EnsureSuccessStatusCode();
 
-      return await respond.Content.ReadAsStringAsync().ConfigureAwait(false);
+      return await respond.Content.ReadAsStringAsync(token).ConfigureAwait(false);
     }
 
     /// <summary>
-    /// Read as Json (async)
+    /// Read as Text (async)
     /// </summary>
-    public static async Task<JsonValue> JsonAsync(string address) {
+    public static async Task<string> ReadTextAsync(string address) => 
+      await ReadTextAsync(address, CancellationToken.None);
+
+    /// <summary>
+    /// Read as XML (async)
+    /// </summary>
+    public static async Task<XDocument> XmlAsync(string address, CancellationToken token) {
       if (null == address)
         throw new ArgumentNullException(nameof(address));
 
-      var respond = await Client.GetAsync(address).ConfigureAwait(false);
+      var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
 
       respond.EnsureSuccessStatusCode();
 
-      var text = await respond.Content.ReadAsStringAsync().ConfigureAwait(false);
+      var text = await respond.Content.ReadAsStringAsync(token).ConfigureAwait(false);
 
-      return JsonValue.Parse(text);
+      return XDocument.Parse(text);
     }
 
     /// <summary>
     /// Read as XML (async)
     /// </summary>
-    public static async Task<XDocument> XmlAsync(string address) {
+    public static async Task<XDocument> XmlAsync(string address) =>
+      await XmlAsync(address, CancellationToken.None);
+
+    /// <summary>
+    /// Read Json Async 
+    /// </summary>
+    public static async Task<JsonDocument> JsonAsync(string address, CancellationToken token) {
       if (null == address)
         throw new ArgumentNullException(nameof(address));
 
-      var respond = await Client.GetAsync(address).ConfigureAwait(false);
+      var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
 
       respond.EnsureSuccessStatusCode();
 
-      var text = await respond.Content.ReadAsStringAsync().ConfigureAwait(false);
+      using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
 
-      return XDocument.Parse(text);
+      JsonDocumentOptions options = new JsonDocumentOptions() {
+        CommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true
+      };
+
+      return await JsonDocument.ParseAsync(stream, options, token);
+    }
+
+    /// <summary>
+    /// Read Json Async
+    /// </summary>
+    public static async Task<JsonDocument> JsonAsync(string address) =>
+      await JsonAsync(address, CancellationToken.None);
+    
+    /// <summary>
+    /// Read Lines Async
+    /// </summary>
+    public static async IAsyncEnumerable<string> ReadLinesAsync(
+      string address, Encoding encoding, [EnumeratorCancellation] CancellationToken token) {
+
+      if (null == address)
+        throw new ArgumentNullException(nameof(address));
+
+      encoding ??= Encoding.Default;
+
+      using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
+
+      using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
+
+      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine()) {
+        token.ThrowIfCancellationRequested();
+
+        yield return line;
+      }
+    }
+
+    /// <summary>
+    /// Read Lines Async
+    /// </summary>
+    public static async IAsyncEnumerable<string> ReadLinesAsync(string address) {
+      await foreach (string line in ReadLinesAsync(address, null, CancellationToken.None))
+        yield return line;
+    }
+
+    /// <summary>
+    /// Read Lines Async
+    /// </summary>
+    public static async IAsyncEnumerable<string> ReadLinesAsync(
+      string address, [EnumeratorCancellation] CancellationToken token) {
+      
+      await foreach (string line in ReadLinesAsync(address, null, token))
+        yield return line;
+    }
+
+    /// <summary>
+    /// Read Lines Async
+    /// </summary>
+    public static async IAsyncEnumerable<string> ReadLinesAsync(string address, Encoding encoding) {
+      await foreach (string line in ReadLinesAsync(address, encoding, CancellationToken.None))
+        yield return line;
+    }
+
+    /// <summary>
+    /// Read Csv
+    /// </summary>
+    public static async IAsyncEnumerable<string[]> ReadCsvAsync(string address,
+                                                                Encoding encoding = null,
+                                                                char delimiter = ',',
+                                                                char quotation = '"',
+                                       [EnumeratorCancellation] CancellationToken token = default) {
+      if (null == address)
+        throw new ArgumentNullException(nameof(address));
+
+      encoding ??= Encoding.Default;
+
+      using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
+
+      using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
+
+      IEnumerable<string> Lines() {
+        for (string line = reader.ReadLine(); line != null; line = reader.ReadLine()) {
+          token.ThrowIfCancellationRequested();
+
+          yield return line;
+        }
+      }
+
+      foreach (string[] record in CommaSeparatedValues.ParseCsv(Lines(), delimiter, quotation)) {
+        token.ThrowIfCancellationRequested();
+
+        yield return record;
+      }
     }
 
     #endregion Async
