@@ -15,7 +15,7 @@ namespace Gloson.Collections.Generic {
   public sealed class UnionFind<T> {
     #region Private Data
 
-    private Dictionary<T, Tuple<T, int>> m_Items;
+    private readonly Dictionary<T, Tuple<T, int>> m_Items;
 
     #endregion Private Data
 
