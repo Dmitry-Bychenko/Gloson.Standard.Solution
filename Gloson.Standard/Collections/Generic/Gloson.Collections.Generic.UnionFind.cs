@@ -15,7 +15,7 @@ namespace Gloson.Collections.Generic {
   public sealed class UnionFind<T> {
     #region Private Data
 
-    private readonly Dictionary<T, (T root, int size)> m_Items;
+    private Dictionary<T, Tuple<T, int>> m_Items;
 
     #endregion Private Data
 
@@ -27,7 +27,7 @@ namespace Gloson.Collections.Generic {
     public UnionFind(IEqualityComparer<T> comparer) {
       Comparer = comparer ?? EqualityComparer<T>.Default;
 
-      m_Items = new Dictionary<T, (T root, int size)>(Comparer);
+      m_Items = new Dictionary<T, Tuple<T, int>>(Comparer);
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Items
     /// </summary>
-    public IReadOnlyDictionary<T, (T root, int size)> Items => m_Items;
+    public IReadOnlyDictionary<T, Tuple<T, int>> Items => m_Items;
 
     /// <summary>
     /// Id
@@ -61,12 +61,12 @@ namespace Gloson.Collections.Generic {
       while (true) {
         if (!m_Items.TryGetValue(result, out var next))
           return result;
-        else if (Comparer.Equals(next.root, result)) {
+        else if (Comparer.Equals(next.Item1, result)) {
           if (null != path) {
-            int size = m_Items[result].size;
+            int size = m_Items[result].Item2;
 
             foreach (T node in path)
-              m_Items[node] = (result, size);
+              m_Items[node] = new Tuple<T, int>(result, size);
           }
 
           return result;
@@ -77,7 +77,7 @@ namespace Gloson.Collections.Generic {
 
         path.Add(result);
 
-        result = next.root;
+        result = next.Item1;
       }
     }
 
@@ -87,7 +87,7 @@ namespace Gloson.Collections.Generic {
     public int Count(T value) {
       T id = Id(value);
 
-      return m_Items.TryGetValue(id, out var rec) ? rec.size : 1;
+      return m_Items.TryGetValue(id, out var rec) ? rec.Item2 : 1;
     }
 
     /// <summary>
@@ -103,26 +103,26 @@ namespace Gloson.Collections.Generic {
       if (Find(left, right))
         return;
 
-      if (!m_Items.TryGetValue(left, out (T root, int size) leftRec))
-        m_Items.Add(left, leftRec = (left, 1));
+      if (!m_Items.TryGetValue(left, out var leftRec))
+        m_Items.Add(left, leftRec = new Tuple<T, int>(left, 1));
 
-      if (!m_Items.TryGetValue(right, out (T root, int size) rightRec))
-        m_Items.Add(right, rightRec = (right, 1));
+      if (!m_Items.TryGetValue(right, out var rightRec))
+        m_Items.Add(right, rightRec = new Tuple<T, int>(right, 1));
 
-      T id;
+      T idLeft = Id(left);
+      T idRight = Id(right);
 
-      if (leftRec.size < rightRec.size) {
-        id = Id(right);
+      if (Comparer.Equals(idLeft, idRight))
+        return;
 
-        m_Items[left] = (id, leftRec.size + rightRec.size);
+      if (leftRec.Item2 < rightRec.Item2) {
+        m_Items[idLeft] = new Tuple<T, int>(idRight, leftRec.Item2 + rightRec.Item2);
+        m_Items[idRight] = new Tuple<T, int>(idRight, leftRec.Item2 + rightRec.Item2);
       }
       else {
-        id = Id(left);
-
-        m_Items[right] = (Id(left), leftRec.size + rightRec.size);
+        m_Items[idRight] = new Tuple<T, int>(idLeft, leftRec.Item2 + rightRec.Item2);
+        m_Items[idLeft] = new Tuple<T, int>(idLeft, leftRec.Item2 + rightRec.Item2);
       }
-
-      m_Items[id] = (id, leftRec.size + rightRec.size);
     }
 
     #endregion Public
