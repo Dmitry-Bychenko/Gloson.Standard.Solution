@@ -39,8 +39,7 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Name
     /// </summary>
-    public static String Name(this PokerCombination value) => value switch
-    {
+    public static String Name(this PokerCombination value) => value switch {
       PokerCombination.Flush => "Flush",
       PokerCombination.Four => "Four",
       PokerCombination.FullHouse => "Full House",

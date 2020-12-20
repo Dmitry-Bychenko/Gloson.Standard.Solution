@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Gloson {
 
@@ -22,7 +21,7 @@ namespace Gloson {
     /// <summary>
     /// Euler constant (C)
     /// </summary>
-   public const double C = 0.577215664901532860606512090082;
+    public const double C = 0.577215664901532860606512090082;
 
     /// <summary>
     /// Euler constant (Gamma)

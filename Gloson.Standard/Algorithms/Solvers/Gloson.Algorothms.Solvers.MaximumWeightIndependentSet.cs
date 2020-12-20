@@ -74,7 +74,7 @@ namespace Gloson.Algorithms.Solvers {
       /// <returns></returns>
       public override string ToString() =>
         $"Value: {Value} Taken: {TakenCount} From: {m_Items.Count}";
-      
+
       #endregion Public
 
       #region IReadOnlyList<(T value, long weight, bool isTaken)>

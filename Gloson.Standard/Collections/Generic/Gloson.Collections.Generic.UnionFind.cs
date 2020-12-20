@@ -113,9 +113,9 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Union
     /// </summary>
-    public void Union(T left, T right) {
+    public bool Union(T left, T right) {
       if (Find(left, right))
-        return;
+        return false;
 
       if (!m_Items.TryGetValue(left, out var leftRec))
         m_Items.Add(left, leftRec = new Tuple<T, int>(left, 1));
@@ -127,7 +127,7 @@ namespace Gloson.Collections.Generic {
       T idRight = Id(right);
 
       if (Comparer.Equals(idLeft, idRight))
-        return;
+        return false;
 
       if (leftRec.Item2 < rightRec.Item2) {
         m_Items[idLeft] = new Tuple<T, int>(idRight, leftRec.Item2 + rightRec.Item2);
@@ -144,6 +144,8 @@ namespace Gloson.Collections.Generic {
         m_CountMax = count;
         m_IdMax = idRight;
       }
+
+      return true;
     }
 
     #endregion Public

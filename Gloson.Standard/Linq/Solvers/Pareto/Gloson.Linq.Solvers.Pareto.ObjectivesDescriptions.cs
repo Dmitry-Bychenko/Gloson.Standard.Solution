@@ -30,8 +30,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// To Report
     /// </summary>
     public static string ToReport(this ObjectiveGoal value) {
-      return value switch
-      {
+      return value switch {
         ObjectiveGoal.Min => "Minimize",
         ObjectiveGoal.Max => "Maximize",
         _ => $"??? ({(int)value})",

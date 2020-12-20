@@ -58,7 +58,7 @@ namespace Gloson.Geometry.Plane {
     /// <returns>New point</returns>
     public static (double x, double y) Mirror(this (double x, double y) source, (double x, double y) center) =>
       (2 * center.x - source.x, 2 * center.y - source.y);
-    
+
     /// <summary>
     /// Rotate 
     /// </summary>

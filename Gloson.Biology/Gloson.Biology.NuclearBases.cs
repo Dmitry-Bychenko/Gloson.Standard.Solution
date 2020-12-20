@@ -178,7 +178,7 @@ namespace Gloson.Biology {
       RnaNuclearbase.C => RnaNuclearbase.G,
       RnaNuclearbase.G => RnaNuclearbase.C,
       RnaNuclearbase.U => RnaNuclearbase.A,
-      _ => unchecked((RnaNuclearbase) (-1)),
+      _ => unchecked((RnaNuclearbase)(-1)),
     };
 
 
@@ -190,7 +190,7 @@ namespace Gloson.Biology {
       RnaNuclearbase.C => DnaNuclearbase.G,
       RnaNuclearbase.G => DnaNuclearbase.C,
       RnaNuclearbase.U => DnaNuclearbase.A,
-      _ => unchecked((DnaNuclearbase) (-1)),
+      _ => unchecked((DnaNuclearbase)(-1)),
     };
 
     /// <summary>
@@ -203,7 +203,7 @@ namespace Gloson.Biology {
       RnaNuclearbase.U => 'U',
       _ => '?',
     };
-      
+
     #endregion Public
   }
 

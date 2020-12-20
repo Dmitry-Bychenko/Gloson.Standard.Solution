@@ -133,10 +133,10 @@ namespace Gloson.Numerics {
       if (data.Count <= 0)
         return NaN;
       else if (data.Count == 1)
-        return new Polynom(new double[] { data[0].x});
+        return new Polynom(new double[] { data[0].x });
 
       double[][] matrix = new double[data.Count][];
-      
+
       for (int r = 0; r < matrix.Length; ++r) {
         double[] row = new double[matrix.Length + 1];
 
@@ -174,7 +174,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// NaN
     /// </summary>
-    public static Polynom NaN { get; } = new Polynom(new double[] { double.NaN});
+    public static Polynom NaN { get; } = new Polynom(new double[] { double.NaN });
 
     /// <summary>
     /// Compute At point x 
@@ -231,7 +231,7 @@ namespace Gloson.Numerics {
       for (int k = 0; k <= n; ++k) {
         double coef = 0;
 
-        for (int i = 0; i <= n - k; ++i) 
+        for (int i = 0; i <= n - k; ++i)
           coef += a[n - i] * C(n - i, k) * Math.Pow(shift, n - k - i);
 
         r[k] = coef;

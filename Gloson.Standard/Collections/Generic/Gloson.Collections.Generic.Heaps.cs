@@ -728,7 +728,7 @@ namespace Gloson.Collections.Generic {
     /// Standard Constructor
     /// </summary>
     public PriorityQueue(IComparer<T> comparer, int capacity) {
-      Comparer ??= Comparer<T>.Default 
+      Comparer ??= Comparer<T>.Default
                ?? throw new ArgumentNullException($"Type {typeof(T).Name} doesn't have default comparer.");
 
       Capacity = capacity < 0 ? -1 : capacity;

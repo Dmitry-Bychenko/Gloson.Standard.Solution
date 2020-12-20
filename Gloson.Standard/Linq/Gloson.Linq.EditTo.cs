@@ -47,8 +47,7 @@ namespace Gloson.Linq {
     #region Algorithm
 
     internal string ToReport() {
-      return Kind switch
-      {
+      return Kind switch {
         EditOperationKind.None => $"Keep   '{Before}', ({Cost})",
         EditOperationKind.Insert => $"Insert '{After}', ({Cost})",
         EditOperationKind.Delete => $"Delete '{Before}', ({Cost})",
@@ -108,8 +107,7 @@ namespace Gloson.Linq {
     /// To String
     /// </summary>
     public override string ToString() {
-      return Kind switch
-      {
+      return Kind switch {
         EditOperationKind.None => $"Keep '{Before}'",
         EditOperationKind.Insert => $"Insert '{After}'",
         EditOperationKind.Delete => $"Delete '{Before}'",

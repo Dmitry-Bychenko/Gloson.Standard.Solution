@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gloson.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -8,8 +9,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-
-using Gloson.Text;
 
 namespace Gloson.Net.Http {
 
@@ -107,7 +106,7 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Read as Text (async)
     /// </summary>
-    public static async Task<string> ReadTextAsync(string address) => 
+    public static async Task<string> ReadTextAsync(string address) =>
       await ReadTextAsync(address, CancellationToken.None);
 
     /// <summary>
@@ -158,7 +157,7 @@ namespace Gloson.Net.Http {
     /// </summary>
     public static async Task<JsonDocument> JsonAsync(string address) =>
       await JsonAsync(address, CancellationToken.None);
-    
+
     /// <summary>
     /// Read Lines Async
     /// </summary>
@@ -194,7 +193,7 @@ namespace Gloson.Net.Http {
     /// </summary>
     public static async IAsyncEnumerable<string> ReadLinesAsync(
       string address, [EnumeratorCancellation] CancellationToken token) {
-      
+
       await foreach (string line in ReadLinesAsync(address, null, token))
         yield return line;
     }

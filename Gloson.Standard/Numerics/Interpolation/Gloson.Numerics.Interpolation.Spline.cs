@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Gloson.Numerics.Interpolation;
+﻿using Gloson.Numerics.Interpolation;
 using Gloson.Numerics.Matrices;
+using System.Collections.Generic;
 
 namespace Gloson.Numerics {
 
@@ -81,7 +79,7 @@ namespace Gloson.Numerics {
     private void CoreBuild() {
       if (CoreBuildSpecial())
         return;
-      
+
       int N = m_X.Count - 1;
 
       m_A = new double[N + 1];
@@ -141,7 +139,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public CubicSpline(IEnumerable<(double x, double y)> source) 
+    public CubicSpline(IEnumerable<(double x, double y)> source)
       : base(source) {
 
       CoreBuild();

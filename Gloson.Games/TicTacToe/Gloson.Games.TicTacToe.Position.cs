@@ -31,8 +31,7 @@ namespace Gloson.Games.TicTacToe {
     /// To Char
     /// </summary>
     public static char ToChar(this Mark mark) {
-      return mark switch
-      {
+      return mark switch {
         Mark.Cross => 'X',
         Mark.Nought => 'O',
         Mark.None => '.',

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Gloson.Numerics.Matrices {
 
@@ -39,9 +38,9 @@ namespace Gloson.Numerics.Matrices {
       f[1] = 1;
       f[2] = m_B[0];
 
-      for (int i = 1; i < m_B.Count; ++i) 
+      for (int i = 1; i < m_B.Count; ++i)
         f[i + 2] = m_B[i] * f[i - 1 + 2] - m_A[i] * m_C[i - 1] * f[i - 2 + 2];
-      
+
       return f[^1];
     }
 
@@ -55,9 +54,9 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public TriDiagonalMatrix(IEnumerable<(double a, double b, double c)> lines) 
+    public TriDiagonalMatrix(IEnumerable<(double a, double b, double c)> lines)
       : this() {
-      
+
       if (null == lines)
         throw new ArgumentNullException(nameof(lines));
 
@@ -193,12 +192,12 @@ namespace Gloson.Numerics.Matrices {
 
         return result;
       }
-      
+
       result[0] = m_B[0] * v[0] + m_C[0] * v[1];
-      result[^1] = m_B[result.Length - 2] * v[result.Length - 2] + 
+      result[^1] = m_B[result.Length - 2] * v[result.Length - 2] +
                                   m_C[result.Length - 1] * v[result.Length - 1];
 
-      for (int r = 1; r < result.Length - 1; ++r) 
+      for (int r = 1; r < result.Length - 1; ++r)
         result[r] = m_A[r] * v[r - 1] + m_B[r] * v[r] + m_C[r] * v[r + 1];
 
       return result;

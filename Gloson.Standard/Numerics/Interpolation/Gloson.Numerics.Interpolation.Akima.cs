@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Gloson.Numerics.Interpolation;
+﻿using Gloson.Numerics.Interpolation;
 using Gloson.Numerics.Matrices;
+using System;
+using System.Collections.Generic;
 
 namespace Gloson.Numerics {
 
@@ -127,7 +126,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Standard Constructor
     /// </summary>
-    public AkimaSpline(IEnumerable<(double x, double y)> source) 
+    public AkimaSpline(IEnumerable<(double x, double y)> source)
       : base(source) {
 
       m_A = new double[m_Y.Count];

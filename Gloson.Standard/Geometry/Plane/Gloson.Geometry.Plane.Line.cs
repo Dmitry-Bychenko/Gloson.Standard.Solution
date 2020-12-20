@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Gloson.Geometry.Plane {
-  
+
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
@@ -70,7 +69,7 @@ namespace Gloson.Geometry.Plane {
     #endregion Create
 
     #region Public
-        
+
     /// <summary>
     /// A in A * y + B * x + C = 0
     /// </summary>
@@ -144,7 +143,7 @@ namespace Gloson.Geometry.Plane {
         sb.Append("-y");
       else if (A == 1)
         sb.Append('y');
-      else if (A != 0){
+      else if (A != 0) {
         sb.Append(A);
         sb.Append(" * y");
       }
@@ -210,8 +209,8 @@ namespace Gloson.Geometry.Plane {
     /// <summary>
     /// HasCode 
     /// </summary>
-    public override int GetHashCode() => ((A == 0) ? B : (B / A)).GetHashCode(); 
-      
+    public override int GetHashCode() => ((A == 0) ? B : (B / A)).GetHashCode();
+
     #endregion IEquatable<Line2D>
   }
 

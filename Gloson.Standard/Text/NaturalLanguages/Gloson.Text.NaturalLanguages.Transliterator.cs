@@ -321,7 +321,7 @@ namespace Gloson.Text.NaturalLanguages {
              languageTo,
              pairs != null
                ? pairs.Select(item => new KeyValuePair<string, string>(item.Item1, item.Item2))
-               : Array.Empty<KeyValuePair<string, string>>()) { } 
+               : Array.Empty<KeyValuePair<string, string>>()) { }
 
     #endregion Create
   }

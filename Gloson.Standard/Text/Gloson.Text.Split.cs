@@ -41,8 +41,7 @@ namespace Gloson.Text {
     /// <param name="newLine">New Line</param>
     /// <returns>delimiter or null if doesn't exists</returns>
     public static string Delimiter(this NewLine newLine) {
-      return newLine switch
-      {
+      return newLine switch {
         NewLine.Smart => null,
         NewLine.Default => Environment.NewLine,
         NewLine.N => "\n",
@@ -104,7 +103,7 @@ namespace Gloson.Text {
           if (position > i || splitOptions != StringSplitOptions.RemoveEmptyEntries) {
             index += 1;
 
-            yield return source[position .. i]; 
+            yield return source[position..i];
           }
 
           if (next != current && (next == '\n' || next == '\r'))
