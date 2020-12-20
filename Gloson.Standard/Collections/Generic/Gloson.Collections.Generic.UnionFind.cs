@@ -17,6 +17,10 @@ namespace Gloson.Collections.Generic {
 
     private readonly Dictionary<T, Tuple<T, int>> m_Items;
 
+    private int m_CountMax = 1;
+
+    private T m_IdMax = default;
+
     #endregion Private Data
 
     #region Create
@@ -46,9 +50,19 @@ namespace Gloson.Collections.Generic {
     public IEqualityComparer<T> Comparer { get; }
 
     /// <summary>
-    /// Items
+    /// Total Count
     /// </summary>
-    public IReadOnlyDictionary<T, Tuple<T, int>> Items => m_Items;
+    public int CountTotal => m_Items.Count;
+
+    /// <summary>
+    /// Count Max (number of items in the largest disjoint set)
+    /// </summary>
+    public int CountMax => m_CountMax;
+
+    /// <summary>
+    /// Id Max (Id of the largest disjoint set)
+    /// </summary>
+    public T IdMax => m_IdMax;
 
     /// <summary>
     /// Id
@@ -122,6 +136,13 @@ namespace Gloson.Collections.Generic {
       else {
         m_Items[idRight] = new Tuple<T, int>(idLeft, leftRec.Item2 + rightRec.Item2);
         m_Items[idLeft] = new Tuple<T, int>(idLeft, leftRec.Item2 + rightRec.Item2);
+      }
+
+      int count = Count(idRight);
+
+      if (count >= m_CountMax) {
+        m_CountMax = count;
+        m_IdMax = idRight;
       }
     }
 
