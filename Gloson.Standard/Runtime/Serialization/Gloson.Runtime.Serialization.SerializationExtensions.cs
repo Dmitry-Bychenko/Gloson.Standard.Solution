@@ -21,7 +21,7 @@ namespace Gloson.Runtime.Serialization {
     /// Clone 
     /// </summary>
     public static T CloneSerializable<T>(T original, StreamingContextStates states) where T : ISerializable {
-      if (null == original)
+      if (original is null)
         return default;
 
       var constructor = original
@@ -33,7 +33,7 @@ namespace Gloson.Runtime.Serialization {
           .SequenceEqual(new Type[] { typeof(SerializationInfo), typeof(StreamingContext) }))
         .FirstOrDefault();
 
-      if (null == constructor)
+      if (constructor is null)
         throw new ArgumentException($"Type {typeof(T).Name} doesn't have {typeof(T).Name}(SerializationInfo info, StreamingContext context) constructor", nameof(original));
 
       SerializationInfo info = new SerializationInfo(original.GetType(), new FormatterConverter());

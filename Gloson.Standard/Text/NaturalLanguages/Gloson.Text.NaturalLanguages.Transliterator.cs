@@ -63,7 +63,7 @@ namespace Gloson.Text.NaturalLanguages {
     /// Standard Conctructor
     /// </summary>
     public EmptyTransliterator(CultureInfo culture) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
       LanguageFrom = culture;
@@ -121,7 +121,7 @@ namespace Gloson.Text.NaturalLanguages {
         if (m_SubstitutionLength > 0)
           return m_SubstitutionLength;
 
-        int value = Substitutions.Keys.Aggregate(0, (s, item) => Math.Max(s, item == null ? 0 : item.Length));
+        int value = Substitutions.Keys.Aggregate(0, (s, item) => Math.Max(s, item is null ? 0 : item.Length));
 
         Interlocked.CompareExchange(ref m_SubstitutionLength, value, 0);
 
@@ -226,9 +226,9 @@ namespace Gloson.Text.NaturalLanguages {
     /// <param name="languageFrom"></param>
     /// <param name="languageTo"></param>
     protected BaseTransliterator(CultureInfo languageFrom, CultureInfo languageTo) {
-      if (null == languageFrom)
+      if (languageFrom is null)
         throw new ArgumentNullException(nameof(languageFrom));
-      else if (null == languageTo)
+      else if (languageTo is null)
         throw new ArgumentNullException(nameof(languageTo));
 
       LanguageFrom = languageFrom;
@@ -292,7 +292,7 @@ namespace Gloson.Text.NaturalLanguages {
                                   IEnumerable<KeyValuePair<string, string>> pairs)
       : base(languageFrom, languageTo) {
 
-      if (null == pairs)
+      if (pairs is null)
         throw new ArgumentNullException(nameof(pairs));
 
       int max = 1;
@@ -301,7 +301,7 @@ namespace Gloson.Text.NaturalLanguages {
         m_Correspondence.Add(pair.Key.Normalize(NormalizationForm.FormC),
                              pair.Value.Normalize(NormalizationForm.FormC));
 
-        if (pair.Key != null)
+        if (pair.Key is not null)
           max = Math.Max(max, pair.Key.Length);
       }
 
@@ -319,7 +319,7 @@ namespace Gloson.Text.NaturalLanguages {
                                   IEnumerable<(string, string)> pairs)
       : this(languageFrom,
              languageTo,
-             pairs != null
+             pairs is not null
                ? pairs.Select(item => new KeyValuePair<string, string>(item.Item1, item.Item2))
                : Array.Empty<KeyValuePair<string, string>>()) { }
 

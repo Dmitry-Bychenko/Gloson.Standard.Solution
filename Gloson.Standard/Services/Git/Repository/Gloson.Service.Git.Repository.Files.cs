@@ -60,9 +60,9 @@ namespace Gloson.Services.Git.Repository {
     public static int Compare(GitRepoFile left, GitRepoFile right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return StringComparers.StandardOrdinalComparer.Compare(left.FileName, right.FileName);
@@ -147,7 +147,7 @@ namespace Gloson.Services.Git.Repository {
     public bool Equals(GitRepoFile other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(FileName, other.FileName, StringComparison.Ordinal);
@@ -162,7 +162,7 @@ namespace Gloson.Services.Git.Repository {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      return FileName == null ? 0 : FileName.GetHashCode();
+      return FileName is null ? 0 : FileName.GetHashCode();
     }
 
     #endregion IEquatable<GitRepoFile>

@@ -37,14 +37,14 @@ namespace Gloson.Net.Http {
     /// Read Lines
     /// </summary>
     public static IEnumerable<string> ReadLines(string address, Encoding encoding = null) {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
-      using var reader = null == encoding
+      using var reader = encoding is null
         ? new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult())
         : new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult(), encoding);
 
-      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
+      for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine())
         yield return line;
     }
 
@@ -55,7 +55,7 @@ namespace Gloson.Net.Http {
                                                 Encoding encoding = null,
                                                 char delimiter = ',',
                                                 char quotation = '"') {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       return ReadLines(address, encoding)
@@ -66,7 +66,7 @@ namespace Gloson.Net.Http {
     /// Read Text
     /// </summary>
     public static String ReadText(string address, Encoding encoding = null) {
-      using var reader = null == encoding
+      using var reader = encoding is null
         ? new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult())
         : new StreamReader(Client.GetStreamAsync(address).ConfigureAwait(false).GetAwaiter().GetResult(), encoding);
 
@@ -93,7 +93,7 @@ namespace Gloson.Net.Http {
     /// Read as Text (async)
     /// </summary>
     public static async Task<string> ReadTextAsync(string address, CancellationToken token) {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
@@ -113,7 +113,7 @@ namespace Gloson.Net.Http {
     /// Read as XML (async)
     /// </summary>
     public static async Task<XDocument> XmlAsync(string address, CancellationToken token) {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
@@ -135,7 +135,7 @@ namespace Gloson.Net.Http {
     /// Read Json Async 
     /// </summary>
     public static async Task<JsonDocument> JsonAsync(string address, CancellationToken token) {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       var respond = await Client.GetAsync(address, token).ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace Gloson.Net.Http {
     public static async IAsyncEnumerable<string> ReadLinesAsync(
       string address, Encoding encoding, [EnumeratorCancellation] CancellationToken token) {
 
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       encoding ??= Encoding.Default;
@@ -173,7 +173,7 @@ namespace Gloson.Net.Http {
 
       using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
 
-      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine()) {
+      for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine()) {
         token.ThrowIfCancellationRequested();
 
         yield return line;
@@ -214,7 +214,7 @@ namespace Gloson.Net.Http {
                                                                 char delimiter = ',',
                                                                 char quotation = '"',
                                        [EnumeratorCancellation] CancellationToken token = default) {
-      if (null == address)
+      if (address is null)
         throw new ArgumentNullException(nameof(address));
 
       encoding ??= Encoding.Default;
@@ -224,7 +224,7 @@ namespace Gloson.Net.Http {
       using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
 
       IEnumerable<string> Lines() {
-        for (string line = reader.ReadLine(); line != null; line = reader.ReadLine()) {
+        for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine()) {
           token.ThrowIfCancellationRequested();
 
           yield return line;

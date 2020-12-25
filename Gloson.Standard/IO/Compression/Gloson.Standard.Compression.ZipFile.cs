@@ -27,7 +27,7 @@ namespace Gloson.IO.Compression {
     #region Algorithm
 
     private static bool IsZipped(Stream value) {
-      if (null == value)
+      if (value is null)
         return false;
 
       if (!value.CanSeek || !value.CanRead)
@@ -51,7 +51,7 @@ namespace Gloson.IO.Compression {
     }
 
     //private static IEnumerable<byte[]> ReadChunks(Stream stream) {
-    //  if (null == stream)
+    //  if (stream is null)
     //    yield break;
 
     //  byte[] buffer = new byte[BufferSize];
@@ -89,7 +89,7 @@ namespace Gloson.IO.Compression {
           return stm;
       }
       catch {
-        if (stm != null)
+        if (stm is not null)
           stm.Dispose();
 
         throw;
@@ -119,7 +119,7 @@ namespace Gloson.IO.Compression {
           return stm;
       }
       catch {
-        if (stm != null)
+        if (stm is not null)
           stm.Dispose();
 
         throw;
@@ -130,7 +130,7 @@ namespace Gloson.IO.Compression {
     /// Read Bytes
     /// </summary>
     public static IEnumerable<byte> ReadBytes(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using var stm = ReadStream(fileName, FileMode.Open);
@@ -157,9 +157,9 @@ namespace Gloson.IO.Compression {
     /// <param name="bytes">Bytes to write</param>
     /// <param name="compression">Compression Level</param>
     public static void WriteAllBytes(string fileName, IEnumerable<byte> bytes, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == bytes)
+      else if (bytes is null)
         throw new ArgumentNullException(nameof(bytes));
 
       using Stream stm = WriteStream(fileName, FileMode.Create, compression);
@@ -189,9 +189,9 @@ namespace Gloson.IO.Compression {
     /// <param name="bytes">Bytes to write</param>
     /// <param name="compression">Compression Level</param>
     public static void AppendAllBytes(string fileName, IEnumerable<byte> bytes, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == bytes)
+      else if (bytes is null)
         throw new ArgumentNullException(nameof(bytes));
 
       using Stream stm = WriteStream(fileName, FileMode.Append, compression);
@@ -220,7 +220,7 @@ namespace Gloson.IO.Compression {
     /// <param name="fileName">File Name</param>
     /// <param name="encoding">Encoding</param>
     public static String ReadAllText(string fileName, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
@@ -233,7 +233,7 @@ namespace Gloson.IO.Compression {
     /// </summary>
     /// <param name="fileName">File Name</param>
     public static String ReadAllText(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
@@ -247,7 +247,7 @@ namespace Gloson.IO.Compression {
     /// <param name="fileName">File Name</param>
     /// <param name="encoding">Encoding</param>
     public static IEnumerable<string> ReadLines(string fileName, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
@@ -255,7 +255,7 @@ namespace Gloson.IO.Compression {
       while (true) {
         string line = reader.ReadLine();
 
-        if (null == line)
+        if (line is null)
           yield break;
         else
           yield return line;
@@ -267,7 +267,7 @@ namespace Gloson.IO.Compression {
     /// </summary>
     /// <param name="fileName">File Name</param>
     public static IEnumerable<string> ReadLines(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
@@ -275,7 +275,7 @@ namespace Gloson.IO.Compression {
       while (true) {
         string line = reader.ReadLine();
 
-        if (null == line)
+        if (line is null)
           yield break;
         else
           yield return line;
@@ -290,9 +290,9 @@ namespace Gloson.IO.Compression {
     /// <param name="compression">Compression</param>
     /// <param name="encoding">Encoding</param>
     public static void WriteAllText(string fileName, string text, CompressionLevel compression, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == text)
+      else if (text is null)
         throw new ArgumentNullException(text);
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
@@ -307,9 +307,9 @@ namespace Gloson.IO.Compression {
     /// <param name="text">Text</param>
     /// <param name="compression">Compression</param>
     public static void WriteAllText(string fileName, string text, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == text)
+      else if (text is null)
         throw new ArgumentNullException(text);
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
@@ -325,9 +325,9 @@ namespace Gloson.IO.Compression {
     /// <param name="compression">Compression</param>
     /// <param name="encoding">Encoding</param>
     public static void AppendAllText(string fileName, string text, CompressionLevel compression, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == text)
+      else if (text is null)
         throw new ArgumentNullException(text);
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
@@ -342,9 +342,9 @@ namespace Gloson.IO.Compression {
     /// <param name="text">Text</param>
     /// <param name="compression">Compression</param>
     public static void AppendAllText(string fileName, string text, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == text)
+      else if (text is null)
         throw new ArgumentNullException(text);
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
@@ -360,9 +360,9 @@ namespace Gloson.IO.Compression {
     /// <param name="compression">Compression</param>
     /// <param name="encoding">Encoding</param>
     public static void WriteAllLines(string fileName, IEnumerable<string> lines, CompressionLevel compression, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == lines)
+      else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
@@ -378,9 +378,9 @@ namespace Gloson.IO.Compression {
     /// <param name="lines">Lines to write</param>
     /// <param name="compression">Compression</param>
     public static void WriteAllLines(string fileName, IEnumerable<string> lines, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == lines)
+      else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
@@ -397,9 +397,9 @@ namespace Gloson.IO.Compression {
     /// <param name="compression">Compression</param>
     /// <param name="encoding">Encoding</param>
     public static void AppendAllLines(string fileName, IEnumerable<string> lines, CompressionLevel compression, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == lines)
+      else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
@@ -415,9 +415,9 @@ namespace Gloson.IO.Compression {
     /// <param name="lines">Lines to write</param>
     /// <param name="compression">Compression</param>
     public static void AppendAllLines(string fileName, IEnumerable<string> lines, CompressionLevel compression) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
-      else if (null == lines)
+      else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
@@ -430,7 +430,7 @@ namespace Gloson.IO.Compression {
     /// If file is zipped
     /// </summary>
     public static bool IsZipped(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       using Stream stm = ReadStream(fileName, FileMode.Open);

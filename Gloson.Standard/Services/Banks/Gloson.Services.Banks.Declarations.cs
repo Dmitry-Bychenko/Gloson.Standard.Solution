@@ -40,7 +40,7 @@ namespace Gloson.Services.Banks {
     /// <param name="at">DateTime of Exchange Rates</param>
     /// <returns>Exchange Rates</returns>
     public static IDictionary<CurrencyInfo, decimal> ExchangeRates(this IExchangeOffice office, DateTime at) {
-      if (null == office)
+      if (office is null)
         throw new ArgumentNullException(nameof(office));
 
       return office.ExchangeRatesAsync(at, CancellationToken.None).GetAwaiter().GetResult();
@@ -52,7 +52,7 @@ namespace Gloson.Services.Banks {
     /// <param name="at">DateTime of Exchange Rates</param>
     /// <returns>Exchange Rates</returns>
     public static Task<IDictionary<CurrencyInfo, decimal>> ExchangeRatesAsync(this IExchangeOffice office, DateTime at) {
-      if (null == office)
+      if (office is null)
         throw new ArgumentNullException(nameof(office));
 
       return office.ExchangeRatesAsync(at, CancellationToken.None);

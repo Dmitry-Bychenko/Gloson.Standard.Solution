@@ -28,7 +28,7 @@ namespace Gloson.Text {
                                            char openEscapement,
                                            char closeQuotation,
                                            char closeEscapement) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       StringBuilder sb = new StringBuilder(2 * value.Length + 2);
@@ -97,7 +97,7 @@ namespace Gloson.Text {
                                                char closeEscapement) {
       result = null;
 
-      if (null == value)
+      if (value is null)
         return false;
       else if (value.Length <= 1)
         return false;
@@ -190,7 +190,7 @@ namespace Gloson.Text {
                                                 char openEscapement,
                                                 char closeQuotation,
                                                 char closeEscapement) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       if (value.Length <= 1)

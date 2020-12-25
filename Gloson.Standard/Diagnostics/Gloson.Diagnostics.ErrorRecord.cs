@@ -66,9 +66,9 @@ namespace Gloson.Diagnostics {
     public static int Compare(ErrorRecord left, ErrorRecord right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = string.Compare(left.FileName, right.FileName, StringComparison.OrdinalIgnoreCase);
@@ -248,7 +248,7 @@ namespace Gloson.Diagnostics {
     public static bool operator ==(ErrorRecord left, ErrorRecord right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
       else
         return left.Equals(right);
@@ -260,7 +260,7 @@ namespace Gloson.Diagnostics {
     public static bool operator !=(ErrorRecord left, ErrorRecord right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
       else
         return !left.Equals(right);
@@ -296,7 +296,7 @@ namespace Gloson.Diagnostics {
     public bool Equals(ErrorRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(FileName, other.FileName, StringComparison.OrdinalIgnoreCase) &&

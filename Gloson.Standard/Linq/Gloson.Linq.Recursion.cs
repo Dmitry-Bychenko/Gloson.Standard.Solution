@@ -18,7 +18,7 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(Func<T> next) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       while (true)
@@ -29,7 +29,7 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(T first, Func<T, T> next) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       yield return first;
@@ -45,7 +45,7 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(T first, T second, Func<T, T, T> next) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       yield return first;
@@ -65,7 +65,7 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(T first, T second, T third, Func<T, T, T, T> next) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       yield return first;
@@ -87,7 +87,7 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(T first, T second, T third, T fourth, Func<T, T, T, T, T> next) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       yield return first;
@@ -111,9 +111,9 @@ namespace Gloson.Linq {
     /// Generate
     /// </summary>
     public static IEnumerable<T> Generate<T>(Func<T[], T> next, params T[] seeds) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
-      else if (null == seeds)
+      else if (seeds is null)
         throw new ArgumentNullException(nameof(seeds));
       else if (seeds.Length <= 0)
         throw new ArgumentException("Seends can't be empty", nameof(seeds));

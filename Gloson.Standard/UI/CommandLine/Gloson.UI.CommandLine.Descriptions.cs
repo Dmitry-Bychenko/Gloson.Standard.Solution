@@ -50,7 +50,7 @@ namespace Gloson.UI.CommandLine {
     }
 
     private void OnUpdate() {
-      if (null == Owner)
+      if (Owner is null)
         Owner.OnItemUpdate();
     }
 
@@ -90,9 +90,9 @@ namespace Gloson.UI.CommandLine {
     public static int Compare(CommandLineArgumentDescription left, CommandLineArgumentDescription right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == right)
+      else if (right is null)
         return 1;
-      else if (null == left)
+      else if (left is null)
         return -1;
 
       int result = string.Compare(left.m_OrderName, right.m_OrderName, StringComparison.OrdinalIgnoreCase);
@@ -111,10 +111,10 @@ namespace Gloson.UI.CommandLine {
       private set {
         if (ReferenceEquals(m_Owner, value))
           return;
-        else if (null == value)
+        else if (value is null)
           throw new ArgumentNullException(nameof(value));
 
-        if (null != m_Owner) {
+        if (m_Owner is not null) {
           m_Owner.CoreRemove(this);
           m_Owner.OnUpdate();
         }
@@ -297,7 +297,7 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     public Regex RegularExpression {
       get {
-        if (null == m_RegularExpression)
+        if (m_RegularExpression is null)
           m_RegularExpression = CreateRegularExpression();
 
         return m_RegularExpression;
@@ -337,7 +337,7 @@ namespace Gloson.UI.CommandLine {
 
         EventHandler<ValidationEventArgs<CommandLineArgumentDescription>> custom = Validate;
 
-        if (null != custom) {
+        if (custom is not null) {
           ValidationEventArgs<CommandLineArgumentDescription> args = new ValidationEventArgs<CommandLineArgumentDescription>(this);
 
           custom.Invoke(this, args);
@@ -372,7 +372,7 @@ namespace Gloson.UI.CommandLine {
     public bool Equals(CommandLineArgumentDescription other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;
@@ -393,7 +393,7 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     /// <returns></returns>
     public override int GetHashCode() {
-      if (null == m_OrderName)
+      if (m_OrderName is null)
         return 0;
       else if ((Owner.Options & CommandLineDescriptorsOptions.CaseSensitive) == CommandLineDescriptorsOptions.CaseSensitive)
         return m_OrderName.GetHashCode();
@@ -431,19 +431,19 @@ namespace Gloson.UI.CommandLine {
     internal void OnUpdate() {
       EventHandler updated = Updated;
 
-      if (null != updated)
+      if (updated is not null)
         updated.Invoke(this, EventArgs.Empty);
     }
 
     internal void CoreAdd(CommandLineArgumentDescription item) {
-      if (null == item)
+      if (item is null)
         return;
 
       m_Items.Add(item);
     }
 
     internal void CoreRemove(CommandLineArgumentDescription item) {
-      if (null == item)
+      if (item is null)
         return;
 
       m_Items.Remove(item);
@@ -625,7 +625,7 @@ namespace Gloson.UI.CommandLine {
       get {
         CommandLineArgumentDescription result = Find(name);
 
-        if (null == result)
+        if (result is null)
           throw new ArgumentException($"Description \"{name}\" is not found.", nameof(name));
 
         return result;

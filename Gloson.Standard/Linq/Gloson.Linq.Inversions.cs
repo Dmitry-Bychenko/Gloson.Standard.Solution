@@ -66,13 +66,13 @@ namespace Gloson.Linq {
     /// Count inversions
     /// </summary>
     public static int InversionsCount<T>(this IEnumerable<T> source, IComparer<T> comparer = null) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = Comparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer), $"type {typeof(T).Name} doesn't have default comparer.");
 
       T[] arr = source.ToArray();

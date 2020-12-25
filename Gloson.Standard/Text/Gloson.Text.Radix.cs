@@ -49,7 +49,7 @@ namespace Gloson.Text {
     /// Radix From Prefix
     /// </summary>
     public static int RadixFromPrefix(string value) {
-      if (null == value)
+      if (value is null)
         return -1;
       else if (value.Length == 1)
         return RadixFromPrefix(value[0]);
@@ -212,7 +212,7 @@ namespace Gloson.Text {
     /// Convert from radix to radix
     /// </summary>
     public static String Convert(string value, int fromRadix, int toRadix) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
       else if (string.IsNullOrEmpty(value))
         throw new FormatException("Empty String can't be converted");
@@ -301,7 +301,7 @@ namespace Gloson.Text {
     /// Convert To Decimal (with radix autodetection)
     /// </summary>
     public static String ToDecimal(string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       if (TryToDecimal(value, out string result))

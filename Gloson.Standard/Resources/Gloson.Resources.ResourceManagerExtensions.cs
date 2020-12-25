@@ -31,10 +31,10 @@ namespace Gloson.Resources {
     public static IEnumerable<KeyValuePair<string, object>> EnumerateResources(this ResourceManager manager,
                                                                                     CultureInfo culture) {
 
-      if (null == manager)
+      if (manager is null)
         throw new ArgumentNullException(nameof(manager));
 
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentUICulture;
 
       using ResourceSet rs = manager.GetResourceSet(culture, true, true);
@@ -53,7 +53,7 @@ namespace Gloson.Resources {
     /// Resources Main Assembly
     /// </summary>
     public static Assembly ResourceMainAssembly(this ResourceManager manager) {
-      if (null == manager)
+      if (manager is null)
         throw new ArgumentNullException(nameof(manager));
 
       return s_MainAssembly.Value.GetValue(manager) as Assembly;
@@ -63,9 +63,9 @@ namespace Gloson.Resources {
     /// Load Assembly
     /// </summary>
     public static Assembly LoadAssembly(this ResourceManager manager, string resourceName) {
-      if (null == manager)
+      if (manager is null)
         throw new ArgumentNullException(nameof(manager));
-      else if (null == resourceName)
+      else if (resourceName is null)
         throw new ArgumentNullException(nameof(resourceName));
 
       //if (manager.GetObject(resourceName) is byte[] bytes)

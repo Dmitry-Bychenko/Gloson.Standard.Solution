@@ -38,7 +38,7 @@ namespace Gloson.Ini {
       Name = name ?? "";
       Value = value ?? "";
 
-      if (owner != null)
+      if (owner is not null)
         owner.CoreAddRecord(this);
     }
 
@@ -193,7 +193,7 @@ namespace Gloson.Ini {
     public bool Equals(NameValueRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (Comparer != other.Comparer)
@@ -254,13 +254,13 @@ namespace Gloson.Ini {
     }
 
     internal void CoreAddRecord(NameValueRecord record) {
-      if (null == record)
+      if (record is null)
         return;
 
       if (record.Owner == this)
         return;
 
-      if (record.Owner != null)
+      if (record.Owner is not null)
         record.Owner.CoreRemoveRecord(record);
 
       if (m_Records.TryGetValue(record.Name, out var old))
@@ -270,7 +270,7 @@ namespace Gloson.Ini {
     }
 
     internal void CoreRemoveRecord(NameValueRecord record) {
-      if (null == record)
+      if (record is null)
         return;
 
       if (record.Owner != this)
@@ -311,7 +311,7 @@ namespace Gloson.Ini {
     public static NameValueDocument Load(IEnumerable<string> lines,
                                          StringComparer comparer,
                                          IniFileCommentKind commentKind) {
-      if (null == lines)
+      if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       NameValueDocument result = new NameValueDocument(comparer, commentKind);
@@ -423,7 +423,7 @@ namespace Gloson.Ini {
     /// Add
     /// </summary>
     public NameValueRecord Add(NameValueRecord item) {
-      if (null == item)
+      if (item is null)
         throw new ArgumentNullException(nameof(item));
 
       CoreAddRecord(item);
@@ -467,7 +467,7 @@ namespace Gloson.Ini {
         return null;
       }
       set {
-        if (null == value)
+        if (value is null)
           Remove(name);
         else
           Add(name, value);

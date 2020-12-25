@@ -83,7 +83,7 @@ namespace Gloson.Numerics {
       if (interestRate <= -1)
         throw new ArgumentOutOfRangeException(nameof(interestRate));
 
-      if (null == cashFlow)
+      if (cashFlow is null)
         throw new ArgumentNullException(nameof(cashFlow));
 
       double result = 0.0;

@@ -40,7 +40,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static double[][] Clone(double[][] source) {
-      if (null == source)
+      if (source is null)
         return null;
 
       double[][] result = new double[source.Length][];
@@ -48,7 +48,7 @@ namespace Gloson.Numerics.Matrices {
       for (int i = source.Length - 1; i >= 0; --i) {
         double[] src = source[i];
 
-        if (null == src)
+        if (src is null)
           continue;
 
         double[] res = new double[src.Length];
@@ -62,7 +62,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static double[][] Transpose(double[][] value) {
-      if (null == value)
+      if (value is null)
         return null;
 
       int colCount = value.Length;
@@ -166,7 +166,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static int Rank(double[][] value) {
-      if (null == value)
+      if (value is null)
         return 0;
 
       double[][] m = Clone(value);
@@ -319,7 +319,7 @@ namespace Gloson.Numerics.Matrices {
     }
 
     internal static double[] Solve(double[][] value) {
-      if (null == value)
+      if (value is null)
         return Array.Empty<double>();
       else if (value.Length <= 0)
         return Array.Empty<double>();
@@ -617,7 +617,7 @@ namespace Gloson.Numerics.Matrices {
       double[][] f = null;
 
       foreach (var factor in HouseholderFactors(value)) {
-        if (f != null) {
+        if (f is not null) {
           double[][] z = new double[f.Length][];
 
           for (int j = 0; j < f.Length; ++j)

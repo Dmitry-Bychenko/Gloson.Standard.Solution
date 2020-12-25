@@ -35,7 +35,7 @@ namespace Gloson.Diagnostics {
     public ValidationEventArgs(T valueUnderTest)
       : base() {
 
-      if (null == valueUnderTest)
+      if (valueUnderTest is null)
         throw new ArgumentNullException(nameof(valueUnderTest));
 
       ValueUnderTest = valueUnderTest;
@@ -64,10 +64,10 @@ namespace Gloson.Diagnostics {
     /// </summary>
     public IReadOnlyList<string> Errors {
       get {
-        if (null != m_Errors)
+        if (m_Errors is not null)
           return m_Errors;
 
-        if (m_ErrorsFound == null)
+        if (m_ErrorsFound is null)
           m_Errors = new List<String>();
         else
           m_Errors = m_ErrorsFound

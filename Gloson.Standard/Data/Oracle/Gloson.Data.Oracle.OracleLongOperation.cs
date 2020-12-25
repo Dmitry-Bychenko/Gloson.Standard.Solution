@@ -165,7 +165,7 @@ namespace Gloson.Data.Oracle {
                                string title,
                                int finalStep,
                                int currentStep) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
       else if (connection.State != ConnectionState.Open ||
                connection.State != ConnectionState.Fetching ||

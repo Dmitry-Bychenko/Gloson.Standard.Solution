@@ -18,9 +18,9 @@ namespace Gloson.Linq {
     /// IF Empty. Either source or sequence if source is empty
     /// </summary>
     public static IEnumerable<T> IfEmpty<T>(this IEnumerable<T> source, IEnumerable<T> sequence) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == sequence)
+      else if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       bool isEmpty = true;
@@ -40,10 +40,10 @@ namespace Gloson.Linq {
     /// IF Empty. Either source or sequence if source is null or empty
     /// </summary>
     public static IEnumerable<T> IfNullOrEmpty<T>(this IEnumerable<T> source, IEnumerable<T> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
-      if (null == source) {
+      if (source is null) {
         foreach (T item in sequence)
           yield return item;
 

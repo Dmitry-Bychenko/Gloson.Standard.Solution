@@ -23,12 +23,12 @@ namespace Gloson.Algorithms.Graphs {
       this IEnumerable<T> source,
            Func<T, (N from, N to, double length)> edgeMap,
            IEqualityComparer<N> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == edgeMap)
+      else if (edgeMap is null)
         throw new ArgumentNullException(nameof(edgeMap));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<N>.Default;
 
       List<(N from, N to, double length)> list = new List<(N from, N to, double length)>();

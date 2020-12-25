@@ -51,7 +51,7 @@ namespace Gloson.Collections.Generic {
     /// Hash Code
     /// </summary>
     public int GetHashCode(IEnumerable<T> obj) {
-      if (null == obj)
+      if (obj is null)
         return -1;
       else if (obj is IReadOnlyList<T> list)
         return list.Count;
@@ -110,7 +110,7 @@ namespace Gloson.Collections.Generic {
     public bool Equals(IEnumerable<T> x, IEnumerable<T> y) {
       if (ReferenceEquals(x, y))
         return true;
-      else if (null == x || null == y)
+      else if (x is null || y is null)
         return false;
 
       if (x.Except(y, InnerComparer).Any())
@@ -125,7 +125,7 @@ namespace Gloson.Collections.Generic {
     /// Hash Code
     /// </summary>
     public int GetHashCode(IEnumerable<T> obj) {
-      if (null == obj)
+      if (obj is null)
         return -1;
       else if (obj is IReadOnlyList<T> list)
         return list.Count;
@@ -159,7 +159,7 @@ namespace Gloson.Collections.Generic {
     public bool Equals(HashSet<T> x, HashSet<T> y) {
       if (ReferenceEquals(x, y))
         return true;
-      else if (null == x || null == y)
+      else if (x is null || y is null)
         return false;
 
       return x.SetEquals(y);
@@ -168,7 +168,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Hash Code
     /// </summary>
-    public int GetHashCode(HashSet<T> obj) => null == obj ? -1 : obj.Count;
+    public int GetHashCode(HashSet<T> obj) => obj is null ? -1 : obj.Count;
 
     #endregion IEqualityComparer<ISet<T>>
   }

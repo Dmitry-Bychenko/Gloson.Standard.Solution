@@ -32,7 +32,7 @@ namespace Gloson.Ini {
     #region Algorithm
 
     internal void CoreUpdateRecords() {
-      if (null == m_Records)
+      if (m_Records is null)
         return;
 
       if (m_Records.Comparer == Comparer)
@@ -52,13 +52,13 @@ namespace Gloson.Ini {
     }
 
     internal void CoreAddRecord(IniDocumentRecord record) {
-      if (null == record)
+      if (record is null)
         return;
 
       if (record.Section == this)
         return;
 
-      if (record.Section != null)
+      if (record.Section is not null)
         record.Section.CoreRemoveRecord(record);
 
       if (m_Records.TryGetValue(record.Name, out var old))
@@ -70,7 +70,7 @@ namespace Gloson.Ini {
     }
 
     internal void CoreRemoveRecord(IniDocumentRecord record) {
-      if (null == record)
+      if (record is null)
         return;
 
       if (record.Section != this)
@@ -89,12 +89,12 @@ namespace Gloson.Ini {
     /// Standard Constructor
     /// </summary>
     public IniDocumentSection(string name, IniDocument document) {
-      if (null == name)
+      if (name is null)
         throw new ArgumentNullException(nameof(name));
 
       Name = string.Concat(name.Where(c => !char.IsControl(c)));
 
-      if (null != document)
+      if (document is not null)
         document.CoreAddSection(this);
 
       m_Records = new Dictionary<string, IniDocumentRecord>(Comparer);
@@ -117,7 +117,7 @@ namespace Gloson.Ini {
         return m_Comments;
       }
       set {
-        if (null == value)
+        if (value is null)
           value = "";
 
         m_Comments = value;
@@ -134,9 +134,9 @@ namespace Gloson.Ini {
     /// </summary>
     public StringComparer Comparer {
       get {
-        if (Document != null)
+        if (Document is not null)
           return Document.Comparer;
-        else if (m_Records != null)
+        else if (m_Records is not null)
           if (m_Records.Comparer is StringComparer comparer)
             return comparer;
 
@@ -178,7 +178,7 @@ namespace Gloson.Ini {
     /// Add
     /// </summary>
     public IniDocumentRecord AddRecord(IniDocumentRecord record) {
-      if (null == record)
+      if (record is null)
         throw new ArgumentNullException(nameof(record));
 
       CoreAddRecord(record);
@@ -190,7 +190,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(IEnumerable<IniDocumentRecord> records) {
-      if (null == records)
+      if (records is null)
         throw new ArgumentNullException(nameof(records));
 
       foreach (var record in records)
@@ -203,7 +203,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(params IniDocumentRecord[] records) {
-      if (null == records)
+      if (records is null)
         throw new ArgumentNullException(nameof(records));
 
       foreach (var record in records)
@@ -216,7 +216,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(IEnumerable<(string, object)> tuples) {
-      if (null == tuples)
+      if (tuples is null)
         throw new ArgumentNullException(nameof(tuples));
 
       foreach (var tuple in tuples)
@@ -229,7 +229,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(params (string, object)[] tuples) {
-      if (null == tuples)
+      if (tuples is null)
         throw new ArgumentNullException(nameof(tuples));
 
       foreach (var tuple in tuples)
@@ -242,7 +242,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(IEnumerable<KeyValuePair<string, object>> pairs) {
-      if (null == pairs)
+      if (pairs is null)
         throw new ArgumentNullException(nameof(pairs));
 
       foreach (var pair in pairs)
@@ -255,7 +255,7 @@ namespace Gloson.Ini {
     /// Add Records
     /// </summary>
     public IniDocumentSection AddRecords(params KeyValuePair<string, object>[] pairs) {
-      if (null == pairs)
+      if (pairs is null)
         throw new ArgumentNullException(nameof(pairs));
 
       foreach (var pair in pairs)
@@ -287,7 +287,7 @@ namespace Gloson.Ini {
     public static bool operator ==(IniDocumentSection left, IniDocumentSection right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
       else
         return left.Equals(right);
@@ -299,7 +299,7 @@ namespace Gloson.Ini {
     public static bool operator !=(IniDocumentSection left, IniDocumentSection right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
       else
         return !left.Equals(right);
@@ -315,7 +315,7 @@ namespace Gloson.Ini {
     public bool Equals(IniDocumentSection other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Comparer == other.Comparer &&
@@ -366,7 +366,7 @@ namespace Gloson.Ini {
           : "";
       }
       set {
-        if (null == key)
+        if (key is null)
           throw new ArgumentNullException(nameof(key));
 
         if (m_Records.TryGetValue(key, out var record))
@@ -427,7 +427,7 @@ namespace Gloson.Ini {
     /// CopyTo
     /// </summary>
     public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex) {
-      if (null == array)
+      if (array is null)
         throw new ArgumentNullException(nameof(array));
 
       if (arrayIndex < array.GetLowerBound(0) || arrayIndex + Count > array.GetUpperBound(0))
@@ -498,9 +498,9 @@ namespace Gloson.Ini {
     /// Standard Constructor
     /// </summary>
     public IniDocumentRecord(IniDocumentSection section, string name, object value) {
-      if (null == section)
+      if (section is null)
         throw new ArgumentNullException(nameof(section));
-      else if (null == name)
+      else if (name is null)
         throw new ArgumentNullException(nameof(name));
 
       Name = name;
@@ -509,7 +509,7 @@ namespace Gloson.Ini {
         Value = value?.ToString();
       }
 
-      if (section != null)
+      if (section is not null)
         section.CoreAddRecord(this);
     }
 
@@ -545,7 +545,7 @@ namespace Gloson.Ini {
         return m_Comments;
       }
       set {
-        if (null == value)
+        if (value is null)
           value = "";
 
         m_Comments = value;
@@ -572,7 +572,7 @@ namespace Gloson.Ini {
     public bool Equals(IniDocumentRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Comparer == other.Comparer &&
@@ -631,12 +631,12 @@ namespace Gloson.Ini {
     }
 
     internal void CoreAddSection(IniDocumentSection section) {
-      if (null == section)
+      if (section is null)
         return;
       else if (section.Document == this)
         return;
 
-      if (section.Document != null)
+      if (section.Document is not null)
         section.Document.CoreRemoveSection(section);
 
       if (m_Sections.TryGetValue(section.Name, out var old))
@@ -649,9 +649,9 @@ namespace Gloson.Ini {
     }
 
     internal void CoreRemoveSection(IniDocumentSection section) {
-      if (null == section)
+      if (section is null)
         return;
-      else if (section.Document != null)
+      else if (section.Document is not null)
         return;
 
       if (m_Sections.TryGetValue(section.Name, out var actual) && actual == section) {
@@ -668,7 +668,7 @@ namespace Gloson.Ini {
     /// Standard Constructor
     /// </summary>
     public IniDocument(StringComparer comparer, IniFileCommentKind commentKind) {
-      if (null == comparer)
+      if (comparer is null)
         comparer = StringComparer.OrdinalIgnoreCase;
 
       m_Sections = new Dictionary<string, IniDocumentSection>(comparer);
@@ -725,7 +725,7 @@ namespace Gloson.Ini {
           comments.Clear();
         }
         else if (IniFileRecord.TryParse(line, out var iniRecord)) {
-          if (null == section)
+          if (section is null)
             section = new IniDocumentSection("", result);
 
           section.AddRecord(iniRecord.Name, iniRecord.Value).Comments = string.Join(Environment.NewLine, comments);
@@ -822,7 +822,7 @@ namespace Gloson.Ini {
     /// Add Section
     /// </summary>
     public IniDocumentSection AddSection(string name) {
-      if (name == null)
+      if (name is null)
         throw new ArgumentNullException(nameof(name));
 
       if (m_Sections.TryGetValue(name, out var result))
@@ -835,7 +835,7 @@ namespace Gloson.Ini {
     /// Add Section
     /// </summary>
     public IniDocumentSection AddSection(IniDocumentSection section) {
-      if (null == section)
+      if (section is null)
         throw new ArgumentNullException(nameof(section));
 
       CoreAddSection(section);
@@ -847,7 +847,7 @@ namespace Gloson.Ini {
     /// Add Sections
     /// </summary>
     public IniDocument AddSections(IEnumerable<IniDocumentSection> sections) {
-      if (null == sections)
+      if (sections is null)
         throw new ArgumentNullException(nameof(sections));
 
       foreach (IniDocumentSection section in sections)
@@ -860,7 +860,7 @@ namespace Gloson.Ini {
     /// Add Sections
     /// </summary>
     public IniDocument AddSections(params IniDocumentSection[] sections) {
-      if (null == sections)
+      if (sections is null)
         throw new ArgumentNullException(nameof(sections));
 
       foreach (IniDocumentSection section in sections)
@@ -930,7 +930,7 @@ namespace Gloson.Ini {
           : null;
       }
       set {
-        if (null == value)
+        if (value is null)
           Remove(sectionName, recordName);
         else {
           IniDocumentSection section = AddSection(sectionName);

@@ -17,9 +17,9 @@ namespace Gloson {
     /// Pipeline
     /// </summary>
     public static Func<T, T> Pipeline<T>(this Func<T, T> first, params Func<T, T>[] next) {
-      if (null == first)
+      if (first is null)
         throw new ArgumentNullException(nameof(first));
-      else if (null == next)
+      else if (next is null)
         throw new ArgumentNullException(nameof(first));
 
       if (next.Length <= 0)

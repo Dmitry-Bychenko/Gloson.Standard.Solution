@@ -72,7 +72,7 @@ namespace Gloson.Text {
     /// Dump
     /// </summary>
     public static string Dump(string value) {
-      if (null == value)
+      if (value is null)
         return "[null]";
 
       StringBuilder sb = new StringBuilder(value.Length + 256);

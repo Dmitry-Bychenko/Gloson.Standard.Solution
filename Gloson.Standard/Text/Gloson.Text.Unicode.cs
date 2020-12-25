@@ -19,7 +19,7 @@ namespace Gloson.Text {
     /// Remove diacritics crème brûlée => creme brulee
     /// </summary>
     public static string RemoveDiacritics(string value) {
-      if (null == value)
+      if (value is null)
         return null;
 
       return string

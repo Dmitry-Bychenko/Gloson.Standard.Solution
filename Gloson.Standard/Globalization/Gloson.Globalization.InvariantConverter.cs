@@ -115,7 +115,7 @@ namespace Gloson.Globalization {
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out float result) {
-      if (null == value) {
+      if (value is null) {
         result = Single.NaN;
         return false;
       }
@@ -129,7 +129,7 @@ namespace Gloson.Globalization {
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out double result) {
-      if (null == value) {
+      if (value is null) {
         result = double.NaN;
         return false;
       }
@@ -143,7 +143,7 @@ namespace Gloson.Globalization {
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out bool result) {
-      if (null == value) {
+      if (value is null) {
         result = false;
         return false;
       }
@@ -179,7 +179,7 @@ namespace Gloson.Globalization {
     /// Try Parse
     /// </summary>
     public static bool TryParse(string value, out DateTime result) {
-      if (null == value) {
+      if (value is null) {
         result = DateTime.MinValue;
 
         return false;

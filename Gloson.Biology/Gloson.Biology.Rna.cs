@@ -30,7 +30,7 @@ namespace Gloson.Biology {
     /// Standard Constructor
     /// </summary>
     public Rna(IEnumerable<RnaNuclearbase> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       m_Items = new List<RnaNuclearbase>(sequence);
@@ -41,7 +41,7 @@ namespace Gloson.Biology {
     /// </summary>
     /// <param name="sequence"></param>
     public Rna(IEnumerable<char> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       m_Items = sequence
@@ -53,7 +53,7 @@ namespace Gloson.Biology {
     /// Standard Constructor
     /// </summary>
     public static Rna FromDna(Dna source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       Rna result = new Rna() {
@@ -90,7 +90,7 @@ namespace Gloson.Biology {
     public static bool operator ==(Rna left, Rna right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -102,7 +102,7 @@ namespace Gloson.Biology {
     public static bool operator !=(Rna left, Rna right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -149,7 +149,7 @@ namespace Gloson.Biology {
     public bool Equals(Rna other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Enumerable.SequenceEqual(m_Items, other.m_Items);
@@ -164,7 +164,7 @@ namespace Gloson.Biology {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      if (m_Items == null)
+      if (m_Items is null)
         return 0;
 
       unchecked {

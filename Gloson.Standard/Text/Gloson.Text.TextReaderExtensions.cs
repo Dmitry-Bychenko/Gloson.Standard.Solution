@@ -19,13 +19,13 @@ namespace Gloson.Text {
     /// As Enumerable
     /// </summary>
     public static IEnumerable<string> AsEnumerable(this TextReader reader) {
-      if (null == reader)
+      if (reader is null)
         throw new ArgumentNullException(nameof(reader));
 
       while (true) {
         string line = reader.ReadLine();
 
-        if (null == line)
+        if (line is null)
           break;
 
         yield return line;

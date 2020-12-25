@@ -17,7 +17,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     /// Add / Edit Credentilas
     /// </summary>
     public bool ShowDialog(string title, ref NetworkCredential credential) {
-      if (null == credential)
+      if (credential is null)
         credential = new NetworkCredential(Environment.UserName, "");
 
       if (string.IsNullOrWhiteSpace(title))

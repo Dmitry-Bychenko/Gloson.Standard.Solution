@@ -41,7 +41,7 @@ namespace Gloson.Numerics {
     /// Smooth
     /// </summary>
     public IEnumerable<double> Smooth(IEnumerable<double> source) =>
-      null != source ? CoreSmooth(source) : throw new ArgumentNullException(nameof(source));
+      source is not null ? CoreSmooth(source) : throw new ArgumentNullException(nameof(source));
 
     #endregion IDataSmoothing
   }
@@ -61,10 +61,10 @@ namespace Gloson.Numerics {
     /// Smooth
     /// </summary>
     public static IEnumerable<double> Smooth(this IEnumerable<double> source, IDataSequenceSmoother smoother) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == smoother)
+      if (smoother is null)
         smoother = new SmootherNone();
 
       foreach (var item in smoother.Smooth(source))
@@ -113,7 +113,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Equals
     /// </summary>
-    public bool Equals(SmootherNone other) => null != other;
+    public bool Equals(SmootherNone other) => other is not null;
 
     /// <summary>
     /// Equals
@@ -201,7 +201,7 @@ namespace Gloson.Numerics {
     public bool Equals(SmootherSimpleMovingAverage other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Window == other.Window;

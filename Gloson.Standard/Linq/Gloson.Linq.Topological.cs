@@ -92,9 +92,9 @@ namespace Gloson.Linq {
     /// <param name="source">Items to sort</param>
     /// <param name="required">Items required to be before the current item</param>
     public static IOrderedEnumerable<T> TopologicalOrderBy<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == required)
+      else if (required is null)
         throw new ArgumentNullException(nameof(required));
 
       List<List<T>> list = TopologicalList(source, required);
@@ -108,9 +108,9 @@ namespace Gloson.Linq {
     /// <param name="source">Items to sort</param>
     /// <param name="required">Items required to be before the current item</param>
     public static IOrderedEnumerable<T> TopologicalOrderByDescending<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == required)
+      else if (required is null)
         throw new ArgumentNullException(nameof(required));
 
       List<List<T>> list = TopologicalList(source, required);
@@ -128,9 +128,9 @@ namespace Gloson.Linq {
     /// <param name="required"></param>
     /// <returns></returns>
     public static IEnumerable<IGrouping<int, T>> TopologicalGroupBy<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == required)
+      else if (required is null)
         throw new ArgumentNullException(nameof(required));
 
       var list = TopologicalList(source, required);

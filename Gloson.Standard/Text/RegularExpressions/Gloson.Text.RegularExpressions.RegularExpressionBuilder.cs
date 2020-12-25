@@ -54,7 +54,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="escape">escape symbol</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardPattern(string value, char manyJoker, char oneJoker, char escape) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       StringBuilder sb = new StringBuilder();
@@ -112,7 +112,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="oneJoker">many joker, usually '?'</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardPattern(string value, char manyJoker, char oneJoker) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       StringBuilder sb = new StringBuilder();
@@ -159,7 +159,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="escape">escape</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardAnchoredPattern(string value, char manyJoker, char oneJoker, char escape) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return $"^{FromWildCardPattern(value, manyJoker, oneJoker, escape)}$";
@@ -173,7 +173,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="oneJoker">many joker, usually '?'</param>
     /// <returns>Regular expression pattern</returns>
     public static string FromWildCardAnchoredPattern(string value, char manyJoker, char oneJoker) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return $"^{FromWildCardPattern(value, manyJoker, oneJoker)}$";
@@ -190,7 +190,7 @@ namespace Gloson.Text.RegularExpressions {
     /// If options pattern: abc[XY[Z]]def where abcdef, abcXYdef, abcXYZdef are valid is valid
     /// </summary>
     public static bool IsOptionsPatternValid(string value) {
-      if (null == value)
+      if (value is null)
         return false;
 
       int bracketsCount = 0;
@@ -213,7 +213,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="value">value to convert to regex pattern</param>
     /// <returns></returns>
     public static string FromOptionsPattern(string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       StringBuilder sb = new StringBuilder(value.Length * 2 + 8);
@@ -248,7 +248,7 @@ namespace Gloson.Text.RegularExpressions {
     /// <param name="value">value to convert to regex pattern</param>
     /// <returns></returns>
     public static string FromOptionsAnchoredPattern(string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return $"^{FromOptionsPattern(value)}$";

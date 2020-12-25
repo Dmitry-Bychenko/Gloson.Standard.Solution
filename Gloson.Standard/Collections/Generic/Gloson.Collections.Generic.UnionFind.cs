@@ -76,7 +76,7 @@ namespace Gloson.Collections.Generic {
         if (!m_Items.TryGetValue(result, out var next))
           return result;
         else if (Comparer.Equals(next.Item1, result)) {
-          if (null != path) {
+          if (path is not null) {
             int size = m_Items[result].Item2;
 
             foreach (T node in path)
@@ -86,7 +86,7 @@ namespace Gloson.Collections.Generic {
           return result;
         }
 
-        if (null == path)
+        if (path is null)
           path = new List<T>();
 
         path.Add(result);

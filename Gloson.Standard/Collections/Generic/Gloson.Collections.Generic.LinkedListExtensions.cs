@@ -18,9 +18,9 @@ namespace Gloson.Collections.Generic {
     /// Add range after
     /// </summary>
     public static void AddRangeAfter<T>(this LinkedList<T> list, IEnumerable<T> value) {
-      if (null == list)
+      if (list is null)
         throw new ArgumentNullException(nameof(list));
-      else if (null == value)
+      else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       foreach (T item in value)
@@ -31,7 +31,7 @@ namespace Gloson.Collections.Generic {
     /// Consume (as queue)
     /// </summary>
     public static IEnumerable<T> Consume<T>(this LinkedList<T> list) {
-      if (null == list)
+      if (list is null)
         throw new ArgumentNullException(nameof(list));
 
       while (list.Count > 0) {

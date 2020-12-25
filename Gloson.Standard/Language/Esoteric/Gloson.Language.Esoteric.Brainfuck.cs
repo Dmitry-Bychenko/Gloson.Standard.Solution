@@ -275,7 +275,7 @@ namespace Gloson.Language.Esoteric {
 
       CurrentOutput = ((char)item).ToString();
 
-      if (null != output)
+      if (output is not null)
         output.Invoke(this, new OutputEventArgs(this, (char)item));
     }
 
@@ -286,7 +286,7 @@ namespace Gloson.Language.Esoteric {
 
       CurrentOutput = item.ToString(CultureInfo.InvariantCulture);
 
-      if (null != output)
+      if (output is not null)
         output.Invoke(this, new OutputEventArgs(this, item));
     }
 
@@ -508,7 +508,7 @@ namespace Gloson.Language.Esoteric {
     /// Run To Point
     /// </summary>
     public int RunToPoint(params int[] breakPoints) {
-      if (null == breakPoints)
+      if (breakPoints is null)
         throw new ArgumentNullException(nameof(breakPoints));
 
       while (true) {
@@ -526,15 +526,15 @@ namespace Gloson.Language.Esoteric {
     public static IEnumerable<string> Run(string sourceCode,
                                           IEnumerable<string> input,
                                           BrainfuckSyntax syntax = BrainfuckSyntax.PlusPlus) {
-      if (null == sourceCode)
+      if (sourceCode is null)
         throw new ArgumentNullException(nameof(sourceCode));
-      else if (null == input)
+      else if (input is null)
         input = Array.Empty<string>();
 
       using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
 
       while (engine.Next())
-        if (engine.CurrentOutput != null)
+        if (engine.CurrentOutput is not null)
           yield return engine.CurrentOutput;
     }
 
@@ -546,23 +546,23 @@ namespace Gloson.Language.Esoteric {
                                                BrainfuckSyntax syntax,
                                                Func<BrainfuckInterpreter, bool> breakFunction,
                                                params int[] breakPoints) {
-      if (null == sourceCode)
+      if (sourceCode is null)
         throw new ArgumentNullException(nameof(sourceCode));
-      else if (null == input)
+      else if (input is null)
         input = Array.Empty<string>();
 
       using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
 
       while (true) {
         if (breakPoints.Contains(engine.Position))
-          if (breakFunction != null)
+          if (breakFunction is not null)
             if (breakFunction(engine))
               yield break;
 
         if (!engine.Next())
           yield break;
 
-        if (engine.CurrentOutput != null)
+        if (engine.CurrentOutput is not null)
           yield return engine.CurrentOutput;
       }
     }
@@ -576,7 +576,7 @@ namespace Gloson.Language.Esoteric {
     /// Remove all comments in a source code
     /// </summary>
     public static string RemoveAllComments(string sourceCode, BrainfuckSyntax syntax = BrainfuckSyntax.PlusPlus) {
-      if (null == sourceCode)
+      if (sourceCode is null)
         return null;
 
       HashSet<char> allowed = new HashSet<char>() {
@@ -595,7 +595,7 @@ namespace Gloson.Language.Esoteric {
     /// Is source code well formed
     /// </summary>
     public static bool IsWellFormed(string sourceCode) {
-      if (null == sourceCode)
+      if (sourceCode is null)
         return false;
 
       int count = 0;
@@ -620,7 +620,7 @@ namespace Gloson.Language.Esoteric {
       sb.AppendLine("  " + SourceCode.Replace('\r', ' ').Replace('\n', ' '));
       sb.AppendLine(new string(' ', Position + 1) + $"^ ({Position})");
 
-      if (CurrentOutput != null) {
+      if (CurrentOutput is not null) {
         sb.AppendLine();
         sb.AppendLine($"Current output value: {CurrentOutput.GetType().Name} {CurrentOutput}");
       }
@@ -648,7 +648,7 @@ namespace Gloson.Language.Esoteric {
       if (disposing) {
         IsDisposed = true;
 
-        if (null != m_InputEnumerator)
+        if (m_InputEnumerator is not null)
           m_InputEnumerator.Dispose();
 
         m_InputEnumerator = null;

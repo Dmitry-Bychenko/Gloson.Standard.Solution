@@ -75,7 +75,7 @@ namespace Gloson.Games.Nim {
     /// </summary>
     /// <param name="heaps">Heaps</param>
     public NimGame(IEnumerable<long> heaps) {
-      if (null == heaps)
+      if (heaps is null)
         throw new ArgumentNullException(nameof(heaps));
 
       int argMax = 0;
@@ -138,7 +138,7 @@ namespace Gloson.Games.Nim {
     /// Parse; any sequences of non-nengative long numbers like "123 456 78" or "123;456;78" are valid  
     /// </summary>
     public static NimGame Parse(string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return TryParse(value, out var result)
@@ -219,7 +219,7 @@ namespace Gloson.Games.Nim {
     /// Boolean - IsWinning
     /// </summary>
     public static implicit operator bool(NimGame value) {
-      if (null == value)
+      if (value is null)
         return false;
 
       return value.IsWin;
@@ -231,7 +231,7 @@ namespace Gloson.Games.Nim {
     public static bool operator ==(NimGame left, NimGame right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -243,7 +243,7 @@ namespace Gloson.Games.Nim {
     public static bool operator !=(NimGame left, NimGame right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -257,7 +257,7 @@ namespace Gloson.Games.Nim {
     /// Equals
     /// </summary>
     public bool Equals(NimGame other) {
-      if (null == other)
+      if (other is null)
         return false;
 
       return m_Heaps

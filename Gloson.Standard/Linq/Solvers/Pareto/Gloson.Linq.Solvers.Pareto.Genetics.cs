@@ -49,12 +49,12 @@ namespace Gloson.Linq.Solvers.Pareto {
     public ParetoGeneticsSolver(ObjectivesScope<T> scope,
                                 Func<T, T, T> breed,
                                 IComparer<ObjectiveItem<T>> comparer) {
-      if (null == scope)
+      if (scope is null)
         throw new ArgumentNullException(nameof(scope));
-      else if (null == breed)
+      else if (breed is null)
         throw new ArgumentNullException(nameof(breed));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = ObjectiveItem<T>.FrontierAndCroudDistanceComparer;
 
       m_Comparer = comparer;
@@ -80,17 +80,17 @@ namespace Gloson.Linq.Solvers.Pareto {
                                 IEnumerable<ObjectiveDescription<T>> objectives,
                                 Func<T, T, T> breed,
                                 IComparer<ObjectiveItem<T>> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == objectives)
+      else if (objectives is null)
         throw new ArgumentNullException(nameof(objectives));
-      else if (null == breed)
+      else if (breed is null)
         throw new ArgumentNullException(nameof(breed));
 
       m_Scope = new ObjectivesScope<T>(source, objectives);
       m_Breed = breed;
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = ObjectiveItem<T>.FrontierAndCroudDistanceComparer;
 
       m_Comparer = comparer;

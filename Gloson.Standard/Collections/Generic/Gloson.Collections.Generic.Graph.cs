@@ -174,9 +174,9 @@ namespace Gloson.Collections.Generic {
       /// <param name="to">To</param>
       /// <param name="value">Associated value</param>
       public Edge(Vertex from, Vertex to, E value) {
-        if (null == from)
+        if (from is null)
           throw new ArgumentNullException(nameof(from));
-        else if (null == to)
+        else if (to is null)
           throw new ArgumentNullException(nameof(to));
         else if (from.Graph != to.Graph)
           throw new ArgumentException("From and To vertexes belong to different graphs.", nameof(to));
@@ -220,7 +220,7 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Graph
       /// </summary>
-      public Graph<V, E> Graph => null != From
+      public Graph<V, E> Graph => From is not null
         ? From.Graph
         : To?.Graph;
 
@@ -234,7 +234,7 @@ namespace Gloson.Collections.Generic {
         set {
           m_Value = value;
 
-          if (null != m_Twin)
+          if (m_Twin is not null)
             m_Twin.m_Value = value;
         }
       }
@@ -254,13 +254,13 @@ namespace Gloson.Collections.Generic {
 
     // Add Vertex (always possible)
     private bool CoreAddVertex(Vertex value) =>
-      (null != value) && m_Vertexes.Add(value);
+      (value is not null) && m_Vertexes.Add(value);
 
     // If Edge allowed
     private bool IsEdgeAllowed(Vertex from, Vertex to) {
-      if (null == from)
+      if (from is null)
         return false;
-      else if (null == to)
+      else if (to is null)
         return false;
       else if (from.Graph != to.Graph)
         return false;

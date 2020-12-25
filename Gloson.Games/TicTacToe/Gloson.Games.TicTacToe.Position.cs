@@ -394,7 +394,7 @@ namespace Gloson.Games.TicTacToe {
     public static bool operator ==(TicTacToePosition left, TicTacToePosition right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -406,7 +406,7 @@ namespace Gloson.Games.TicTacToe {
     public static bool operator !=(TicTacToePosition left, TicTacToePosition right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null != left || null != right)
+      else if (left is not null || right is not null)
         return false;
 
       return !left.Equals(right);
@@ -422,7 +422,7 @@ namespace Gloson.Games.TicTacToe {
     public bool Equals(TicTacToePosition other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Enumerable.SequenceEqual(m_Marks, other.m_Marks);
@@ -516,7 +516,7 @@ namespace Gloson.Games.TicTacToe {
     /// Expected Winner
     /// </summary>
     public static GameOutcome ExpectedWinner(this TicTacToePosition position) {
-      if (null == position)
+      if (position is null)
         return GameOutcome.Illegal;
 
       return s_Outcomes.TryGetValue(position, out var result)
@@ -528,7 +528,7 @@ namespace Gloson.Games.TicTacToe {
     /// Move Expectation
     /// </summary>
     public static GameOutcome MoveExpectation(this TicTacToePosition position, int line, int column) {
-      if (null == position)
+      if (position is null)
         return GameOutcome.Illegal;
 
       if (position[line, column] != Mark.None)
@@ -543,7 +543,7 @@ namespace Gloson.Games.TicTacToe {
     /// Move Expectation
     /// </summary>
     public static GameOutcome MoveExpectation(this TicTacToePosition position, int index) {
-      if (null == position)
+      if (position is null)
         return GameOutcome.Illegal;
 
       if (position[index] != Mark.None)

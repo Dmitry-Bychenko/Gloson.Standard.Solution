@@ -20,13 +20,13 @@ namespace Gloson.Linq {
     /// Longest Increasing Subsequence
     /// </summary>
     public static T[] LongestIncreasingSubsequence<T>(this IEnumerable<T> source, bool duplicatesAllowed, IComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = Comparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer), $"Type {typeof(T).Name} doesn't have default comparer.");
 
       T[] X = source.ToArray();
@@ -108,9 +108,9 @@ namespace Gloson.Linq {
     public static T[] LongestCommonSubsequence<T>(this IEnumerable<T> source,
                                                        IEnumerable<T> target,
                                                        IEqualityComparer<T> comparer = null) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == target)
+      else if (target is null)
         throw new ArgumentNullException(nameof(target));
 
       comparer = (comparer ?? EqualityComparer<T>.Default)

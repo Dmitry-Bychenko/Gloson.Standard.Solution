@@ -65,7 +65,7 @@ namespace Gloson.Numerics {
     /// <param name="values">values (put double.NaN for abscent points)</param>
     /// <returns></returns>
     public static Polynom Reconstruct(int startAt, IEnumerable<double> values) {
-      if (null == values)
+      if (values is null)
         throw new ArgumentNullException(nameof(values));
 
       var points = values
@@ -123,7 +123,7 @@ namespace Gloson.Numerics {
     /// Reconstruct from (x, y) pairs by Lagrange interpolation
     /// </summary>
     public static Polynom Reconstruct(IEnumerable<(double x, double y)> points) {
-      if (null == points)
+      if (points is null)
         throw new ArgumentNullException(nameof(points));
 
       var data = points
@@ -309,7 +309,7 @@ namespace Gloson.Numerics {
     /// Divide and find Remainder
     /// </summary>
     public Polynom DivRem(Polynom value, out Polynom remainder) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
       else if (value.Count <= 0)
         throw new DivideByZeroException();
@@ -409,7 +409,7 @@ namespace Gloson.Numerics {
     /// GCD (Greatest Common Divisor)
     /// </summary>
     public Polynom Gcd(Polynom other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       Polynom left = this;
@@ -438,7 +438,7 @@ namespace Gloson.Numerics {
     public static bool operator ==(Polynom left, Polynom right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -450,7 +450,7 @@ namespace Gloson.Numerics {
     public static bool operator !=(Polynom left, Polynom right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -468,7 +468,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Unary -
     /// </summary>
-    public static Polynom operator -(Polynom value) => value == null
+    public static Polynom operator -(Polynom value) => value is null
       ? null
       : new Polynom(value.m_Items.Select(x => -x));
 
@@ -476,9 +476,9 @@ namespace Gloson.Numerics {
     /// Binary + 
     /// </summary>
     public static Polynom operator +(Polynom left, Polynom right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       List<double> result = new List<double>(Math.Max(left.Count, right.Count));
@@ -493,9 +493,9 @@ namespace Gloson.Numerics {
     /// Binary - 
     /// </summary>
     public static Polynom operator -(Polynom left, Polynom right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       List<double> result = new List<double>(Math.Max(left.Count, right.Count));
@@ -510,7 +510,7 @@ namespace Gloson.Numerics {
     /// Binary * 
     /// </summary>
     public static Polynom operator *(Polynom value, double coef) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(coef));
 
       return new Polynom(value.m_Items.Select(x => x * coef));
@@ -520,7 +520,7 @@ namespace Gloson.Numerics {
     /// Binary * 
     /// </summary>
     public static Polynom operator *(double coef, Polynom value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(coef));
 
       return new Polynom(value.m_Items.Select(x => x * coef));
@@ -530,7 +530,7 @@ namespace Gloson.Numerics {
     /// Binary / 
     /// </summary>
     public static Polynom operator /(Polynom value, double coef) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(coef));
 
       return new Polynom(value.m_Items.Select(x => x / coef));
@@ -540,9 +540,9 @@ namespace Gloson.Numerics {
     /// Binary *
     /// </summary>
     public static Polynom operator *(Polynom left, Polynom right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (left.Count <= 0 || right.Count <= 0)
@@ -571,9 +571,9 @@ namespace Gloson.Numerics {
     /// Division /
     /// </summary>
     public static Polynom operator /(Polynom left, Polynom right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       return left.DivRem(right, out var _);
@@ -583,9 +583,9 @@ namespace Gloson.Numerics {
     /// Remainder %
     /// </summary>
     public static Polynom operator %(Polynom left, Polynom right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       left.DivRem(right, out var remainder);
@@ -605,7 +605,7 @@ namespace Gloson.Numerics {
     public bool Equals(Polynom other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return m_Items.SequenceEqual(other.m_Items);

@@ -20,7 +20,7 @@ namespace Gloson.Linq {
     /// e.g. {A, B, C} -> {[A, B, C], [A, C, B], ... [C, B, A] }
     /// </summary>
     public static IEnumerable<T[]> Permutations<T>(this IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       T[] items = source.ToArray();
@@ -53,7 +53,7 @@ namespace Gloson.Linq {
     /// e.g. {A, B, C} -> {[], [A], [B], [A, B], [C], [A, C], ..., [A, B, C]}
     /// </summary>
     public static IEnumerable<T[]> SubSets<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       T[] items = source.Distinct(comparer).ToArray();
@@ -74,7 +74,7 @@ namespace Gloson.Linq {
     /// e.g. {A, B, C} -> {[], [A], [B], [A, B], [C], [A, C], ..., [A, B, C]}
     /// </summary>
     public static IEnumerable<T[]> SubSets<T>(this IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       T[] items = source.Distinct().ToArray();
@@ -96,7 +96,7 @@ namespace Gloson.Linq {
     /// Order Matters
     /// </summary>
     public static IEnumerable<T[]> OrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
         throw new ArgumentOutOfRangeException(nameof(size));
@@ -132,7 +132,7 @@ namespace Gloson.Linq {
     /// {A, B, C}, 4 -> {A, A, A, A}, {A, A, A, B}, {A, A, A, C}, {A, A, B, B}, {A, A, B, C},... , {C, C, C, C}
     /// </summary>
     public static IEnumerable<T[]> UnOrderedWithReplacement<T>(this IEnumerable<T> source, int size) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
         throw new ArgumentOutOfRangeException(nameof(size));
@@ -171,7 +171,7 @@ namespace Gloson.Linq {
     /// {A, B, C}, 2 -> {A, B}, {A, C}, {B, C}
     /// </summary>
     public static IEnumerable<T[]> UnOrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
         throw new ArgumentOutOfRangeException(nameof(size));
@@ -219,7 +219,7 @@ namespace Gloson.Linq {
     /// Order Matters
     /// </summary>
     public static IEnumerable<T[]> OrderedWithoutReplacement<T>(this IEnumerable<T> source, int size) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
         throw new ArgumentOutOfRangeException(nameof(size));
@@ -289,7 +289,7 @@ namespace Gloson.Linq {
       bool withReplacement,
       bool orderMatters) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (size < 0)
         throw new ArgumentOutOfRangeException(nameof(size));
@@ -311,9 +311,9 @@ namespace Gloson.Linq {
     /// e.g. {A, B, C}, {1, 2} -> {[(A, 1) (B, 2)], [(A, 1) (C, 2)], ..., [(B, 2) (C, 1)]}
     /// </summary>
     public static IEnumerable<Tuple<T1, T2>[]> Assignments<T1, T2>(this IEnumerable<T1> source, IEnumerable<T2> target) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == target)
+      else if (target is null)
         throw new ArgumentNullException(nameof(target));
 
       T1[] sources = source.ToArray();

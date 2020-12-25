@@ -25,11 +25,11 @@ namespace Gloson.Data {
     public static int ExecuteNonQuery(this IDbConnection connection,
                                            string sql,
                                    params (string, object)[] parameters) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
-      else if (null == sql)
+      else if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbCommand q = connection.CreateCommand();
@@ -55,11 +55,11 @@ namespace Gloson.Data {
     public static object ExecuteScalar(this IDbConnection connection,
                                             string sql,
                                     params (string, object)[] parameters) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
-      else if (null == sql)
+      else if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbCommand q = connection.CreateCommand();
@@ -85,11 +85,11 @@ namespace Gloson.Data {
     public static IEnumerable<IDataRecord> ExecuteEnumerable(this IDbConnection connection,
                                                              string sql,
                                                      params (string, object)[] parameters) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
-      else if (null == sql)
+      else if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbCommand q = connection.CreateCommand();

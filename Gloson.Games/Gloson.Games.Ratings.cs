@@ -39,9 +39,9 @@ namespace Gloson.Games {
     public static int Compare(EloRating left, EloRating right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return left.Value.CompareTo(right.Value);
@@ -72,7 +72,7 @@ namespace Gloson.Games {
     /// <param name="opponentRating">Opponent Rating</param>
     /// <returns>Points (share) 0..1</returns>
     public double Expected(EloRating opponentRating) {
-      if (null == opponentRating)
+      if (opponentRating is null)
         throw new ArgumentNullException(nameof(opponentRating));
 
       return 1.0 / (1.0 + Math.Pow(10, (opponentRating.Value - Value) / 400.0));
@@ -86,7 +86,7 @@ namespace Gloson.Games {
     /// <param name="available">Available points</param>
     /// <param name="coefficient">Coefficient</param>
     public EloRating Update(EloRating opponentRating, double taken, double available, int coefficient) {
-      if (null == opponentRating)
+      if (opponentRating is null)
         throw new ArgumentNullException(nameof(opponentRating));
       else if (taken < 0)
         throw new ArgumentOutOfRangeException(nameof(taken));
@@ -109,7 +109,7 @@ namespace Gloson.Games {
     /// <param name="taken">Taken points</param>
     /// <param name="available">Available points</param>
     public EloRating Update(EloRating opponentRating, double taken, double available) {
-      if (null == opponentRating)
+      if (opponentRating is null)
         throw new ArgumentNullException(nameof(opponentRating));
 
       int v = Math.Min(Value, opponentRating.Value);
@@ -170,7 +170,7 @@ namespace Gloson.Games {
     public bool Equals(EloRating other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Value == other.Value;

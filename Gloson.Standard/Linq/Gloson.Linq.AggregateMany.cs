@@ -35,9 +35,9 @@ namespace Gloson.Linq {
 
       Index = index;
 
-      if (null != m_UpdateWithIndex)
+      if (m_UpdateWithIndex is not null)
         m_Current = m_UpdateWithIndex(Current, item, index);
-      else if (null != m_Update)
+      else if (m_Update is not null)
         m_Current = m_Update(Current, item);
     }
 
@@ -183,11 +183,11 @@ namespace Gloson.Linq {
       this IEnumerable<T> source,
       params Aggregator<T, V>[] aggregators) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == aggregators)
+      else if (aggregators is null)
         throw new ArgumentNullException(nameof(aggregators));
-      else if (aggregators.Any(item => null == item))
+      else if (aggregators.Any(item => item is null))
         throw new ArgumentNullException(nameof(aggregators), $"{nameof(aggregators)}'s items must not be null.");
 
       int index = 0;
@@ -209,11 +209,11 @@ namespace Gloson.Linq {
       this IEnumerable<T> source,
       params Aggregator<T>[] aggregators) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == aggregators)
+      else if (aggregators is null)
         throw new ArgumentNullException(nameof(aggregators));
-      else if (aggregators.Any(item => null == item))
+      else if (aggregators.Any(item => item is null))
         throw new ArgumentNullException(nameof(aggregators), $"{nameof(aggregators)}'s items must not be null.");
 
       int index = 0;

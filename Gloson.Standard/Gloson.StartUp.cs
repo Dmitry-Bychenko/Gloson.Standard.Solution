@@ -65,7 +65,7 @@ namespace Gloson {
     /// </summary>
     /// <param name="assembly"></param>
     public static void RunStaticConstructors(Assembly assembly = null) {
-      if (null == assembly)
+      if (assembly is null)
         assembly = Assembly.GetCallingAssembly();
 
       if (s_Assemblies.TryGetValue(assembly, out bool _))

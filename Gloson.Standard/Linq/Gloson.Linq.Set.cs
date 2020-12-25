@@ -21,15 +21,15 @@ namespace Gloson.Linq {
     public static IEnumerable<T> SymmetricExcept<T>(this IEnumerable<T> source,
                                                          IEnumerable<T> other,
                                                          IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
@@ -53,15 +53,15 @@ namespace Gloson.Linq {
     public static IEnumerable<T> IntersectWithDuplicates<T>(this IEnumerable<T> source,
                                                                  IEnumerable<T> other,
                                                                  IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
@@ -95,15 +95,15 @@ namespace Gloson.Linq {
     public static IEnumerable<T> ExceptWithDuplicates<T>(this IEnumerable<T> source,
                                                               IEnumerable<T> other,
                                                               IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
@@ -139,15 +139,15 @@ namespace Gloson.Linq {
     public static IEnumerable<T> UnionWithDuplicates<T>(this IEnumerable<T> source,
                                                              IEnumerable<T> other,
                                                              IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
@@ -188,15 +188,15 @@ namespace Gloson.Linq {
     public static IEnumerable<T> SymmetricExceptWithDuplicates<T>(this IEnumerable<T> source,
                                                              IEnumerable<T> other,
                                                              IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 

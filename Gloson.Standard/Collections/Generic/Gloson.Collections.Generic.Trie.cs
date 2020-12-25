@@ -39,7 +39,7 @@ namespace Gloson.Collections.Generic {
 
         if (IsRoot)
           return;
-        else if (null == Parent)
+        else if (Parent is null)
           return;
 
         Parent.m_Items.Remove(Value);
@@ -59,7 +59,7 @@ namespace Gloson.Collections.Generic {
 
         m_Items = new Dictionary<T, Node>(Trie.Comparer);
 
-        if (Parent != null)
+        if (Parent is not null)
           Parent.m_Items.Add(Value, this);
       }
 
@@ -104,7 +104,7 @@ namespace Gloson.Collections.Generic {
       /// </summary>
       public IEnumerable<T> Sequence {
         get {
-          if (null == Parent)
+          if (Parent is null)
             yield break;
 
           Stack<T> result = new Stack<T>();
@@ -144,7 +144,7 @@ namespace Gloson.Collections.Generic {
         get {
           int result = 0;
 
-          for (Node current = this; current.Parent != null; current = current.Parent)
+          for (Node current = this; current.Parent is not null; current = current.Parent)
             result += 1;
 
           return result;
@@ -169,8 +169,7 @@ namespace Gloson.Collections.Generic {
     /// Standard constructor
     /// </summary>
     public Trie(IEqualityComparer<T> comparer) {
-      if (null == comparer)
-        comparer = EqualityComparer<T>.Default;
+      comparer ??= EqualityComparer<T>.Default;
 
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No default equality comparer for {typeof(T).Name}");
       Root = new Node(this, null, default);
@@ -239,7 +238,7 @@ namespace Gloson.Collections.Generic {
     /// Add
     /// </summary>
     public void Add(IEnumerable<T> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;
@@ -259,7 +258,7 @@ namespace Gloson.Collections.Generic {
     /// Add Range
     /// </summary>
     public void AddRange(IEnumerable<IEnumerable<T>> sequences) {
-      if (null == sequences)
+      if (sequences is null)
         throw new ArgumentNullException(nameof(sequences));
 
       foreach (IEnumerable<T> sequence in sequences)
@@ -270,7 +269,7 @@ namespace Gloson.Collections.Generic {
     /// Remove
     /// </summary>
     public bool Remove(IEnumerable<T> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;
@@ -312,7 +311,7 @@ namespace Gloson.Collections.Generic {
     /// How many times sequence starts the trie
     /// </summary>
     public int Occurred(IEnumerable<T> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;

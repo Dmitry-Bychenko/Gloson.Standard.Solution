@@ -34,9 +34,9 @@ namespace Gloson.Biology {
     /// <param name="sequence">Sequence</param>
     /// <param name="comments">Comments</param>
     public Fasta(string description, string sequence, string comments) {
-      if (null == description)
+      if (description is null)
         throw new ArgumentNullException(nameof(description));
-      else if (null == sequence)
+      else if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       if (string.IsNullOrWhiteSpace(description))
@@ -77,7 +77,7 @@ namespace Gloson.Biology {
     public static bool TryParse(string text, out Fasta result) {
       result = null;
 
-      if (null == text)
+      if (text is null)
         return false;
 
       var lines = text
@@ -94,7 +94,7 @@ namespace Gloson.Biology {
         if (line.StartsWith(";") || line.StartsWith("#"))
           comments.Add(line[1..]);
         else if (line.StartsWith(">")) {
-          if (null != description)
+          if (description is not null)
             return false;
 
           description = line[1..].Trim();
@@ -170,7 +170,7 @@ namespace Gloson.Biology {
     public static bool operator ==(Fasta left, Fasta right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right || null == left)
+      else if (right is null || left is null)
         return false;
       else
         return left.Equals(right);
@@ -182,7 +182,7 @@ namespace Gloson.Biology {
     public static bool operator !=(Fasta left, Fasta right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right || null == left)
+      else if (right is null || left is null)
         return true;
       else
         return !left.Equals(right);
@@ -198,7 +198,7 @@ namespace Gloson.Biology {
     public bool Equals(Fasta other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(Sequence, other.Sequence);

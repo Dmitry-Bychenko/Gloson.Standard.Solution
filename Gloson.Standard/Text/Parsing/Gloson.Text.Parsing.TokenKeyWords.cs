@@ -44,7 +44,7 @@ namespace Gloson.Text.Parsing {
     public TokenKeyWords(IsIdentifierLetter identifier, bool isCaseSensitive, IEnumerable<string> keyWords)
       : base() {
 
-      if (null == keyWords)
+      if (keyWords is null)
         throw new ArgumentNullException(nameof(keyWords));
 
       m_IsIdentifierLetter = identifier ?? IsStandardIdentifier;
@@ -190,9 +190,9 @@ namespace Gloson.Text.Parsing {
     public static bool operator ==(TokenKeyWords left, TokenKeyWords right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      else if (null == left)
+      else if (left is null)
         return false;
-      else if (null == right)
+      else if (right is null)
         return false;
 
       return left.Equals(right);
@@ -204,9 +204,9 @@ namespace Gloson.Text.Parsing {
     public static bool operator !=(TokenKeyWords left, TokenKeyWords right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      else if (null == left)
+      else if (left is null)
         return true;
-      else if (null == right)
+      else if (right is null)
         return true;
 
       return !left.Equals(right);
@@ -258,7 +258,7 @@ namespace Gloson.Text.Parsing {
     public bool Equals(TokenKeyWords other) {
       if (object.ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (m_IsCaseSensitive != other.m_IsCaseSensitive)
@@ -365,7 +365,7 @@ namespace Gloson.Text.Parsing {
     protected override Tuple<int, int> CoreMatchEntire(string source, int checkAt, IReadOnlyList<Token> context) {
       string key = m_KeyWords.KeyWordAt(source, checkAt);
 
-      if (null == key)
+      if (key is null)
         return new Tuple<int, int>(-1, -1);
 
       return new Tuple<int, int>(checkAt, checkAt + key.Length);

@@ -78,9 +78,9 @@ namespace Gloson {
     public static bool operator ==(Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      else if (null == left)
+      else if (left is null)
         return false;
-      else if (null == right)
+      else if (right is null)
         return false;
 
       return left.Equals(right);
@@ -92,9 +92,9 @@ namespace Gloson {
     public static bool operator !=(Optional<T> left, Optional<T> right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      else if (null == left)
+      else if (left is null)
         return true;
-      else if (null == right)
+      else if (right is null)
         return true;
 
       return !left.Equals(right);
@@ -104,7 +104,7 @@ namespace Gloson {
     /// Equals
     /// </summary>
     public static bool operator ==(Optional<T> left, T right) {
-      if (null == left || !left.Exists)
+      if (left is null || !left.Exists)
         return false;
 
       return Object.Equals(left.m_Value, right);
@@ -114,7 +114,7 @@ namespace Gloson {
     /// Not Equals
     /// </summary>
     public static bool operator !=(Optional<T> left, T right) {
-      if (null == left || !left.Exists)
+      if (left is null || !left.Exists)
         return true;
 
       return !Object.Equals(left.m_Value, right);
@@ -133,7 +133,7 @@ namespace Gloson {
     /// Equals
     /// </summary>
     public bool Equals(Optional<T> other) {
-      if (null == other)
+      if (other is null)
         return false;
 
       if (other.Exists != Exists)
@@ -146,7 +146,7 @@ namespace Gloson {
     /// Equals
     /// </summary>
     public bool Equals(T other) {
-      if (null == other)
+      if (other is null)
         return false;
 
       if (!Exists)
@@ -173,7 +173,7 @@ namespace Gloson {
     public override int GetHashCode() {
       return
           !Exists ? int.MaxValue
-        : null == m_Value ? 0
+        : m_Value is null ? 0
         : m_Value.GetHashCode();
     }
 

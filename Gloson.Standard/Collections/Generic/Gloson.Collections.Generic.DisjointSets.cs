@@ -28,7 +28,7 @@ namespace Gloson.Collections.Generic {
       public bool Equals(DisjointSets<T> x, DisjointSets<T> y) {
         if (ReferenceEquals(x, y))
           return true;
-        else if (null == x || null == y)
+        else if (x is null || y is null)
           return false;
 
         if (x.ItemsComparer != y.ItemsComparer)
@@ -47,7 +47,7 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Hash Code
       /// </summary>
-      public int GetHashCode(DisjointSets<T> obj) => obj == null ? 0 : obj.Count;
+      public int GetHashCode(DisjointSets<T> obj) => obj is null ? 0 : obj.Count;
     }
 
     private class UnOrderedComparerClass : IEqualityComparer<DisjointSets<T>> {
@@ -57,7 +57,7 @@ namespace Gloson.Collections.Generic {
       public bool Equals(DisjointSets<T> x, DisjointSets<T> y) {
         if (ReferenceEquals(x, y))
           return true;
-        else if (null == x || null == y)
+        else if (x is null || y is null)
           return false;
 
         if (x.ItemsComparer != y.ItemsComparer)
@@ -84,7 +84,7 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Hash Code
       /// </summary>
-      public int GetHashCode(DisjointSets<T> obj) => obj == null ? 0 : obj.Count;
+      public int GetHashCode(DisjointSets<T> obj) => obj is null ? 0 : obj.Count;
     }
 
     #endregion Internal Classes

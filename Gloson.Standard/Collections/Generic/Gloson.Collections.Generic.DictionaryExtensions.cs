@@ -30,11 +30,11 @@ namespace Gloson.Collections.Generic {
            V value,
            Func<K, V, V> tie) {
 
-      if (null == dictionary)
+      if (dictionary is null)
         throw new ArgumentNullException(nameof(dictionary));
 
       if (dictionary.TryGetValue(key, out var prior)) {
-        if (tie != null)
+        if (tie is not null)
           value = tie(key, prior);
 
         dictionary[key] = value;
@@ -68,7 +68,7 @@ namespace Gloson.Collections.Generic {
       this IReadOnlyDictionary<K, V> dictionary,
            K key,
            V defaultValue) {
-      if (null == dictionary)
+      if (dictionary is null)
         throw new ArgumentNullException(nameof(dictionary));
 
       return dictionary.TryGetValue(key, out V value) ? value : defaultValue;

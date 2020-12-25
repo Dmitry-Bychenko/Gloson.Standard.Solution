@@ -26,7 +26,7 @@ namespace Gloson.Numerics.SpecialFunctions {
                                             Func<int, double, double, double> next,
                                             int index = 0,
                                             double start = 0.0) {
-      if (null == next)
+      if (next is null)
         throw new ArgumentNullException(nameof(next));
 
       double result = start;

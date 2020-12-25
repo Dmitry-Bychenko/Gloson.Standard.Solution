@@ -32,7 +32,7 @@ namespace Gloson.Data.Oracle {
 
     // Serializable 
     internal OracleError(SerializationInfo info, StreamingContext context) {
-      if (null == info)
+      if (info is null)
         throw new ArgumentNullException(nameof(info));
 
       Prefix = info.GetString("Prefix");
@@ -47,11 +47,11 @@ namespace Gloson.Data.Oracle {
     /// <param name="number">Number</param>
     /// <param name="message">Message</param>
     public OracleError(string prefix, int number, string message) {
-      if (null == prefix)
+      if (prefix is null)
         throw new ArgumentNullException(nameof(prefix));
       else if (number <= -100_000 || number >= 100_000)
         throw new ArgumentOutOfRangeException(nameof(number));
-      else if (null == message)
+      else if (message is null)
         throw new ArgumentNullException(nameof(message));
 
       Prefix = prefix.Trim().ToUpperInvariant();
@@ -105,18 +105,18 @@ namespace Gloson.Data.Oracle {
 
       foreach (string line in text.SplitToLines()) {
         if (OracleError.TryParse(line, out OracleError error)) {
-          if (null != current)
+          if (current is not null)
             yield return current;
 
           current = error;
         }
-        else if (null == current)
+        else if (current is null)
           yield break;
         else
           current.Message += Environment.NewLine + line;
       }
 
-      if (null != current)
+      if (current is not null)
         yield return current;
     }
 
@@ -130,9 +130,9 @@ namespace Gloson.Data.Oracle {
     public static int Compare(OracleError left, OracleError right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = string.Compare(left.Prefix, right.Prefix, StringComparison.Ordinal);
@@ -237,7 +237,7 @@ namespace Gloson.Data.Oracle {
     public bool Equals(OracleError other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(Prefix, other.Prefix, StringComparison.OrdinalIgnoreCase) &&
@@ -272,7 +272,7 @@ namespace Gloson.Data.Oracle {
     /// Get Object Data
     /// </summary>
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
-      if (null == info)
+      if (info is null)
         throw new ArgumentNullException(nameof(info));
 
       info.AddValue("Prefix", Prefix);

@@ -69,9 +69,9 @@ namespace Gloson.Text.Parsing {
       public int Compare(Token x, Token y) {
         if (object.ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return 1;
 
         int result = x.StartLine.CompareTo(y.StartLine);
@@ -102,7 +102,7 @@ namespace Gloson.Text.Parsing {
       public bool Equals(Token x, Token y) {
         if (ReferenceEquals(x, y))
           return true;
-        else if (null == x || null == y)
+        else if (x is null || y is null)
           return false;
 
         return x.Description == y.Description &&
@@ -114,7 +114,7 @@ namespace Gloson.Text.Parsing {
       }
 
       public int GetHashCode(Token token) {
-        if (token == null)
+        if (token is null)
           return 0;
 
         return token.Description.GetHashCode() ^
@@ -190,7 +190,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public bool IsWhiteSpace {
       get {
-        if (null == Description)
+        if (Description is null)
           return false;
 
         return Description.IsWhiteSpace;
@@ -210,7 +210,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public TokenClassification Classification {
       get {
-        if (null == Description)
+        if (Description is null)
           return TokenClassification.Unknown;
 
         return Description.Classification;
@@ -260,7 +260,7 @@ namespace Gloson.Text.Parsing {
     /// Equals To Text
     /// </summary>
     public bool EqualsToText(string value) {
-      if (null == value)
+      if (value is null)
         return false;
 
       if (Classification == TokenClassification.String ||
@@ -280,7 +280,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public IComparer<String> TextComparer {
       get {
-        if (null == Description)
+        if (Description is null)
           return StringComparer.Ordinal;
 
         return Description.Options.HasFlag(TokenDescriptionOptions.IgnoreCase)
@@ -294,7 +294,7 @@ namespace Gloson.Text.Parsing {
     /// </summary>
     public IEqualityComparer<String> TextEqualityComparer {
       get {
-        if (null == Description)
+        if (Description is null)
           return StringComparer.Ordinal;
 
         return Description.Options.HasFlag(TokenDescriptionOptions.IgnoreCase)

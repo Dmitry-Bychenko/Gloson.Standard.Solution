@@ -21,7 +21,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     /// Makes and Test connection string
     /// </summary>
     public string ConnectionString(IDbConnection connection) {
-      if (null == connection)
+      if (connection is null)
         return null;
       else if (connection.State == ConnectionState.Open ||
                connection.State == ConnectionState.Connecting ||

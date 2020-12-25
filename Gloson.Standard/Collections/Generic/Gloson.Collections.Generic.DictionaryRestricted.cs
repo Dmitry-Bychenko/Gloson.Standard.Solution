@@ -318,7 +318,7 @@ namespace Gloson.Collections.Generic {
     /// Copy To
     /// </summary>
     public void CopyTo(KeyValuePair<K, V>[] array, int arrayIndex) {
-      if (null == array)
+      if (array is null)
         throw new ArgumentNullException(nameof(array));
       else if (arrayIndex < array.GetLowerBound(0))
         throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex is below lower bound");

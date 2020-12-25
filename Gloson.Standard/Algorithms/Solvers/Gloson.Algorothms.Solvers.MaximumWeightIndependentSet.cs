@@ -107,7 +107,7 @@ namespace Gloson.Algorithms.Solvers {
     #region Algorithm 
 
     private static long CoreSolve<T>(T[] items, int at, Func<T, long> map, Dictionary<int, (T value, long total, bool taken, long weigth)> cache) {
-      if (null == items || items.Length <= 0)
+      if (items is null || items.Length <= 0)
         return 0;
       else if (at < 0)
         return CoreSolve(items, 0, map, cache);
@@ -154,9 +154,9 @@ namespace Gloson.Algorithms.Solvers {
       this IEnumerable<T> source,
       Func<T, long> weight) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == weight)
+      else if (weight is null)
         weight = x => (long)Convert.ChangeType(x, typeof(long));
 
       T[] items = source.ToArray();

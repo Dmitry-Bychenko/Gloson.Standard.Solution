@@ -30,7 +30,7 @@ namespace Gloson.Resources {
     /// Resources for a given assembly
     /// </summary>
     public static IEnumerable<ResourceManager> Resources(this Assembly assembly) {
-      if (null == assembly)
+      if (assembly is null)
         throw new ArgumentNullException(nameof(assembly));
 
       foreach (var resourceFile in assembly.GetManifestResourceNames()) {
@@ -45,7 +45,7 @@ namespace Gloson.Resources {
     /// </summary>
     /// <param name="assembly">Assembly with resources</param>
     public static CultureInfo NeutralResourcesLanguage(this Assembly assembly) {
-      if (null == assembly)
+      if (assembly is null)
         throw new ArgumentNullException(nameof(assembly));
 
       return s_GetNeutralResourcesLanguage.Value.Invoke(null, new object[] { assembly }) as CultureInfo;
@@ -63,14 +63,14 @@ namespace Gloson.Resources {
                                                      string address,
                                                      CultureInfo culture,
                                                      StringComparer comparer) {
-      if (null == assembly)
+      if (assembly is null)
         throw new ArgumentNullException(nameof(assembly));
       else if (string.IsNullOrWhiteSpace(address))
         yield break;
 
       culture ??= CultureInfo.CurrentUICulture;
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = StringComparer.Ordinal;
 
       int index = address.IndexOf('@');

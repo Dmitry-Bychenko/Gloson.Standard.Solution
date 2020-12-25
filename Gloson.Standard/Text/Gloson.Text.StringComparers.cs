@@ -32,7 +32,7 @@ namespace Gloson.Text {
       bool isDigit = false;
 
       foreach (var c in value) {
-        if (sb == null) {
+        if (sb is null) {
           sb = new StringBuilder(value.Length);
           isDigit = char.IsDigit(c);
           sb.Append(c);
@@ -48,7 +48,7 @@ namespace Gloson.Text {
         sb.Append(c);
       }
 
-      if (sb != null)
+      if (sb is not null)
         result.Add(sb.ToString());
 
       return result;
@@ -63,7 +63,7 @@ namespace Gloson.Text {
     /// </summary>
     /// <param name="comparer">Comparer to be based on</param>
     public StringNaturalComparer(IComparer<string> comparer) {
-      if (null == comparer)
+      if (comparer is null)
         comparer = StringComparer.Ordinal;
 
       m_Comparer = comparer;
@@ -79,7 +79,7 @@ namespace Gloson.Text {
     /// Standard constructor
     /// </summary>
     public StringNaturalComparer(CultureInfo culture, bool ignoreCase) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
       CompareOptions options = CompareOptions.None;
@@ -165,7 +165,7 @@ namespace Gloson.Text {
       bool isDigit = false;
 
       foreach (var c in value) {
-        if (sb == null) {
+        if (sb is null) {
           sb = new StringBuilder(value.Length);
           isDigit = char.IsDigit(c);
           sb.Append(c);
@@ -181,7 +181,7 @@ namespace Gloson.Text {
         sb.Append(c);
       }
 
-      if (sb != null)
+      if (sb is not null)
         result.Add(sb.ToString());
 
       return result;
@@ -195,7 +195,7 @@ namespace Gloson.Text {
     /// Standard Constructor
     /// </summary>
     public StringStandardComparer(CultureInfo culture) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.InvariantCulture;
 
       Culture = culture;
@@ -330,7 +330,7 @@ namespace Gloson.Text {
     /// Natural Comparer
     /// </summary>
     public static IComparer<String> NaturalComparer(CultureInfo culture, bool ignoreCase) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
       CompareOptions options = CompareOptions.None;
@@ -345,7 +345,7 @@ namespace Gloson.Text {
     /// Natural Comparer
     /// </summary>
     public static IComparer<String> NaturalComparer(CultureInfo culture) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
       return new StringNaturalComparer(culture.CompareInfo.GetStringComparer(CompareOptions.None));

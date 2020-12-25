@@ -66,9 +66,9 @@ namespace Gloson.Linq {
     /// Order By
     /// </summary>
     public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> source, Func<T, T, int> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == comparer)
+      else if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -79,9 +79,9 @@ namespace Gloson.Linq {
     /// Order By Descending
     /// </summary>
     public static IEnumerable<T> OrderByDescending<T>(this IEnumerable<T> source, Func<T, T, int> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == comparer)
+      else if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -92,9 +92,9 @@ namespace Gloson.Linq {
     /// Then By
     /// </summary>
     public static IOrderedEnumerable<T> ThenBy<T>(this IOrderedEnumerable<T> source, Func<T, T, int> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == comparer)
+      else if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -105,9 +105,9 @@ namespace Gloson.Linq {
     /// Then By Descending
     /// </summary>
     public static IOrderedEnumerable<T> ThenByDescending<T>(this IOrderedEnumerable<T> source, Func<T, T, int> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == comparer)
+      else if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
 
       return source
@@ -118,13 +118,13 @@ namespace Gloson.Linq {
     /// Detect order of the sequence
     /// </summary>
     public static Orders Order<T>(this IEnumerable<T> source, IComparer<T> comparer = null) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = Comparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"Type {typeof(T).Name} doesn't have default comparer");
 

@@ -78,7 +78,7 @@ namespace Gloson.Data.Oracle {
     /// </summary>
     /// <param name="connection"></param>
     public OracleEnvironment(IDbConnection connection) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
 
       if (!(connection.State == ConnectionState.Open ||
@@ -129,7 +129,7 @@ namespace Gloson.Data.Oracle {
     /// </summary>
     public Version Version {
       get {
-        if (null != m_Version)
+        if (m_Version is not null)
           return m_Version;
 
         using IDbCommand q = Connection.CreateCommand();

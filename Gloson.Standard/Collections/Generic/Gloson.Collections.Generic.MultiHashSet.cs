@@ -34,7 +34,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="comparer">Comparer</param>
     public MultiHashSet(IEqualityComparer<T> comparer) {
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
@@ -54,7 +54,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="source">Source</param>
     /// <param name="comparer">Comparer</param>
     public MultiHashSet(IEnumerable<T> source, IEqualityComparer<T> comparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer),
@@ -187,7 +187,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="source">Source</param>
     public void AddRange(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (var item in source)
@@ -248,7 +248,7 @@ namespace Gloson.Collections.Generic {
     /// Remove Range
     /// </summary>
     public void RemoveRange(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (var item in source)
@@ -276,7 +276,7 @@ namespace Gloson.Collections.Generic {
     /// Intersect with
     /// </summary>
     public void IntersectWith(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       var list = m_Items.ToList();
@@ -295,7 +295,7 @@ namespace Gloson.Collections.Generic {
     /// Except with
     /// </summary>
     public void ExceptWith(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       foreach (var pair in other.m_Items) {
@@ -314,7 +314,7 @@ namespace Gloson.Collections.Generic {
     /// Symmetric Except with
     /// </summary>
     public void SymmetricExceptWith(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       foreach (var pair in other.m_Items) {
@@ -335,7 +335,7 @@ namespace Gloson.Collections.Generic {
     /// Union with
     /// </summary>
     public void UnionWith(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       foreach (var pair in other.m_Items)
@@ -349,7 +349,7 @@ namespace Gloson.Collections.Generic {
     /// If subset of
     /// </summary>
     public bool IsSubsetOf(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       foreach (var pair in m_Items)
@@ -363,7 +363,7 @@ namespace Gloson.Collections.Generic {
     /// If superset of
     /// </summary>
     public bool IsSupersetOf(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       return other.IsSubsetOf(this);
@@ -373,7 +373,7 @@ namespace Gloson.Collections.Generic {
     /// If proper subset of
     /// </summary>
     public bool IsProperSubsetOf(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       bool proper = false;
@@ -395,7 +395,7 @@ namespace Gloson.Collections.Generic {
     /// If proper superset of
     /// </summary>
     public bool IsProperSupersetOf(MultiHashSet<T> other) {
-      if (null == other)
+      if (other is null)
         throw new ArgumentNullException(nameof(other));
 
       return other.IsProperSubsetOf(this);
@@ -411,7 +411,7 @@ namespace Gloson.Collections.Generic {
     public bool Equals(MultiHashSet<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (m_Items.Count != other.m_Items.Count)
@@ -466,9 +466,9 @@ namespace Gloson.Collections.Generic {
     /// Intersect
     /// </summary>
     public static MultiHashSet<T> Intersect<T>(this MultiHashSet<T> left, MultiHashSet<T> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
@@ -487,9 +487,9 @@ namespace Gloson.Collections.Generic {
     /// Except
     /// </summary>
     public static MultiHashSet<T> Except<T>(this MultiHashSet<T> left, MultiHashSet<T> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
@@ -508,9 +508,9 @@ namespace Gloson.Collections.Generic {
     /// Symmetric Except
     /// </summary>
     public static MultiHashSet<T> SymmetricExcept<T>(this MultiHashSet<T> left, MultiHashSet<T> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
@@ -533,9 +533,9 @@ namespace Gloson.Collections.Generic {
     /// Union
     /// </summary>
     public static MultiHashSet<T> Union<T>(this MultiHashSet<T> left, MultiHashSet<T> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
@@ -587,9 +587,9 @@ namespace Gloson.Collections.Generic {
                                              IEqualityComparer<T> comparer) {
       if (ReferenceEquals(source, other))
         return true;
-      else if (null == source)
+      else if (source is null)
         return false;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       var left = new MultiHashSet<T>(source, comparer);

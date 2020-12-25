@@ -18,7 +18,7 @@ namespace Gloson.Text {
     /// Prefixes
     /// </summary>
     public static IEnumerable<string> Prefixes(string value, bool addEmpty) {
-      if (null == value)
+      if (value is null)
         yield break;
 
       if (addEmpty)
@@ -37,7 +37,7 @@ namespace Gloson.Text {
     /// Suffixes
     /// </summary>
     public static IEnumerable<string> Suffixes(string value, bool addEmpty) {
-      if (null == value)
+      if (value is null)
         yield break;
 
       for (int i = 0; i < value.Length - 1; ++i)

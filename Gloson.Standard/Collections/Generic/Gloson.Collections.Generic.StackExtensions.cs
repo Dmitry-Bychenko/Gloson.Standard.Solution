@@ -18,7 +18,7 @@ namespace Gloson.Collections.Generic {
     /// Consuming enumeration
     /// </summary>
     public static IEnumerable<T> Consume<T>(this Stack<T> value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       while (value.Count > 0)
@@ -29,9 +29,9 @@ namespace Gloson.Collections.Generic {
     /// Add Range
     /// </summary>
     public static Stack<T> PushRange<T>(this Stack<T> value, IEnumerable<T> items) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
-      else if (null == items)
+      else if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       foreach (var item in items)

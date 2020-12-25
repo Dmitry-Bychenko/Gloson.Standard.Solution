@@ -36,7 +36,7 @@ namespace Gloson.Games.Life {
     /// Create
     /// </summary>
     public LifeGeneration(IEnumerable<(int y, int x)> cells) {
-      if (null == cells)
+      if (cells is null)
         throw new ArgumentNullException(nameof(cells));
 
       m_Cells = new HashSet<(int y, int x)>(cells);
@@ -50,7 +50,7 @@ namespace Gloson.Games.Life {
     /// Cells To Create
     /// </summary>
     public static HashSet<(int y, int x)> CellsToCreate(HashSet<(int y, int x)> cells) {
-      if (null == cells)
+      if (cells is null)
         throw new ArgumentNullException(nameof(cells));
 
       if (cells.Count == 0)
@@ -96,7 +96,7 @@ namespace Gloson.Games.Life {
     /// Cells To Kill 
     /// </summary>
     public static Queue<(int y, int x)> CellsToKill(HashSet<(int y, int x)> cells) {
-      if (null == cells)
+      if (cells is null)
         throw new ArgumentNullException(nameof(cells));
 
       if (cells.Count == 0)
@@ -123,7 +123,7 @@ namespace Gloson.Games.Life {
     /// Cells Next Generation (cells modification)  
     /// </summary>
     public static void CellsNext(HashSet<(int y, int x)> cells) {
-      if (null == cells)
+      if (cells is null)
         throw new ArgumentNullException(nameof(cells));
 
       if (cells.Count <= 0)
@@ -244,7 +244,7 @@ namespace Gloson.Games.Life {
     public static bool operator ==(LifeGeneration left, LifeGeneration right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if ((null == left) || (null == right))
+      else if ((left is null) || (right is null))
         return false;
 
       return left.Equals(right);
@@ -256,7 +256,7 @@ namespace Gloson.Games.Life {
     public static bool operator !=(LifeGeneration left, LifeGeneration right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if ((null == left) || (null == right))
+      else if ((left is null) || (right is null))
         return true;
 
       return !left.Equals(right);
@@ -286,7 +286,7 @@ namespace Gloson.Games.Life {
     public bool Equals(LifeGeneration other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (m_Cells.Count != other.Count)

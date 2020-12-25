@@ -20,9 +20,9 @@ namespace Gloson.Linq {
     public static IEnumerable<T> Assert<T>(this IEnumerable<T> source,
                                            Func<T, bool> predicate,
                                            Func<T, Exception> exception) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == predicate)
+      else if (predicate is null)
         throw new ArgumentNullException(nameof(predicate));
 
       foreach (T item in source) {

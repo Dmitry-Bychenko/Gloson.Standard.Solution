@@ -129,7 +129,7 @@ namespace Gloson.Linq {
 
       m_InsertIndex = (m_InsertIndex + 1) % m_Buffer.Capacity;
 
-      if (changed != null) {
+      if (changed is not null) {
         SlidingWindowChangedEventArgs<T> args = new SlidingWindowChangedEventArgs<T>(
           this,
           new Optional<T>(Current),
@@ -163,7 +163,7 @@ namespace Gloson.Linq {
 
       EventHandler<SlidingWindowChangedEventArgs<T>> changed = Changed;
 
-      if (changed != null) {
+      if (changed is not null) {
         SlidingWindowChangedEventArgs<T> args = new SlidingWindowChangedEventArgs<T>(
           this,
           new Optional<T>(Current),
@@ -425,7 +425,7 @@ namespace Gloson.Linq {
                                                                  bool completedOnly,
                                                                  EventHandler<SlidingWindowChangedEventArgs<T>> changed) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (beforeCapacity < 0)
         throw new ArgumentOutOfRangeException(nameof(beforeCapacity));
@@ -434,7 +434,7 @@ namespace Gloson.Linq {
 
       SlidingWindow<T> window = new SlidingWindow<T>(beforeCapacity, afterCapacity);
 
-      if (null != changed)
+      if (changed is not null)
         window.Changed += changed;
 
       try {
@@ -450,7 +450,7 @@ namespace Gloson.Linq {
             yield return window;
       }
       finally {
-        if (null != changed)
+        if (changed is not null)
           window.Changed -= changed;
       }
     }

@@ -33,17 +33,17 @@ namespace Gloson.Linq {
             Func<S, V> value,
             IEqualityComparer<K> comparer) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == key)
+      else if (key is null)
         throw new ArgumentNullException(nameof(key));
-      else if (null == value)
+      else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<K>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(
             nameof(comparer),
           $"No default equality comparer found for {typeof(K).Name}");

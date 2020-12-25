@@ -92,7 +92,7 @@ namespace Gloson.Security.Crackers {
       if (modulo < 0)
         throw new ArgumentNullException(nameof(modulo));
 
-      if (null == items)
+      if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       Modulo = modulo;

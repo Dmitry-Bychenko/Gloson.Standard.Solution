@@ -59,7 +59,7 @@ namespace Gloson.Algorithms.Encodings {
       #region IComparable<HuffmanNode<T>>
 
       public int CompareTo(HuffmanNode<T> other) {
-        if (null == other)
+        if (other is null)
           return 1;
 
         return Weight.CompareTo(other.Weight);
@@ -96,10 +96,10 @@ namespace Gloson.Algorithms.Encodings {
     }
 
     private static IEnumerable<(T value, string code, int index)> CoreBuildCodes<T>(HuffmanNode<T> root) {
-      if (null == root)
+      if (root is null)
         yield break;
 
-      if (root.Left == null && root.Right == null) {
+      if (root.Left is null && root.Right is null) {
         yield return (root.Value, "0", 0);
 
         yield break;
@@ -112,17 +112,17 @@ namespace Gloson.Algorithms.Encodings {
       while (agenda.Count > 0) {
         HuffmanNode<T> node = agenda.Dequeue();
 
-        if (node.Left == null && node.Right == null)
+        if (node.Left is null && node.Right is null)
           yield return (node.Value, node.Code.ToString(), node.Index);
         else {
-          if (node.Left != null) {
+          if (node.Left is not null) {
 
             node.Left.Code.Append(node.Code);
             node.Left.Code.Append('1');
             agenda.Enqueue(node.Left);
           }
 
-          if (node.Right != null) {
+          if (node.Right is not null) {
             node.Right.Code.Append(node.Code);
             node.Right.Code.Append('0');
             agenda.Enqueue(node.Right);
@@ -139,9 +139,9 @@ namespace Gloson.Algorithms.Encodings {
     /// Huffman codes 
     /// </summary>
     public static IEnumerable<(T value, string code)> EncodeHuffman<T>(this IEnumerable<T> source, Func<T, double> weight) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == weight)
+      else if (weight is null)
         throw new ArgumentNullException(nameof(weight));
 
       var root = BuildHuffmanTree(source, weight);

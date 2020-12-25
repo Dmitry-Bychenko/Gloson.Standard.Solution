@@ -21,7 +21,7 @@ namespace Gloson.Text {
     public static bool TrySplit(string value, out string[] items) {
       items = null;
 
-      if (null == value)
+      if (value is null)
         return false;
 
       bool inQuotation = false;
@@ -70,7 +70,7 @@ namespace Gloson.Text {
     /// Split Command Line into parameters
     /// </summary>
     public static string[] Split(string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       if (TrySplit(value, out var result))

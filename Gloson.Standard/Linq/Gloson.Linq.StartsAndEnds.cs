@@ -18,9 +18,9 @@ namespace Gloson.Linq {
     /// Starts With
     /// </summary>
     public static bool StartsWith<T>(IEnumerable<T> source, Func<T, bool> predicate) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == predicate)
+      else if (predicate is null)
         throw new ArgumentNullException(nameof(predicate));
 
       foreach (var item in source)
@@ -33,9 +33,9 @@ namespace Gloson.Linq {
     /// Ends With
     /// </summary>
     public static bool EndsWith<T>(IEnumerable<T> source, Func<T, bool> predicate) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == predicate)
+      else if (predicate is null)
         throw new ArgumentNullException(nameof(predicate));
 
       int count = -1;

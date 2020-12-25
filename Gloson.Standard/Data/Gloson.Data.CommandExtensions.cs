@@ -21,7 +21,7 @@ namespace Gloson.Data {
     public static IEnumerable<IDataRecord> AsEnumerable(
       this IDbCommand command) {
 
-      if (null == command)
+      if (command is null)
         throw new ArgumentNullException(nameof(command));
 
       using IDataReader reader = command.ExecuteReader();

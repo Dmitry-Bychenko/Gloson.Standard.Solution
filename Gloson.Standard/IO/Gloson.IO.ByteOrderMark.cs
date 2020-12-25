@@ -70,16 +70,16 @@ namespace Gloson.IO {
     }
 
     private ByteOrderMark(string name, IEnumerable<IEnumerable<byte>> sequences, Encoding encoding) {
-      if (null == name)
+      if (name is null)
         throw new ArgumentNullException(nameof(name));
-      else if (null == sequences)
+      else if (sequences is null)
         throw new ArgumentNullException(nameof(sequences));
 
       Encoding = encoding;
       Name = name;
 
       Sequences = sequences
-        .Where(seq => seq != null)
+        .Where(seq => seq is not null)
         .Select(seq => seq.ToList())
         .ToList();
 
@@ -146,7 +146,7 @@ namespace Gloson.IO {
     /// From Sequence
     /// </summary>
     public static ByteOrderMark FromSequence(IEnumerable<byte> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       byte[] chunk = sequence.Take(MaxSequenceLength()).ToArray();
@@ -167,7 +167,7 @@ namespace Gloson.IO {
     /// From Stream
     /// </summary>
     public static ByteOrderMark FromStream(Stream stream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       if (!stream.CanRead)
@@ -211,7 +211,7 @@ namespace Gloson.IO {
     public bool Equals(ByteOrderMark other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(Name, other.Name);
@@ -228,7 +228,7 @@ namespace Gloson.IO {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      return (null == Name)
+      return (Name is null)
         ? 0
         : Name.GetHashCode();
     }

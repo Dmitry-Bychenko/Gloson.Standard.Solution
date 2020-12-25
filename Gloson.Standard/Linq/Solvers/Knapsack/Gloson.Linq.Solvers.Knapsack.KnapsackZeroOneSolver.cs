@@ -160,11 +160,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
            Func<T, double> weight,
            Func<T, double> value) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == weight)
+      else if (weight is null)
         throw new ArgumentNullException(nameof(weight));
-      else if (null == value)
+      else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       double initialCapacity = capacity;
@@ -396,11 +396,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
            Func<T, double> weight,
            Func<T, double> value) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == weight)
+      else if (weight is null)
         throw new ArgumentNullException(nameof(weight));
-      else if (null == value)
+      else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       double initialCapacity = capacity;

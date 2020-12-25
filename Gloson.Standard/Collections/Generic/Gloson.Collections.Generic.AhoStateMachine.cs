@@ -72,7 +72,7 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Is Final
       /// </summary>
-      public bool IsFinal => Pattern != null;
+      public bool IsFinal => Pattern is not null;
 
       /// <summary>
       /// Pattern
@@ -98,10 +98,10 @@ namespace Gloson.Collections.Generic {
       /// All Patterns
       /// </summary>
       public IEnumerable<IReadOnlyList<T>> AllPatterns() {
-        if (null != Pattern)
+        if (Pattern is not null)
           yield return Pattern;
 
-        for (Node node = FinalEdge; node != null; node = node.FinalEdge)
+        for (Node node = FinalEdge; node is not null; node = node.FinalEdge)
           yield return node.Pattern;
       }
 
@@ -114,7 +114,7 @@ namespace Gloson.Collections.Generic {
 
         Node node = SuffixEdge;
 
-        for (; node != null; node = node.SuffixEdge) {
+        for (; node is not null; node = node.SuffixEdge) {
           if (node.m_Edges.TryGetValue(value, out result))
             return (result, true);
         }
@@ -202,7 +202,7 @@ namespace Gloson.Collections.Generic {
 
     private static void CoreBuildFinals(HashSet<Node> nodes) {
       foreach (Node parent in nodes) {
-        for (Node node = parent.SuffixEdge; node != null; node = node.SuffixEdge)
+        for (Node node = parent.SuffixEdge; node is not null; node = node.SuffixEdge)
           if (node.IsFinal) {
             parent.FinalEdge = node;
 
@@ -228,13 +228,13 @@ namespace Gloson.Collections.Generic {
     /// <param name="patterns">Patterns to find</param>
     /// <param name="comparer">Comparer to use</param>
     public AhoStateMachine(IEnumerable<IEnumerable<T>> patterns, IEqualityComparer<T> comparer) {
-      if (null == patterns)
+      if (patterns is null)
         throw new ArgumentNullException(nameof(patterns));
 
       Comparer = comparer ?? EqualityComparer<T>.Default;
 
       Patterns = patterns
-        .Where(pattern => pattern != null)
+        .Where(pattern => pattern is not null)
         .Select(pattern => pattern.ToList())
         .Where(pattern => pattern.Count > 0)
         .ToList();
@@ -269,7 +269,7 @@ namespace Gloson.Collections.Generic {
     /// Matches
     /// </summary>
     public IEnumerable<(IReadOnlyList<T> pattern, int position)> Matches(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       int position = 0;

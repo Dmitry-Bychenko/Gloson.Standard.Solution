@@ -22,14 +22,14 @@ namespace Gloson.Linq {
     /// <param name="others">Other sources</param>
     /// <returns>Interleaved m, o1, o2, ..., oN, m, o1, ..., oN ... </returns>
     public static IEnumerable<T> Interleave<T>(this IEnumerable<T> source, params IEnumerable<T>[] others) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == others)
+      else if (others is null)
         throw new ArgumentNullException(nameof(others));
 
       IEnumerator<T>[] enums = new IEnumerator<T>[] { source.GetEnumerator() }
           .Concat(others
-          .Where(item => item != null)
+          .Where(item => item is not null)
           .Select(item => item.GetEnumerator()))
         .ToArray();
 
@@ -40,7 +40,7 @@ namespace Gloson.Linq {
           hasValue = false;
 
           for (int i = 0; i < enums.Length; ++i) {
-            if (enums[i] != null && enums[i].MoveNext()) {
+            if (enums[i] is not null && enums[i].MoveNext()) {
               hasValue = true;
 
               yield return enums[i].Current;
@@ -54,7 +54,7 @@ namespace Gloson.Linq {
       }
       finally {
         for (int i = enums.Length - 1; i >= 0; --i)
-          if (enums[i] != null)
+          if (enums[i] is not null)
             enums[i].Dispose();
       }
     }
@@ -66,14 +66,14 @@ namespace Gloson.Linq {
     /// <param name="others">Other sources</param>
     /// <returns>Interleaved [m, o1, o2, ..., oN], [m, o1, ..., oN] ... </returns>
     public static IEnumerable<T[]> InterleaveAsArray<T>(this IEnumerable<T> source, params IEnumerable<T>[] others) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == others)
+      else if (others is null)
         throw new ArgumentNullException(nameof(others));
 
       IEnumerator<T>[] enums = new IEnumerator<T>[] { source.GetEnumerator() }
           .Concat(others
-          .Where(item => item != null)
+          .Where(item => item is not null)
           .Select(item => item.GetEnumerator()))
         .ToArray();
 
@@ -82,7 +82,7 @@ namespace Gloson.Linq {
           T[] record = new T[enums.Length];
 
           for (int i = 0; i < enums.Length; ++i) {
-            if (enums[i] != null && !enums[i].MoveNext())
+            if (enums[i] is not null && !enums[i].MoveNext())
               yield break;
 
             record[i] = enums[i].Current;
@@ -93,7 +93,7 @@ namespace Gloson.Linq {
       }
       finally {
         for (int i = enums.Length - 1; i >= 0; --i)
-          if (enums[i] != null)
+          if (enums[i] is not null)
             enums[i].Dispose();
       }
     }

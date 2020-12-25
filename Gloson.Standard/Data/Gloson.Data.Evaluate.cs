@@ -18,7 +18,7 @@ namespace Gloson.Data {
     /// Run 
     /// </summary>
     public static T Run<T>(string formula) {
-      if (null == formula)
+      if (formula is null)
         throw new ArgumentNullException(nameof(formula));
 
       using DataTable table = new DataTable();
@@ -34,7 +34,7 @@ namespace Gloson.Data {
       using DataTable table = new DataTable();
 
       foreach (var (n, v) in variables)
-        table.Columns.Add(n, v == null ? typeof(object) : v.GetType());
+        table.Columns.Add(n, v is null ? typeof(object) : v.GetType());
 
       table.Rows.Add();
 

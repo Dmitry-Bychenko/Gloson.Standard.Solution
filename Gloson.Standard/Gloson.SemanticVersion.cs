@@ -207,9 +207,9 @@ namespace Gloson {
     public static int Compare(SemanticVersion left, SemanticVersion right) {
       if (object.ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result;
@@ -363,7 +363,7 @@ namespace Gloson {
     /// String
     /// </summary>
     public static implicit operator string(SemanticVersion value) {
-      if (null == value)
+      if (value is null)
         return null;
 
       return value.ToString();

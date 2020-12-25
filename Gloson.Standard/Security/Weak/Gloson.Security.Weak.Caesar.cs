@@ -24,7 +24,7 @@ namespace Gloson.Security.Weak {
     public static String Encrypt(string source, int shift, params (char left, char right)[] ranges) {
       if (string.IsNullOrEmpty(source))
         return source;
-      else if (null == ranges || ranges.Length == 0)
+      else if (ranges is null || ranges.Length == 0)
         return source;
 
       StringBuilder sb = new StringBuilder(source.Length);

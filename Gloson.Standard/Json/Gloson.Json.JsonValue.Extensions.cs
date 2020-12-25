@@ -18,7 +18,7 @@ namespace Gloson.Json {
     /// Value
     /// </summary>
     public static JsonValue Value(this JsonValue json, string name) {
-      if (null == json)
+      if (json is null)
         throw new ArgumentNullException(nameof(json));
       else if (string.IsNullOrWhiteSpace(name))
         throw new ArgumentNullException(nameof(name));
@@ -33,7 +33,7 @@ namespace Gloson.Json {
     /// Value
     /// </summary>
     public static JsonValue Value(this JsonValue json, int index) {
-      if (null == json)
+      if (json is null)
         throw new ArgumentNullException(nameof(json));
 
       if (json is JsonArray arr && (index >= 0 || index < arr.Count))

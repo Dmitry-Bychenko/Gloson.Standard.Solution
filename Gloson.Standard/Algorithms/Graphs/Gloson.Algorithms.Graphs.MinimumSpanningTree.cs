@@ -25,18 +25,18 @@ namespace Gloson.Algorithms.Graphs {
            IEqualityComparer<N> nodeComparer,
            IComparer<E> edgeComparer) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == graph)
+      else if (graph is null)
         throw new ArgumentNullException(nameof(graph));
 
-      if (nodeComparer == null)
+      if (nodeComparer is null)
         nodeComparer = EqualityComparer<N>.Default;
 
-      if (null == edgeComparer) {
+      if (edgeComparer is null) {
         edgeComparer = Comparer<E>.Default;
 
-        if (null == edgeComparer)
+        if (edgeComparer is null)
           throw new ArgumentNullException(nameof(edgeComparer),
                                         $"Type {typeof(E).Name} doesn't provide default IComparer<{typeof(E).Name}>");
       }

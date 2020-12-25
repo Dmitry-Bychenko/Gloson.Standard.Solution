@@ -133,7 +133,7 @@ namespace Gloson.Games.Nim {
     /// </summary>
     /// <param name="position">Current Position</param>
     public IEnumerable<int[]> Next(IEnumerable<int> position) {
-      if (null == position)
+      if (position is null)
         throw new ArgumentNullException(nameof(position));
 
       List<int> source = new List<int>();
@@ -153,7 +153,7 @@ namespace Gloson.Games.Nim {
     /// Is the position a winning one
     /// </summary>
     public bool IsWin(IEnumerable<int> position) {
-      if (null == position)
+      if (position is null)
         throw new ArgumentNullException(nameof(position));
 
       List<int> source = new List<int>();
@@ -174,7 +174,7 @@ namespace Gloson.Games.Nim {
     /// Best Move
     /// </summary>
     public int[] BestMove(IEnumerable<int> position) {
-      if (null == position)
+      if (position is null)
         throw new ArgumentNullException(nameof(position));
 
       List<int> source = new List<int>();
@@ -212,7 +212,7 @@ namespace Gloson.Games.Nim {
     public static bool operator ==(GameOfSticks left, GameOfSticks right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -224,7 +224,7 @@ namespace Gloson.Games.Nim {
     public static bool operator !=(GameOfSticks left, GameOfSticks right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -240,7 +240,7 @@ namespace Gloson.Games.Nim {
     public bool Equals(GameOfSticks other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return other.IsLastWin == IsLastWin &&

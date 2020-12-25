@@ -27,16 +27,16 @@ namespace Gloson.Collections.Generic {
       public bool Equals(T x, T y) {
         if (ReferenceEquals(x, y))
           return true;
-        else if (null == y)
+        else if (y is null)
           return false;
-        else if (x == null)
+        else if (x is null)
           return false;
 
         return m_Equals(x, y);
       }
 
       public int GetHashCode(T obj) {
-        return null == obj ? 0 : m_Hash(obj);
+        return obj is null ? 0 : m_Hash(obj);
       }
     }
 
@@ -57,9 +57,9 @@ namespace Gloson.Collections.Generic {
     /// <param name="hash">Hash</param>
     /// <returns></returns>
     public static IEqualityComparer<T> FromFunc<T>(Func<T, T, bool> equals, Func<T, int> hash) {
-      if (null == equals)
+      if (equals is null)
         throw new ArgumentNullException(nameof(equals));
-      else if (null == hash)
+      else if (hash is null)
         throw new ArgumentNullException(nameof(hash));
 
       return new EqualityComparerFunc<T>(equals, hash);
@@ -81,7 +81,7 @@ namespace Gloson.Collections.Generic {
     public static IEqualityComparer<T> DefaultRequired<T>() {
       IEqualityComparer<T> result = EqualityComparer<T>.Default;
 
-      if (null == result)
+      if (result is null)
         throw new InvalidOperationException($"Type {typeof(T).Name} doesn't have any default Equality Comparer.");
 
       return result;
@@ -114,7 +114,7 @@ namespace Gloson.Collections.Generic {
       /// Standard Constructor
       /// </summary>
       public EqualityComparerCombined(IEnumerable<IEqualityComparer<T>> comparers) {
-        if (null == comparers)
+        if (comparers is null)
           throw new ArgumentNullException(nameof(comparers));
 
         m_Items = comparers
@@ -172,10 +172,10 @@ namespace Gloson.Collections.Generic {
     /// Combine Equality Comparers
     /// </summary>
     public static IEqualityComparer<T> ThenBy<T>(this IEqualityComparer<T> master, params IEqualityComparer<T>[] others) {
-      if (null == master)
+      if (master is null)
         master = EqualityComparerBuilder.DefaultRequired<T>();
 
-      if (null == others)
+      if (others is null)
         throw new ArgumentNullException(nameof(others));
 
       if (others.Length <= 0)

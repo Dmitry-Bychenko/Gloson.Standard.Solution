@@ -90,7 +90,7 @@ namespace Gloson.Services.Git {
     /// <param name="path">Path</param>
     /// <returns></returns>
     public static GitLocalRepository Clone(Uri ssh, string branch, string path) {
-      if (null == ssh)
+      if (ssh is null)
         throw new ArgumentNullException(nameof(ssh));
 
       if (string.IsNullOrEmpty(path))
@@ -149,7 +149,7 @@ namespace Gloson.Services.Git {
     /// </summary>
     public Uri Ssh {
       get {
-        if (null != m_Ssh)
+        if (m_Ssh is not null)
           return m_Ssh;
 
         m_Ssh = new Uri(Execute("remote get-url origin").Out);
@@ -163,7 +163,7 @@ namespace Gloson.Services.Git {
     /// </summary>
     public GitPerson Author {
       get {
-        if (null != m_Author)
+        if (m_Author is not null)
           return m_Author;
 
         CoreUpdateAuthorAndCommiter();
@@ -177,7 +177,7 @@ namespace Gloson.Services.Git {
     /// </summary>
     public GitPerson Commiter {
       get {
-        if (null != m_Commiter)
+        if (m_Commiter is not null)
           return m_Commiter;
 
         CoreUpdateAuthorAndCommiter();

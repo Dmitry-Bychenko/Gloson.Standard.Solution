@@ -57,7 +57,7 @@ namespace Gloson.Numerics.Matrices {
     public TriDiagonalMatrix(IEnumerable<(double a, double b, double c)> lines)
       : this() {
 
-      if (null == lines)
+      if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       foreach (var (a, b, c) in lines) {
@@ -132,7 +132,7 @@ namespace Gloson.Numerics.Matrices {
     /// Solve Matrix * x = f equation
     /// </summary>
     public double[] Solve(IEnumerable<double> f) {
-      if (null == f)
+      if (f is null)
         throw new ArgumentNullException(nameof(f));
 
       double[] free = f.Take(m_B.Count + 1).ToArray();
@@ -140,7 +140,7 @@ namespace Gloson.Numerics.Matrices {
       if (m_B.Count != free.Length)
         throw new ArgumentOutOfRangeException(nameof(f));
 
-      if (null == m_Bs) {
+      if (m_Bs is null) {
         m_Bs = new double[m_B.Count];
         m_Bs[0] = m_B[0];
 
@@ -169,7 +169,7 @@ namespace Gloson.Numerics.Matrices {
     /// Multiply Matrix * x
     /// </summary>
     public double[] Apply(IEnumerable<double> x) {
-      if (null == x)
+      if (x is null)
         throw new ArgumentNullException(nameof(x));
 
       double[] v = x.Take(Count + 1).ToArray();
@@ -215,7 +215,7 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator ==(TriDiagonalMatrix left, TriDiagonalMatrix right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
       else
         return left.Equals(right);
@@ -227,7 +227,7 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator !=(TriDiagonalMatrix left, TriDiagonalMatrix right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null != left || null != right)
+      else if (left is not null || right is not null)
         return false;
       else
         return !left.Equals(right);
@@ -241,7 +241,7 @@ namespace Gloson.Numerics.Matrices {
     /// Unary + 
     /// </summary>
     public static TriDiagonalMatrix operator +(TriDiagonalMatrix value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return value;
@@ -251,7 +251,7 @@ namespace Gloson.Numerics.Matrices {
     /// Unary - 
     /// </summary>
     public static TriDiagonalMatrix operator -(TriDiagonalMatrix value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       TriDiagonalMatrix result = new TriDiagonalMatrix();
@@ -267,7 +267,7 @@ namespace Gloson.Numerics.Matrices {
     /// Multiplication
     /// </summary>
     public static TriDiagonalMatrix operator *(TriDiagonalMatrix value, double coefficient) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       TriDiagonalMatrix result = new TriDiagonalMatrix();
@@ -283,7 +283,7 @@ namespace Gloson.Numerics.Matrices {
     /// Division
     /// </summary>
     public static TriDiagonalMatrix operator /(TriDiagonalMatrix value, double coefficient) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       TriDiagonalMatrix result = new TriDiagonalMatrix();
@@ -299,7 +299,7 @@ namespace Gloson.Numerics.Matrices {
     /// Multiplication
     /// </summary>
     public static TriDiagonalMatrix operator *(double coefficient, TriDiagonalMatrix value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       TriDiagonalMatrix result = new TriDiagonalMatrix();
@@ -315,9 +315,9 @@ namespace Gloson.Numerics.Matrices {
     /// Addition
     /// </summary>
     public static TriDiagonalMatrix operator +(TriDiagonalMatrix left, TriDiagonalMatrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
       else if (left.Count != right.Count)
         throw new ArgumentOutOfRangeException(nameof(right));
@@ -335,9 +335,9 @@ namespace Gloson.Numerics.Matrices {
     /// Subtraction
     /// </summary>
     public static TriDiagonalMatrix operator -(TriDiagonalMatrix left, TriDiagonalMatrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
       else if (left.Count != right.Count)
         throw new ArgumentOutOfRangeException(nameof(right));
@@ -363,7 +363,7 @@ namespace Gloson.Numerics.Matrices {
     public bool Equals(TriDiagonalMatrix other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return m_A.SequenceEqual(other.m_A) &&

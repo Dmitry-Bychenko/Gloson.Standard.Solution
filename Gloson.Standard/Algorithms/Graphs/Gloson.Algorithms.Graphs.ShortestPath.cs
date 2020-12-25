@@ -22,15 +22,15 @@ namespace Gloson.Algorithms.Graphs {
       IEqualityComparer<V> comparer = null,
       Func<(V from, V to, double oldLength, double length), double> collision = null) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == edgeMap)
+      else if (edgeMap is null)
         throw new ArgumentNullException(nameof(edgeMap));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<V>.Default;
 
-      if (collision == null)
+      if (collision is null)
         collision = r => Math.Min(r.oldLength, r.length);
 
       Dictionary<V, Dictionary<V, double>> result =
@@ -89,7 +89,7 @@ namespace Gloson.Algorithms.Graphs {
       IEqualityComparer<V> comparer = null,
       Func<(V from, V to, double oldLength, double length), double> collision = null) {
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<V>.Default;
 
       Dictionary<V, Dictionary<V, double>> graph = BuildGraph(source, edgeMap, biDirect, comparer, collision);

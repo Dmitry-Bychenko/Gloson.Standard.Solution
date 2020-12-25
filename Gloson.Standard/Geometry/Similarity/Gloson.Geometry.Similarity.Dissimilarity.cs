@@ -33,11 +33,11 @@ namespace Gloson.Geometry.Similarity {
     /// Dissimilarity
     /// </summary>
     public static double Dissimilarity(this IDissimilarity rules, IEnumerable<int> left, IEnumerable<int> right) {
-      if (null == rules)
+      if (rules is null)
         throw new ArgumentNullException(nameof(rules));
-      else if (null == left)
+      else if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       return rules.Dissimilarity(left.Select(x => x != 0), right.Select(x => x != 0));
@@ -68,9 +68,9 @@ namespace Gloson.Geometry.Similarity {
     /// Dissimilarity
     /// </summary>
     public double Dissimilarity(IEnumerable<bool> left, IEnumerable<bool> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == left)
+      else if (left is null)
         throw new ArgumentNullException(nameof(left));
 
       List<bool> listLeft = new List<bool>();

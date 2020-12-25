@@ -116,10 +116,10 @@ namespace Gloson.Text.NaturalLanguages {
     /// Register
     /// </summary>
     public static void Register(CultureInfo culture, IGrammaticalNumberDetector detector) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
-      if (null == detector)
+      if (detector is null)
         s_Detectors.TryRemove(culture, out detector);
       else
         s_Detectors.AddOrUpdate(culture, detector, (key, existing) => detector);
@@ -129,10 +129,10 @@ namespace Gloson.Text.NaturalLanguages {
     /// Find
     /// </summary>
     public static IGrammaticalNumberDetector Find(CultureInfo culture) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
-      while (culture != null) {
+      while (culture is not null) {
         if (s_Detectors.TryGetValue(culture, out var result))
           return result;
 

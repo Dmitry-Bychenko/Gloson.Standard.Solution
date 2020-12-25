@@ -126,7 +126,7 @@ namespace Gloson.Linq {
     public static bool operator ==(EditOperation<T> left, EditOperation<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -138,7 +138,7 @@ namespace Gloson.Linq {
     public static bool operator !=(EditOperation<T> left, EditOperation<T> right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -154,7 +154,7 @@ namespace Gloson.Linq {
     public bool Equals(EditOperation<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return object.Equals(this.Before, other.Before) &&
@@ -173,8 +173,8 @@ namespace Gloson.Linq {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      return (Before == null ? 0 : Before.GetHashCode()) ^
-             (After == null ? 0 : After.GetHashCode()) ^
+      return (Before is null ? 0 : Before.GetHashCode()) ^
+             (After is null ? 0 : After.GetHashCode()) ^
              (int)Kind;
     }
 
@@ -372,15 +372,15 @@ namespace Gloson.Linq {
                          Func<T, double> insertCost,
                          Func<T, double> deleteCost,
                          Func<T, T, double> editCost) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == target)
+      else if (target is null)
         throw new ArgumentNullException(nameof(target));
-      else if (null == insertCost)
+      else if (insertCost is null)
         throw new ArgumentNullException(nameof(insertCost));
-      else if (null == deleteCost)
+      else if (deleteCost is null)
         throw new ArgumentNullException(nameof(deleteCost));
-      else if (null == editCost)
+      else if (editCost is null)
         throw new ArgumentNullException(nameof(editCost));
 
       CorePerform(source.ToArray(),
@@ -399,11 +399,11 @@ namespace Gloson.Linq {
     public EditProcedure(IEnumerable<T> source,
                          IEnumerable<T> target,
                          IEditCost<T> price) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == target)
+      else if (target is null)
         throw new ArgumentNullException(nameof(target));
-      else if (null == price)
+      else if (price is null)
         throw new ArgumentNullException(nameof(price));
 
       Func<T, double> insertCost = price.InsertionPrice;

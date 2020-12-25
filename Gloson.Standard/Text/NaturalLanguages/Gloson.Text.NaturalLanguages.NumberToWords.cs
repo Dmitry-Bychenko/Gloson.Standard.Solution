@@ -176,10 +176,10 @@ namespace Gloson.Text.NaturalLanguages {
     /// Register
     /// </summary>
     public static void Register(CultureInfo culture, INumberToWords detector) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
-      if (null == detector)
+      if (detector is null)
         s_Items.TryRemove(culture, out detector);
       else
         s_Items.AddOrUpdate(culture, detector, (key, existing) => detector);
@@ -189,10 +189,10 @@ namespace Gloson.Text.NaturalLanguages {
     /// Find
     /// </summary>
     public static INumberToWords Find(CultureInfo culture) {
-      if (null == culture)
+      if (culture is null)
         culture = CultureInfo.CurrentCulture;
 
-      while (culture != null) {
+      while (culture is not null) {
         if (s_Items.TryGetValue(culture, out var result))
           return result;
 

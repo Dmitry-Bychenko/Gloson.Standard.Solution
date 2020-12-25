@@ -45,11 +45,11 @@ namespace Gloson.Services.Git.Stash {
 
       m_Branches = new Lazy<List<StashBranch>>(CoreCreateBranches);
 
-      if (json.Value("links")?.Value("clone") is JsonArray array && array != null)
+      if (json.Value("links")?.Value("clone") is JsonArray array && array is not null)
         foreach (JsonValue item in array) {
           string hRef = item.Value("href");
 
-          if (hRef != null && hRef.Trim().StartsWith("ssh://", StringComparison.OrdinalIgnoreCase)) {
+          if (hRef is not null && hRef.Trim().StartsWith("ssh://", StringComparison.OrdinalIgnoreCase)) {
             Ssh = new Uri(hRef.Trim());
 
             break;

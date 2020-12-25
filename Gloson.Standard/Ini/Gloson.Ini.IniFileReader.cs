@@ -30,7 +30,7 @@ namespace Gloson.Ini {
     /// Create from Text Reader
     /// </summary>
     public static IniFileReader Create(TextReader reader) {
-      if (null == reader)
+      if (reader is null)
         throw new ArgumentNullException(nameof(reader));
 
       return new IniFileReader(reader);
@@ -40,7 +40,7 @@ namespace Gloson.Ini {
     /// From Stream
     /// </summary>
     public static IniFileReader Create(Stream stream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       TextReader reader = null;
@@ -51,7 +51,7 @@ namespace Gloson.Ini {
         return Create(reader);
       }
       catch {
-        if (null != reader)
+        if (reader is not null)
           reader.Dispose();
 
         throw;
@@ -62,7 +62,7 @@ namespace Gloson.Ini {
     /// From Stream
     /// </summary>
     public static IniFileReader Create(Stream stream, Encoding encoding) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       TextReader reader = null;
@@ -73,7 +73,7 @@ namespace Gloson.Ini {
         return Create(reader);
       }
       catch {
-        if (null != reader)
+        if (reader is not null)
           reader.Dispose();
 
         throw;
@@ -84,7 +84,7 @@ namespace Gloson.Ini {
     /// From File Name
     /// </summary>
     public static IniFileReader Create(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       TextReader reader = null;
@@ -95,7 +95,7 @@ namespace Gloson.Ini {
         return Create(reader);
       }
       catch {
-        if (null != reader)
+        if (reader is not null)
           reader.Dispose();
 
         throw;
@@ -106,7 +106,7 @@ namespace Gloson.Ini {
     /// From File Name
     /// </summary>
     public static IniFileReader Create(string fileName, Encoding encoding) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       TextReader reader = null;
@@ -117,7 +117,7 @@ namespace Gloson.Ini {
         return Create(reader);
       }
       catch {
-        if (null != reader)
+        if (reader is not null)
           reader.Dispose();
 
         throw;
@@ -142,12 +142,12 @@ namespace Gloson.Ini {
     /// Read
     /// </summary>
     public bool Read() {
-      if (null == m_Reader)
+      if (m_Reader is null)
         return false;
 
       int index = 0;
 
-      for (string line = m_Reader.ReadLine(); line != null; line = m_Reader.ReadLine()) {
+      for (string line = m_Reader.ReadLine(); line is not null; line = m_Reader.ReadLine()) {
         index += 1;
 
         if (string.IsNullOrWhiteSpace(line))
@@ -164,7 +164,7 @@ namespace Gloson.Ini {
         else if (IniFileRecord.TryParse(line, out var r))
           Current = r;
 
-        if (null != Current)
+        if (Current is not null)
           return true;
         else
           throw new FormatException($"Syntax error at #{index} line");
@@ -180,7 +180,7 @@ namespace Gloson.Ini {
     // Dispose
     private void Dispose(bool disposing) {
       if (disposing) {
-        if (null != m_Reader)
+        if (m_Reader is not null)
           m_Reader.Dispose();
 
         m_Reader = null;

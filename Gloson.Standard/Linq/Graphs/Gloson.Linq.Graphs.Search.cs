@@ -76,7 +76,7 @@ namespace Gloson.Linq.Graphs {
       /// Value from Node
       /// </summary>
       public static implicit operator T(Vertex<T> value) {
-        if (null == value)
+        if (value is null)
           throw new ArgumentNullException(nameof(value));
 
         return value.Value;
@@ -88,7 +88,7 @@ namespace Gloson.Linq.Graphs {
       public static bool operator ==(Vertex<T> left, Vertex<T> right) {
         if (ReferenceEquals(left, right))
           return true;
-        else if (null == left || null == right)
+        else if (left is null || right is null)
           return false;
 
         return left.Equals(right);
@@ -100,7 +100,7 @@ namespace Gloson.Linq.Graphs {
       public static bool operator !=(Vertex<T> left, Vertex<T> right) {
         if (ReferenceEquals(left, right))
           return false;
-        else if (null == left || null == right)
+        else if (left is null || right is null)
           return true;
 
         return !left.Equals(right);
@@ -114,7 +114,7 @@ namespace Gloson.Linq.Graphs {
       /// Hash Code
       /// </summary>
       public override int GetHashCode() {
-        return Value == null ? 0 : Value.GetHashCode();
+        return Value is null ? 0 : Value.GetHashCode();
       }
 
       /// <summary>
@@ -130,7 +130,7 @@ namespace Gloson.Linq.Graphs {
       public bool Equals(Vertex<T> other) {
         if (ReferenceEquals(this, other))
           return true;
-        else if (null == other)
+        else if (other is null)
           return false;
 
         return object.Equals(Value, other.Value);
@@ -149,9 +149,9 @@ namespace Gloson.Linq.Graphs {
     /// <param name="source">Top items (connected components representatives)</param>
     /// <param name="children">return children on given item</param>
     public static IEnumerable<Vertex<T>> BreadthFirstSearch<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> children) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == children)
+      else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
       HashSet<T> proceeded = new HashSet<T>();
@@ -163,7 +163,7 @@ namespace Gloson.Linq.Graphs {
       while (queue.Count > 0) {
         IEnumerable<Vertex<T>> src = queue.Dequeue();
 
-        if (null == src)
+        if (src is null)
           continue;
 
         foreach (var item in src)
@@ -181,9 +181,9 @@ namespace Gloson.Linq.Graphs {
     /// <param name="source">Top items (connected components representatives)</param>
     /// <param name="children">return children on given item</param>
     public static IEnumerable<Vertex<T>> DepthFirstSearch<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> children) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == children)
+      else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
       HashSet<T> proceeded = new HashSet<T>();
@@ -195,7 +195,7 @@ namespace Gloson.Linq.Graphs {
       while (stack.Count > 0) {
         IEnumerable<Vertex<T>> src = stack.Pop();
 
-        if (null == src)
+        if (src is null)
           continue;
 
         foreach (var item in src)

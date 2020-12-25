@@ -457,7 +457,7 @@ namespace Gloson.Text {
     /// Linear Time Suffix Array
     /// </summary>
     public static int[] SuffixArray(this string value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
       else if (value.Length <= 1)
         return new int[value.Length];

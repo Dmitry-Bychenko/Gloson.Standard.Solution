@@ -20,7 +20,7 @@ namespace Gloson.Numerics.Combinatorics {
     /// Permutation rank
     /// </summary>
     public static BigInteger PermutationRank(IEnumerable<int> permutation) {
-      if (null == permutation)
+      if (permutation is null)
         throw new ArgumentNullException(nameof(permutation));
 
       int[] value = permutation.ToArray();

@@ -26,7 +26,7 @@ namespace Gloson.Numerics.Interpolation {
     /// Standard Constructor
     /// </summary>
     public BaseSpline(IEnumerable<(double x, double y)> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (var (x, y) in source.OrderBy(p => p.x)) {

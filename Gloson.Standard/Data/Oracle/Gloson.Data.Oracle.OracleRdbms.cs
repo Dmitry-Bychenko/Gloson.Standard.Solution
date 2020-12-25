@@ -26,12 +26,12 @@ namespace Gloson.Data.Oracle {
       /*
       Assembly assembly = Assembly.GetEntryAssembly();
 
-      if (null == assembly)
+      if (assembly is null)
         assembly = Assembly.GetExecutingAssembly();
 
       var framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>();
 
-      bool isCore = (null != framework) &&
+      bool isCore = (framework is not null) &&
                     (framework.FrameworkName.IndexOf("Core", StringComparison.OrdinalIgnoreCase) >= 0);
 
       return isCore
@@ -41,7 +41,7 @@ namespace Gloson.Data.Oracle {
     }
 
     private static Type ConnectionType() {
-      if (null == AccessAssembly)
+      if (AccessAssembly is null)
         return null;
 
       return AccessAssembly

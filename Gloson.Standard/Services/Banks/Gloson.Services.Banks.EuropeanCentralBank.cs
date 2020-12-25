@@ -40,7 +40,7 @@ namespace Gloson.Services.Banks {
 
         JsonObject array = null;
 
-        if (null == top)
+        if (top is null)
           return new Dictionary<CurrencyInfo, decimal>();
         else if (top is JsonObject)
           array = top as JsonObject;

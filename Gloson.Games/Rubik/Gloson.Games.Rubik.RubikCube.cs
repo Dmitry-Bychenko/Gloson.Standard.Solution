@@ -190,7 +190,7 @@ namespace Gloson.Games.Rubik {
     /// </summary>
     public T this[string address] {
       get {
-        if (null == address)
+        if (address is null)
           throw new ArgumentNullException(nameof(address));
 
         if (address.Length != 2 || !m_Items.ContainsKey(address[0]) || address[1] < '0' || address[1] > '8')
@@ -199,7 +199,7 @@ namespace Gloson.Games.Rubik {
         return m_Items[address[0]][address[1] - '0'];
       }
       set {
-        if (null == address)
+        if (address is null)
           throw new ArgumentNullException(nameof(address));
 
         if (address.Length != 2 || !m_Items.ContainsKey(address[0]) || address[1] < '0' || address[1] > '8')
@@ -239,7 +239,7 @@ namespace Gloson.Games.Rubik {
     /// like "R2,D-1,FF"
     /// </summary>
     public bool TryPerform(string command) {
-      if (null == command)
+      if (command is null)
         return false;
 
       var comms = Regex
@@ -276,7 +276,7 @@ namespace Gloson.Games.Rubik {
     /// like "R2,D-1,FF"
     /// </summary>
     public void Perform(string command) {
-      if (null == command)
+      if (command is null)
         throw new ArgumentNullException(nameof(command));
 
       if (!TryPerform(command))
@@ -366,7 +366,7 @@ namespace Gloson.Games.Rubik {
     public static bool operator ==(RubikCube<T> left, RubikCube<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -378,7 +378,7 @@ namespace Gloson.Games.Rubik {
     public static bool operator !=(RubikCube<T> left, RubikCube<T> right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -394,7 +394,7 @@ namespace Gloson.Games.Rubik {
     public bool Equals(RubikCube<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return s_Faces.All(face => other.m_Items[face].SequenceEqual(m_Items[face]));

@@ -323,9 +323,9 @@ namespace Gloson.Globalization {
     public static int Compare(CurrencyInfo left, CurrencyInfo right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = string.Compare(left.Code, right.Code, StringComparison.OrdinalIgnoreCase);
@@ -477,7 +477,7 @@ namespace Gloson.Globalization {
     public static bool TryParse(string code, out CurrencyInfo result) {
       result = null;
 
-      if (null == code)
+      if (code is null)
         return false;
 
       code = code.Trim();
@@ -517,7 +517,7 @@ namespace Gloson.Globalization {
     /// To int32 (ISO number)
     /// </summary>
     public static implicit operator int(CurrencyInfo value) =>
-      value == null ? -1 : value.Number;
+      value is null ? -1 : value.Number;
 
     /// <summary>
     /// To string (ISO code)
@@ -536,7 +536,7 @@ namespace Gloson.Globalization {
     public bool Equals(CurrencyInfo other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Number == other.Number &&

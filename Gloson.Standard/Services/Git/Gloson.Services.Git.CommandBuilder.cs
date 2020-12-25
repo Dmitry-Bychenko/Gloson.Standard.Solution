@@ -22,7 +22,7 @@ namespace Gloson.Services.Git {
     /// <param name="items">Items</param>
     /// <returns></returns>
     public static string Build(IEnumerable<string> items) {
-      if (null == items)
+      if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       return string.Join(" ", items
@@ -45,7 +45,7 @@ namespace Gloson.Services.Git {
     /// <param name="targetPath">Target Path</param>
     /// <param name="cloneSubModules">If submodules should be cloned</param>
     public static string Clone(Uri ssh, string branch, string targetPath, bool cloneSubModules = true) {
-      if (null == ssh)
+      if (ssh is null)
         throw new ArgumentNullException(nameof(ssh));
 
       return BuildCommand(
@@ -66,7 +66,7 @@ namespace Gloson.Services.Git {
       if (string.IsNullOrWhiteSpace(targetPath))
         targetPath = Environment.CurrentDirectory;
 
-      if (null == format)
+      if (format is null)
         throw new ArgumentNullException(nameof(format));
 
       return BuildCommand(
@@ -105,7 +105,7 @@ namespace Gloson.Services.Git {
     /// <param name="filesToAdd">Files to be added</param>
     /// <returns></returns>
     public static string AddFiles(params string[] filesToAdd) {
-      if (null == filesToAdd)
+      if (filesToAdd is null)
         throw new ArgumentNullException(nameof(filesToAdd));
       else if (filesToAdd.Length <= 0)
         return "";
@@ -125,7 +125,7 @@ namespace Gloson.Services.Git {
     /// <param name="filesToAdd">Files to be removed</param>
     /// <returns></returns>
     public static string RemoveFiles(params string[] filesToAdd) {
-      if (null == filesToAdd)
+      if (filesToAdd is null)
         throw new ArgumentNullException(nameof(filesToAdd));
       else if (filesToAdd.Length <= 0)
         return "";

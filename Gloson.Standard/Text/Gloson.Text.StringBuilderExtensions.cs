@@ -18,7 +18,7 @@ namespace Gloson.Text {
     /// Reverse (at place)
     /// </summary>
     public static void Reverse(this StringBuilder value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       for (int i = 0; i < value.Length / 2; ++i) {

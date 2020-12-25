@@ -108,7 +108,7 @@ namespace Gloson {
 
     private void Dispose(bool disposing) {
       if (disposing) {
-        if (m_Random != null)
+        if (m_Random is not null)
           m_Random.Dispose();
 
         m_Random = null;
@@ -210,7 +210,7 @@ namespace Gloson {
     public static bool operator ==(RandomLinearCongruent left, RandomLinearCongruent right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -222,7 +222,7 @@ namespace Gloson {
     public static bool operator !=(RandomLinearCongruent left, RandomLinearCongruent right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -236,7 +236,7 @@ namespace Gloson {
     /// Equals
     /// </summary>
     public bool Equals(RandomLinearCongruent other) {
-      if (null == other)
+      if (other is null)
         return false;
 
       return A == other.A &&

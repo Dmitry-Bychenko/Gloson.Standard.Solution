@@ -60,7 +60,7 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="seed">Seed</param>
     /// <returns>Random value, distributed according to the distribution</returns>
     public static ContinuousRandom Rdf(IContinuousProbabilityDistribution distribution, int seed) {
-      if (null == distribution)
+      if (distribution is null)
         throw new ArgumentNullException(nameof(distribution));
 
       return new ContinuousRandom(distribution, seed);
@@ -73,7 +73,7 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="seed">Seed</param>
     /// <returns>Random value, distributed according to the distribution</returns>
     public static ContinuousRandom Random(IContinuousProbabilityDistribution distribution) {
-      if (null == distribution)
+      if (distribution is null)
         throw new ArgumentNullException(nameof(distribution));
 
       return new ContinuousRandom(distribution);

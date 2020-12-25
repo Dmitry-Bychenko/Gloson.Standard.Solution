@@ -191,7 +191,7 @@ namespace Gloson.Services.Git {
     /// To Boolean (no failure)
     /// </summary>
     public static implicit operator bool(GitResult value) {
-      return (null != value) && value.ErrorLevel < GitResultLevel.Error;
+      return (value is not null) && value.ErrorLevel < GitResultLevel.Error;
     }
 
     /// <summary>
@@ -207,7 +207,7 @@ namespace Gloson.Services.Git {
     public static bool operator ==(GitResult left, GitResult right) {
       if (object.ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
       else
         return left.Equals(right);
@@ -219,7 +219,7 @@ namespace Gloson.Services.Git {
     public static bool operator !=(GitResult left, GitResult right) {
       if (object.ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
       else
         return !left.Equals(right);
@@ -235,7 +235,7 @@ namespace Gloson.Services.Git {
     public bool Equals(GitResult other) {
       if (object.ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return ExitCode == other.ExitCode &&

@@ -90,13 +90,13 @@ namespace Gloson.Games.Cards {
           for (int v = 0; v < 5; ++v) {
             Card cardToAdd = Hand.FirstOrDefault(card => card.Value == startAt - v && card.Suit == suit);
 
-            if (cardToAdd == null && jokerIndex < jokers.Length) {
+            if (cardToAdd is null && jokerIndex < jokers.Length) {
               cardToAdd = jokers[jokerIndex];
 
               jokerIndex += 1;
             }
 
-            if (cardToAdd == null)
+            if (cardToAdd is null)
               break;
 
             list.Add(cardToAdd);
@@ -143,13 +143,13 @@ namespace Gloson.Games.Cards {
         for (int v = 0; v < 5; ++v) {
           Card cardToAdd = Hand.FirstOrDefault(card => card.Value == startAt - v);
 
-          if (cardToAdd == null && jokerIndex < jokers.Length) {
+          if (cardToAdd is null && jokerIndex < jokers.Length) {
             cardToAdd = jokers[jokerIndex];
 
             jokerIndex += 1;
           }
 
-          if (cardToAdd == null)
+          if (cardToAdd is null)
             break;
 
           list.Add(cardToAdd);
@@ -361,7 +361,7 @@ namespace Gloson.Games.Cards {
     /// Poker Best Score
     /// </summary>
     public PokerBestScore(IEnumerable<Card> hand) {
-      if (null == hand)
+      if (hand is null)
         throw new ArgumentNullException(nameof(hand));
 
       Hand = hand.ToList();
@@ -379,9 +379,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(PokerBestScore left, PokerBestScore right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = left.Combination.CompareTo(right.Combination);

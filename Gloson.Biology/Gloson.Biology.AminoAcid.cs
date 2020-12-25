@@ -171,9 +171,9 @@ namespace Gloson.Biology {
     public static int Compare(AminoAcid left, AminoAcid right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return left.Code.CompareTo(right.Code);
@@ -311,7 +311,7 @@ namespace Gloson.Biology {
     public bool Equals(AminoAcid other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Code == other.Code;

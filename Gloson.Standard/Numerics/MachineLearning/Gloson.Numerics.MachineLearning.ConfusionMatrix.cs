@@ -26,9 +26,9 @@ namespace Gloson.Numerics.MachineLearning {
       public int Compare(ConfusionMatrix<T> x, ConfusionMatrix<T> y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (x == null)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return 1;
         else
           return x.F1Score.CompareTo(y.F1Score);
@@ -55,9 +55,9 @@ namespace Gloson.Numerics.MachineLearning {
     /// <param name="predictedMap">Predicted value from given item</param>
     /// <param name="actualMap">Actual value (grpund truth) from item</param>
     public ConfusionMatrix(Func<T, bool> predictedMap, Func<T, bool> actualMap) {
-      if (null == predictedMap)
+      if (predictedMap is null)
         throw new ArgumentNullException(nameof(predictedMap));
-      else if (null == predictedMap)
+      else if (predictedMap is null)
         throw new ArgumentNullException(nameof(actualMap));
 
       m_PredictedMap = predictedMap;
@@ -105,7 +105,7 @@ namespace Gloson.Numerics.MachineLearning {
     /// Add Range
     /// </summary>
     public long AddRange(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (var value in source) {
@@ -249,7 +249,7 @@ namespace Gloson.Numerics.MachineLearning {
     public static bool operator ==(ConfusionMatrix<T> left, ConfusionMatrix<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right || left == null)
+      else if (right is null || left is null)
         return false;
       else
         return left.Equals(right);
@@ -261,7 +261,7 @@ namespace Gloson.Numerics.MachineLearning {
     public static bool operator !=(ConfusionMatrix<T> left, ConfusionMatrix<T> right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right || left == null)
+      else if (right is null || left is null)
         return true;
       else
         return !left.Equals(right);
@@ -277,7 +277,7 @@ namespace Gloson.Numerics.MachineLearning {
     public bool Equals(ConfusionMatrix<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return TruePositive == other.TruePositive &
@@ -316,7 +316,7 @@ namespace Gloson.Numerics.MachineLearning {
       if (string.IsNullOrWhiteSpace(format))
         format = "F3";
 
-      if (null == formatProvider)
+      if (formatProvider is null)
         formatProvider = CultureInfo.InvariantCulture;
 
       return string.Concat(

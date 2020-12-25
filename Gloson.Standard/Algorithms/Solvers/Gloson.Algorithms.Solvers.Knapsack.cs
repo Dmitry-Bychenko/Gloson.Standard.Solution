@@ -66,7 +66,7 @@ namespace Gloson.Algorithms.Solvers {
     /// Standard construtor
     /// </summary>
     public DynamicKnapsackSolver(int weight, IEnumerable<(int weight, int value)> items) {
-      if (null == items)
+      if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       m_Items = items.ToList();
@@ -126,7 +126,7 @@ namespace Gloson.Algorithms.Solvers {
     public static bool operator ==(DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
       else
         return left.Equals(right);
@@ -138,7 +138,7 @@ namespace Gloson.Algorithms.Solvers {
     public static bool operator !=(DynamicKnapsackSolver left, DynamicKnapsackSolver right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
       else
         return !left.Equals(right);
@@ -152,7 +152,7 @@ namespace Gloson.Algorithms.Solvers {
     /// Equals
     /// </summary>
     public bool Equals(DynamicKnapsackSolver other) {
-      if (null == other)
+      if (other is null)
         return false;
 
       if (Weight != other.Weight)

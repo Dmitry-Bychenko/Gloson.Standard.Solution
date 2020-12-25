@@ -105,9 +105,9 @@ namespace Gloson.Geometry.Clustering {
     #region Algorithm
 
     private static IEnumerable<IGrouping<int, T>> ToGroupBy<T>(IClustering<T> engine, IEnumerable<T> source) {
-      if (null == engine)
+      if (engine is null)
         throw new ArgumentNullException(nameof(engine));
-      else if (null == source)
+      else if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       Dictionary<int, List<T>> result = new Dictionary<int, List<T>>();
@@ -148,9 +148,9 @@ namespace Gloson.Geometry.Clustering {
     public static IEnumerable<IGrouping<int, T>> GroupByClusters<T>(
       this IEnumerable<T> source, IClustering<T> algorithm) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == algorithm)
+      else if (algorithm is null)
         throw new ArgumentNullException(nameof(algorithm));
 
       return ToGroupBy(algorithm, source);

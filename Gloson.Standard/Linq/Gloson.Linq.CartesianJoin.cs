@@ -26,11 +26,11 @@ namespace Gloson.Linq {
       IEnumerable<Right> right,
       Func<Left, Right, Result> map) {
 
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
-      else if (null == map)
+      else if (map is null)
         throw new ArgumentNullException(nameof(map));
 
       if (right is ICollection<Right>) {

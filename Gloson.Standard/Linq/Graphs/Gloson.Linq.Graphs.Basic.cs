@@ -24,9 +24,9 @@ namespace Gloson.Linq.Graphs {
            Func<(V from, V to, E oldEdge, E newEdge), E> collision = null,
            Func<(V from, V to, E edge), bool> edgeFilter = null) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == edgeMap)
+      else if (edgeMap is null)
         throw new ArgumentNullException(nameof(edgeMap));
 
       vertexComparer ??= EqualityComparer<V>.Default;

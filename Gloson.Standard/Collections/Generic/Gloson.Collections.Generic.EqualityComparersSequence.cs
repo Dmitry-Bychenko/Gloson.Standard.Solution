@@ -46,7 +46,7 @@ namespace Gloson.Collections.Generic {
       OrderMatters = orderMatters;
       CountMatters = countMatters;
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
       ItemComparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"Type {typeof(T).Name} doesn't have default Equality Comparer");
@@ -81,7 +81,7 @@ namespace Gloson.Collections.Generic {
     public bool Equals(IEnumerable<T> left, IEnumerable<T> right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       if (OrderMatters) {
@@ -174,7 +174,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="obj"></param>
     /// <returns></returns>
     public int GetHashCode(IEnumerable<T> obj) {
-      if (null == obj)
+      if (obj is null)
         return 0;
 
       return obj.Count();

@@ -96,7 +96,7 @@ namespace Gloson.Numerics.Matrices {
         throw new ArgumentOutOfRangeException(nameof(lines));
       else if (columns <= 0)
         throw new ArgumentOutOfRangeException(nameof(columns));
-      else if (null == createItem)
+      else if (createItem is null)
         throw new ArgumentNullException(nameof(createItem));
 
       Matrix result = new Matrix(lines, columns);
@@ -120,7 +120,7 @@ namespace Gloson.Numerics.Matrices {
     /// Create
     /// </summary>
     public static Matrix Create(IEnumerable<IEnumerable<double>> data) {
-      if (null == data)
+      if (data is null)
         throw new ArgumentNullException(nameof(data));
 
       var copy = data
@@ -142,7 +142,7 @@ namespace Gloson.Numerics.Matrices {
     /// <param name="func">func: value, line, column returns a new value</param>
     /// <returns>New Matrix</returns>
     public Matrix Perform(Func<double, int, int, double> func) {
-      if (null == func)
+      if (func is null)
         throw new ArgumentNullException(nameof(func));
 
       Matrix result = new Matrix(LineCount, ColumnCount);
@@ -160,7 +160,7 @@ namespace Gloson.Numerics.Matrices {
     /// <param name="func">func: line, column returns a new value</param>
     /// <returns>New Matrix</returns>
     public Matrix Perform(Func<int, int, double> func) {
-      if (null == func)
+      if (func is null)
         throw new ArgumentNullException(nameof(func));
 
       Matrix result = new Matrix(LineCount, ColumnCount);
@@ -178,7 +178,7 @@ namespace Gloson.Numerics.Matrices {
     /// <param name="func">func: value returns a new value</param>
     /// <returns>New Matrix</returns>
     public Matrix Perform(Func<double, double> func) {
-      if (null == func)
+      if (func is null)
         throw new ArgumentNullException(nameof(func));
 
       Matrix result = new Matrix(LineCount, ColumnCount);
@@ -332,7 +332,7 @@ namespace Gloson.Numerics.Matrices {
     /// </summary>
     public double[] LinearSoution {
       get {
-        if (null == m_LinearSolutions)
+        if (m_LinearSolutions is null)
           m_LinearSolutions = MatrixLowLevel.Solve(m_Items);
 
         return m_LinearSolutions;
@@ -385,9 +385,9 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator ==(Matrix left, Matrix right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right)
+      else if (right is null)
         return false;
-      else if (null == left)
+      else if (left is null)
         return false;
 
       return left.Equals(right);
@@ -399,9 +399,9 @@ namespace Gloson.Numerics.Matrices {
     public static bool operator !=(Matrix left, Matrix right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right)
+      else if (right is null)
         return true;
-      else if (null == left)
+      else if (left is null)
         return true;
 
       return !left.Equals(right);
@@ -415,7 +415,7 @@ namespace Gloson.Numerics.Matrices {
     /// Unary +
     /// </summary>
     public static Matrix operator +(Matrix value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return value;
@@ -425,7 +425,7 @@ namespace Gloson.Numerics.Matrices {
     /// Unary -
     /// </summary>
     public static Matrix operator -(Matrix value) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       Matrix result = value.Clone();
@@ -441,7 +441,7 @@ namespace Gloson.Numerics.Matrices {
     /// Multiplication by number
     /// </summary>
     public static Matrix operator *(Matrix matrix, double value) {
-      if (null == matrix)
+      if (matrix is null)
         throw new ArgumentNullException(nameof(matrix));
 
       if (value == 1)
@@ -465,7 +465,7 @@ namespace Gloson.Numerics.Matrices {
     /// Division by number
     /// </summary>
     public static Matrix operator /(Matrix matrix, double value) {
-      if (null == matrix)
+      if (matrix is null)
         throw new ArgumentNullException(nameof(matrix));
 
       if (value == 1)
@@ -484,9 +484,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Addition
     /// </summary>
     public static Matrix operator +(Matrix left, Matrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (left.LineCount != right.LineCount)
@@ -507,9 +507,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Subtractions
     /// </summary>
     public static Matrix operator -(Matrix left, Matrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (left.LineCount != right.LineCount)
@@ -530,9 +530,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Mutiplication
     /// </summary>
     public static Matrix operator *(Matrix left, Matrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (left.ColumnCount != right.LineCount)
@@ -557,9 +557,9 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Division
     /// </summary>
     public static Matrix operator /(Matrix left, Matrix right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (left.ColumnCount != right.LineCount)
@@ -574,7 +574,7 @@ namespace Gloson.Numerics.Matrices {
     /// Matrix Division
     /// </summary>
     public static Matrix operator /(double left, Matrix right) {
-      if (null == right)
+      if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       if (right.ColumnCount != right.LineCount)
@@ -631,7 +631,7 @@ namespace Gloson.Numerics.Matrices {
 
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (this.ColumnCount != other.ColumnCount || this.LineCount != other.LineCount)
@@ -653,7 +653,7 @@ namespace Gloson.Numerics.Matrices {
     public bool Equals(Matrix other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (this.ColumnCount != other.ColumnCount || this.LineCount != other.LineCount)
@@ -682,7 +682,7 @@ namespace Gloson.Numerics.Matrices {
     /// To String
     /// </summary>
     public string ToString(string format, IFormatProvider formatProvider) {
-      if (null == formatProvider)
+      if (formatProvider is null)
         formatProvider = CultureInfo.InvariantCulture;
 
       if (string.IsNullOrEmpty(format) || "g".Equals(format, StringComparison.OrdinalIgnoreCase))

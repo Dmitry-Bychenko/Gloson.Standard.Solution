@@ -35,7 +35,7 @@ namespace Gloson.Data.Oracle.Client {
       Name = name;
       Parent = parent;
 
-      if (parent != null)
+      if (parent is not null)
         parent.m_Items.Add(this);
     }
 
@@ -43,7 +43,7 @@ namespace Gloson.Data.Oracle.Client {
     /// Load
     /// </summary>
     public static TnsNames Load(IEnumerable<string> lines) {
-      if (null == lines)
+      if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       TnsNames root = new TnsNames("", null);
@@ -153,7 +153,7 @@ namespace Gloson.Data.Oracle.Client {
         TnsNames result = this;
 
         while (true) {
-          if (result.Parent == null)
+          if (result.Parent is null)
             return result;
 
           result = result.Parent;
@@ -202,7 +202,7 @@ namespace Gloson.Data.Oracle.Client {
       get {
         int result = 0;
 
-        for (TnsNames parent = Parent; parent != null; parent = parent.Parent)
+        for (TnsNames parent = Parent; parent is not null; parent = parent.Parent)
           result += 1;
 
         return result;

@@ -31,7 +31,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
     #region Create
 
     protected CheckSumBase(IEnumerable<T> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       m_Items = sequence.ToList();
@@ -84,7 +84,7 @@ namespace Gloson.ComponentModel.DataAnnotations.CheckSums {
     /// To Boolean (not null and IsValid)
     /// </summary>
     public static implicit operator bool(CheckSumBase<T> value) =>
-      (null != value) && value.IsValid;
+      (value is not null) && value.IsValid;
 
     #endregion Operators
   }

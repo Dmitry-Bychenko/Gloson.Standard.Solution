@@ -23,13 +23,13 @@ namespace Gloson.Linq {
       Func<V, T, V> aggregate,
       Func<V, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       V aggregatedValue = seed;
@@ -52,13 +52,13 @@ namespace Gloson.Linq {
       Func<T, T, T> aggregate,
       Func<T, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       T aggregatedValue = default;
@@ -88,13 +88,13 @@ namespace Gloson.Linq {
       Func<V, T, V> aggregate,
       Func<V, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       V aggregatedValue = seed;
@@ -123,13 +123,13 @@ namespace Gloson.Linq {
       Func<T, T, T> aggregate,
       Func<T, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       T aggregatedValue = default;
@@ -165,13 +165,13 @@ namespace Gloson.Linq {
       Func<V, T, V> aggregate,
       Func<V, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       V aggregatedValue = seed;
@@ -192,13 +192,13 @@ namespace Gloson.Linq {
       Func<T, T, T> aggregate,
       Func<T, bool> condition) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == aggregate)
+      if (aggregate is null)
         throw new ArgumentNullException(nameof(aggregate));
 
-      if (null == condition)
+      if (condition is null)
         throw new ArgumentNullException(nameof(condition));
 
       T aggregatedValue = default;

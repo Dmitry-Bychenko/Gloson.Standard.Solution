@@ -19,15 +19,15 @@ namespace Gloson.Linq {
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<T> ConcatOrdered<T>(this IEnumerable<T> source, IEnumerable<T> other, IComparer<T> comparer = null) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == other)
+      else if (other is null)
         throw new ArgumentNullException(nameof(other));
 
-      if (null == comparer) {
+      if (comparer is null) {
         comparer = Comparer<T>.Default;
 
-        if (null == comparer)
+        if (comparer is null)
           throw new ArgumentNullException(nameof(comparer), $"No default {nameof(comparer)} for {typeof(T).Name} found");
       }
 

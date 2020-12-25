@@ -86,7 +86,7 @@ namespace Gloson.Numerics.Distributions {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => null == m_Random;
+    public bool IsDisposed => m_Random is null;
 
     /// <summary>
     /// Dispose
@@ -100,7 +100,7 @@ namespace Gloson.Numerics.Distributions {
     /// </summary>
     private void Dispose(bool disposing) {
       if (disposing) {
-        if (m_Random != null)
+        if (m_Random is not null)
           m_Random.Dispose();
 
         m_Random = null;

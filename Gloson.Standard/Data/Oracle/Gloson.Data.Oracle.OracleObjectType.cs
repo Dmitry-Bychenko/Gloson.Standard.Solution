@@ -108,9 +108,9 @@ namespace Gloson.Data.Oracle {
     public static int Compare(OracleObjectType left, OracleObjectType right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == right)
+      else if (right is null)
         return -1;
-      else if (left == null)
+      else if (left is null)
         return 1;
 
       return left.Id.CompareTo(right.Id);
@@ -179,7 +179,7 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// To Int32 (Id)
     /// </summary>
-    public static implicit operator int(OracleObjectType value) => null == value
+    public static implicit operator int(OracleObjectType value) => value is null
       ? -1
       : value.Id;
 
@@ -244,7 +244,7 @@ namespace Gloson.Data.Oracle {
     public bool Equals(OracleObjectType other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return other.Id == Id;

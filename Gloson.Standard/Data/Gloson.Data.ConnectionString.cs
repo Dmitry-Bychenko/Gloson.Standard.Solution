@@ -66,7 +66,7 @@ namespace Gloson.Data {
     /// Standard Constructor
     /// </summary>
     public ConnectionStringBuilder(IConnectionStringBuilder builder) {
-      if (null == builder)
+      if (builder is null)
         builder = Dependencies.GetService<IConnectionStringBuilder>();
 
       Builder = builder ?? throw new ArgumentNullException(nameof(builder));
@@ -137,13 +137,13 @@ namespace Gloson.Data {
     /// With Option
     /// </summary>
     public ConnectionStringBuilder WithOption(string name, string value) {
-      if (null == name)
+      if (name is null)
         throw new ArgumentNullException(nameof(name));
 
       if (string.IsNullOrWhiteSpace(name))
         throw new ArgumentException("Empty (or white space only) name is not allowed.", nameof(name));
 
-      if (null == value)
+      if (value is null)
         m_Items.Remove(name);
       else if (m_Items.ContainsKey(name))
         m_Items[name] = value;

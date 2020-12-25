@@ -45,7 +45,7 @@ namespace Gloson.Geometry.Neighbours {
     /// </summary>
     /// <param name="from">From point</param>
     public static IEnumerable<int[]> Manhatten(IEnumerable<int> from) {
-      if (null == from)
+      if (from is null)
         throw new ArgumentNullException(nameof(from));
 
       int[] data = from.ToArray();
@@ -97,7 +97,7 @@ namespace Gloson.Geometry.Neighbours {
     /// </summary>
     /// <param name="from">From point</param>
     public static IEnumerable<int[]> Euclid(IEnumerable<int> from) {
-      if (null == from)
+      if (from is null)
         throw new ArgumentNullException(nameof(from));
 
       int[] data = from.ToArray();

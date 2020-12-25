@@ -32,7 +32,7 @@ namespace Gloson.Text {
     /// Objects (collection) to scv
     /// </summary>
     public static string ObjectsToCsv<T>(IEnumerable<T> value, char delimiter, char quotation) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       return string.Join(delimiter.ToString(), value
@@ -43,7 +43,7 @@ namespace Gloson.Text {
     /// Parse CSV
     /// </summary>
     public static IEnumerable<string[]> ParseCsv(IEnumerable<string> lines, char delimiter, char quotation) {
-      if (null == lines)
+      if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
       List<string> items = new List<string>();
@@ -51,7 +51,7 @@ namespace Gloson.Text {
       StringBuilder sb = new StringBuilder();
 
       foreach (var line in lines) {
-        if (null == line)
+        if (line is null)
           continue;
 
         for (int i = 0; i < line.Length; ++i) {
@@ -107,7 +107,7 @@ namespace Gloson.Text {
     /// Parse Csv
     /// </summary>
     public static IEnumerable<string[]> ParseCsv(TextReader reader, char delimiter, char quotation) {
-      if (null == reader)
+      if (reader is null)
         throw new ArgumentNullException(nameof(reader));
 
       return ParseCsv(reader.AsEnumerable(), delimiter, quotation);
@@ -117,7 +117,7 @@ namespace Gloson.Text {
     /// Parse Csv
     /// </summary>
     public static IEnumerable<string[]> ParseCsv(Stream stream, char delimiter, char quotation, Encoding encoding) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       using StreamReader reader = new StreamReader(stream, encoding, true, 8192, true);
@@ -143,11 +143,11 @@ namespace Gloson.Text {
     /// To CSV
     /// </summary>
     public static IEnumerable<string> ToCsv<T>(this IEnumerable<IEnumerable<T>> source, char delimiter, char quotation) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (IEnumerable<T> line in source) {
-        if (null == line)
+        if (line is null)
           yield return "";
         else
           yield return CommaSeparatedValues.ObjectsToCsv(line, delimiter, quotation);
@@ -170,7 +170,7 @@ namespace Gloson.Text {
     /// From Csv
     /// </summary>
     public static IEnumerable<string[]> FromCsv(this IEnumerable<string> source, char delimiter, char quotation) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       return CommaSeparatedValues.ParseCsv(source, delimiter, quotation);

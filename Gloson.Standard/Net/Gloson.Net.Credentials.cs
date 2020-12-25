@@ -66,7 +66,7 @@ namespace Gloson.Net {
     public bool Equals(NetworkCredentialRecord other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Address == other.Address &&
@@ -106,7 +106,7 @@ namespace Gloson.Net {
     #region Algorithm
 
     private static NetworkCredential Clone(NetworkCredential value) {
-      if (null == value)
+      if (value is null)
         return value;
 
       return new NetworkCredential(value.UserName, value.Password, value.Domain);
@@ -138,10 +138,10 @@ namespace Gloson.Net {
     /// Add Or Update
     /// </summary>
     public bool Add(Uri uri, string authType, NetworkCredential credential) {
-      if (null == credential)
+      if (credential is null)
         return Remove(uri, authType);
       else {
-        if (null == uri)
+        if (uri is null)
           return false;
 
         NetworkCredentialRecord id = new NetworkCredentialRecord(uri, authType);
@@ -173,7 +173,7 @@ namespace Gloson.Net {
       NetworkCredential result = null;
 
       if (string.IsNullOrEmpty(title))
-        title = uri == null ? "Local Host Credentials" : uri.ToString();
+        title = uri is null ? "Local Host Credentials" : uri.ToString();
 
       var dialog = Dependencies.CreateService<INetworkCredentialDialog>();
 
@@ -243,11 +243,11 @@ namespace Gloson.Net {
     public NetworkCredential GetOrReadCredential(string title, Uri uri, string authType) {
       NetworkCredential result = GetCredential(uri, authType);
 
-      if (null != result)
+      if (result is not null)
         return result;
 
       if (string.IsNullOrEmpty(title))
-        title = uri == null ? "Local Host Credentials" : uri.ToString();
+        title = uri is null ? "Local Host Credentials" : uri.ToString();
 
       var dialog = Dependencies.CreateService<INetworkCredentialDialog>();
 

@@ -64,9 +64,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// Standard constructor
     /// </summary>
     public ObjectiveDescription(string id, ObjectiveGoal goal, Func<T, double> computation) {
-      if (null == id)
+      if (id is null)
         throw new ArgumentNullException(nameof(id));
-      else if (null == computation)
+      else if (computation is null)
         throw new ArgumentNullException(nameof(computation));
 
       Id = id?.Trim();
@@ -90,9 +90,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     public static int Compare(ObjectiveDescription<T> left, ObjectiveDescription<T> right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == right)
+      else if (right is null)
         return -1;
-      else if (null == left)
+      else if (left is null)
         return 1;
 
       return string.Compare(left.Id, right.Id);
@@ -119,7 +119,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Dominates(ObjectiveDescription<T> other, T solution) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (null == other)
+      else if (other is null)
         return false;
       else if (!string.Equals(Id, other.Id))
         return false;
@@ -141,7 +141,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool IsDominated(ObjectiveDescription<T> other, T solution) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (null == other)
+      else if (other is null)
         return false;
       else if (!string.Equals(Id, other.Id))
         return false;
@@ -209,7 +209,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Equals(ObjectiveDescription<T> other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(this.Id, other.Id);
@@ -224,7 +224,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() =>
-      null == Id ? 0 : Id.GetHashCode();
+      Id is null ? 0 : Id.GetHashCode();
 
     #endregion IEquatable<ObjectiveDescription<T>>
   }

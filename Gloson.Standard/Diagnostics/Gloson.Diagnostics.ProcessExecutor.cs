@@ -93,9 +93,9 @@ namespace Gloson.Diagnostics {
     public static int Compare(ProcessExecutionResult left, ProcessExecutionResult right) {
       if (object.ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = left.AtUtc.CompareTo(right.AtUtc);
@@ -293,7 +293,7 @@ namespace Gloson.Diagnostics {
     /// To Integer (exit code)
     /// </summary>
     public static implicit operator int(ProcessExecutionResult value) {
-      return (null == value) ? int.MinValue : value.ExitCode;
+      return (value is null) ? int.MinValue : value.ExitCode;
     }
 
     /// <summary>
@@ -368,7 +368,7 @@ namespace Gloson.Diagnostics {
     public bool Equals(ProcessExecutionResult other) {
       if (object.ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return ExitCode == other.ExitCode &&
@@ -451,7 +451,7 @@ namespace Gloson.Diagnostics {
     public static ProcessExecutionResult Execute(string processPath,
                                                  string processParameters = "",
                                                  Encoding encoding = null) {
-      if (null == processPath)
+      if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
       encoding ??= Encoding.UTF8;
@@ -478,13 +478,13 @@ namespace Gloson.Diagnostics {
       StringBuilder sbErr = new StringBuilder();
 
       process.OutputDataReceived += (sender, e) => {
-        if (e.Data != null) {
+        if (e.Data is not null) {
           sbOut.AppendLine(e.Data);
         }
       };
 
       process.ErrorDataReceived += (sender, e) => {
-        if (e.Data != null)
+        if (e.Data is not null)
           sbErr.AppendLine(e.Data);
       };
 
@@ -513,7 +513,7 @@ namespace Gloson.Diagnostics {
                                                             CancellationToken token,
                                                             string processParameters = "",
                                                             Encoding encoding = null) {
-      if (null == processPath)
+      if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
       encoding ??= Encoding.UTF8;
@@ -560,7 +560,7 @@ namespace Gloson.Diagnostics {
       };
 
       process.OutputDataReceived += (sender, e) => {
-        if (e.Data != null)
+        if (e.Data is not null)
           lock (sbOut) {
             if (sbOut.Length > 0)
               sbOut.AppendLine();
@@ -570,7 +570,7 @@ namespace Gloson.Diagnostics {
       };
 
       process.ErrorDataReceived += (sender, e) => {
-        if (e.Data != null)
+        if (e.Data is not null)
           lock (sbErr) {
             if (sbErr.Length > 0)
               sbErr.AppendLine();
@@ -615,7 +615,7 @@ namespace Gloson.Diagnostics {
     /// <returns></returns>
     public static int FireAndForget(string processPath,
                                     string processParameters = "") {
-      if (null == processPath)
+      if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
       ProcessStartInfo info = new ProcessStartInfo() {
@@ -648,7 +648,7 @@ namespace Gloson.Diagnostics {
     public static Task<int> FireAndForgetAsync(string processPath,
                                                CancellationToken token,
                                                string processParameters = "") {
-      if (null == processPath)
+      if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
       ProcessStartInfo info = new ProcessStartInfo() {

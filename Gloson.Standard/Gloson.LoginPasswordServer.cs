@@ -60,9 +60,9 @@ namespace Gloson {
       public int Compare(LoginPasswordServer x, LoginPasswordServer y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return 1;
 
         int result = string.Compare(x.Server, y.Server, StringComparison.OrdinalIgnoreCase);
@@ -179,7 +179,7 @@ namespace Gloson {
     /// Parse
     /// </summary>
     public static LoginPasswordServer Parse(string value, LoginPasswordServerPolicy policy) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       if (TryParse(value, out var result, policy))
@@ -249,7 +249,7 @@ namespace Gloson {
     public static bool operator ==(LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -261,7 +261,7 @@ namespace Gloson {
     public static bool operator !=(LoginPasswordServer left, LoginPasswordServer right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -277,7 +277,7 @@ namespace Gloson {
     public bool Equals(LoginPasswordServer other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return

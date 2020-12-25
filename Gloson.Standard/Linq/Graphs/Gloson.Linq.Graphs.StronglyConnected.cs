@@ -54,9 +54,9 @@ namespace Gloson.Linq.Graphs {
     public static IEnumerable<T[]> StronglyConnectedComponents<T>(
       this IEnumerable<T> source,
            Func<T, IEnumerable<T>> children) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == children)
+      else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
       Dictionary<T, (HashSet<T> to, HashSet<T> from)> graph = source
@@ -100,11 +100,11 @@ namespace Gloson.Linq.Graphs {
       this IEnumerable<T> source,
            Func<T, N> vertex,
            Func<T, IEnumerable<N>> children) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == vertex)
+      else if (vertex is null)
         throw new ArgumentNullException(nameof(vertex));
-      else if (null == children)
+      else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
       Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph =

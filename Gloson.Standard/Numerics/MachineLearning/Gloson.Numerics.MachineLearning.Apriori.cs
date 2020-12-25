@@ -36,7 +36,7 @@ namespace Gloson.Numerics.MachineLearning {
       IEnumerable<T> right,
       IEqualityComparer<T> comparer = null) {
 
-      if (null == transactions)
+      if (transactions is null)
         throw new ArgumentNullException(nameof(transactions));
 
       comparer ??= EqualityComparer<T>.Default;
@@ -61,7 +61,7 @@ namespace Gloson.Numerics.MachineLearning {
       foreach (IEnumerable<T> record in transactions) {
         CountAll += 1;
 
-        if (null == record)
+        if (record is null)
           continue;
 
         var dict = record
@@ -333,7 +333,7 @@ namespace Gloson.Numerics.MachineLearning {
       int maxSubsetSize = -1,
       IEqualityComparer<T> comparer = null) {
 
-      if (null == transactions)
+      if (transactions is null)
         throw new ArgumentNullException(nameof(transactions));
       else if (minSupport < 0 || minSupport > 1)
         throw new ArgumentOutOfRangeException(nameof(minSupport));
@@ -426,7 +426,7 @@ namespace Gloson.Numerics.MachineLearning {
         .ToDictionary(group => group.Key, group => group);
 
       double Support(HashSet<T> value) {
-        if (null == value)
+        if (value is null)
           return 0;
 
         if (!data.TryGetValue(value.Count, out var records))

@@ -51,7 +51,7 @@ namespace Gloson.Text {
     /// Reversed Parentheses: ( -> ); ] -> [; <= -> =>; /* -> */ etc. 
     /// </summary>
     public static string ParenthesesReversed(this string value) {
-      if (null == value)
+      if (value is null)
         return value;
 
       StringBuilder sb = new StringBuilder(value.Length);

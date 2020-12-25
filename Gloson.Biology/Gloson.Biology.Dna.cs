@@ -31,7 +31,7 @@ namespace Gloson.Biology {
     /// Standard Constructor
     /// </summary>
     public Dna(IEnumerable<DnaNuclearbase> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       m_Items = new List<DnaNuclearbase>(sequence);
@@ -42,7 +42,7 @@ namespace Gloson.Biology {
     /// </summary>
     /// <param name="sequence"></param>
     public Dna(IEnumerable<char> sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       m_Items = sequence
@@ -106,7 +106,7 @@ namespace Gloson.Biology {
     public static bool operator ==(Dna left, Dna right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       return left.Equals(right);
@@ -118,7 +118,7 @@ namespace Gloson.Biology {
     public static bool operator !=(Dna left, Dna right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return true;
 
       return !left.Equals(right);
@@ -165,7 +165,7 @@ namespace Gloson.Biology {
     public bool Equals(Dna other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Enumerable.SequenceEqual(m_Items, other.m_Items);
@@ -180,7 +180,7 @@ namespace Gloson.Biology {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      if (m_Items == null)
+      if (m_Items is null)
         return 0;
 
       unchecked {

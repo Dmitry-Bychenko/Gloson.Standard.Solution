@@ -84,31 +84,31 @@ namespace Gloson.Data {
         .Where(t => t.GetInterfaces().Any(itf => itf == typeof(IDbDataAdapter)))
         .FirstOrDefault();
 
-      if (transactionType != null)
+      if (transactionType is not null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(IDbTransaction),
           transactionType,
           ServiceLifetime.Transient));
 
-      if (commandType != null)
+      if (commandType is not null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(IDbCommand),
           commandType,
           ServiceLifetime.Transient));
 
-      if (parameterType != null)
+      if (parameterType is not null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(IDbDataParameter),
           parameterType,
           ServiceLifetime.Transient));
 
-      if (providerFactoryType != null)
+      if (providerFactoryType is not null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(DbProviderFactory),
           providerFactoryType,
           ServiceLifetime.Transient));
 
-      if (adapterType != null)
+      if (adapterType is not null)
         Dependencies.Services.Add(new ServiceDescriptor(
           typeof(IDbDataAdapter),
           adapterType,
@@ -125,7 +125,7 @@ namespace Gloson.Data {
     /// <param name="connectionType">Connection Type</param>
     /// <param name="connectionString">Connection String</param>
     public static void Register(Type connectionType, string connectionString) {
-      if (null == connectionType)
+      if (connectionType is null)
         throw new ArgumentNullException(nameof(connectionType));
       else if (connectionType.IsAbstract || connectionType.IsInterface)
         throw new ArgumentException($"Class {connectionType.Name} must not be abstract", nameof(connectionType));
@@ -165,7 +165,7 @@ namespace Gloson.Data {
     /// </summary>
     /// <param name="connectionType">Connection Type</param>
     public static void Register(Type connectionType) {
-      if (null == connectionType)
+      if (connectionType is null)
         throw new ArgumentNullException(nameof(connectionType));
       else if (connectionType.IsAbstract || connectionType.IsInterface)
         throw new ArgumentException($"Class {connectionType.Name} must not be abstract", nameof(connectionType));
@@ -182,7 +182,7 @@ namespace Gloson.Data {
 
             var dialog = Dependencies.Provider.GetService<IRdbmsConnectionDialog>();
 
-            if (dialog != null) {
+            if (dialog is not null) {
               string connectionString = dialog.ConnectionString(result);
 
               if (!string.IsNullOrWhiteSpace(connectionString)) {
@@ -264,9 +264,9 @@ namespace Gloson.Data {
     /// <param name="sql">SQL</param>
     /// <param name="parameters">Parameters</param>
     public static int ExecuteNonQuery(string sql, params (string, object)[] parameters) {
-      if (null == sql)
+      if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbConnection conn = Connect();
@@ -293,9 +293,9 @@ namespace Gloson.Data {
     /// <param name="sql">SQL</param>
     /// <param name="parameters">Parameters</param>
     public static Object ExecuteScalar(string sql, params (string, object)[] parameters) {
-      if (null == sql)
+      if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbConnection conn = Connect();
@@ -319,9 +319,9 @@ namespace Gloson.Data {
     /// <param name="sql">SQL</param>
     /// <param name="parameters">Parameters</param>
     public static IEnumerable<IDataRecord> ExecuteEnumerable(string sql, params (string, object)[] parameters) {
-      if (null == sql)
+      if (sql is null)
         throw new ArgumentNullException(nameof(sql));
-      else if (null == parameters)
+      else if (parameters is null)
         throw new ArgumentNullException(nameof(parameters));
 
       using IDbConnection conn = Connect();

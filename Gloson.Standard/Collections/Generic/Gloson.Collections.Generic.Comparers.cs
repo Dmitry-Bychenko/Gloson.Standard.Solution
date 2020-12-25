@@ -26,7 +26,7 @@ namespace Gloson.Collections.Generic {
     /// From Func
     /// </summary>
     public static IComparer<T> FromFunc<T>(Func<T, T, int> compare) {
-      if (null == compare)
+      if (compare is null)
         throw new ArgumentNullException(nameof(compare));
 
       return Comparer<T>.Create((x, y) => compare(x, y));
@@ -39,9 +39,9 @@ namespace Gloson.Collections.Generic {
       return Comparer<T>.Create((x, y) => {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return 1;
 
         return 0;
@@ -55,9 +55,9 @@ namespace Gloson.Collections.Generic {
       return Comparer<T>.Create((x, y) => {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return 1;
-        else if (null == y)
+        else if (y is null)
           return -1;
 
         return 0;
@@ -80,7 +80,7 @@ namespace Gloson.Collections.Generic {
     public static IComparer<T> DefaultRequired<T>() {
       IComparer<T> result = Comparer<T>.Default;
 
-      if (null == result)
+      if (result is null)
         throw new InvalidOperationException($"Type {typeof(T).Name} doesn't have any default Comparer.");
 
       return result;
@@ -171,7 +171,7 @@ namespace Gloson.Collections.Generic {
     /// Reverse
     /// </summary>
     public static IComparer<T> Reverse<T>(this IComparer<T> comparer) {
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
 
       return new ReversedComparer<T>(comparer);
@@ -181,9 +181,9 @@ namespace Gloson.Collections.Generic {
     /// Then By
     /// </summary>
     public static IComparer<T> ThenBy<T>(this IComparer<T> comparer, IComparer<T> nextComparer) {
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
-      else if (null == nextComparer)
+      else if (nextComparer is null)
         throw new ArgumentNullException(nameof(nextComparer));
 
       if (comparer == nextComparer)
@@ -196,9 +196,9 @@ namespace Gloson.Collections.Generic {
     /// Then By Descending
     /// </summary>
     public static IComparer<T> ThenByDescending<T>(this IComparer<T> comparer, IComparer<T> nextComparer) {
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer));
-      else if (null == nextComparer)
+      else if (nextComparer is null)
         throw new ArgumentNullException(nameof(nextComparer));
 
       if (comparer == nextComparer)

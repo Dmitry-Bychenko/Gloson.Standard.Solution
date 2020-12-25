@@ -33,7 +33,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="key">Key</param>
     /// <param name="items">Items</param>
     public Grouping(K key, IEnumerable<V> items) {
-      if (null == items)
+      if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       Key = key;

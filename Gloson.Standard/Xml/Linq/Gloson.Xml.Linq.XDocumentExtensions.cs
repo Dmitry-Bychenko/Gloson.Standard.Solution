@@ -23,7 +23,7 @@ namespace Gloson.Xml.Linq {
     /// <param name="comment">Add standard caption</param>
     public static void AddStandardCaption(this XDocument document,
                                           String comment) {
-      if (null == document)
+      if (document is null)
         throw new ArgumentNullException(nameof(document));
 
       XComment xComment = null;
@@ -34,17 +34,17 @@ namespace Gloson.Xml.Linq {
         if (en.Current is XElement)
           break;
 
-        if (null == xComment)
+        if (xComment is null)
           xComment = en.Current as XComment;
       }
 
       // Creating the declaration
-      if (null == document.Declaration)
+      if (document.Declaration is null)
         document.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
       // Changing or creating comment
       if (!String.IsNullOrEmpty(comment)) {
-        if (null == xComment) {
+        if (xComment is null) {
           xComment = new XComment(comment);
 
           document.AddFirst(xComment);
@@ -67,12 +67,12 @@ namespace Gloson.Xml.Linq {
     /// </summary>
     /// <param name="document">Document to save</param>
     public static String SaveToString(this XDocument document) {
-      if (null == document)
+      if (document is null)
         throw new ArgumentNullException(nameof(document));
 
       StringBuilder Sb = new StringBuilder();
 
-      if (null != document.Declaration)
+      if (document.Declaration is not null)
         Sb.Append(document.Declaration.ToString());
 
       if (Sb.Length > 0)

@@ -44,18 +44,18 @@ namespace Gloson.Numerics.Distributions {
       int count,
       IEnumerable<IContinuousProbabilityDistribution> distributions) {
 
-      if (null == sampler)
+      if (sampler is null)
         throw new ArgumentNullException(nameof(sampler));
       else if (count < 0)
         throw new ArgumentOutOfRangeException(nameof(count));
-      else if (null == distributions)
+      else if (distributions is null)
         throw new ArgumentNullException(nameof(distributions));
 
       IContinuousProbabilityDistribution[] dist = distributions.ToArray();
 
       if (dist.Length <= 0)
         throw new ArgumentOutOfRangeException(nameof(distributions));
-      else if (dist.Any(d => d == null))
+      else if (dist.Any(d => d is null))
         throw new ArgumentException("nulls are not allowed within distributions", nameof(distributions));
 
       foreach (double[] points in sampler.Generate(dist.Length, count)) {

@@ -54,10 +54,10 @@ namespace Gloson.Collections.Generic {
       if (capacity <= 0)
         capacity = 0;
 
-      if (null == directComparer)
+      if (directComparer is null)
         directComparer = EqualityComparer<K>.Default;
 
-      if (null == reversedComparer)
+      if (reversedComparer is null)
         reversedComparer = EqualityComparer<V>.Default;
 
       m_Direct = new Dictionary<K, V>(capacity, directComparer);
@@ -290,11 +290,11 @@ namespace Gloson.Collections.Generic {
                                                                       Func<T, V> value,
                                                                       IEqualityComparer<K> keyComparer,
                                                                       IEqualityComparer<V> valueComparer) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == key)
+      else if (key is null)
         throw new ArgumentNullException(nameof(key));
-      else if (null == value)
+      else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       Correspondence<K, V> result = new Correspondence<K, V>(keyComparer, valueComparer);

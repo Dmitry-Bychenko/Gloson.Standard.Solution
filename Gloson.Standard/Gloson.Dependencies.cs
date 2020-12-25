@@ -106,10 +106,10 @@ namespace Gloson {
     /// <param name="interfaceType"></param>
     /// <param name="serviceType"></param>
     public static void RegisterService(Type serviceType, Type implementationType) {
-      if (null == serviceType)
+      if (serviceType is null)
         throw new ArgumentNullException(nameof(serviceType));
 
-      if (null == serviceType)
+      if (serviceType is null)
         Services.RemoveAll(serviceType);
       else {
         ServiceDescriptor descriptor = new ServiceDescriptor(
@@ -127,10 +127,10 @@ namespace Gloson {
     /// <param name="interfaceType"></param>
     /// <param name="serviceType"></param>
     public static void TryRegisterService(Type serviceType, Type implementationType) {
-      if (null == serviceType)
+      if (serviceType is null)
         throw new ArgumentNullException(nameof(serviceType));
 
-      if (null == serviceType)
+      if (serviceType is null)
         Services.RemoveAll(serviceType);
       else {
         ServiceDescriptor descriptor = new ServiceDescriptor(
@@ -146,7 +146,7 @@ namespace Gloson {
     /// Register Instance
     /// </summary>
     public static void RegisterInstance(Type serviceType, Object instance) {
-      if (null == instance)
+      if (instance is null)
         Services.RemoveAll(serviceType);
       else {
         Services.AddSingleton(serviceType, instance);

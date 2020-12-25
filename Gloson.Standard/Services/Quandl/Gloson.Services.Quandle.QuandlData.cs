@@ -36,7 +36,7 @@ namespace Gloson.Services.Quandl {
     /// Query
     /// </summary>
     public static IEnumerable<string[]> Query(string dataset, string apiKey, int version) {
-      if (null == dataset)
+      if (dataset is null)
         throw new ArgumentNullException(nameof(dataset));
       else if (version <= 0)
         version = 3;
@@ -74,7 +74,7 @@ namespace Gloson.Services.Quandl {
     /// Query
     /// </summary>
     public static async Task<string[][]> QueryAsync(string dataset, string apiKey, int version) {
-      if (null == dataset)
+      if (dataset is null)
         throw new ArgumentNullException(nameof(dataset));
       else if (version <= 0)
         version = 3;

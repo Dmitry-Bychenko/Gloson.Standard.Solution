@@ -49,7 +49,7 @@ namespace Gloson.Geometry.Clustering.Library {
     /// <param name="source">Items to clusterize</param>
     /// <returns></returns>
     public override IEnumerable<(T item, int cluster)> Clusterize(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       List<(T item, double[] point, int cluster)> data = source

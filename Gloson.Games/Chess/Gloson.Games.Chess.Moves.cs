@@ -81,7 +81,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       for ((int rank, int file) at = (position.rank, position.file - 1); ; at = (at.rank, at.file - 1)) {
@@ -148,7 +148,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       for ((int rank, int file) at = (position.rank - 1, position.file - 1); ; at = (at.rank - 1, at.file - 1)) {
@@ -215,7 +215,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       foreach (var move in Rook(position, piece, pieces))
@@ -236,7 +236,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       for (int rank = position.rank - 1; rank <= position.rank + 1; ++rank)
@@ -263,7 +263,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       for (int y = -2; y <= 2; ++y)
@@ -294,7 +294,7 @@ namespace Gloson.Games.Chess {
       if (piece != ChessFieldState.BlackPiece && piece != ChessFieldState.WhitePiece)
         throw new ArgumentOutOfRangeException(nameof(piece));
 
-      if (null == pieces)
+      if (pieces is null)
         throw new ArgumentNullException(nameof(pieces));
 
       bool doubleMove = false;

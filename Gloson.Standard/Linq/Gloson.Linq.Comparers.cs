@@ -42,21 +42,21 @@ namespace Gloson.Linq {
                                         IEqualityComparer<T> comparer) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == left || null == right)
+      else if (left is null || right is null)
         return false;
 
       // Ordered and Counted
       if (orderMatters && countMatters) {
-        if (null == comparer)
+        if (comparer is null)
           return Enumerable.SequenceEqual(left, right);
         else
           return Enumerable.SequenceEqual(left, right, comparer);
       }
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer), $"No default equality comparer for {typeof(T).Name}");
 
       // Ordered, not counted

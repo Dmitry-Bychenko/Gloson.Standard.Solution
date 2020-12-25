@@ -17,7 +17,7 @@ namespace Gloson.Numerics.Calculus {
     /// Simpson integration At
     /// </summary>
     public static double SimpsonAt(this Func<double, double> func, double from, double to, int points) {
-      if (null == func)
+      if (func is null)
         throw new ArgumentNullException(nameof(func));
 
       if (points <= 0)

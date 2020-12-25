@@ -104,7 +104,7 @@ namespace Gloson.Numerics.Distributions {
     /// </summary>
     /// <param name="sample">Sample to create distribution from</param>
     public SampleBasedDistribution(IEnumerable<double> sample) {
-      if (null == sample)
+      if (sample is null)
         throw new ArgumentNullException(nameof(sample));
 
       CoreProcess(sample);

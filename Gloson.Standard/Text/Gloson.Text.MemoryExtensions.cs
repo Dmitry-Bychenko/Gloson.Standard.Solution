@@ -20,7 +20,7 @@ namespace Gloson.Text {
     /// <param name="value">Text to Split</param>
     /// <param name="delimiter">Delimiter</param>
     public static IEnumerable<ReadOnlyMemory<char>> Split(this ReadOnlyMemory<char> value, string delimiter) {
-      if (null == delimiter)
+      if (delimiter is null)
         throw new ArgumentNullException(nameof(delimiter));
 
       int last = 0;

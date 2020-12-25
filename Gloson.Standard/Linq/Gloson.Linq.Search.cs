@@ -30,22 +30,22 @@ namespace Gloson.Linq {
            Func<T, V> map = null,
            IComparer<V> comparer = null) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == map) {
+      else if (map is null) {
         if (typeof(V).IsAssignableFrom(typeof(T)))
           map = (t) => (V)Convert.ChangeType(t, typeof(V));
         else if (TypeDescriptor.GetConverter(typeof(T)).CanConvertTo(typeof(V)))
           map = (t) => (V)Convert.ChangeType(t, typeof(V));
 
-        if (null == map)
+        if (map is null)
           throw new ArgumentNullException(nameof(map));
       }
 
-      if (null == comparer) {
+      if (comparer is null) {
         comparer = Comparer<V>.Default;
 
-        if (null == comparer)
+        if (comparer is null)
           throw new ArgumentNullException(nameof(comparer));
       }
 

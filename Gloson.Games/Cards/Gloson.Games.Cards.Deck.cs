@@ -27,7 +27,7 @@ namespace Gloson.Games.Cards {
       /// </summary>
       /// <param name="order">Order</param>
       public SuitComparer(string order) {
-        if (null == order)
+        if (order is null)
           throw new ArgumentNullException(nameof(order));
 
         Order = order
@@ -55,9 +55,9 @@ namespace Gloson.Games.Cards {
       public int Compare(CardSuit x, CardSuit y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return 1;
 
         int pX = Order.IndexOf(x.Symbol);
@@ -202,9 +202,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int pLeft = s_StandardOrder.IndexOf(left.Symbol);
@@ -238,7 +238,7 @@ namespace Gloson.Games.Cards {
     public static bool operator ==(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right || left == null)
+      else if (right is null || left is null)
         return false;
 
       return left.Equals(right);
@@ -250,7 +250,7 @@ namespace Gloson.Games.Cards {
     public static bool operator !=(CardSuit left, CardSuit right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right || null == left)
+      else if (right is null || left is null)
         return true;
 
       return !left.Equals(right);
@@ -266,7 +266,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardSuit other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(Name, other.Name);
@@ -281,7 +281,7 @@ namespace Gloson.Games.Cards {
     /// Hash Code
     /// </summary>
     /// <returns></returns>
-    public override int GetHashCode() => Name == null ? 0 : Name.GetHashCode();
+    public override int GetHashCode() => Name is null ? 0 : Name.GetHashCode();
 
     #endregion IEquatable<Suit>
 
@@ -382,9 +382,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(CardValue left, CardValue right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return left.Value - right.Value;
@@ -455,7 +455,7 @@ namespace Gloson.Games.Cards {
     /// To Integer
     /// </summary>
     public static implicit operator int(CardValue card) {
-      return card == null ? 0 : card.Value;
+      return card is null ? 0 : card.Value;
     }
 
     /// <summary>
@@ -501,7 +501,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardValue other) {
       if (ReferenceEquals(other, this))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return other.Value == Value;
@@ -544,9 +544,9 @@ namespace Gloson.Games.Cards {
     /// Standard Constructor
     /// </summary>
     public Card(CardValue value, CardSuit suit) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
-      else if (null == suit)
+      else if (suit is null)
         throw new ArgumentNullException(nameof(suit));
 
       if (Value == 0)
@@ -628,9 +628,9 @@ namespace Gloson.Games.Cards {
     public static int Compare(Card left, Card right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       int result = left.Suit.CompareTo(right.Suit);
@@ -673,7 +673,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(Card other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return Value == other.Value && Suit == other.Suit;
@@ -723,7 +723,7 @@ namespace Gloson.Games.Cards {
     #region Algorithm
 
     private int ReferenceIndex(Card value) {
-      if (null == value)
+      if (value is null)
         return -1;
 
       for (int i = 0; i < m_Items.Count; ++i)
@@ -758,11 +758,11 @@ namespace Gloson.Games.Cards {
     public CardHand(IEnumerable<Card> cards, bool isOrdered)
       : this(isOrdered) {
 
-      if (null == cards)
+      if (cards is null)
         throw new ArgumentNullException(nameof(cards));
 
       foreach (var card in cards) {
-        if (null == card)
+        if (card is null)
           throw new ArgumentException("Null cards aren't allowed!", nameof(cards));
 
         Add(card);
@@ -983,7 +983,7 @@ namespace Gloson.Games.Cards {
     /// Shuffle
     /// </summary>
     public void Shuffle(Random random) {
-      var list = (null == random)
+      var list = (random is null)
         ? m_Items.Shuffle().ToList()
         : m_Items.Shuffle(random).ToList();
 
@@ -1011,7 +1011,7 @@ namespace Gloson.Games.Cards {
     public Card this[int index] {
       get => m_Items[index];
       set {
-        if (null == value) {
+        if (value is null) {
           RemoveAt(index);
 
           return;
@@ -1057,7 +1057,7 @@ namespace Gloson.Games.Cards {
     /// Add
     /// </summary>
     public void Add(Card item) {
-      if (null == item)
+      if (item is null)
         throw new ArgumentNullException(nameof(item));
 
       int old = ReferenceIndex(item);
@@ -1074,7 +1074,7 @@ namespace Gloson.Games.Cards {
     public void Insert(int index, Card item) {
       if (index < 0 || index > m_Items.Count)
         throw new ArgumentOutOfRangeException(nameof(index));
-      else if (null == item)
+      else if (item is null)
         throw new ArgumentNullException(nameof(item));
 
       int old = ReferenceIndex(item);
@@ -1154,7 +1154,7 @@ namespace Gloson.Games.Cards {
     public bool Equals(CardHand other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       if (IsOrdered != other.IsOrdered)

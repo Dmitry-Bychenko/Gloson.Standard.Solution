@@ -149,9 +149,9 @@ namespace Gloson.Numerics.Distributions {
     /// <param name="dependent">Dependent sequence to shuffle</param>
     /// <param name="desiredR">Desired correlation</param>
     public ShuffledCorrelation(IEnumerable<double> source, IEnumerable<double> dependent, double desiredR) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == dependent)
+      else if (dependent is null)
         throw new ArgumentNullException(nameof(dependent));
       else if (desiredR < -1 || desiredR > 1)
         throw new ArgumentOutOfRangeException(nameof(desiredR));

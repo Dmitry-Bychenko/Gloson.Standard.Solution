@@ -110,15 +110,15 @@ namespace Gloson.Numerics.Combinatorics {
       bool orderMatters,
       IEqualityComparer<T> comparer) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (take < 0)
         throw new ArgumentOutOfRangeException(nameof(take));
 
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<T>.Default;
 
-      if (null == comparer)
+      if (comparer is null)
         throw new ArgumentNullException(nameof(comparer),
           $"{nameof(comparer)} is not provided and there are no default equality comparer for {typeof(T).Name} type");
 

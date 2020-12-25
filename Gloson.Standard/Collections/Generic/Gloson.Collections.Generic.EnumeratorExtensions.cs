@@ -18,7 +18,7 @@ namespace Gloson.Collections.Generic {
     /// AsEnumerable 
     /// </summary>
     public static IEnumerable<T> AsEnumerable<T>(this IEnumerator<T> enumerator) {
-      if (null == enumerator)
+      if (enumerator is null)
         throw new ArgumentNullException(nameof(enumerator));
 
       using (enumerator) {
@@ -31,7 +31,7 @@ namespace Gloson.Collections.Generic {
     /// AsEnumerable 
     /// </summary>
     public static IEnumerable<T> AsEnumerable<T>(this IEnumerator<T> enumerator, bool keepOpen) {
-      if (null == enumerator)
+      if (enumerator is null)
         throw new ArgumentNullException(nameof(enumerator));
 
       if (keepOpen)

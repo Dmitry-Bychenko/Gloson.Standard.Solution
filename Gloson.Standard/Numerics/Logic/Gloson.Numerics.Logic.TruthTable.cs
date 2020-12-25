@@ -19,7 +19,7 @@ namespace Gloson.Numerics.Logic {
     /// Generate Truth table for given delegate
     /// </summary>
     public static IEnumerable<(bool[] data, bool result)> Generate(Delegate function) {
-      if (null == function)
+      if (function is null)
         throw new ArgumentNullException(nameof(function));
 
       if (function.Method.ReturnType != typeof(bool))

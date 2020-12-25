@@ -22,7 +22,7 @@ namespace Gloson.Threading {
     /// <param name="timeout">Timeout</param>
     /// <returns>Task representation of the wait handle</returns>
     public static Task AsTask(this WaitHandle handle, TimeSpan timeout) {
-      if (null == handle)
+      if (handle is null)
         throw new ArgumentNullException(nameof(handle));
 
       var ts = new TaskCompletionSource<object>();

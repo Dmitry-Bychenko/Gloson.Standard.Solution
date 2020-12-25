@@ -66,9 +66,9 @@ namespace Gloson.Geometry.Norms {
     /// <param name="right">Right Point</param>
     /// <returns>Distance</returns>
     public double Distance(IEnumerable<double> left, IEnumerable<double> right) {
-      if (null == left)
+      if (left is null)
         throw new ArgumentNullException(nameof(left));
-      else if (null == right)
+      else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
       return CoreDistance(CoreData(left, right));

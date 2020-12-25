@@ -178,7 +178,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="values">Values to push into heap</param>
     public void AddRange(IEnumerable<T> values) {
-      if (null == values)
+      if (values is null)
         throw new ArgumentNullException(nameof(values));
 
       foreach (var value in values)
@@ -203,18 +203,16 @@ namespace Gloson.Collections.Generic {
     /// Remove single value
     /// </summary>
     public bool Remove(T value) {
-      for (int i = m_Items.Count - 1; i >= 0; --i)
-        if (Comparer.Compare(value, m_Items[i]) == 0) {
-          m_Items[i] = m_Items[^1];
+      int index = IndexOf(value);
 
-          m_Items.RemoveAt(m_Items.Count - 1);
+      if (index < 0)
+        return false;
 
-          MoveDown(i);
+      m_Items[index] = m_Items[^1];
+      m_Items.RemoveAt(m_Items.Count - 1);
+      MoveDown(index);
 
-          return true;
-        }
-
-      return false;
+      return true;
     }
 
     /// <summary>

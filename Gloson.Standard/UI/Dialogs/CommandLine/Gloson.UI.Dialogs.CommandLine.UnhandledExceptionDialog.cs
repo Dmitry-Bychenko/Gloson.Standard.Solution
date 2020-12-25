@@ -23,7 +23,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     }
 
     private static string InnerMessage(Exception e) {
-      if (null == e)
+      if (e is null)
         return "";
 
       StringBuilder sb = new StringBuilder();
@@ -43,7 +43,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
     /// Show
     /// </summary>
     public void Show(Exception error) {
-      if (null == error)
+      if (error is null)
         return;
 
       StringBuilder sb = new StringBuilder();
@@ -52,7 +52,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
       sb.AppendLine($"Message:     {ToTable(error.Message, 13)}");
       sb.AppendLine($"Stack trace: {ToTable(error.StackTrace, 13)}");
 
-      for (Exception inner = error.InnerException; inner != null; inner = inner.InnerException) {
+      for (Exception inner = error.InnerException; inner is not null; inner = inner.InnerException) {
         sb.AppendLine();
         sb.AppendLine(InnerMessage(inner));
       }

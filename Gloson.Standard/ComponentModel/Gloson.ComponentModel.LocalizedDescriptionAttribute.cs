@@ -122,7 +122,7 @@ namespace Gloson.ComponentModel {
         .GetAssemblies()
         .FirstOrDefault(item => item.GetName().Name == assemblyName);
 
-      if (null == asm)
+      if (asm is null)
         return false;
 
       var managers = asm

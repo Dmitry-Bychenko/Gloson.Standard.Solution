@@ -25,7 +25,7 @@ namespace Gloson.Diagnostics {
     /// <param name="killOnCancel">Kill on cancellation</param>
     /// <returns>Exit code</returns>
     public static Task<int> WaitForExitAsync(this Process process, bool killOnCancel, CancellationToken token) {
-      if (null == process)
+      if (process is null)
         throw new ArgumentNullException(nameof(process));
 
       TaskCompletionSource<int> source = new TaskCompletionSource<int>();

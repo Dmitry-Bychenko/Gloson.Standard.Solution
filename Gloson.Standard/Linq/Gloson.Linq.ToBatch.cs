@@ -24,9 +24,9 @@ namespace Gloson.Linq {
       this IEnumerable<T> source,
       Func<ICollection<T>, T, bool> addToBatch) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == addToBatch)
+      else if (addToBatch is null)
         throw new ArgumentNullException(nameof(addToBatch));
 
       List<T> batch = new List<T>();

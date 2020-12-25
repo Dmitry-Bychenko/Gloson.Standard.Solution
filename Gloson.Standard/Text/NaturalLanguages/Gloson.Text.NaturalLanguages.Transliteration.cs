@@ -62,11 +62,11 @@ namespace Gloson.Text.NaturalLanguages {
                                   ITransliterator reverse)
       : this() {
 
-      if (null == name)
+      if (name is null)
         throw new ArgumentNullException(nameof(name));
-      else if (null == direct)
+      else if (direct is null)
         throw new ArgumentNullException(nameof(direct));
-      else if (null == reverse)
+      else if (reverse is null)
         throw new ArgumentNullException(nameof(reverse));
 
       Name = name;
@@ -98,7 +98,7 @@ namespace Gloson.Text.NaturalLanguages {
     public static bool operator ==(BaseTransliteration left, BaseTransliteration right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right || null == left)
+      else if (right is null || left is null)
         return false;
 
       return left.Equals(right);
@@ -110,7 +110,7 @@ namespace Gloson.Text.NaturalLanguages {
     public static bool operator !=(BaseTransliteration left, BaseTransliteration right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right || null == left)
+      else if (right is null || left is null)
         return true;
 
       return !left.Equals(right);
@@ -155,7 +155,7 @@ namespace Gloson.Text.NaturalLanguages {
     public bool Equals(ITransliteration other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return LanguageFrom == other.LanguageFrom &&
@@ -172,9 +172,9 @@ namespace Gloson.Text.NaturalLanguages {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() {
-      return (LanguageFrom == null ? 0 : LanguageFrom.GetHashCode()) ^
-             (LanguageTo == null ? 0 : LanguageTo.GetHashCode()) ^
-             (Name == null ? 0 : Name.GetHashCode());
+      return (LanguageFrom is null ? 0 : LanguageFrom.GetHashCode()) ^
+             (LanguageTo is null ? 0 : LanguageTo.GetHashCode()) ^
+             (Name is null ? 0 : Name.GetHashCode());
     }
 
     #endregion IEquatable<ITransliteration>
@@ -288,7 +288,7 @@ namespace Gloson.Text.NaturalLanguages {
     /// <param name="source"></param>
     /// <returns></returns>
     public static ITransliteration Reversed(this ITransliteration source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (source.LanguageFrom == source.LanguageTo || source.Direct == source.Reverse)
         return source;
@@ -336,7 +336,7 @@ namespace Gloson.Text.NaturalLanguages {
     /// Register new transliteration
     /// </summary>
     public static bool Register(ITransliteration value) {
-      if (null == value)
+      if (value is null)
         return false;
 
       return s_Items.TryAdd(value, true);

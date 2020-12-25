@@ -87,7 +87,7 @@ namespace Gloson.Ini {
     /// Standard constructor
     /// </summary>
     public IniFileComment(string value, IniFileCommentKind kind) {
-      if (null == value)
+      if (value is null)
         value = "";
 
       Value = string.Concat(value.Where(c => !char.IsControl(c)));
@@ -106,7 +106,7 @@ namespace Gloson.Ini {
     public static bool TryParse(string value, out IniFileComment result) {
       result = null;
 
-      if (null == value)
+      if (value is null)
         return false;
       else if (value.StartsWith("#")) {
         result = new IniFileComment(value[1..], IniFileCommentKind.Unix);
@@ -175,7 +175,7 @@ namespace Gloson.Ini {
     /// </summary>
     /// <param name="value"></param>
     public IniFileSection(string value) {
-      if (null == value)
+      if (value is null)
         value = "";
 
       Value = string.Concat(value.Where(c => !char.IsControl(c)));
@@ -187,7 +187,7 @@ namespace Gloson.Ini {
     public static bool TryParse(string value, out IniFileSection result) {
       result = null;
 
-      if (null == value)
+      if (value is null)
         return false;
       else if (!value.StartsWith("[") || !value.EndsWith("]"))
         return false;
@@ -262,11 +262,11 @@ namespace Gloson.Ini {
     /// <param name="name">Name</param>
     /// <param name="value">Value</param>
     public IniFileRecord(string name, string value) {
-      Name = name == null
+      Name = name is null
         ? ""
         : string.Concat(name.Where(c => !char.IsControl(c)));
 
-      Value = value == null
+      Value = value is null
         ? ""
         : string.Concat(value.Where(c => !char.IsControl(c)));
     }

@@ -50,12 +50,12 @@ namespace Gloson.UI.CommandLine {
         if (ReferenceEquals(m_Owner, value))
           return;
 
-        if (null != m_Owner)
+        if (m_Owner is not null)
           m_Owner.CoreRemove(this);
 
         m_Owner = value;
 
-        if (null != m_Owner)
+        if (m_Owner is not null)
           m_Owner.CoreAdd(this);
       }
     }
@@ -75,7 +75,7 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     public IEnumerable<string> ValidationErrors {
       get {
-        if (null == Description)
+        if (Description is null)
           yield return $"{RawValue} : Description is not found";
       }
     }
@@ -103,14 +103,14 @@ namespace Gloson.UI.CommandLine {
     #region Algorithm
 
     internal void CoreAdd(CommandLineArgument item) {
-      if (null == item)
+      if (item is null)
         return;
 
       m_Items.Add(item);
     }
 
     internal void CoreRemove(CommandLineArgument item) {
-      if (null == item)
+      if (item is null)
         return;
 
       m_Items.Remove(item);
@@ -128,7 +128,7 @@ namespace Gloson.UI.CommandLine {
     }
 
     private void CoreParse() {
-      if (m_Items != null)
+      if (m_Items is not null)
         return;
 
       bool parametersOnly = false;
@@ -164,7 +164,7 @@ namespace Gloson.UI.CommandLine {
           .OrderByDescending(rec => rec.match.Length)
           .FirstOrDefault();
 
-        if (null == best) {
+        if (best is null) {
 #pragma warning disable CA1806 // Do not ignore method results
           new CommandLineArgument(this, null, null);
 #pragma warning restore CA1806 // Do not ignore method results
@@ -196,11 +196,11 @@ namespace Gloson.UI.CommandLine {
     /// Standard constructor
     /// </summary>
     public CommandLineArguments(string[] arguments, CommandLineArgumentDescriptions descriptions) {
-      m_RawArguments = (null == arguments)
+      m_RawArguments = (arguments is null)
         ? Environment.GetCommandLineArgs().Skip(1).ToList()
         : arguments.ToList();
 
-      if (null == descriptions)
+      if (descriptions is null)
         descriptions = CommandLineArgumentDescriptions.Default;
 
       Descriptions = descriptions;

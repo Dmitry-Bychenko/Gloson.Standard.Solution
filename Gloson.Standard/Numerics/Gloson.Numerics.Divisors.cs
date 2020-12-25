@@ -69,9 +69,9 @@ namespace Gloson.Numerics {
     /// <returns></returns>
     /// <example>BigInteger x = Modular.Crt(new BigInteger[] { 1, 2, 6}, new BigInteger[] { 2, 3, 7});</example>
     public static BigInteger Crt(IEnumerable<BigInteger> values, IEnumerable<BigInteger> mods) {
-      if (null == values)
+      if (values is null)
         throw new ArgumentNullException(nameof(values));
-      else if (null == mods)
+      else if (mods is null)
         throw new ArgumentNullException(nameof(mods));
 
       BigInteger[] r = values.ToArray();
@@ -155,7 +155,7 @@ namespace Gloson.Numerics {
     public static IEnumerable<BigInteger> PrimeDivisorsFlat(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value <= 1)
         yield break;
-      else if (null == primes) {
+      else if (primes is null) {
         foreach (BigInteger div in PrimeDivisorsFlat(value))
           yield return div;
 
@@ -283,7 +283,7 @@ namespace Gloson.Numerics {
     public static IEnumerable<BigInteger> DistinctPrimeDivisors(this BigInteger value, IEnumerable<BigInteger> primes) {
       if (value <= 1)
         yield break;
-      else if (null == primes) {
+      else if (primes is null) {
         foreach (BigInteger div in DistinctPrimeDivisors(value))
           yield return div;
 

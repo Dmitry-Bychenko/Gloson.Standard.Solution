@@ -22,7 +22,7 @@ namespace Gloson.Text.Parsing {
     public static IEnumerable<T> MeanfulOnly<T>(this IEnumerable<T> source)
       where T : Token {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (T item in source)
@@ -36,7 +36,7 @@ namespace Gloson.Text.Parsing {
     public static IEnumerable<T> EssentialOnly<T>(this IEnumerable<T> source)
       where T : Token {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       foreach (T item in source)
@@ -61,13 +61,13 @@ namespace Gloson.Text.Parsing {
                                                params Func<T, bool>[] pattern)
       where T : Token {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == pattern)
+      else if (pattern is null)
         throw new ArgumentNullException(nameof(pattern));
       else if (pattern.Length <= 0)
         throw new ArgumentOutOfRangeException(nameof(pattern), "pattern must not be empty.");
-      else if (pattern.Any(func => func == null))
+      else if (pattern.Any(func => func is null))
         throw new ArgumentException("null is not allowed as a pattern's item.", nameof(pattern));
 
       Queue<T> queue = new Queue<T>(pattern.Length + 1);
@@ -102,11 +102,11 @@ namespace Gloson.Text.Parsing {
     /// <param name="source">Tokens</param>
     /// <returns>Source text</returns>
     public static IEnumerable<String> Build(this IEnumerable<Token> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       var tokens = source
-        .Where(token => token != null)
+        .Where(token => token is not null)
         .OrderBy(token => token.StartLine)
         .ThenBy(token => token.StartColumn)
         .ThenBy(token => token.StopLine)

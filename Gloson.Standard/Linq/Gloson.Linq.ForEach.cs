@@ -18,9 +18,9 @@ namespace Gloson.Linq {
     /// For Each
     /// </summary>
     public static void ForEach<T>(this IEnumerable<T> source, Action<T> action) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == action)
+      else if (action is null)
         throw new ArgumentNullException(nameof(action));
 
       foreach (T item in source)
@@ -31,9 +31,9 @@ namespace Gloson.Linq {
     /// For Each
     /// </summary>
     public static void ForEach<T>(this IEnumerable<T> source, Func<T, bool> action) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == action)
+      else if (action is null)
         throw new ArgumentNullException(nameof(action));
 
       foreach (T item in source)
@@ -45,9 +45,9 @@ namespace Gloson.Linq {
     /// For Each
     /// </summary>
     public static void ForEach<T>(this IEnumerable<T> source, Action<T, int> action) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == action)
+      else if (action is null)
         throw new ArgumentNullException(nameof(action));
 
       int index = 0;
@@ -63,9 +63,9 @@ namespace Gloson.Linq {
     /// For Each
     /// </summary>
     public static void ForEach<T>(this IEnumerable<T> source, Func<T, int, bool> action) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == action)
+      else if (action is null)
         throw new ArgumentNullException(nameof(action));
 
       int index = 0;

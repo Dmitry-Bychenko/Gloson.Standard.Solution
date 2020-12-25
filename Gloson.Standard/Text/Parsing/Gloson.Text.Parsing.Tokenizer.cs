@@ -96,7 +96,7 @@ namespace Gloson.Text.Parsing {
 
         while (column < lineOfSource.Length) {
           // Long lexeme
-          if (current != null) {
+          if (current is not null) {
             if (current.Description.TryMatchStop(lineOfSource, column, context, out match, prefix)) {
               current.StopLine = line;
               current.StopColumn = match.To;
@@ -165,7 +165,7 @@ namespace Gloson.Text.Parsing {
         }
       }
 
-      if (null != current)
+      if (current is not null)
         throw new TokenSyntaxException($"Dangling token at {current.StartLine + 1:00000} : {current.StartColumn + 1:000}",
                                          current.StartLine,
                                          current.StartColumn);
@@ -184,13 +184,13 @@ namespace Gloson.Text.Parsing {
     /// <param name="rules">Rules to use</param>
     public static IEnumerable<Token> Parse(this IEnumerable<string> source,
                                                 ITokenDescriptionRules rules) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      if (null == rules)
+      if (rules is null)
         rules = Dependencies.GetService<ITokenDescriptionRules>();
 
-      if (null == rules)
+      if (rules is null)
         throw new ArgumentNullException(nameof(rules));
 
       return CoreParse(source, rules);

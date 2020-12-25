@@ -25,7 +25,7 @@ namespace Gloson.IO {
     /// </summary>
     /// <param name="fileName">File Name</param>
     public FileLock(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
       m_Stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None);
@@ -49,7 +49,7 @@ namespace Gloson.IO {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => m_Stream != null;
+    public bool IsDisposed => m_Stream is not null;
 
     /// <summary>
     /// Dispose

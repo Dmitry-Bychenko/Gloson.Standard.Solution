@@ -38,7 +38,7 @@ namespace Gloson.Collections {
 
         if (IsRoot)
           return;
-        else if (null == Parent)
+        else if (Parent is null)
           return;
 
         Parent.m_Items.Remove(Value);
@@ -58,7 +58,7 @@ namespace Gloson.Collections {
 
         m_Items = new Dictionary<char, Node>(Trie.Comparer);
 
-        if (Parent != null)
+        if (Parent is not null)
           Parent.m_Items.Add(Value, this);
       }
 
@@ -108,7 +108,7 @@ namespace Gloson.Collections {
       /// </summary>
       public string Sequence {
         get {
-          if (null == Parent)
+          if (Parent is null)
             return "";
 
           List<char> letters = new List<char>();
@@ -144,7 +144,7 @@ namespace Gloson.Collections {
         get {
           int result = 0;
 
-          for (Node current = this; current.Parent != null; current = current.Parent)
+          for (Node current = this; current.Parent is not null; current = current.Parent)
             result += 1;
 
           return result;
@@ -169,7 +169,7 @@ namespace Gloson.Collections {
     /// Standard constructor
     /// </summary>
     public StringTrie(IEqualityComparer<char> comparer) {
-      if (null == comparer)
+      if (comparer is null)
         comparer = EqualityComparer<char>.Default;
 
       Comparer = comparer;
@@ -185,7 +185,7 @@ namespace Gloson.Collections {
     /// Create suffix trie
     /// </summary>
     public static StringTrie Create(string value, IEqualityComparer<char> comparer) {
-      if (null == value)
+      if (value is null)
         throw new ArgumentNullException(nameof(value));
 
       StringTrie result = new StringTrie(comparer);
@@ -275,7 +275,7 @@ namespace Gloson.Collections {
     /// Add
     /// </summary>
     public void Add(string sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;
@@ -295,7 +295,7 @@ namespace Gloson.Collections {
     /// Add Range
     /// </summary>
     public void AddRange(IEnumerable<string> sequences) {
-      if (null == sequences)
+      if (sequences is null)
         throw new ArgumentNullException(nameof(sequences));
 
       foreach (string sequence in sequences)
@@ -306,7 +306,7 @@ namespace Gloson.Collections {
     /// Remove
     /// </summary>
     public bool Remove(string sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;
@@ -348,7 +348,7 @@ namespace Gloson.Collections {
     /// How many times sequence starts the trie
     /// </summary>
     public int Occurred(string sequence) {
-      if (null == sequence)
+      if (sequence is null)
         throw new ArgumentNullException(nameof(sequence));
 
       Node current = Root;

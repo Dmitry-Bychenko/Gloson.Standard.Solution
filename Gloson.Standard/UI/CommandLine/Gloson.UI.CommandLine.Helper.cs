@@ -35,7 +35,7 @@ namespace Gloson.UI.CommandLine {
     /// Trim Name
     /// </summary>
     public static string TrimName(string name) {
-      if (null == name)
+      if (name is null)
         return "";
 
       return name.Trim().TrimStart(Prefixes).TrimEnd(Suffixes);

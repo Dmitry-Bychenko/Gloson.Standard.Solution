@@ -106,7 +106,7 @@ namespace Gloson.Globalization {
     /// </summary>
     private void Dispose(bool disposing) {
       if (disposing) {
-        if (null != m_CurrentCulture) {
+        if (m_CurrentCulture is not null) {
           if (CultureInfo.CurrentCulture == m_TemporalCulture)
             CultureInfo.CurrentCulture = m_CurrentCulture;
           else
@@ -122,7 +122,7 @@ namespace Gloson.Globalization {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => null == m_CurrentCulture;
+    public bool IsDisposed => m_CurrentCulture is null;
 
     /// <summary>
     /// Dispose
@@ -139,7 +139,7 @@ namespace Gloson.Globalization {
     public bool Equals(TemporalCultureInfo other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return m_CurrentCulture == other.m_CurrentCulture &&
@@ -158,7 +158,7 @@ namespace Gloson.Globalization {
     /// Hash Code
     /// </summary>
     public override int GetHashCode() =>
-      null == m_TemporalCulture
+      m_TemporalCulture is null
         ? 0
         : m_TemporalCulture.GetHashCode();
 

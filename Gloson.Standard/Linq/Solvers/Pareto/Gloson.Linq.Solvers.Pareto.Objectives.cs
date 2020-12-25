@@ -88,15 +88,15 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// <param name="solutions">Solutions</param>
     /// <param name="objectives">Objectives</param>
     public ObjectivesScope(IEnumerable<T> solutions, IEnumerable<ObjectiveDescription<T>> objectives) {
-      if (null == solutions)
+      if (solutions is null)
         throw new ArgumentNullException(nameof(solutions));
-      else if (null == objectives)
+      else if (objectives is null)
         throw new ArgumentNullException(nameof(objectives));
 
       m_ObjectiveDescriptions = new List<ObjectiveDescription<T>>(objectives);
 
       foreach (var solution in solutions) {
-        if (null == solution)
+        if (solution is null)
           continue;
 
         ObjectiveItem<T> item = new ObjectiveItem<T>(this, solution);
@@ -128,7 +128,7 @@ namespace Gloson.Linq.Solvers.Pareto {
                                      IComparer<ObjectiveItem<T>> comparer) {
       if (generation < 0)
         throw new ArgumentOutOfRangeException(nameof(generation));
-      else if (null == breed)
+      else if (breed is null)
         throw new ArgumentNullException(nameof(breed));
 
       if (generation == 0)
@@ -196,9 +196,9 @@ namespace Gloson.Linq.Solvers.Pareto {
       public int Compare(ObjectiveItem<T> x, ObjectiveItem<T> y) {
         if (ReferenceEquals(x, y))
           return 0;
-        else if (null == x)
+        else if (x is null)
           return -1;
-        else if (null == y)
+        else if (y is null)
           return +1;
 
         if (!ReferenceEquals(x.Owner, y.Owner))
@@ -261,9 +261,9 @@ namespace Gloson.Linq.Solvers.Pareto {
     public static int Dominance(ObjectiveItem<T> left, ObjectiveItem<T> right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
       else if (!ReferenceEquals(left.Owner, right.Owner))
         return 0;
@@ -311,7 +311,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// Objective Value
     /// </summary>
     public double ObjectiveValue(ObjectiveDescription<T> description) {
-      if (null == description)
+      if (description is null)
         throw new ArgumentNullException(nameof(description));
 
       if (m_Cached.TryGetValue(description, out double result))
@@ -330,7 +330,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool Dominates(ObjectiveItem<T> other) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (null == other)
+      else if (other is null)
         return true;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;
@@ -355,7 +355,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public bool IsDominated(ObjectiveItem<T> other) {
       if (ReferenceEquals(this, other))
         return false;
-      else if (null == other)
+      else if (other is null)
         return false;
       else if (!ReferenceEquals(Owner, other.Owner))
         return false;

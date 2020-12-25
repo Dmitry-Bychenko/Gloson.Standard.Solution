@@ -205,9 +205,9 @@ namespace Gloson.Astronomy {
     public static int Compare(Constellation left, Constellation right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (null == left)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return StringComparer.OrdinalIgnoreCase.Compare(left, right);

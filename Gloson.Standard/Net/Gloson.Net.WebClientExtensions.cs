@@ -21,7 +21,7 @@ namespace Gloson.Net {
     /// With Default credentials
     /// </summary>
     public static WebClient WithDefaultCredentials(this WebClient client) {
-      if (null == client)
+      if (client is null)
         throw new ArgumentNullException(nameof(client));
 
       client.Credentials = CredentialCache.DefaultCredentials;
@@ -33,7 +33,7 @@ namespace Gloson.Net {
     /// Read String with encoding
     /// </summary>
     public static string ReadString(this WebClient client, string address, Encoding encoding) {
-      if (null == client)
+      if (client is null)
         throw new ArgumentNullException(nameof(client));
 
       byte[] data = client.DownloadData(address);
@@ -45,7 +45,7 @@ namespace Gloson.Net {
     /// Read Json
     /// </summary>
     public static JsonValue ReadJson(this WebClient client, string address, Encoding encoding) {
-      if (null == client)
+      if (client is null)
         throw new ArgumentNullException(nameof(client));
 
       return JsonValue.Parse(ReadString(client, address, encoding));
@@ -55,7 +55,7 @@ namespace Gloson.Net {
     /// Read XML
     /// </summary>
     public static XDocument ReadXml(this WebClient client, string address, Encoding encoding) {
-      if (null == client)
+      if (client is null)
         throw new ArgumentNullException(nameof(client));
 
       return XDocument.Parse(ReadString(client, address, encoding));

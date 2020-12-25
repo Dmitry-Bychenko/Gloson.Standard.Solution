@@ -33,7 +33,7 @@ namespace Gloson.UI.Dialogs {
     /// Show (with standard level == 0)
     /// </summary>
     public static void Show(this IAboutDialog dialog) {
-      if (null == dialog)
+      if (dialog is null)
         throw new ArgumentNullException(nameof(dialog));
 
       dialog.Show(0);

@@ -53,7 +53,7 @@ namespace Gloson.Text.Parsing {
     /// Match entire
     /// </summary>
     protected override Tuple<int, int> CoreMatchEntire(string source, int checkAt, IReadOnlyList<Token> context) {
-      if (null == m_EntireRegex)
+      if (m_EntireRegex is null)
         return new Tuple<int, int>(-1, -1);
 
       var match = m_EntireRegex.Match(source, checkAt, source.Length - checkAt);
@@ -70,7 +70,7 @@ namespace Gloson.Text.Parsing {
     /// Match start
     /// </summary>
     protected override Tuple<int, int> CoreMatchStart(string source, int checkAt, IReadOnlyList<Token> context) {
-      if (null == m_StartRegex)
+      if (m_StartRegex is null)
         return new Tuple<int, int>(-1, -1);
 
       var match = m_StartRegex.Match(source, checkAt, source.Length - checkAt);
@@ -87,7 +87,7 @@ namespace Gloson.Text.Parsing {
     /// Match stop
     /// </summary>
     protected override Tuple<int, int> CoreMatchStop(string source, int startAt, string prefix, IReadOnlyList<Token> context) {
-      if (null == m_StopRegex)
+      if (m_StopRegex is null)
         return new Tuple<int, int>(-1, -1);
 
       var match = m_StopRegex.Match(source, startAt);
@@ -102,7 +102,7 @@ namespace Gloson.Text.Parsing {
     /// Is in Start/Stop mode 
     /// </summary>
     protected override bool CoreIsStartStopMode() {
-      return m_EntireRegex == null;
+      return m_EntireRegex is null;
     }
 
     #endregion Algorithm
@@ -171,7 +171,7 @@ namespace Gloson.Text.Parsing {
     /// Match entire
     /// </summary>
     protected override Tuple<int, int> CoreMatchEntire(string source, int checkAt, IReadOnlyList<Token> context) {
-      if (null == m_EntireMatch)
+      if (m_EntireMatch is null)
         return new Tuple<int, int>(-1, -1);
 
       return m_EntireMatch(source, checkAt);
@@ -181,7 +181,7 @@ namespace Gloson.Text.Parsing {
     /// Match start
     /// </summary>
     protected override Tuple<int, int> CoreMatchStart(string source, int checkAt, IReadOnlyList<Token> context) {
-      if (null == m_StartMatch)
+      if (m_StartMatch is null)
         return new Tuple<int, int>(-1, -1);
 
       return m_StartMatch(source, checkAt);
@@ -191,7 +191,7 @@ namespace Gloson.Text.Parsing {
     /// Match stop
     /// </summary>
     protected override Tuple<int, int> CoreMatchStop(string source, int startAt, string prefix, IReadOnlyList<Token> context) {
-      if (null == m_StopMatch)
+      if (m_StopMatch is null)
         return new Tuple<int, int>(-1, -1);
 
       return m_StopMatch(source, startAt, prefix);
@@ -201,7 +201,7 @@ namespace Gloson.Text.Parsing {
     /// Is in Start/Stop mode 
     /// </summary>
     protected override bool CoreIsStartStopMode() {
-      return m_EntireMatch == null;
+      return m_EntireMatch is null;
     }
 
     #endregion Algorithm

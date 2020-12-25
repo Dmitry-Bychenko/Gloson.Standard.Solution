@@ -22,9 +22,9 @@ namespace Gloson.Linq {
       this IEnumerable<T> source,
       params (string, Type, Func<T, object>)[] columns) {
 
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
-      else if (null == columns)
+      else if (columns is null)
         throw new ArgumentNullException(nameof(columns));
 
       DataTable result = new DataTable();

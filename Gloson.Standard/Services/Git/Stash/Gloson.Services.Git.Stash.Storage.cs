@@ -67,7 +67,7 @@ namespace Gloson.Services.Git.Stash {
           root = JsonValue.Parse(reader.ReadToEnd());
         }
 
-        if (root?.Value("values") is JsonArray array && array != null) {
+        if (root?.Value("values") is JsonArray array && array is not null) {
           foreach (JsonValue item in array)
             yield return item;
 
@@ -99,7 +99,7 @@ namespace Gloson.Services.Git.Stash {
     /// </summary>
     /// <param name="connection">Connection</param>
     public StashStorage(LoginPasswordServer connection) {
-      if (null == connection)
+      if (connection is null)
         throw new ArgumentNullException(nameof(connection));
 
       if (!Uri.TryCreate(connection.Server, UriKind.RelativeOrAbsolute, out Uri address)) {
@@ -157,7 +157,7 @@ namespace Gloson.Services.Git.Stash {
     /// Query
     /// </summary>
     public IEnumerable<JsonValue> Query(string query) {
-      if (null == query)
+      if (query is null)
         throw new ArgumentNullException(nameof(query));
       else if (string.IsNullOrWhiteSpace(query))
         throw new ArgumentException("Empty query", nameof(query));

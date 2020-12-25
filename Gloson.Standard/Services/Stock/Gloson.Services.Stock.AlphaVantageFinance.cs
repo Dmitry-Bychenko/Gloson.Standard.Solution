@@ -58,7 +58,7 @@ namespace Gloson.Services.Stock {
         return string.IsNullOrWhiteSpace(value) ? "demo" : value;
       }
       set {
-        if (null == value)
+        if (value is null)
           value = "";
 
         Interlocked.Exchange(ref s_DefaultApiKey, value);
@@ -72,7 +72,7 @@ namespace Gloson.Services.Stock {
     /// <param name="symbol">Symbol</param>
     /// <param name="interval">Interval (in minutes)</param>
     public async Task<Ticket[]> DailyAsync(string symbol, int interval = 1) {
-      if (null == symbol)
+      if (symbol is null)
         throw new ArgumentNullException(nameof(symbol));
 
       string address = string.Join("&",

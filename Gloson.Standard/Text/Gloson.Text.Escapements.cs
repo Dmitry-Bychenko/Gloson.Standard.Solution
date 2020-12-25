@@ -30,7 +30,7 @@ namespace Gloson {
       foreach (char c in value) {
         if (c == escapement)
           sb.Append(escapement);
-        else if (needBeEscaped != null && needBeEscaped.Contains(c))
+        else if (needBeEscaped is not null && needBeEscaped.Contains(c))
           sb.Append(escapement);
 
         sb.Append(c);
@@ -52,7 +52,7 @@ namespace Gloson {
       StringBuilder sb = new StringBuilder(2 * value.Length);
 
       foreach (char c in value) {
-        if (needBeDuplicated != null && needBeDuplicated.Contains(c))
+        if (needBeDuplicated is not null && needBeDuplicated.Contains(c))
           sb.Append(c);
 
         sb.Append(c);

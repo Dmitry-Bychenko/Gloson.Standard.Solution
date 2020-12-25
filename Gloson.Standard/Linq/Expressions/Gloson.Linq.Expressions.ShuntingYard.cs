@@ -161,7 +161,7 @@ namespace Gloson.Linq.Expressions {
     public bool Equals(IExpressionToken other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return string.Equals(Name, other.Name) &&
@@ -179,7 +179,7 @@ namespace Gloson.Linq.Expressions {
     /// </summary>
     public override int GetHashCode() {
       unchecked {
-        return (null == Name ? 0 : Name.GetHashCode()) ^
+        return (Name is null ? 0 : Name.GetHashCode()) ^
                ((int)Kind << 4) ^
                 Priority;
       }
@@ -206,7 +206,7 @@ namespace Gloson.Linq.Expressions {
     /// <param name="source">Original parsed text</param>
     /// <returns>Reversed Polish Order</returns>
     public static IEnumerable<T> Process(IEnumerable<T> source) {
-      if (null == source)
+      if (source is null)
         throw new ArgumentNullException(nameof(source));
 
       Stack<T> funcs = new Stack<T>();

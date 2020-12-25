@@ -43,7 +43,7 @@ namespace Gloson.IO {
     /// </summary>
     /// <param name="stream"></param>
     public StreamByteEnumerator(Stream stream, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -89,13 +89,13 @@ namespace Gloson.IO {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => Stream == null;
+    public bool IsDisposed => Stream is null;
 
     /// <summary>
     /// Dispose
     /// </summary>
     public void Dispose() {
-      if (null != Stream) {
+      if (Stream is not null) {
         if (m_DisposeStream)
           Stream.Dispose();
         else
@@ -172,7 +172,7 @@ namespace Gloson.IO {
     /// <param name="stream">Stream</param>
     /// <param name="encoding">Encoding</param>
     public StreamCharEnumerator(Stream stream, Encoding encoding, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -195,7 +195,7 @@ namespace Gloson.IO {
     /// </summary>
     /// <param name="stream">Stream</param>
     public StreamCharEnumerator(Stream stream, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -243,7 +243,7 @@ namespace Gloson.IO {
     /// </summary>
     public Encoding Encoding {
       get {
-        return m_Reader == null ? m_Reader.CurrentEncoding : m_Encoding;
+        return m_Reader is null ? m_Reader.CurrentEncoding : m_Encoding;
       }
     }
 
@@ -255,13 +255,13 @@ namespace Gloson.IO {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => Stream == null;
+    public bool IsDisposed => Stream is null;
 
     /// <summary>
     /// Dispose
     /// </summary>
     public void Dispose() {
-      if (null != Stream) {
+      if (Stream is not null) {
         if (m_DisposeStream)
           Stream.Dispose();
         else
@@ -340,7 +340,7 @@ namespace Gloson.IO {
     /// <param name="stream">Stream</param>
     /// <param name="encoding">Encoding</param>
     public StreamStringEnumerator(Stream stream, Encoding encoding, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -363,7 +363,7 @@ namespace Gloson.IO {
     /// </summary>
     /// <param name="stream">Stream</param>
     public StreamStringEnumerator(Stream stream, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -408,7 +408,7 @@ namespace Gloson.IO {
     /// </summary>
     public Encoding Encoding {
       get {
-        return m_Reader == null ? m_Reader.CurrentEncoding : m_Encoding;
+        return m_Reader is null ? m_Reader.CurrentEncoding : m_Encoding;
       }
     }
 
@@ -420,13 +420,13 @@ namespace Gloson.IO {
     /// <summary>
     /// Is Disposed
     /// </summary>
-    public bool IsDisposed => Stream == null;
+    public bool IsDisposed => Stream is null;
 
     /// <summary>
     /// Dispose
     /// </summary>
     public void Dispose() {
-      if (null != Stream) {
+      if (Stream is not null) {
         if (m_DisposeStream)
           Stream.Dispose();
         else
@@ -447,7 +447,7 @@ namespace Gloson.IO {
 
       m_CurrentLine = m_Reader.ReadLine();
 
-      return m_CurrentLine != null;
+      return m_CurrentLine is not null;
     }
 
     /// <summary>
@@ -498,7 +498,7 @@ namespace Gloson.IO {
     /// Standard constructor
     /// </summary>
     public StreamEnumerable(Stream stream, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -516,7 +516,7 @@ namespace Gloson.IO {
     /// Standard constructor
     /// </summary>
     public StreamEnumerable(Stream stream, Encoding encoding, bool disposeStream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new NotSupportedException("Stream must be readable");
@@ -590,7 +590,7 @@ namespace Gloson.IO {
     /// <param name="stream">Stream to cast</param>
     /// <param name="encoding">Encoding</param>
     public static IEnumerable<T> Cast<T>(this Stream stream, Encoding encoding) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       if (typeof(T) == typeof(byte))
@@ -610,7 +610,7 @@ namespace Gloson.IO {
     /// <param name="stream">Stream to cast</param>
     /// <param name="encoding">Encoding</param>
     public static IEnumerable<T> Cast<T>(this Stream stream) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
       if (typeof(T) == typeof(byte))

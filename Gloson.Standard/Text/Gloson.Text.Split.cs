@@ -59,7 +59,7 @@ namespace Gloson.Text {
     /// <param name="items">Items to join</param>
     /// <returns>Joined string</returns>
     public static string Join(this NewLine newLine, params object[] items) {
-      if (null == items)
+      if (items is null)
         throw new ArgumentNullException(nameof(items));
 
       return string.Join(Delimiter(newLine) ?? Environment.NewLine, items);

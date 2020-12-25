@@ -235,7 +235,7 @@ namespace Gloson.Games.Sudoku {
 
     // Assign
     private void CoreAssign(SudokuSolver other) {
-      if (null == other)
+      if (other is null)
         return;
 
       for (int i = 0; i < 9; ++i)

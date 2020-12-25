@@ -76,9 +76,9 @@ namespace Gloson.Services.Git.Repository {
     public static int Compare(GitRepo left, GitRepo right) {
       if (ReferenceEquals(left, right))
         return 0;
-      else if (left == null)
+      else if (left is null)
         return -1;
-      else if (null == right)
+      else if (right is null)
         return 1;
 
       return StringComparers.StandardOrdinalComparer.Compare(left.Location, right.Location);
@@ -93,7 +93,7 @@ namespace Gloson.Services.Git.Repository {
     /// Add File
     /// </summary>
     public void AddFile(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
       else if (!File.Exists(fileName))
         throw new ArgumentException($"File {fileName} doesn't exist.", nameof(fileName));
@@ -105,7 +105,7 @@ namespace Gloson.Services.Git.Repository {
     /// Add File
     /// </summary>
     public void RemoveFile(string fileName) {
-      if (null == fileName)
+      if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
       else if (!File.Exists(fileName))
         throw new ArgumentException($"File {fileName} doesn't exist.", nameof(fileName));
@@ -151,7 +151,7 @@ namespace Gloson.Services.Git.Repository {
     /// <param name="message"></param>
     /// <returns></returns>
     public string Commit(string message) {
-      if (null == message)
+      if (message is null)
         message = "";
 
       message = string.Concat(message.Where(c => !char.IsControl(c)));
@@ -175,7 +175,7 @@ namespace Gloson.Services.Git.Repository {
     /// Commit And Push
     /// </summary>
     public void CommitAndPush(string message, string origin = null) {
-      message = (null == message)
+      message = (message is null)
         ? ""
         : string.Concat(message.Where(c => !char.IsControl(c)));
 
@@ -203,7 +203,7 @@ namespace Gloson.Services.Git.Repository {
     /// </summary>
     /// <param name="command">Command to perform</param>
     public string Perform(string command) {
-      if (null == command)
+      if (command is null)
         throw new ArgumentNullException(nameof(command));
 
       using (new CurrentDirectory(Location)) {
@@ -227,7 +227,7 @@ namespace Gloson.Services.Git.Repository {
     public bool Equals(GitRepo other) {
       if (ReferenceEquals(this, other))
         return true;
-      else if (null == other)
+      else if (other is null)
         return false;
 
       return String.Equals(Location, other.Location);
@@ -241,7 +241,7 @@ namespace Gloson.Services.Git.Repository {
     /// <summary>
     /// Hash Code
     /// </summary>
-    public override int GetHashCode() => Location == null ? 0 : Location.GetHashCode();
+    public override int GetHashCode() => Location is null ? 0 : Location.GetHashCode();
 
     #endregion IEquatable<GitRepo>
 

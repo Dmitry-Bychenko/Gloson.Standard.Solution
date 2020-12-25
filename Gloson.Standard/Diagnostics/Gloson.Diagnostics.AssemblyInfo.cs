@@ -94,7 +94,7 @@ namespace Gloson.Diagnostics {
       get {
         var attr = Master.GetCustomAttribute<GuidAttribute>();
 
-        return (attr != null && Guid.TryParse(attr.Value, out Guid result))
+        return (attr is not null && Guid.TryParse(attr.Value, out Guid result))
           ? result
           : Guid.Empty;
       }
@@ -107,7 +107,7 @@ namespace Gloson.Diagnostics {
       get {
         var attr = Master.GetCustomAttribute<AssemblyVersionAttribute>();
 
-        return attr != null && Version.TryParse(attr.Version, out var result)
+        return attr is not null && Version.TryParse(attr.Version, out var result)
           ? result
           : new Version(0, 0);
       }
@@ -120,7 +120,7 @@ namespace Gloson.Diagnostics {
       get {
         var attr = Master.GetCustomAttribute<AssemblyFileVersionAttribute>();
 
-        return attr != null && Version.TryParse(attr.Version, out var result)
+        return attr is not null && Version.TryParse(attr.Version, out var result)
           ? result
           : new Version(0, 0);
       }
@@ -154,9 +154,9 @@ namespace Gloson.Diagnostics {
     public static bool operator ==(AssemblyInfo left, AssemblyInfo right) {
       if (ReferenceEquals(left, right))
         return true;
-      else if (null == right)
+      else if (right is null)
         return false;
-      else if (null == left)
+      else if (left is null)
         return false;
 
       return left.Equals(right);
@@ -168,9 +168,9 @@ namespace Gloson.Diagnostics {
     public static bool operator !=(AssemblyInfo left, AssemblyInfo right) {
       if (ReferenceEquals(left, right))
         return false;
-      else if (null == right)
+      else if (right is null)
         return true;
-      else if (null == left)
+      else if (left is null)
         return true;
 
       return !left.Equals(right);
@@ -195,7 +195,7 @@ namespace Gloson.Diagnostics {
     /// <summary>
     /// Hash Code
     /// </summary>
-    public override int GetHashCode() => Master == null
+    public override int GetHashCode() => Master is null
       ? 0
       : Master.GetHashCode();
 

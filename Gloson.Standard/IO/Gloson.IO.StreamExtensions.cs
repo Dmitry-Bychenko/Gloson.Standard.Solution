@@ -34,7 +34,7 @@ namespace Gloson.IO {
     /// <param name="chunkSize">Chunk Size, 0 fro default</param>
     /// <returns>chunks</returns>
     public static IEnumerable<byte[]> ReadChunks(this Stream stream, int chunkSize) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanRead)
         throw new ArgumentException("Stream can't be read", nameof(stream));
@@ -75,11 +75,11 @@ namespace Gloson.IO {
     /// <param name="chunkSize">Chunk size to use</param>
     /// <returns>bytes written</returns>
     public static long WriteAllBytes(this Stream stream, IEnumerable<byte> bytes, int chunkSize) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanWrite)
         throw new ArgumentException("Stream can't be written", nameof(stream));
-      if (null == bytes)
+      if (bytes is null)
         throw new ArgumentNullException(nameof(bytes));
       else if (chunkSize < 0)
         throw new ArgumentOutOfRangeException(nameof(chunkSize));
@@ -144,11 +144,11 @@ namespace Gloson.IO {
                                                       IEnumerable<byte> bytes,
                                                       int chunkSize,
                                                       CancellationToken token) {
-      if (null == stream)
+      if (stream is null)
         throw new ArgumentNullException(nameof(stream));
       else if (!stream.CanWrite)
         throw new ArgumentException("Stream can't be written", nameof(stream));
-      if (null == bytes)
+      if (bytes is null)
         throw new ArgumentNullException(nameof(bytes));
       else if (chunkSize < 0)
         throw new ArgumentOutOfRangeException(nameof(chunkSize));
