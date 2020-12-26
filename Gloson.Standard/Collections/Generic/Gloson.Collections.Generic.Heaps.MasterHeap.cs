@@ -18,10 +18,6 @@ namespace Gloson.Collections.Generic {
 
     #endregion Private Data
 
-    #region Algorithm
-
-    #endregion Algorithm
-
     #region Create
 
     /// <summary>
@@ -45,6 +41,28 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public T Value;
 
+    /// <summary>
+    /// Remove
+    /// </summary>
+    public bool Remove() {
+      if (Heap is null)
+        return false;
+
+      Heap.Remove(this);
+
+      return true;
+    }
+
+    /// <summary>
+    /// Add 
+    /// </summary>
+    public void Add(MasterHeap<T> heap) {
+      if (heap is null)
+        throw new ArgumentNullException(nameof(heap));
+
+      heap.Push(this);
+    }
+
     #endregion Public
   }
 
@@ -60,7 +78,7 @@ namespace Gloson.Collections.Generic {
     #region Private Data
 
     // Items
-    protected List<MasterHeapNode<T>> m_Items = new List<MasterHeapNode<T>>();
+    protected readonly List<MasterHeapNode<T>> m_Items = new List<MasterHeapNode<T>>();
 
     #endregion Private Data
 
