@@ -6,6 +6,10 @@
     <AssemblyOriginatorKeyFile>Gloson.Games.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <LangVersion>latest</LangVersion>
+    <Description>Some Game Algorithms Implemented</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution/tree/master/Gloson.Games</RepositoryUrl>
+    <Version>1.0.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
