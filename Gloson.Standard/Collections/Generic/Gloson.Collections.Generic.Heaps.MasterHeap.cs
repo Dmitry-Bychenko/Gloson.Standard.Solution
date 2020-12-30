@@ -269,9 +269,12 @@ namespace Gloson.Collections.Generic {
       if (value.Heap != this)
         return false;
 
-      m_Items.RemoveAt(value.Index);
+      m_Items[value.Index] = m_Items[m_Items.Count - 1];
+      m_Items[value.Index].Index = value.Index;
+      m_Items.RemoveAt(m_Items.Count - 1);
 
-      MoveDown(value.Index);
+      if (value.Index != m_Items.Count)
+        MoveDown(value.Index);
 
       value.Heap = null;
       value.Index = -1;
@@ -463,6 +466,9 @@ namespace Gloson.Collections.Generic {
           MasterHeapNode<T> h = m_Items[index];
           m_Items[index] = m_Items[leftIndex];
           m_Items[leftIndex] = h;
+
+          m_Items[index].Index = index;
+          m_Items[leftIndex].Index = leftIndex;
         }
 
         return;
