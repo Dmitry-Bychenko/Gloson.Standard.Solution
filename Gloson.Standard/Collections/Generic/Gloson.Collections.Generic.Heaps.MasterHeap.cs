@@ -274,7 +274,7 @@ namespace Gloson.Collections.Generic {
       m_Items.RemoveAt(m_Items.Count - 1);
 
       if (value.Index != m_Items.Count)
-        MoveDown(value.Index);
+        MoveUp(value.Index);
 
       value.Heap = null;
       value.Index = -1;
