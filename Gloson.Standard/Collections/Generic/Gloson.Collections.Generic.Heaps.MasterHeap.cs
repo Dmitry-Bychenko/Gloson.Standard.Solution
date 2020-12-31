@@ -269,7 +269,7 @@ namespace Gloson.Collections.Generic {
       if (value.Heap != this)
         return false;
 
-      m_Items[value.Index] = m_Items[m_Items.Count - 1];
+      m_Items[value.Index] = m_Items[^1];
       m_Items[value.Index].Index = value.Index;
       m_Items.RemoveAt(m_Items.Count - 1);
 
