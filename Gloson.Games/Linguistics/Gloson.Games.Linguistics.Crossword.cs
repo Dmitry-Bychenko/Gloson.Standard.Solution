@@ -1,6 +1,7 @@
 ﻿using Gloson.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
@@ -80,6 +81,11 @@ namespace Gloson.Games.Linguistics {
     public bool IsCompleted => Letter.HasValue;
 
     /// <summary>
+    /// Clear
+    /// </summary>
+    public void Clear() => Letter = null;
+    
+    /// <summary>
     /// To String
     /// </summary>
     public override string ToString() => Letter.HasValue
@@ -103,9 +109,6 @@ namespace Gloson.Games.Linguistics {
     private readonly List<CrosswordCell> m_Cells = new List<CrosswordCell>();
 
     #endregion Private Data
-
-    #region Algorithm
-    #endregion Algorithm
 
     #region Create
 
@@ -230,7 +233,75 @@ namespace Gloson.Games.Linguistics {
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public sealed class Crossword {
+  public sealed class Crossword : IEquatable<Crossword> {
+    #region Inner Classes
+
+    private class StructuralEqualityComparerClass : IEqualityComparer<Crossword> {
+      public bool Equals(Crossword left, Crossword right) {
+        if (ReferenceEquals(left, right))
+          return true;
+        if ((left is null) || (right is null))
+          return false;
+
+        if (left.m_Cells.Count == 0)
+          return right.m_Cells.Count == 0;
+
+        if (left.m_Cells.Count != right.m_Cells.Count)
+          return false;
+        if (left.m_Lines.Count != right.m_Lines.Count)
+          return false;
+
+        int leftMinX = left.m_Cells.Min(c => c.X);
+        int rightMinX = right.m_Cells.Min(c => c.X);
+
+        int leftMinY = left.m_Cells.Min(c => c.Y);
+        int rightMinY = right.m_Cells.Min(c => c.Y);
+
+        return !left.m_Cells
+          .Select(c => (c.Y - leftMinY, c.X - leftMinX))
+          .Except(right.m_Cells.Select(c => (c.Y - rightMinY, c.X - rightMinX)))
+          .Any();
+      }
+
+      public int GetHashCode([DisallowNull] Crossword obj) {
+        if (obj is null)
+          return -1;
+
+        return unchecked((obj.m_Cells.Count << 10) ^ (obj.m_Lines.Count)); 
+      }
+    }
+
+    private class EqualityComparerClass : IEqualityComparer<Crossword> {
+      public bool Equals(Crossword left, Crossword right) {
+        if (ReferenceEquals(left, right))
+          return true;
+        if ((left is null) || (right is null))
+          return false;
+
+        if (left.m_Cells.Count == 0)
+          return right.m_Cells.Count == 0;
+
+        if (left.m_Cells.Count != right.m_Cells.Count)
+          return false;
+        if (left.m_Lines.Count != right.m_Lines.Count)
+          return false;
+
+        return !left.m_Cells
+          .Select(c => (c.Y - left.Top, c.X - left.Left, c.Letter))
+          .Except(right.m_Cells.Select(c => (c.Y - right.Top, c.X - right.Left, c.Letter)))
+          .Any();
+      }
+
+      public int GetHashCode([DisallowNull] Crossword obj) {
+        if (obj is null)
+          return -1;
+
+        return unchecked((obj.m_Cells.Count << 10) ^ (obj.m_Lines.Count));
+      }
+    }
+
+    #endregion Inner Classes
+
     #region Private Data
 
     private List<CrosswordCell> m_Cells;
@@ -263,7 +334,7 @@ namespace Gloson.Games.Linguistics {
 
         var rows = group
           .OrderBy(cell => cell.Y)
-          .ToBatch((batch, cell) => batch.Any(c => c.X + 1 == cell.X));
+          .ToBatch((batch, cell) => batch.Any(c => c.Y + 1 == cell.Y));
 
         foreach (var row in rows)
           if (row.Length > 1)
@@ -274,12 +345,23 @@ namespace Gloson.Games.Linguistics {
         .OrderBy(line => line.Cells[0].Y)
         .ThenBy(line => line.Cells[0].X);
 
+      // Other
+
       int index = 0;
 
       foreach (var line in lines)
         line.Index = ++index;
 
       m_Lines.Sort((left, right) => left.Index.CompareTo(right.Index));
+
+      if (m_Cells.Count <= 0) {
+        Left = 0;
+        Top = 0;
+      }
+      else {
+        Left = m_Cells.Min(c => c.X);
+        Top = m_Cells.Min(c => c.Y);
+      }
     }
 
     private void BuildCells(IEnumerable<(int y, int x, char? letter)> grid) {
@@ -317,10 +399,15 @@ namespace Gloson.Games.Linguistics {
 
     #region Create
 
+    // Default constructor
+    private Crossword() { }
+
     /// <summary>
     /// Create from cells
     /// </summary>
-    public Crossword(IEnumerable<(int y, int x, char? letter)> grid) {
+    public Crossword(IEnumerable<(int y, int x, char? letter)> grid) 
+      : this() {
+      
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
@@ -330,7 +417,9 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Create from cells
     /// </summary>
-    public Crossword(IEnumerable<(int y, int x)> grid) {
+    public Crossword(IEnumerable<(int y, int x)> grid) 
+      : this() {
+      
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
@@ -340,16 +429,54 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Create From Text
     /// </summary>
-    public Crossword(IEnumerable<string> grid, char empty = '-') {
+    public Crossword(IEnumerable<string> grid, char empty = '-') 
+      : this() {
+      
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
       BuildCells(CoreParse(grid, empty));
     }
 
+    /// <summary>
+    /// Clone
+    /// </summary>
+
+    public Crossword Clone() {
+      Crossword result = new Crossword();
+
+      result.m_Cells = m_Cells
+        .Select(c => new CrosswordCell(result, c.Y, c.X, c.Letter))
+        .ToList();
+
+      result.BuildLines();
+
+      return result;
+    }
+
     #endregion Create
 
     #region Public
+
+    /// <summary>
+    /// Structural Comparer
+    /// </summary>
+    public static IEqualityComparer<Crossword> StructuralComparer = new StructuralEqualityComparerClass();
+
+    /// <summary>
+    /// Equality Comparer
+    /// </summary>
+    public static IEqualityComparer<Crossword> EqualityComparer = new EqualityComparerClass();
+
+    /// <summary>
+    /// Left corner
+    /// </summary>
+    public int Left { get; private set; }
+
+    /// <summary>
+    /// Top corner
+    /// </summary>
+    public int Top { get; private set; }
 
     /// <summary>
     /// Cells
@@ -365,6 +492,14 @@ namespace Gloson.Games.Linguistics {
     /// Is Completed
     /// </summary>
     public bool IsCompleted => m_Cells.All(cell => cell.IsCompleted);
+
+    /// <summary>
+    /// Clear
+    /// </summary>
+    public void Clear() {
+      foreach (var cell in m_Cells)
+        cell.Clear();
+    }
 
     /// <summary>
     /// To report
@@ -404,7 +539,41 @@ namespace Gloson.Games.Linguistics {
     }
 
     #endregion Public
-  }
 
+    #region Operators
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public static bool operator == (Crossword left, Crossword right) =>
+      EqualityComparer.Equals(left, right);
+
+    /// <summary>
+    /// Not Equals
+    /// </summary>
+    public static bool operator !=(Crossword left, Crossword right) =>
+      !EqualityComparer.Equals(left, right);
+
+    #endregion Operators
+
+    #region IEquatable<Crossword>
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public bool Equals(Crossword other) => EqualityComparer.Equals(this, other);
+
+    /// <summary>
+    /// Equals
+    /// </summary>
+    public override bool Equals(object obj) => obj is Crossword cwd && EqualityComparer.Equals(this, cwd);
+
+    /// <summary>
+    /// HashCode
+    /// </summary>
+    public override int GetHashCode() => EqualityComparer.GetHashCode(this);
+
+    #endregion IEquatable<Crossword>
+  }
 
 }
