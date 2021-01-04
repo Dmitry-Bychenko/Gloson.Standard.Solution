@@ -193,9 +193,9 @@ namespace Gloson.Collections.Generic {
         throw new ArgumentOutOfRangeException(nameof(index));
 
       m_Items[index] = m_Items[^1];
-
       m_Items.RemoveAt(m_Items.Count - 1);
 
+      MoveUp(index);
       MoveDown(index);
     }
 
@@ -210,6 +210,8 @@ namespace Gloson.Collections.Generic {
 
       m_Items[index] = m_Items[^1];
       m_Items.RemoveAt(m_Items.Count - 1);
+      
+      MoveUp(index);
       MoveDown(index);
 
       return true;

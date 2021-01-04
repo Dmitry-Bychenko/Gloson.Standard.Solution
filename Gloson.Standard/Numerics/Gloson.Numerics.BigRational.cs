@@ -147,6 +147,43 @@ namespace Gloson.Numerics {
     #region Public
 
     /// <summary>
+    /// Farey sequence
+    /// </summary>
+    /// <see cref="https://en.wikipedia.org/wiki/Farey_sequence"/>
+    public static IEnumerable<BigRational> Farey(BigInteger n) {
+      if (n <= 0)
+        throw new ArgumentOutOfRangeException(nameof(n), $"{nameof(n)} must be positive");
+
+      BigInteger a = 0;
+      BigInteger b = 1;
+      BigInteger c = 1;
+      BigInteger d = n;
+
+      yield return new BigRational(a, b);
+      yield return new BigRational(c, d);
+
+      if (n == 1)
+        yield break;
+
+      while (true) {
+        BigInteger z = (n + b) / d;
+
+        BigInteger p = z * c - a;
+        BigInteger q = z * d - b;
+
+        yield return new BigRational(p, q);
+
+        if (p == 1 && q == 1)
+          break;
+
+        a = c;
+        b = d;
+        c = p;
+        d = q;
+      }
+    }
+
+    /// <summary>
     /// Compare
     /// </summary>
     public static int Compare(BigRational left, BigRational right) {
