@@ -68,6 +68,22 @@ namespace Gloson.Numerics {
       throw new ArithmeticException("NaN");
     }
 
+    /// <summary>
+    /// Dijkstra Fusc function
+    /// </summary>
+    /// <see cref="https://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree"/>
+    public static BigInteger Fusc(this BigInteger value) {
+      BigInteger result = 0;
+
+      for (BigInteger n = value, a = 1; n != 0; n /= 2)
+        if (n % 2 == 0)
+          a += result;
+        else
+          result += a;
+
+      return result;
+    }
+
     #endregion Public
   }
 

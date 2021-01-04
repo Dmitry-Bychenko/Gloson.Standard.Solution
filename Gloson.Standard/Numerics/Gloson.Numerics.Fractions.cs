@@ -54,6 +54,22 @@ namespace Gloson.Numerics {
       }
     }
 
+    /// <summary>
+    /// Dijkstra Fusc function
+    /// </summary>
+    /// <see cref="https://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree"/>
+    public static int Fusc(int value) {
+      int result = 0;
+
+      for (int n = value, a = 1; n != 0; n /= 2)
+        if (n % 2 == 0)
+          a += result;
+        else
+          result += a;
+
+      return result;
+    }
+
     #endregion Public 
   }
 
