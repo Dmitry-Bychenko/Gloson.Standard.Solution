@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Gloson.Consoles {
@@ -60,6 +61,33 @@ namespace Gloson.Consoles {
     /// Read string as password (masked)
     /// </summary>
     public static string ReadPasswordLine() => ReadPasswordLine('*');
+
+    /// <summary>
+    /// Read StdIn
+    /// </summary>
+    public static string ReadStandardInput() {
+      using var reader = new StreamReader(Console.OpenStandardInput());
+        
+      return reader.ReadToEnd();
+    }
+
+    /// <summary>
+    /// Read StdOut
+    /// </summary>
+    public static string ReadStandardOutput() {
+      using var reader = new StreamReader(Console.OpenStandardOutput());
+      
+      return reader.ReadToEnd();
+    }
+
+    /// <summary>
+    /// Read StdErr
+    /// </summary>
+    public static string ReadStandardError() {
+      using var reader = new StreamReader(Console.OpenStandardError());
+
+      return reader.ReadToEnd();
+    }
 
     #endregion Public
   }
