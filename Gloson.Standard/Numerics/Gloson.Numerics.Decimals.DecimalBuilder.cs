@@ -326,4 +326,24 @@ namespace Gloson.Numerics {
     #endregion IEquatable<DecimalBuilder>
   }
 
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Decimal Extensions
+  /// </summary>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public static partial class DecimalExtensions {
+    #region Public
+
+    /// <summary>
+    /// Get Builder
+    /// </summary>
+    public static DecimalBuilder GetBuilder(this decimal value) =>
+      new DecimalBuilder(value);
+
+    #endregion Public
+  }
+
 }
