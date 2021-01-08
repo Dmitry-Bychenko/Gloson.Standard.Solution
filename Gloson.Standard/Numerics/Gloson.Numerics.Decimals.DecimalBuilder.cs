@@ -144,6 +144,19 @@ namespace Gloson.Numerics {
     public decimal Build() => new decimal(m_Bits);
 
     /// <summary>
+    /// Bits
+    /// </summary>
+    public int[] Bits {
+      get {
+        int[] result = new int[4];
+
+        Array.Copy(m_Bits, result, m_Bits.Length);
+
+        return result;
+      }
+    }
+
+    /// <summary>
     /// Is Zero (either positive or negative)
     /// </summary>
     public bool IsZero => (m_Bits[0] == 0) && (m_Bits[1] == 0) && (m_Bits[2] == 0);
@@ -300,6 +313,7 @@ namespace Gloson.Numerics {
 
     /// <summary>
     /// Equals
+    /// We assume 1 != 1.0 != 1.00 != 1.000 != ...
     /// </summary>
     public bool Equals(DecimalBuilder other) {
       if (ReferenceEquals(other, this))
@@ -307,10 +321,18 @@ namespace Gloson.Numerics {
       if (other is null)
         return false;
 
-      return m_Bits[0] == other.m_Bits[0] &&
-             m_Bits[1] == other.m_Bits[1] &&
-             m_Bits[2] == other.m_Bits[2] &&
-             m_Bits[3] == other.m_Bits[3];
+      if (m_Bits[0] == other.m_Bits[0] &&
+          m_Bits[1] == other.m_Bits[1] &&
+          m_Bits[2] == other.m_Bits[2]) {
+        // Zero: no need to check scale and sign
+        if (m_Bits[0] == 0 && m_Bits[1] == 0 && m_Bits[2] == 0)
+          return true;
+
+        // We assume that 1.00 != 1.0 != 1
+        return m_Bits[3] == other.m_Bits[3];
+      }
+
+      return false;
     }
 
     /// <summary>
