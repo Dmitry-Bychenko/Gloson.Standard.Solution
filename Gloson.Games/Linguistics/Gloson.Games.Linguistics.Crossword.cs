@@ -84,7 +84,7 @@ namespace Gloson.Games.Linguistics {
     /// Clear
     /// </summary>
     public void Clear() => Letter = null;
-    
+
     /// <summary>
     /// To String
     /// </summary>
@@ -267,7 +267,7 @@ namespace Gloson.Games.Linguistics {
         if (obj is null)
           return -1;
 
-        return unchecked((obj.m_Cells.Count << 10) ^ (obj.m_Lines.Count)); 
+        return unchecked((obj.m_Cells.Count << 10) ^ (obj.m_Lines.Count));
       }
     }
 
@@ -405,9 +405,9 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Create from cells
     /// </summary>
-    public Crossword(IEnumerable<(int y, int x, char? letter)> grid) 
+    public Crossword(IEnumerable<(int y, int x, char? letter)> grid)
       : this() {
-      
+
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
@@ -417,9 +417,9 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Create from cells
     /// </summary>
-    public Crossword(IEnumerable<(int y, int x)> grid) 
+    public Crossword(IEnumerable<(int y, int x)> grid)
       : this() {
-      
+
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
@@ -429,9 +429,9 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Create From Text
     /// </summary>
-    public Crossword(IEnumerable<string> grid, char empty = '-') 
+    public Crossword(IEnumerable<string> grid, char empty = '-')
       : this() {
-      
+
       if (grid is null)
         throw new ArgumentNullException(nameof(grid));
 
@@ -461,12 +461,12 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Structural Comparer
     /// </summary>
-    public static IEqualityComparer<Crossword> StructuralComparer = new StructuralEqualityComparerClass();
+    public static IEqualityComparer<Crossword> StructuralComparer { get; } = new StructuralEqualityComparerClass();
 
     /// <summary>
     /// Equality Comparer
     /// </summary>
-    public static IEqualityComparer<Crossword> EqualityComparer = new EqualityComparerClass();
+    public static IEqualityComparer<Crossword> EqualityComparer { get; } = new EqualityComparerClass();
 
     /// <summary>
     /// Left corner
@@ -545,7 +545,7 @@ namespace Gloson.Games.Linguistics {
     /// <summary>
     /// Equals
     /// </summary>
-    public static bool operator == (Crossword left, Crossword right) =>
+    public static bool operator ==(Crossword left, Crossword right) =>
       EqualityComparer.Equals(left, right);
 
     /// <summary>

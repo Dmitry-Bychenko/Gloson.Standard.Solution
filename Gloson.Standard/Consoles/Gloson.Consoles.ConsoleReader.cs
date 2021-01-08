@@ -67,7 +67,7 @@ namespace Gloson.Consoles {
     /// </summary>
     public static string ReadStandardInput() {
       using var reader = new StreamReader(Console.OpenStandardInput());
-        
+
       return reader.ReadToEnd();
     }
 
@@ -76,7 +76,7 @@ namespace Gloson.Consoles {
     /// </summary>
     public static string ReadStandardOutput() {
       using var reader = new StreamReader(Console.OpenStandardOutput());
-      
+
       return reader.ReadToEnd();
     }
 
