@@ -213,7 +213,7 @@ namespace Gloson.Numerics {
     }
 
     /// <summary>
-    /// Scale
+    /// Scale [0..28]
     /// </summary>
     public int Scale {
       get {
@@ -229,6 +229,21 @@ namespace Gloson.Numerics {
         m_Bits[3] = ((m_Bits[3] | mask) ^ mask) | scale;
       }
     }
+
+    /// <summary>
+    /// Scale factor [1..1**28]
+    /// </summary>
+    public BigInteger ScaleFactor => BigInteger.Pow(10, Scale);
+
+    /// <summary>
+    /// If Integer (4, 4.0, 4.00 etc.)
+    /// </summary>
+    public bool IsInteger => Mantissa % ScaleFactor == 0;
+
+    /// <summary>
+    /// Ratio
+    /// </summary>
+    public BigRational Ratio => new BigRational(Sign * Mantissa, ScaleFactor);
 
     /// <summary>
     /// Mantissa
@@ -256,6 +271,18 @@ namespace Gloson.Numerics {
           m_Bits[2] = (int)(value / factor);
         }
       }
+    }
+
+    /// <summary>
+    /// To Report 
+    /// </summary>
+    public string ToReport() {
+      return string.Join(Environment.NewLine,
+        $"Value:   {(Build() >= 0 ? " " : "")}{Build()}",
+        $"Sign:    {(Sign > 0 ? "+1" : Sign < 0 ? "-1" : " 0")}",
+        $"Mantissa: {Mantissa}",
+        $"Scale:    {Scale}"
+      );
     }
 
     /// <summary>
