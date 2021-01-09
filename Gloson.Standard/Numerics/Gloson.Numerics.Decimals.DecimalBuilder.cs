@@ -348,18 +348,7 @@ namespace Gloson.Numerics {
       if (other is null)
         return false;
 
-      if (m_Bits[0] == other.m_Bits[0] &&
-          m_Bits[1] == other.m_Bits[1] &&
-          m_Bits[2] == other.m_Bits[2]) {
-        // Zero: no need to check scale and sign
-        if (m_Bits[0] == 0 && m_Bits[1] == 0 && m_Bits[2] == 0)
-          return true;
-
-        // We assume that 1.00 != 1.0 != 1
-        return m_Bits[3] == other.m_Bits[3];
-      }
-
-      return false;
+      return Build() == other.Build();
     }
 
     /// <summary>
