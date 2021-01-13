@@ -35,13 +35,19 @@ namespace Gloson.Numerics {
     public static decimal Round(this decimal value, int decimals, MidpointRounding mode) =>
       Math.Round(value, decimals, mode) + Zero(decimals);
 
-
     /// <summary>
     /// Round 
     /// </summary>
     public static decimal Round(this decimal value, int decimals) =>
       Math.Round(value, decimals) + Zero(decimals);
 
+    /// <summary>
+    /// Is Negative
+    /// </summary>
+    public static bool IsNegative(this decimal value, bool negativeZero) => negativeZero
+      ? unchecked((decimal.GetBits(value)[3] & (1 << 31)) != 0)
+      : value < 0;
+    
     #endregion Public
   }
 }
