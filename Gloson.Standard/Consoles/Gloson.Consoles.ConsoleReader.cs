@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -65,8 +66,27 @@ namespace Gloson.Consoles {
     /// <summary>
     /// Read StdIn
     /// </summary>
-    public static string ReadStandardInput() {
+    public static string StandardInputText() {
       using var reader = new StreamReader(Console.OpenStandardInput());
+
+      return reader.ReadToEnd();
+    }
+
+    /// <summary>
+    /// Read StdIn
+    /// </summary>
+    public static IEnumerable<string> StandardInputLines() {
+      using var reader = new StreamReader(Console.OpenStandardInput());
+
+      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
+        yield return line;
+    }
+
+    /// <summary>
+    /// Read StdOut
+    /// </summary>
+    public static string StandardOutputText() {
+      using var reader = new StreamReader(Console.OpenStandardOutput());
 
       return reader.ReadToEnd();
     }
@@ -74,8 +94,18 @@ namespace Gloson.Consoles {
     /// <summary>
     /// Read StdOut
     /// </summary>
-    public static string ReadStandardOutput() {
+    public static IEnumerable<string> StandardOutputLines() {
       using var reader = new StreamReader(Console.OpenStandardOutput());
+
+      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
+        yield return line;
+    }
+
+    /// <summary>
+    /// Read StdErr
+    /// </summary>
+    public static string StandardErrorText() {
+      using var reader = new StreamReader(Console.OpenStandardError());
 
       return reader.ReadToEnd();
     }
@@ -83,10 +113,11 @@ namespace Gloson.Consoles {
     /// <summary>
     /// Read StdErr
     /// </summary>
-    public static string ReadStandardError() {
+    public static IEnumerable<string> StandardErrorLines() {
       using var reader = new StreamReader(Console.OpenStandardError());
 
-      return reader.ReadToEnd();
+      for (string line = reader.ReadLine(); line != null; line = reader.ReadLine())
+        yield return line;
     }
 
     #endregion Public
