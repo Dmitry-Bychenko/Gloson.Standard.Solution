@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -139,7 +138,7 @@ namespace Gloson.Threading.Channels {
     /// <summary>
     /// Split Channel into count ones
     /// </summary>
-    public static ChannelReader<T>[] Split<T>(ChannelReader<T> reader, int count) {
+    public static ChannelReader<T>[] SplitRoundRobin<T>(ChannelReader<T> reader, int count) {
       if (reader is null)
         throw new ArgumentNullException(nameof(reader));
       if (count <= 0)
@@ -168,6 +167,35 @@ namespace Gloson.Threading.Channels {
 
       return result
         .Select(ch => ch.Reader)
+        .ToArray();
+    }
+
+    /// <summary>
+    /// Split Channel into count ones
+    /// </summary>
+    public static ChannelReader<T>[] SplitRound<T>(ChannelReader<T> reader, int count) {
+      if (reader is null)
+        throw new ArgumentNullException(nameof(reader));
+      if (count <= 0)
+        throw new ArgumentOutOfRangeException(nameof(count));
+
+      if (1 == count)
+        return new ChannelReader<T>[] { reader };
+
+      var result = new Channel<T>[count];
+
+      Task[] tasks = Enumerable
+        .Range(1, count)
+        .Select(index => Task.Run(async () => {
+          await foreach (T item in reader.ReadAllAsync())
+            await result[index].Writer.WriteAsync(item);
+
+          result[index].Writer.Complete();
+        }))
+        .ToArray();
+
+      return result
+        .Select(channel => channel.Reader)
         .ToArray();
     }
 

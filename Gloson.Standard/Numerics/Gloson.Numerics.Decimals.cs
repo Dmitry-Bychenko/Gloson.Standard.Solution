@@ -34,14 +34,14 @@ namespace Gloson.Numerics {
     /// </summary>
     public static decimal Round(this decimal value, int decimals, MidpointRounding mode) =>
       Math.Round(value, decimals, mode) + Zero(decimals);
-    
+
 
     /// <summary>
     /// Round 
     /// </summary>
     public static decimal Round(this decimal value, int decimals) =>
       Math.Round(value, decimals) + Zero(decimals);
-    
+
     #endregion Public
   }
 }
