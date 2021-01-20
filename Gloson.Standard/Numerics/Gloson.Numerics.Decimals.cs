@@ -47,7 +47,7 @@ namespace Gloson.Numerics {
     public static bool IsNegative(this decimal value, bool negativeZero) => negativeZero
       ? unchecked((decimal.GetBits(value)[3] & (1 << 31)) != 0)
       : value < 0;
-    
+
     #endregion Public
   }
 }
