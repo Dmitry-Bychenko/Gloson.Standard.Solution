@@ -1,2 +1,2 @@
 # Gloson.Standard.Solution
-Gloson .Net Standard Library
+General Purpose .Net 5 Library [Nuget](https://www.nuget.org/packages/Gloson.Standard/)
