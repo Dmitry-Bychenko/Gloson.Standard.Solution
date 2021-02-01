@@ -99,4 +99,5 @@ namespace Gloson.Numerics.Combinatorics {
 
     #endregion Public
   }
+
 }

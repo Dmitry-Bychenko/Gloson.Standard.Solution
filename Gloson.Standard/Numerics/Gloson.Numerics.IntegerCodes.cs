@@ -34,7 +34,7 @@
       for (uint v = result >> 1; v > 0; v >>= 1)
         result ^= v;
 
-      return unchecked((int)value);
+      return unchecked((int)result);
     }
 
     /// <summary>
@@ -46,7 +46,7 @@
       for (ulong v = result >> 1; v > 0; v >>= 1)
         result ^= v;
 
-      return unchecked((long)value);
+      return unchecked((long)result);
     }
 
     #endregion public

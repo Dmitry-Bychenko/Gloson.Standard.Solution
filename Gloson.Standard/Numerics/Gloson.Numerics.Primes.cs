@@ -202,4 +202,5 @@ namespace Gloson.Numerics {
 
     #endregion Public
   }
+
 }

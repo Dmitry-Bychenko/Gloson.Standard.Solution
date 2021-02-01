@@ -272,6 +272,9 @@ namespace Gloson.Numerics {
       ? this
       : new BigRational(Numerator % Denominator, 1);
 
+    /// <summary>
+    /// Floor
+    /// </summary>
     public BigRational Floor() {
       if (Denominator == 0)
         return this;
@@ -334,7 +337,7 @@ namespace Gloson.Numerics {
 
     /// <summary>
     /// Fractional digits
-    /// e.g. 1/7 returns 1, 4, 2, 8, 5, 7, 1, 4 ,2 ...
+    /// e.g. 1/7 returns 1, 4, 2, 8, 5, 7, 1, 4, 2 ...
     /// </summary>
     public IEnumerable<int> FractionalDigits() {
       if (Denominator <= 1)
