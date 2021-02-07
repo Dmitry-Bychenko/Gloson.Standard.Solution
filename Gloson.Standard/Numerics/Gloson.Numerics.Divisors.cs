@@ -394,6 +394,122 @@ namespace Gloson.Numerics {
     public static BigInteger Totient(this BigInteger value) =>
       Totient(value, null);
 
+    /// <summary>
+    /// Minimum Primitive root
+    /// </summary>
+    /// <returns>Minimum primitive root; 0 if primitive root doesn't exist</returns>
+    public static BigInteger PrimitiveRoot(this BigInteger value) {
+      if (value <= 0)
+        return 0;
+      if (value == 1)
+        return 1;
+      if (value <= 4)
+        return value - 1;
+
+      if (value % 4 == 0)
+        return 0;
+
+      BigInteger number = value % 2 == 0
+        ? value / 2
+        : value;
+
+      List<BigInteger> divisors = number.DistinctPrimeDivisors().Take(2).ToList();
+
+      if (divisors.Count == 2)
+        return 0;
+
+      BigInteger fi = value;
+
+      if (number != value)
+        divisors.Add(2);
+
+      foreach (BigInteger div in divisors)
+        fi = fi / div * (div - 1);
+
+      List<BigInteger> ps = fi.DistinctPrimeDivisors().ToList();
+      ps.Add(1);
+
+      HashSet<BigInteger> hs = new HashSet<BigInteger>();
+
+      for (BigInteger g = 1; g < value; ++g) {
+        if (g.Gcd(value) != 1)
+          continue;
+
+        bool isOK = true;
+
+        hs.Clear();
+
+        foreach (BigInteger p in ps) {
+          var z = BigInteger.ModPow(g, fi / p, value);
+
+          if (!hs.Add(z)) {
+            isOK = false;
+
+            break;
+          }
+        }
+
+        if (isOK)
+          return g;
+      }
+
+      return 0;
+    }
+
+    /// <summary>
+    /// If root is primitive root of value
+    /// </summary>
+    public static bool IsPrimitiveRoot(this BigInteger value, BigInteger root) {
+      if (value <= 0)
+        return false;
+      if (value == 1)
+        return root == 1;
+      if (value <= 4)
+        return root == value - 1;
+
+      if (value % 4 == 0)
+        return false;
+
+      if (root <= 1 || root > value)
+        return false;
+
+      if (root.Gcd(value) != 1)
+        return false;
+
+      BigInteger number = value % 2 == 0
+        ? value / 2
+        : value;
+
+      List<BigInteger> divisors = number.DistinctPrimeDivisors().Take(2).ToList();
+
+      if (divisors.Count == 2)
+        return false;
+
+      BigInteger fi = value;
+
+      if (number != value)
+        divisors.Add(2);
+
+      foreach (BigInteger div in divisors)
+        fi = fi / div * (div - 1);
+
+      List<BigInteger> ps = fi.DistinctPrimeDivisors().ToList();
+      ps.Add(1);
+
+      HashSet<BigInteger> hs = new HashSet<BigInteger>();
+
+      hs.Clear();
+
+      foreach (BigInteger p in ps) {
+        var z = BigInteger.ModPow(root, fi / p, value);
+
+        if (!hs.Add(z))
+          return false;
+      }
+
+      return true;
+    }
+
     #endregion Public
   }
 
