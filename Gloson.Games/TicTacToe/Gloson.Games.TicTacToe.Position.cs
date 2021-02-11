@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Gloson.Games.TicTacToe {
 
@@ -35,6 +36,18 @@ namespace Gloson.Games.TicTacToe {
         Mark.Cross => 'X',
         Mark.Nought => 'O',
         Mark.None => '.',
+        _ => '?'
+      };
+    }
+
+    /// <summary>
+    /// To Char
+    /// </summary>
+    public static char ToChar(this Mark mark, char empty) {
+      return mark switch {
+        Mark.Cross => 'X',
+        Mark.Nought => 'O',
+        Mark.None => empty,
         _ => '?'
       };
     }
@@ -135,7 +148,7 @@ namespace Gloson.Games.TicTacToe {
         foreach (var parent in agenda) {
           yield return parent;
 
-          foreach (var child in parent.AvailableMoves())
+          foreach (var child in parent.AvailablePositions())
             next.Add(child);
         }
 
@@ -152,6 +165,19 @@ namespace Gloson.Games.TicTacToe {
         string.Concat(m_Marks.Skip(3).Take(3).Select(m => m.ToChar())),
         string.Concat(m_Marks.Skip(6).Take(3).Select(m => m.ToChar()))
      );
+    }
+
+    /// <summary>
+    /// Draw Position
+    /// </summary>
+    public string DrawPosition() {
+      return string.Join(Environment.NewLine,
+        "3 | " + string.Concat(m_Marks.Skip(0).Take(3).Select(m => m.ToChar(' '))) + " ",
+        "2 | " + string.Concat(m_Marks.Skip(3).Take(3).Select(m => m.ToChar(' '))) + " ",
+        "1 | " + string.Concat(m_Marks.Skip(6).Take(3).Select(m => m.ToChar(' '))) + " ",
+        "   -----",
+        "    abc "
+      );
     }
 
     /// <summary>
@@ -176,7 +202,10 @@ namespace Gloson.Games.TicTacToe {
     }
 
     /// <summary>
-    /// Make move
+    /// Make move, index is
+    ///   1 2 3
+    ///   4 5 6
+    ///   7 8 9
     /// </summary>
     public TicTacToePosition MakeMove(int index) {
       if (index < 1 || index > 9)
@@ -195,7 +224,29 @@ namespace Gloson.Games.TicTacToe {
     }
 
     /// <summary>
-    /// Who is On Move 
+    /// Make move 
+    ///  3
+    ///  2
+    ///  1
+    ///   a b c
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <returns></returns>
+    public TicTacToePosition MakeMove(string cell) {
+      if (cell is null)
+        throw new ArgumentNullException(nameof(cell));
+
+      var match = Regex.Match(cell, @"^\s*(?<rank>[A-Ca-c])\s*(?<file>[1-3])\s*$");
+
+      if (!match.Success)
+        throw new FormatException("Incorrect Syntax for cell; a1..c3 expected");
+
+      return MakeMove('3' - match.Groups["file"].Value[0],
+                      match.Groups["rank"].Value.ToUpper()[0] - 'A');
+    }
+
+    /// <summary>
+    /// Who is On Move (Crosses or Naugts)
     /// </summary>
     public Mark WhoIsOnMove {
       get {
@@ -298,14 +349,38 @@ namespace Gloson.Games.TicTacToe {
 
     /// <summary>
     /// Board
+    ///   1 2 3
+    ///   4 5 6
+    ///   7 8 9
     /// </summary>
-    /// <param name="line">Line</param>
-    /// <param name="column">Column</param>
     /// <returns>Mark</returns>
     public Mark this[int index] {
       get => (index < 1 || index > 9)
         ? Mark.None
         : m_Marks[index - 1];
+    }
+
+    /// <summary>
+    /// Board
+    ///   3
+    ///   2
+    ///   1
+    ///     a b c
+    /// </summary>
+    /// <param name="cell"></param>
+    /// <returns></returns>
+    public Mark this[string cell] {
+      get {
+        if (cell is null)
+          throw new ArgumentNullException(nameof(cell));
+
+        var match = Regex.Match(cell, @"^\s*(?<rank>[A-Ca-c])\s*(?<file>[1-3])\s*$");
+
+        if (!match.Success)
+          return Mark.None;
+
+        return this['3' - match.Groups["file"].Value[0],  match.Groups["rank"].Value.ToUpper()[0] - 'A'];
+      }
     }
 
     /// <summary>
@@ -334,7 +409,7 @@ namespace Gloson.Games.TicTacToe {
     /// <summary>
     /// Available Moves
     /// </summary>
-    public IEnumerable<TicTacToePosition> AvailableMoves() {
+    public IEnumerable<TicTacToePosition> AvailablePositions() {
       Mark mark = WhoIsOnMove;
 
       if (mark == Mark.None)
@@ -349,6 +424,26 @@ namespace Gloson.Games.TicTacToe {
           yield return result;
         }
     }
+
+    /// <summary>
+    /// Available Moves
+    /// </summary>
+    public IEnumerable<(int line, int column, int index, string cell)> AvailableMoves() {
+      for (int index = 0; index < m_Marks.Length; ++index) {
+        if (m_Marks[index] != Mark.None)
+          continue;
+
+        int line = index / 3;
+        int column = index % 3;
+
+        yield return (
+          line,
+          column,
+          index + 1,
+          $"{(char)('a' + column)}{3 - line}"
+        );
+      }
+    } 
 
     /// <summary>
     /// Parent Positions
@@ -488,7 +583,7 @@ namespace Gloson.Games.TicTacToe {
           ? GameOutcome.SecondWin
           : GameOutcome.FirstWin;
 
-        foreach (var next in position.AvailableMoves()) {
+        foreach (var next in position.AvailablePositions()) {
           GameOutcome outcome = s_Outcomes[next];
 
           bestOutcome = onMove == Mark.Cross
@@ -542,6 +637,23 @@ namespace Gloson.Games.TicTacToe {
     /// <summary>
     /// Move Expectation
     /// </summary>
+    public static GameOutcome MoveExpectation(this TicTacToePosition position, string cell) {
+      if (cell is null)
+        return GameOutcome.Illegal;
+
+      var match = Regex.Match(cell, @"^\s*(?<rank>[A-Ca-c])\s*(?<file>[1-3])\s*$");
+
+      if (!match.Success)
+        return GameOutcome.Illegal;
+
+      return MoveExpectation(position, 
+                             '3' - match.Groups["file"].Value[0], 
+                             match.Groups["rank"].Value.ToUpper()[0] - 'A');
+    }
+
+    /// <summary>
+    /// Move Expectation
+    /// </summary>
     public static GameOutcome MoveExpectation(this TicTacToePosition position, int index) {
       if (position is null)
         return GameOutcome.Illegal;
@@ -556,7 +668,7 @@ namespace Gloson.Games.TicTacToe {
 
     /// <summary>
     /// Move quality
-    ///   -1 worsed move
+    ///   -1 worst move
     ///    0 illegal move
     ///   +1 best move
     /// </summary>
@@ -576,7 +688,7 @@ namespace Gloson.Games.TicTacToe {
 
     /// <summary>
     /// Move quality
-    ///   -1 worsed move
+    ///   -1 worst move
     ///    0 illegal move
     ///   +1 best move
     /// </summary>
@@ -592,6 +704,35 @@ namespace Gloson.Games.TicTacToe {
         return 1;
       else
         return -1;
+    }
+
+    /// <summary>
+    /// Move quality
+    ///   -1 worst move
+    ///    0 illegal move
+    ///   +1 best move
+    /// </summary>
+    public static int MoveQuality(this TicTacToePosition position, string cell) {
+      var match = Regex.Match(cell, @"^\s*(?<rank>[A-Ca-c])\s*(?<file>[1-3])\s*$");
+
+      if (!match.Success)
+        return 0;
+
+      return MoveQuality(position,
+                         '3' - match.Groups["file"].Value[0],
+                         match.Groups["rank"].Value.ToUpper()[0] - 'A');
+    }
+
+    /// <summary>
+    /// Best Moves (all winning moves or, if the position drawish, all draw moves)
+    /// </summary>
+    public static IEnumerable<(int line, int column, int index, string cell)> BestMoves(this TicTacToePosition position) {
+      if (position is null)
+        yield break;
+
+      foreach (var move in position.AvailableMoves()) 
+        if (MoveQuality(position, move.index) == 1)
+          yield return move;
     }
 
     #endregion Public
