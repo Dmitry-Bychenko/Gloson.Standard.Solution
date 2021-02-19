@@ -167,7 +167,7 @@ namespace Gloson.Games.Nim {
     /// <summary>
     /// Is Completed
     /// </summary>
-    public bool IsComplted => m_Heaps.All(item => item == 0);
+    public bool IsCompleted => m_Heaps.All(item => item == 0);
 
     /// <summary>
     /// Best Move
