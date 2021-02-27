@@ -68,7 +68,7 @@ namespace Gloson.Collections.Generic {
     /// <summary>
     /// Bloom Filter Size
     /// </summary>
-    public int Size => m_Bits.Length * sizeof(ulong);
+    public int Size => m_Bits.Length * sizeof(ulong) * 8;
 
     /// <summary>
     /// Number of hash functions used
