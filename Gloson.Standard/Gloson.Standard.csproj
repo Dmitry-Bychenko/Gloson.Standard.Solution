@@ -17,6 +17,7 @@
     <Version>1.0.0.4</Version>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Gloson.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,6 +28,10 @@
     <Compile Remove="Numerics\Statistics\**" />
     <EmbeddedResource Remove="Numerics\Statistics\**" />
     <None Remove="Numerics\Statistics\**" />
+    <None Include="..\..\..\Images\Gloson.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
