@@ -120,6 +120,44 @@ namespace Gloson.Consoles {
         yield return line;
     }
 
+    /// <summary>
+    /// To Console Standard Out
+    /// </summary>
+    public static void ToStandardOut<T>(this IEnumerable<T> source) {
+      if (source is null)
+        throw new ArgumentNullException(nameof(source));
+
+      bool first = true;
+
+      foreach (T item in source) {
+        if (first)
+          first = false;
+        else
+          Console.Out.WriteLine();
+
+        Console.Out.Write(item);
+      }
+    }
+
+    /// <summary>
+    /// To Console Standard Error
+    /// </summary>
+    public static void ToStandardError<T>(this IEnumerable<T> source) {
+      if (source is null)
+        throw new ArgumentNullException(nameof(source));
+
+      bool first = true;
+
+      foreach (T item in source) {
+        if (first)
+          first = false;
+        else
+          Console.Error.WriteLine();
+
+        Console.Error.Write(item);
+      }
+    }
+
     #endregion Public
   }
 
