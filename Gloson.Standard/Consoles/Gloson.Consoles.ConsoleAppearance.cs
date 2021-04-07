@@ -28,7 +28,7 @@ namespace Gloson.Consoles {
     #region Create
 
     /// <summary>
-    /// Standrad constructor
+    /// Standard constructor
     /// </summary>
     public ConsoleAppearance() {
       m_SavedBackgroundColor = Console.BackgroundColor;
