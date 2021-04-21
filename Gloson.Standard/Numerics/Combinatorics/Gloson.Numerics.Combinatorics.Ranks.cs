@@ -19,6 +19,7 @@ namespace Gloson.Numerics.Combinatorics {
     /// <summary>
     /// Permutation rank
     /// </summary>
+    /// <param name="permutation">permutation must be zero-based; e.g. [2, 0, 3, 1]</param>
     public static BigInteger PermutationRank(IEnumerable<int> permutation) {
       if (permutation is null)
         throw new ArgumentNullException(nameof(permutation));
