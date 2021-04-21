@@ -530,32 +530,24 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="comparer">Comparer (null for default)</param>
     /// <param name="capacity">Expected capacity (-1 for default)</param>
-    public MaxHeap(IComparer<T> comparer, int capacity)
-      : base(comparer, capacity) {
-    }
+    public MaxHeap(IComparer<T> comparer, int capacity) : base(comparer, capacity) {}
 
     /// <summary>
     /// Standard constructor
     /// </summary>
     /// <param name="comparer">Comparer (null for default)</param>
-    public MaxHeap(IComparer<T> comparer)
-      : base(comparer, -1) {
-    }
+    public MaxHeap(IComparer<T> comparer) : base(comparer, -1) {}
 
     /// <summary>
     /// Standard constructor
     /// </summary>
     /// <param name="capacity">Expected capacity (-1 for default)</param>
-    public MaxHeap(int capacity)
-      : base(null, capacity) {
-    }
+    public MaxHeap(int capacity) : base(null, capacity) {}
 
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public MaxHeap()
-      : base(null, -1) {
-    }
+    public MaxHeap() : base(null, -1) {}
 
     #endregion Create
   }
