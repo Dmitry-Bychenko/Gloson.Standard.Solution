@@ -120,27 +120,27 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Zero
     /// </summary>
-    public static BigRational Zero => new BigRational(0, 1);
+    public static BigRational Zero => new(0, 1);
 
     /// <summary>
     /// One
     /// </summary>
-    public static BigRational One => new BigRational(1, 1);
+    public static BigRational One => new(1, 1);
 
     /// <summary>
     /// NaN
     /// </summary>
-    public static BigRational NaN => new BigRational(0, 0);
+    public static BigRational NaN => new(0, 0);
 
     /// <summary>
     /// Positive infinity
     /// </summary>
-    public static BigRational PositiveInfinity => new BigRational(1, 0);
+    public static BigRational PositiveInfinity => new(1, 0);
 
     /// <summary>
     /// Negative infinity
     /// </summary>
-    public static BigRational NegativeInfinity => new BigRational(-1, 0);
+    public static BigRational NegativeInfinity => new(-1, 0);
 
     #endregion Create
 
@@ -375,17 +375,17 @@ namespace Gloson.Numerics {
     /// <summary>
     /// From Integer
     /// </summary>
-    public static implicit operator BigRational(BigInteger value) => new BigRational(value);
+    public static implicit operator BigRational(BigInteger value) => new(value);
 
     /// <summary>
     /// From Integer
     /// </summary>
-    public static implicit operator BigRational(int value) => new BigRational(value);
+    public static implicit operator BigRational(int value) => new(value);
 
     /// <summary>
     /// From Integer
     /// </summary>
-    public static implicit operator BigRational(long value) => new BigRational(value);
+    public static implicit operator BigRational(long value) => new(value);
 
     #endregion Cast
 
@@ -433,38 +433,38 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Unary -
     /// </summary>
-    public static BigRational operator -(BigRational value) => new BigRational(-value.Numerator, value.Denominator);
+    public static BigRational operator -(BigRational value) => new(-value.Numerator, value.Denominator);
 
     /// <summary>
     /// Binary +
     /// </summary>
     public static BigRational operator +(BigRational left, BigRational right) =>
-      new BigRational(left.Numerator * right.Denominator + right.Numerator * left.Denominator, left.Denominator * right.Denominator);
+      new(left.Numerator * right.Denominator + right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
     /// <summary>
     /// Binary -
     /// </summary>
     public static BigRational operator -(BigRational left, BigRational right) =>
-      new BigRational(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
+      new(left.Numerator * right.Denominator - right.Numerator * left.Denominator, left.Denominator * right.Denominator);
 
     /// <summary>
     /// Binary *
     /// </summary>
     public static BigRational operator *(BigRational left, BigRational right) =>
-      new BigRational(left.Numerator * right.Numerator, left.Denominator * right.Denominator);
+      new(left.Numerator * right.Numerator, left.Denominator * right.Denominator);
 
     /// <summary>
     /// Binary /
     /// </summary>
     public static BigRational operator /(BigRational left, BigRational right) =>
-      new BigRational(left.Numerator * right.Denominator, left.Denominator * right.Numerator);
+      new(left.Numerator * right.Denominator, left.Denominator * right.Numerator);
 
     /// <summary>
     /// Remainder
     /// </summary>
     public static BigRational operator %(BigRational left, BigRational right) =>
-      new BigRational((left.Numerator * right.Denominator) % (right.Numerator * left.Denominator),
-                       left.Denominator * right.Denominator);
+      new((left.Numerator * right.Denominator) % (right.Numerator * left.Denominator),
+            left.Denominator * right.Denominator);
 
     #endregion Arithmetics
 

@@ -85,7 +85,7 @@ namespace Gloson.Numerics {
 
       int N = m_X.Count - 1;
 
-      Dictionary<int, double> m = new Dictionary<int, double>();
+      Dictionary<int, double> m = new();
 
       for (int i = 0; i < N; ++i)
         m.Add(i, (m_Y[i + 1] - m_Y[i]) / (m_X[i + 1] - m_X[i]));

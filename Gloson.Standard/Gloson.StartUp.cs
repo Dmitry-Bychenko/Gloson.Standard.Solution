@@ -34,8 +34,7 @@ namespace Gloson {
     #region Private Data
 
     // Assemblies initialized
-    private static readonly ConcurrentDictionary<Assembly, bool> s_Assemblies =
-      new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Assembly, bool> s_Assemblies = new();
 
     #endregion Private Data
 

@@ -110,7 +110,7 @@ namespace Gloson.Geometry.Clustering {
       else if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      Dictionary<int, List<T>> result = new Dictionary<int, List<T>>();
+      Dictionary<int, List<T>> result = new();
 
       foreach (var (item, cluster) in engine.Clusterize(source)) {
         if (result.TryGetValue(cluster, out var list))

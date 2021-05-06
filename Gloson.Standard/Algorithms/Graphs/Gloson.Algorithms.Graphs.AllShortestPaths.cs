@@ -31,8 +31,8 @@ namespace Gloson.Algorithms.Graphs {
       if (comparer is null)
         comparer = EqualityComparer<N>.Default;
 
-      List<(N from, N to, double length)> list = new List<(N from, N to, double length)>();
-      Dictionary<N, int> dict = new Dictionary<N, int>(comparer);
+      List<(N from, N to, double length)> list = new();
+      Dictionary<N, int> dict = new(comparer);
 
       foreach (T record in source) {
         var edge = edgeMap(record);

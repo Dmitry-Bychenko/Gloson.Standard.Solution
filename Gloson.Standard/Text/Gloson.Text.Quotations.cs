@@ -31,7 +31,7 @@ namespace Gloson.Text {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      StringBuilder sb = new StringBuilder(2 * value.Length + 2);
+      StringBuilder sb = new(2 * value.Length + 2);
 
       sb.Append(openQuotation);
 
@@ -104,7 +104,7 @@ namespace Gloson.Text {
       else if (value[0] != openQuotation || value[^1] != closeQuotation)
         return false;
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];
@@ -198,7 +198,7 @@ namespace Gloson.Text {
       else if (value[0] != openQuotation || value[^1] != closeQuotation)
         throw new FormatException("Doesn't have start/final quotation marks");
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];

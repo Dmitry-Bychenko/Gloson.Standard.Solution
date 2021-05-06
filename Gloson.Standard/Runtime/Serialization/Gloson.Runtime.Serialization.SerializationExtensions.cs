@@ -36,8 +36,8 @@ namespace Gloson.Runtime.Serialization {
       if (constructor is null)
         throw new ArgumentException($"Type {typeof(T).Name} doesn't have {typeof(T).Name}(SerializationInfo info, StreamingContext context) constructor", nameof(original));
 
-      SerializationInfo info = new SerializationInfo(original.GetType(), new FormatterConverter());
-      StreamingContext context = new StreamingContext(states);
+      SerializationInfo info = new(original.GetType(), new FormatterConverter());
+      StreamingContext context = new(states);
 
       (original as ISerializable).GetObjectData(info, context);
 
@@ -74,8 +74,8 @@ namespace Gloson.Runtime.Serialization {
       if (constructor is null)
         return false;
 
-      SerializationInfo info = new SerializationInfo(original.GetType(), new FormatterConverter());
-      StreamingContext context = new StreamingContext(states);
+      SerializationInfo info = new(original.GetType(), new FormatterConverter());
+      StreamingContext context = new(states);
 
       source.GetObjectData(info, context);
 

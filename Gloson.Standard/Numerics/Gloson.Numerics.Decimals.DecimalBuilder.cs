@@ -87,7 +87,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Clone
     /// </summary>
-    public DecimalBuilder Clone() => new DecimalBuilder(Build());
+    public DecimalBuilder Clone() => new(Build());
 
     /// <summary>
     /// Try Parse
@@ -141,7 +141,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Build
     /// </summary>
-    public decimal Build() => new decimal(m_Bits);
+    public decimal Build() => new(m_Bits);
 
     /// <summary>
     /// Bits
@@ -243,7 +243,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Ratio
     /// </summary>
-    public BigRational Ratio => new BigRational(Sign * Mantissa, ScaleFactor);
+    public BigRational Ratio => new(Sign * Mantissa, ScaleFactor);
 
     /// <summary>
     /// Mantissa
@@ -251,7 +251,7 @@ namespace Gloson.Numerics {
     public BigInteger Mantissa {
       get {
         unchecked {
-          BigInteger result = new BigInteger((long)((uint)High));
+          BigInteger result = new((long)((uint)High));
 
           result = (result << 32) + (long)((uint)Middle);
           result = (result << 32) + (long)((uint)Low);
@@ -331,8 +331,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// From Decimal
     /// </summary>
-    public static implicit operator DecimalBuilder(decimal value) =>
-      new DecimalBuilder(value);
+    public static implicit operator DecimalBuilder(decimal value) => new(value);
 
     #endregion Operators
 
@@ -378,8 +377,7 @@ namespace Gloson.Numerics {
     /// <summary>
     /// Get Builder
     /// </summary>
-    public static DecimalBuilder GetBuilder(this decimal value) =>
-      new DecimalBuilder(value);
+    public static DecimalBuilder GetBuilder(this decimal value) => new(value);
 
     #endregion Public
   }

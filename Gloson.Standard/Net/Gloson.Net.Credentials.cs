@@ -98,8 +98,7 @@ namespace Gloson.Net {
   public sealed class NetworkCredentials : ICredentials {
     #region Private Data
 
-    private readonly ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential> m_Cache =
-      new ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential>();
+    private readonly ConcurrentDictionary<NetworkCredentialRecord, NetworkCredential> m_Cache = new();
 
     #endregion Private Data
 
@@ -144,7 +143,7 @@ namespace Gloson.Net {
         if (uri is null)
           return false;
 
-        NetworkCredentialRecord id = new NetworkCredentialRecord(uri, authType);
+        NetworkCredentialRecord id = new(uri, authType);
 
         bool result = true;
 
@@ -197,7 +196,7 @@ namespace Gloson.Net {
     /// Remove
     /// </summary>
     public bool Remove(Uri uri, string authType) {
-      NetworkCredentialRecord id = new NetworkCredentialRecord(uri, authType);
+      NetworkCredentialRecord id = new(uri, authType);
 
       return m_Cache.TryRemove(id, out var _);
     }
@@ -224,7 +223,7 @@ namespace Gloson.Net {
     /// <param name="uri">Uri</param>
     /// <param name="authType">Authenication type</param>
     public NetworkCredential GetCredential(Uri uri, string authType) {
-      NetworkCredentialRecord id = new NetworkCredentialRecord(uri, authType);
+      NetworkCredentialRecord id = new(uri, authType);
 
       if (m_Cache.TryGetValue(id, out NetworkCredential result))
         return Clone(result);

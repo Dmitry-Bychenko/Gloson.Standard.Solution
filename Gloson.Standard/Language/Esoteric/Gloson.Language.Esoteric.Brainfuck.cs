@@ -45,7 +45,7 @@ namespace Gloson.Language.Esoteric {
     public class LocalMemory {
       #region Private Data
 
-      private readonly Dictionary<long, long> m_Data = new Dictionary<long, long>();
+      private readonly Dictionary<long, long> m_Data = new();
 
       #endregion Private Data
 
@@ -131,7 +131,7 @@ namespace Gloson.Language.Esoteric {
           return "No local variables";
 
         static string ValueToString(long value) {
-          StringBuilder sb = new StringBuilder();
+          StringBuilder sb = new();
 
           sb.Append($"{value,10}");
 
@@ -253,7 +253,7 @@ namespace Gloson.Language.Esoteric {
     #region Private Data
 
     // Inner memory to work with
-    private readonly LocalMemory m_Memory = new LocalMemory();
+    private readonly LocalMemory m_Memory = new();
     // Input Enumerator
     private IEnumerator<string> m_InputEnumerator;
 
@@ -531,7 +531,7 @@ namespace Gloson.Language.Esoteric {
       else if (input is null)
         input = Array.Empty<string>();
 
-      using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
+      using BrainfuckInterpreter engine = new(syntax, sourceCode, input);
 
       while (engine.Next())
         if (engine.CurrentOutput is not null)
@@ -551,7 +551,7 @@ namespace Gloson.Language.Esoteric {
       else if (input is null)
         input = Array.Empty<string>();
 
-      using BrainfuckInterpreter engine = new BrainfuckInterpreter(syntax, sourceCode, input);
+      using BrainfuckInterpreter engine = new(syntax, sourceCode, input);
 
       while (true) {
         if (breakPoints.Contains(engine.Position))
@@ -579,8 +579,15 @@ namespace Gloson.Language.Esoteric {
       if (sourceCode is null)
         return null;
 
-      HashSet<char> allowed = new HashSet<char>() {
-        '>', '<', '+', '-', '.', ',', '[', ']',
+      HashSet<char> allowed = new() {
+        '>',
+        '<',
+        '+',
+        '-',
+        '.',
+        ',',
+        '[',
+        ']',
       };
 
       if (syntax.HasFlag(BrainfuckSyntax.PlusPlus)) {
@@ -614,7 +621,7 @@ namespace Gloson.Language.Esoteric {
     /// Dump
     /// </summary>
     public string Dump() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.AppendLine("Code:");
       sb.AppendLine("  " + SourceCode.Replace('\r', ' ').Replace('\n', ' '));

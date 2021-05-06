@@ -84,11 +84,11 @@ namespace Gloson.Text.Parsing {
 
       int line = -1;
 
-      List<Token> context = new List<Token>();
+      List<Token> context = new();
 
       TokenDescription.TokenDescriptionMatch match;
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       foreach (var lineOfSource in source) {
         line += 1;

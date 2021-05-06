@@ -137,7 +137,7 @@ namespace Gloson.Geometry.Plane {
     /// To String
     /// </summary>
     public override string ToString() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       if (A == -1)
         sb.Append("-y");

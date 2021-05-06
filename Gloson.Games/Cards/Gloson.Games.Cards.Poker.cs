@@ -68,7 +68,7 @@ namespace Gloson.Games.Cards {
 
     #region Private Data
 
-    private readonly List<Card> m_CombinationSet = new List<Card>();
+    private readonly List<Card> m_CombinationSet = new();
 
     #endregion Private Data
 
@@ -84,7 +84,7 @@ namespace Gloson.Games.Cards {
 
       foreach (var suit in CardSuit.Suits) {
         for (int startAt = 14; startAt >= 6; --startAt) {
-          List<Card> list = new List<Card>();
+          List<Card> list = new();
           int jokerIndex = 0;
 
           for (int v = 0; v < 5; ++v) {
@@ -137,7 +137,7 @@ namespace Gloson.Games.Cards {
       int jokersCount = jokers.Length;
 
       for (int startAt = 14; startAt >= 6; --startAt) {
-        List<Card> list = new List<Card>();
+        List<Card> list = new();
         int jokerIndex = 0;
 
         for (int v = 0; v < 5; ++v) {

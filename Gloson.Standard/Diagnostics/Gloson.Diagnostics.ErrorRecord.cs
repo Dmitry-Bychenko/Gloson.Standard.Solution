@@ -206,7 +206,7 @@ namespace Gloson.Diagnostics {
 
       var lines = Description.SplitToLines().ToArray();
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.Append(pad);
 

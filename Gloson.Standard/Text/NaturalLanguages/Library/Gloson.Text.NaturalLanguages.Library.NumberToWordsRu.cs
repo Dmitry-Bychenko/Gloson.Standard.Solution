@@ -79,7 +79,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
     #region Algorithm
 
     private static string Short(int value, GrammaticalGender gender) {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       if (value < 0)
         value = -value;
@@ -130,7 +130,7 @@ namespace Gloson.Text.NaturalLanguages.Library {
       if (0 == value)
         return "нуль";
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       if (value < 0)
         sb.Append("минус");

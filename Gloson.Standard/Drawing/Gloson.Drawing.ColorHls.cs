@@ -267,7 +267,7 @@ namespace Gloson.Drawing {
     /// <summary>
     /// From Color
     /// </summary>
-    public static implicit operator ColorHsl(Color value) => new ColorHsl(value);
+    public static implicit operator ColorHsl(Color value) => new(value);
 
     /// <summary>
     /// To Color

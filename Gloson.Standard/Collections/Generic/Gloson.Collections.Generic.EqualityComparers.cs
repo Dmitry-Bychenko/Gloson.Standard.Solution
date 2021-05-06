@@ -104,7 +104,7 @@ namespace Gloson.Collections.Generic {
     public sealed class EqualityComparerCombined<T> : IEqualityComparer<T> {
       #region Private Data
 
-      private readonly List<IEqualityComparer<T>> m_Items = new List<IEqualityComparer<T>>();
+      private readonly List<IEqualityComparer<T>> m_Items = new();
 
       #endregion Private Data
 

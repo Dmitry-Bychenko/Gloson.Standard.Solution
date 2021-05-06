@@ -104,7 +104,7 @@ namespace Gloson.Geometry.Hexagonal {
     /// <summary>
     /// To PointF 
     /// </summary>
-    public PointF ToPointF() => new PointF((float)CartesianX, (float)CartesianY);
+    public PointF ToPointF() => new((float)CartesianX, (float)CartesianY);
 
     /// <summary>
     /// To PointF

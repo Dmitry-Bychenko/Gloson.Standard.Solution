@@ -21,7 +21,7 @@ namespace Gloson.Collections.Generic {
 
     private readonly Dictionary<K, LinkedListNode<(K key, V value)>> m_Dictionary;
 
-    private readonly LinkedList<(K key, V value)> m_List = new LinkedList<(K key, V value)>();
+    private readonly LinkedList<(K key, V value)> m_List = new();
 
     private int m_MaxLength;
 
@@ -103,7 +103,7 @@ namespace Gloson.Collections.Generic {
         m_List.AddLast(actual);
       }
       else {
-        LinkedListNode<(K key, V value)> node = new LinkedListNode<(K key, V value)>((key, value));
+        LinkedListNode<(K key, V value)> node = new((key, value));
 
         m_Dictionary.Add(key, node);
 
@@ -123,7 +123,7 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public bool TryAdd(K key, V value) {
       if (!m_Dictionary.ContainsKey(key)) {
-        LinkedListNode<(K key, V value)> node = new LinkedListNode<(K key, V value)>((key, value));
+        LinkedListNode<(K key, V value)> node = new((key, value));
 
         m_Dictionary.Add(key, node);
 
@@ -230,7 +230,7 @@ namespace Gloson.Collections.Generic {
     /// Add
     /// </summary>
     public void Add(K key, V value) {
-      LinkedListNode<(K key, V value)> node = new LinkedListNode<(K key, V value)>((key, value));
+      LinkedListNode<(K key, V value)> node = new((key, value));
 
       m_Dictionary.Add(key, node);
 
@@ -285,7 +285,7 @@ namespace Gloson.Collections.Generic {
     /// Add Value
     /// </summary>
     public void Add(KeyValuePair<K, V> item) {
-      LinkedListNode<(K key, V value)> node = new LinkedListNode<(K key, V value)>((item.Key, item.Value));
+      LinkedListNode<(K key, V value)> node = new((item.Key, item.Value));
 
       m_Dictionary.Add(item.Key, node);
 

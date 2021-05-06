@@ -58,7 +58,7 @@ namespace Gloson.Biology {
     /// To Reverse Complement
     /// </summary>
     public Dna ToReverseComplement() {
-      Dna result = new Dna() {
+      Dna result = new() {
         m_Items = new List<DnaNuclearbase>(m_Items.Count)
       };
 
@@ -127,7 +127,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// From String
     /// </summary>
-    public static implicit operator Dna(string value) => new Dna(value);
+    public static implicit operator Dna(string value) => new(value);
 
     #endregion Operators
 

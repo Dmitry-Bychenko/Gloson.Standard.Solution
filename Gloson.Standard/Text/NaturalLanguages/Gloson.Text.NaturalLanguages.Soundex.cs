@@ -16,59 +16,59 @@ namespace Gloson.Text.NaturalLanguages {
   public static class Soundex {
     #region Private Data
 
-    private static readonly Dictionary<char, int> s_Correspondence = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
-      { 'b', 1},
-      { 'f', 1},
-      { 'p', 1},
-      { 'v', 1},
+    private static readonly Dictionary<char, int> s_Correspondence = new(CharacterComparer.OrdinalIgnoreCase) {
+      { 'b', 1 },
+      { 'f', 1 },
+      { 'p', 1 },
+      { 'v', 1 },
 
-      { 'c', 2},
-      { 'g', 2},
-      { 'j', 2},
-      { 'k', 2},
-      { 'q', 2},
-      { 's', 2},
-      { 'x', 2},
-      { 'z', 2},
+      { 'c', 2 },
+      { 'g', 2 },
+      { 'j', 2 },
+      { 'k', 2 },
+      { 'q', 2 },
+      { 's', 2 },
+      { 'x', 2 },
+      { 'z', 2 },
 
-      { 'd', 3},
-      { 't', 3},
+      { 'd', 3 },
+      { 't', 3 },
 
-      { 'l', 4},
+      { 'l', 4 },
 
-      { 'm', 5},
-      { 'n', 5},
+      { 'm', 5 },
+      { 'n', 5 },
 
-      { 'r', 6},
+      { 'r', 6 },
     };
 
-    private static readonly Dictionary<char, int> s_CorrespondenceNext = new Dictionary<char, int>(CharacterComparer.OrdinalIgnoreCase) {
-      { 'b', 1},
-      { 'p', 1},
+    private static readonly Dictionary<char, int> s_CorrespondenceNext = new(CharacterComparer.OrdinalIgnoreCase) {
+      { 'b', 1 },
+      { 'p', 1 },
 
-      { 'f', 2},
-      { 'v', 2},
+      { 'f', 2 },
+      { 'v', 2 },
 
-      { 'c', 3},
-      { 'k', 3},
-      { 's', 3},
+      { 'c', 3 },
+      { 'k', 3 },
+      { 's', 3 },
 
-      { 'g', 4},
-      { 'j', 4},
+      { 'g', 4 },
+      { 'j', 4 },
 
-      { 'q', 5},
-      { 'x', 5},
-      { 'z', 5},
+      { 'q', 5 },
+      { 'x', 5 },
+      { 'z', 5 },
 
-      { 'd', 6},
-      { 't', 6},
+      { 'd', 6 },
+      { 't', 6 },
 
-      { 'l', 7},
+      { 'l', 7 },
 
-      { 'm', 8},
-      { 'n', 8},
+      { 'm', 8 },
+      { 'n', 8 },
 
-      { 'r', 9},
+      { 'r', 9 },
     };
 
     #endregion Private Data
@@ -86,7 +86,7 @@ namespace Gloson.Text.NaturalLanguages {
         return "";
       }
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       foreach (char x in value.Normalize(NormalizationForm.FormD)) {
         char c = char.ToUpper(x);

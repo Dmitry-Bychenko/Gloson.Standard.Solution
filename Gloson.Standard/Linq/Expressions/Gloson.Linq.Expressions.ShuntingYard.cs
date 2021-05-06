@@ -209,7 +209,7 @@ namespace Gloson.Linq.Expressions {
       if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      Stack<T> funcs = new Stack<T>();
+      Stack<T> funcs = new();
 
       foreach (T token in source) {
         if (token.Kind == ExpressionTokenKind.Constant || token.Kind == ExpressionTokenKind.Variable)

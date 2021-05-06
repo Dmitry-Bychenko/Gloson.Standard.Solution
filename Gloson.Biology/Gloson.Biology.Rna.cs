@@ -56,7 +56,7 @@ namespace Gloson.Biology {
       if (source is null)
         throw new ArgumentNullException(nameof(source));
 
-      Rna result = new Rna() {
+      Rna result = new() {
         m_Items = new List<RnaNuclearbase>(source.Count)
       };
 
@@ -111,7 +111,7 @@ namespace Gloson.Biology {
     /// <summary>
     /// From String
     /// </summary>
-    public static implicit operator Rna(string value) => new Rna(value);
+    public static implicit operator Rna(string value) => new(value);
 
     #endregion Operators
 

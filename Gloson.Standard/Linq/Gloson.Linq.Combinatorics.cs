@@ -59,7 +59,7 @@ namespace Gloson.Linq {
       T[] items = source.Distinct(comparer).ToArray();
 
       for (int i = 0; i < 1 << items.Length; ++i) {
-        List<T> result = new List<T>(items.Length);
+        List<T> result = new(items.Length);
 
         for (int v = i, j = 0; v > 0; v /= 2, ++j)
           if ((v & 1) != 0)
@@ -80,7 +80,7 @@ namespace Gloson.Linq {
       T[] items = source.Distinct().ToArray();
 
       for (int i = 0; i < 1 << items.Length; ++i) {
-        List<T> result = new List<T>(items.Length);
+        List<T> result = new(items.Length);
 
         for (int v = i, j = 0; v > 0; v /= 2, ++j)
           if ((v & 1) != 0)
@@ -345,7 +345,7 @@ namespace Gloson.Linq {
         var tar = targets.Where((v, index) => index != i);
 
         foreach (var record in Assignments(sources.Skip(1), tar)) {
-          List<Tuple<T1, T2>> result = new List<Tuple<T1, T2>>(Math.Min(sources.Length, targets.Length)) {
+          List<Tuple<T1, T2>> result = new(Math.Min(sources.Length, targets.Length)) {
             new Tuple<T1, T2>(sources[0], targets[i]),
           };
 

@@ -15,7 +15,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
     #region Private Data
 
     // Hard keywords
-    private static readonly TokenKeyWords s_Hard = new TokenKeyWords(false, new string[] {
+    private static readonly TokenKeyWords s_Hard = new(false, new string[] {
       "ALL", "ALTER", "AND", "ANY", "ARRAY", "ARROW", "AS", "ASC", "AT", "BEGIN", "BETWEEN", "BY", "CASE",
       "CHECK", "CLUSTERS", "CLUSTER", "COLAUTH", "COLUMNS", "COMPRESS", "CONNECT", "CRASH", "CREATE", "CURRENT",
       "DECIMAL", "DECLARE", "DEFAULT", "DELETE", "DESC", "DISTINCT", "DROP", "ELSE", "END", "EXCEPTION",
@@ -47,7 +47,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       classification: TokenClassification.Operation);
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       HardKeyword,
       Integer,
@@ -148,7 +148,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       else if (esc == '{')
         esc = '}';
 
-      string toFind = new string(new char[] { esc, '\'' });
+      string toFind = new(new char[] { esc, '\'' });
 
       int index = source.IndexOf(toFind, startPosition);
 
@@ -283,7 +283,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       if (value[0] != '"' && value[^1] != '"')
         return value;
 
-      StringBuilder sb = new StringBuilder(value.Length - 2);
+      StringBuilder sb = new(value.Length - 2);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];
@@ -357,7 +357,7 @@ namespace Gloson.Text.Parsing.Library.PLSql {
       if (special)
         return value.Substring(start, value.Length - start - 1);
 
-      StringBuilder sb = new StringBuilder(value.Length - 2);
+      StringBuilder sb = new(value.Length - 2);
 
       for (int i = start; i < value.Length - 1; ++i) {
         char ch = value[i];

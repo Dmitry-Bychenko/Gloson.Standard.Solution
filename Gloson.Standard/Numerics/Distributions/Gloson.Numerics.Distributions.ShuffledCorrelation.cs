@@ -180,8 +180,8 @@ namespace Gloson.Numerics.Distributions {
         .Zip(m_Items, (x, y) => (i: x.index, x: x.value, y))
         .OrderBy(record => record.i);
 
-      List<double> listX = new List<double>(m_X.Count);
-      List<double> listY = new List<double>(m_X.Count);
+      List<double> listX = new(m_X.Count);
+      List<double> listY = new(m_X.Count);
 
       foreach (var (i, x, y) in data) {
         listX.Add(x);
@@ -252,7 +252,7 @@ namespace Gloson.Numerics.Distributions {
     /// To String
     /// </summary>
     public string ToReport() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.AppendLine($"{Count} items with R = {ActualR:G4} ({ActualR * 100:G4}%) correlation");
 

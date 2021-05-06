@@ -33,8 +33,7 @@ namespace Gloson.Algorithms.Graphs {
       if (collision is null)
         collision = r => Math.Min(r.oldLength, r.length);
 
-      Dictionary<V, Dictionary<V, double>> result =
-        new Dictionary<V, Dictionary<V, double>>(comparer);
+      Dictionary<V, Dictionary<V, double>> result = new(comparer);
 
       void AddToGraph((V from, V to, double length) edge) {
         if (double.IsNaN(edge.length) || double.IsPositiveInfinity(edge.length))
@@ -94,10 +93,9 @@ namespace Gloson.Algorithms.Graphs {
 
       Dictionary<V, Dictionary<V, double>> graph = BuildGraph(source, edgeMap, biDirect, comparer, collision);
 
-      Dictionary<V, (double length, V prior, bool hasPrior)> result =
-        new Dictionary<V, (double length, V prior, bool hasPrior)>(comparer);
+      Dictionary<V, (double length, V prior, bool hasPrior)> result = new(comparer);
 
-      Queue<V> agenda = new Queue<V>();
+      Queue<V> agenda = new();
       agenda.Enqueue(startVertex);
 
       while (agenda.Count > 0) {

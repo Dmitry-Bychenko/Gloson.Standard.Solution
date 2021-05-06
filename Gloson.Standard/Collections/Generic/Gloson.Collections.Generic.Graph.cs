@@ -55,9 +55,9 @@ namespace Gloson.Collections.Generic {
     public sealed class Vertex {
       #region Private Data
 
-      private readonly HashSet<Edge> m_InEdges = new HashSet<Edge>();
+      private readonly HashSet<Edge> m_InEdges = new();
 
-      private readonly HashSet<Edge> m_OutEdges = new HashSet<Edge>();
+      private readonly HashSet<Edge> m_OutEdges = new();
 
       #endregion Private Data
 
@@ -92,22 +92,22 @@ namespace Gloson.Collections.Generic {
       /// <summary>
       /// Connect To
       /// </summary>
-      public Edge ConnectTo(Vertex to, E value) => new Edge(this, to, value);
+      public Edge ConnectTo(Vertex to, E value) => new(this, to, value);
 
       /// <summary>
       /// Connect To
       /// </summary>
-      public Edge ConnectTo(Vertex to) => new Edge(this, to);
+      public Edge ConnectTo(Vertex to) => new(this, to);
 
       /// <summary>
       /// Connect From
       /// </summary>
-      public Edge ConnectFrom(Vertex from, E value) => new Edge(from, this, value);
+      public Edge ConnectFrom(Vertex from, E value) => new(from, this, value);
 
       /// <summary>
       /// Connect From
       /// </summary>
-      public Edge ConnectFrom(Vertex from) => new Edge(from, this);
+      public Edge ConnectFrom(Vertex from) => new(from, this);
 
       /// <summary>
       /// Value
@@ -246,7 +246,7 @@ namespace Gloson.Collections.Generic {
 
     #region Private Data
 
-    private readonly HashSet<Vertex> m_Vertexes = new HashSet<Vertex>();
+    private readonly HashSet<Vertex> m_Vertexes = new();
 
     #endregion Private Data
 
@@ -278,8 +278,8 @@ namespace Gloson.Collections.Generic {
         if (ReferenceEquals(to, from))
           return false;
 
-        HashSet<Vertex> used = new HashSet<Vertex>();
-        HashSet<Vertex> agenda = new HashSet<Vertex>() { from, to };
+        HashSet<Vertex> used = new();
+        HashSet<Vertex> agenda = new() { from, to };
 
         while (agenda.Any()) {
           List<Vertex> nodes = agenda.ToList();
@@ -344,13 +344,13 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="value">Associated value</param>
     /// <returns>Vertex</returns>
-    public Vertex Add(V value) => new Vertex(this, value);
+    public Vertex Add(V value) => new(this, value);
 
     /// <summary>
     /// Add Vertex
     /// </summary>
     /// <returns>Vertex with default associated value</returns>
-    public Vertex Add() => new Vertex(this);
+    public Vertex Add() => new(this);
 
     #endregion Public
   }

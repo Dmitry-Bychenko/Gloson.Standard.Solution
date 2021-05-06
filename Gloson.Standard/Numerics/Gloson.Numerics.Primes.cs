@@ -17,10 +17,7 @@ namespace Gloson.Numerics {
     #region Private Data
 
     // Random generator
-    private static readonly ThreadLocal<Random> s_Gen = new ThreadLocal<Random>(() => {
-      return new Random();
-    }
-    );
+    private static readonly ThreadLocal<Random> s_Gen = new(() => new Random());
 
     // Random generator
     private static Random Gen {
@@ -37,7 +34,7 @@ namespace Gloson.Numerics {
     /// Primes
     /// </summary>
     public static IEnumerable<BigInteger> Generate() {
-      List<BigInteger> primes = new List<BigInteger>();
+      List<BigInteger> primes = new();
 
       yield return 2;
       yield return 3;

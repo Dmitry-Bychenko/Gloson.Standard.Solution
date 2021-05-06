@@ -223,7 +223,7 @@ namespace Gloson.IO.Compression {
       if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
-      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
+      using StreamReader reader = new(ReadStream(fileName, FileMode.Open), encoding);
 
       return reader.ReadToEnd();
     }
@@ -236,7 +236,7 @@ namespace Gloson.IO.Compression {
       if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
-      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
+      using StreamReader reader = new(ReadStream(fileName, FileMode.Open), true);
 
       return reader.ReadToEnd();
     }
@@ -250,7 +250,7 @@ namespace Gloson.IO.Compression {
       if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
-      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), encoding);
+      using StreamReader reader = new(ReadStream(fileName, FileMode.Open), encoding);
 
       while (true) {
         string line = reader.ReadLine();
@@ -270,7 +270,7 @@ namespace Gloson.IO.Compression {
       if (fileName is null)
         throw new ArgumentNullException(nameof(fileName));
 
-      using StreamReader reader = new StreamReader(ReadStream(fileName, FileMode.Open), true);
+      using StreamReader reader = new(ReadStream(fileName, FileMode.Open), true);
 
       while (true) {
         string line = reader.ReadLine();
@@ -295,7 +295,7 @@ namespace Gloson.IO.Compression {
       else if (text is null)
         throw new ArgumentNullException(text);
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Create, compression), encoding);
 
       writer.Write(text);
     }
@@ -312,7 +312,7 @@ namespace Gloson.IO.Compression {
       else if (text is null)
         throw new ArgumentNullException(text);
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Create, compression));
 
       writer.Write(text);
     }
@@ -330,7 +330,7 @@ namespace Gloson.IO.Compression {
       else if (text is null)
         throw new ArgumentNullException(text);
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Append, compression), encoding);
 
       writer.Write(text);
     }
@@ -347,7 +347,7 @@ namespace Gloson.IO.Compression {
       else if (text is null)
         throw new ArgumentNullException(text);
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Append, compression));
 
       writer.Write(text);
     }
@@ -365,7 +365,7 @@ namespace Gloson.IO.Compression {
       else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression), encoding);
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Create, compression), encoding);
 
       foreach (var line in lines)
         writer.WriteLine(line);
@@ -383,7 +383,7 @@ namespace Gloson.IO.Compression {
       else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Create, compression));
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Create, compression));
 
       foreach (var line in lines)
         writer.WriteLine(line);
@@ -402,7 +402,7 @@ namespace Gloson.IO.Compression {
       else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression), encoding);
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Append, compression), encoding);
 
       foreach (var line in lines)
         writer.WriteLine(line);
@@ -420,7 +420,7 @@ namespace Gloson.IO.Compression {
       else if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      using StreamWriter writer = new StreamWriter(WriteStream(fileName, FileMode.Append, compression));
+      using StreamWriter writer = new(WriteStream(fileName, FileMode.Append, compression));
 
       foreach (var line in lines)
         writer.WriteLine(line);

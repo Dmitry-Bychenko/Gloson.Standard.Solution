@@ -78,7 +78,7 @@ namespace Gloson.Collections.Generic {
     #region Private Data
 
     // Items
-    protected readonly List<MasterHeapNode<T>> m_Items = new List<MasterHeapNode<T>>();
+    protected readonly List<MasterHeapNode<T>> m_Items = new();
 
     #endregion Private Data
 

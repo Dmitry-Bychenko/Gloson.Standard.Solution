@@ -25,9 +25,9 @@ namespace Gloson.Text {
         return false;
 
       bool inQuotation = false;
-      List<string> list = new List<string>();
+      List<string> list = new();
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 0; i < value.Length; ++i) {
         char c = value[i];

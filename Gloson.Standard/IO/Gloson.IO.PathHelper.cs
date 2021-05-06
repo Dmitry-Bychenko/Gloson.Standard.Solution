@@ -44,7 +44,7 @@ namespace Gloson.IO {
       IEnumerable<string> di = Split(path);
 
       bool remove = true;
-      List<string> list = new List<string>();
+      List<string> list = new();
 
       foreach (string dir in di) {
         if (remove) {
@@ -70,7 +70,7 @@ namespace Gloson.IO {
       if (string.IsNullOrEmpty(path))
         yield break;
 
-      for (DirectoryInfo di = new DirectoryInfo(path); di is not null; di = di.Parent)
+      for (DirectoryInfo di = new(path); di is not null; di = di.Parent)
         yield return di.Name;
     }
 
@@ -81,7 +81,7 @@ namespace Gloson.IO {
       if (string.IsNullOrEmpty(path))
         yield break;
 
-      for (DirectoryInfo di = new DirectoryInfo(path); di is not null; di = di.Parent)
+      for (DirectoryInfo di = new(path); di is not null; di = di.Parent)
         yield return di.FullName;
     }
 

@@ -24,7 +24,7 @@ namespace Gloson.Text {
     static StringBracesExtensions() {
       s_Pairs = new Dictionary<char, char>();
 
-      Stack<char> opens = new Stack<char>();
+      Stack<char> opens = new();
 
       for (char c = char.MinValue; c < char.MaxValue - 1; ++c) {
         var category = char.GetUnicodeCategory(c);
@@ -54,7 +54,7 @@ namespace Gloson.Text {
       if (value is null)
         return value;
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = value.Length - 1; i >= 0; --i) {
         char c = value[i];
@@ -101,7 +101,7 @@ namespace Gloson.Text {
       if (string.IsNullOrEmpty(value))
         return true;
 
-      Stack<char> opened = new Stack<char>();
+      Stack<char> opened = new();
 
       foreach (var c in value) {
         var category = char.GetUnicodeCategory(c);

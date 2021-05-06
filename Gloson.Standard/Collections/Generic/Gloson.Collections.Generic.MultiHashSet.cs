@@ -471,7 +471,7 @@ namespace Gloson.Collections.Generic {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
+      MultiHashSet<T> result = new(left.Comparer);
 
       foreach (var leftPair in left.Items) {
         long rightCount = right[leftPair.Key];
@@ -492,7 +492,7 @@ namespace Gloson.Collections.Generic {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
+      MultiHashSet<T> result = new(left.Comparer);
 
       foreach (var leftPair in left.Items) {
         long count = leftPair.Value - right[leftPair.Key];
@@ -513,7 +513,7 @@ namespace Gloson.Collections.Generic {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
+      MultiHashSet<T> result = new(left.Comparer);
 
       foreach (var leftPair in left.Items) {
         long count = leftPair.Value - right[leftPair.Key];
@@ -538,7 +538,7 @@ namespace Gloson.Collections.Generic {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      MultiHashSet<T> result = new MultiHashSet<T>(left.Comparer);
+      MultiHashSet<T> result = new(left.Comparer);
 
       foreach (var leftPair in left.Items) {
         long count = leftPair.Value + right[leftPair.Key];
@@ -571,13 +571,12 @@ namespace Gloson.Collections.Generic {
     /// To Multiset
     /// </summary>
     public static MultiHashSet<T> ToMultiHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T> comparer) =>
-      new MultiHashSet<T>(source, comparer);
+      new(source, comparer);
 
     /// <summary>
     /// To Multiset
     /// </summary>
-    public static MultiHashSet<T> ToMultiHashSet<T>(this IEnumerable<T> source) =>
-      new MultiHashSet<T>(source, null);
+    public static MultiHashSet<T> ToMultiHashSet<T>(this IEnumerable<T> source) => new(source, null);
 
     /// <summary>
     /// If sequencies are equal as multisets

@@ -147,7 +147,7 @@ namespace Gloson.Numerics {
     /// Core Smooth
     /// </summary>
     protected override IEnumerable<double> CoreSmooth(IEnumerable<double> source) {
-      Queue<double> queue = new Queue<double>();
+      Queue<double> queue = new();
 
       double sum = 0.0;
 

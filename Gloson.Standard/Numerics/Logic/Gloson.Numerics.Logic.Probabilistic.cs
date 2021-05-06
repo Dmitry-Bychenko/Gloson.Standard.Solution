@@ -67,18 +67,18 @@ namespace Gloson.Numerics.Logic {
     /// <summary>
     /// Not
     /// </summary>
-    public ProbabilisticLogical Not() => new ProbabilisticLogical(1 - Value);
+    public ProbabilisticLogical Not() => new(1 - Value);
 
     /// <summary>
     /// And
     /// </summary>
-    public ProbabilisticLogical And(ProbabilisticLogical other) => new ProbabilisticLogical(Value * other.Value);
+    public ProbabilisticLogical And(ProbabilisticLogical other) => new(Value * other.Value);
 
     /// <summary>
     /// Or
     /// </summary>
     public ProbabilisticLogical Or(ProbabilisticLogical other) =>
-      new ProbabilisticLogical(Value + other.Value - Value * other.Value);
+      new(Value + other.Value - Value * other.Value);
 
     /// <summary>
     /// Equality
@@ -103,8 +103,7 @@ namespace Gloson.Numerics.Logic {
     /// <summary>
     /// Implication 
     /// </summary>
-    public ProbabilisticLogical Imp(ProbabilisticLogical other) =>
-      new ProbabilisticLogical(1 - other.Value * (Value - 1));
+    public ProbabilisticLogical Imp(ProbabilisticLogical other) => new(1 - other.Value * (Value - 1));
 
     #endregion Public
 
@@ -115,7 +114,7 @@ namespace Gloson.Numerics.Logic {
     /// <summary>
     /// From Boolean
     /// </summary>
-    public static implicit operator ProbabilisticLogical(bool value) => new ProbabilisticLogical(value);
+    public static implicit operator ProbabilisticLogical(bool value) => new(value);
 
     #endregion Cast
 

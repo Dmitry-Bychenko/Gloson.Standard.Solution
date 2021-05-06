@@ -57,7 +57,7 @@ namespace Gloson.Text.RegularExpressions {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       double from = 0;
       double to = 0;
@@ -115,7 +115,7 @@ namespace Gloson.Text.RegularExpressions {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       double from = 0;
       double to = 0;
@@ -216,7 +216,7 @@ namespace Gloson.Text.RegularExpressions {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      StringBuilder sb = new StringBuilder(value.Length * 2 + 8);
+      StringBuilder sb = new(value.Length * 2 + 8);
 
       int bracketsCount = 0;
 

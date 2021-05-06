@@ -29,7 +29,7 @@ namespace Gloson.Data.Oracle.Client {
     private static IReadOnlyDictionary<string, string> ReadAsDictionary(string fileName) {
       IniDocument doc = IniDocument.Load(File.ReadLines(fileName));
 
-      Dictionary<string, string> result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+      Dictionary<string, string> result = new(StringComparer.OrdinalIgnoreCase);
 
       foreach (var section in doc.Sections) {
         foreach (var record in section.Records) {

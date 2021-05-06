@@ -297,7 +297,7 @@ namespace Gloson.Collections.Generic {
       else if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      Correspondence<K, V> result = new Correspondence<K, V>(keyComparer, valueComparer);
+      Correspondence<K, V> result = new(keyComparer, valueComparer);
 
       foreach (T item in source)
         result.Add(key(item), value(item));

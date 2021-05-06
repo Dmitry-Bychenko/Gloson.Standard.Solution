@@ -21,7 +21,7 @@ namespace Gloson.Biology {
 
     #region Private Data
 
-    private static readonly Regex s_WhiteSpaces = new Regex(@"\s+");
+    private static readonly Regex s_WhiteSpaces = new(@"\s+");
 
     #endregion Private Data
 
@@ -85,8 +85,8 @@ namespace Gloson.Biology {
         .Select(item => item.Trim())
         .Where(item => !string.IsNullOrEmpty(item));
 
-      List<string> comments = new List<string>();
-      List<string> seq = new List<string>();
+      List<string> comments = new();
+      List<string> seq = new();
 
       string description = null;
 

@@ -17,7 +17,7 @@ namespace Gloson.Text.Parsing.Library.Lua {
     #region Private Data
 
     // Hard keywords
-    private static readonly TokenKeyWords s_Hard = new TokenKeyWords(new string[] {
+    private static readonly TokenKeyWords s_Hard = new(new string[] {
       "and", "break", "do", "else", "elseif", "end", "false", "for", "function", "if", "in",
       "local", "nil", "not", "or", "repeat", "return", "then", "true", "until", "while"
     });
@@ -41,7 +41,7 @@ namespace Gloson.Text.Parsing.Library.Lua {
     private static readonly TokenDescription s_String = TokenDescription.Create(TryStartString, TryStopString);
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       HardKeyword,
       Integer,
@@ -58,10 +58,10 @@ namespace Gloson.Text.Parsing.Library.Lua {
 
     // Extract simple string
     private static string CoreExtractSimpleString(string value) {
-      StringBuilder sb = new StringBuilder();
-      String num;
+      StringBuilder sb = new();
+      string num;
 
-      StringBuilder hsb = new StringBuilder();
+      StringBuilder hsb = new();
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];

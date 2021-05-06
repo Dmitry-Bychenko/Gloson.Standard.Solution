@@ -16,11 +16,11 @@ namespace Gloson.Text.Parsing.Library.Java {
     #region Private Data
 
     // Hard keywords
-    private static readonly TokenKeyWords s_Hard = new TokenKeyWords(new string[] {
+    private static readonly TokenKeyWords s_Hard = new(new string[] {
       "true", "false", "null" });
 
     // Soft keywords
-    private static readonly TokenKeyWords s_Soft = new TokenKeyWords(new string[] {
+    private static readonly TokenKeyWords s_Soft = new(new string[] {
       "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native", "new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while" });
 
     // Hard keyword
@@ -42,7 +42,7 @@ namespace Gloson.Text.Parsing.Library.Java {
     private static readonly TokenDescription s_IdentifierAttribute = TokenDescription.Create(@"@[A-Za-z]+[A-Za-z0-9_]*");
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       HardKeyword,
       SoftKeyword,
@@ -216,9 +216,9 @@ namespace Gloson.Text.Parsing.Library.Java {
 
       String num = "";
 
-      StringBuilder hsb = new StringBuilder();
+      StringBuilder hsb = new();
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];

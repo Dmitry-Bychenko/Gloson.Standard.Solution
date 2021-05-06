@@ -19,17 +19,17 @@ namespace Gloson.Text {
   public static class Radix {
     #region Private Data
 
-    private static readonly Dictionary<char, int> s_RadixPrefix = new Dictionary<char, int>() {
-      { 'b',  2},
-      { 'B',  2},
-      { 'o',  8},
-      { 'O',  8},
-      { 'd', 10},
-      { 'D', 10},
-      { 'x', 16},
-      { 'X', 16},
-      { 'z', 36},
-      { 'Z', 36},
+    private static readonly Dictionary<char, int> s_RadixPrefix = new() {
+      { 'b', 2 },
+      { 'B', 2 },
+      { 'o', 8 },
+      { 'O', 8 },
+      { 'd', 10 },
+      { 'D', 10 },
+      { 'x', 16 },
+      { 'X', 16 },
+      { 'z', 36 },
+      { 'Z', 36 },
     };
 
     #endregion Private Data
@@ -188,7 +188,7 @@ namespace Gloson.Text {
       if (!hasDigit)
         return false;
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       for (; number > 0; number /= toRadix) {
         int v = (int)(number % toRadix);
@@ -373,7 +373,7 @@ namespace Gloson.Text {
       if (value == 0)
         return "0";
 
-      StringBuilder sb = new StringBuilder(40);
+      StringBuilder sb = new(40);
 
       int lastIndex = -1;
 

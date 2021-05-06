@@ -102,7 +102,7 @@ namespace Gloson.Numerics {
       for (int i = 0; i < data.Length; ++i)
         data[i] = (h[i], 2 * (h[i] + h[i + 1]), h[i + 1]);
 
-      TriDiagonalMatrix matrix = new TriDiagonalMatrix(data);
+      TriDiagonalMatrix matrix = new(data);
 
       double[] s = matrix.Solve(delta);
 

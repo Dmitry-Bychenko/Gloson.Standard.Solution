@@ -107,7 +107,7 @@ namespace Gloson {
       if (items.Length < 1 && items.Length > 3)
         return false;
 
-      List<int> list = new List<int>();
+      List<int> list = new();
 
       foreach (var item in items)
         if (int.TryParse(item, out var v))

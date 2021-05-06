@@ -76,7 +76,7 @@ namespace Gloson.Games.TicTacToe {
 
     // Clone
     private TicTacToePosition Clone() {
-      TicTacToePosition result = new TicTacToePosition();
+      TicTacToePosition result = new();
 
       for (int i = m_Marks.Length - 1; i >= 0; --i)
         result.m_Marks[i] = m_Marks[i];
@@ -140,10 +140,10 @@ namespace Gloson.Games.TicTacToe {
     /// Entire game Tree (Breadth First Search)
     /// </summary>
     public static IEnumerable<TicTacToePosition> AllLegalPositions() {
-      HashSet<TicTacToePosition> agenda = new HashSet<TicTacToePosition>() { Empty };
+      HashSet<TicTacToePosition> agenda = new() { Empty };
 
       while (agenda.Count > 0) {
-        HashSet<TicTacToePosition> next = new HashSet<TicTacToePosition>();
+        HashSet<TicTacToePosition> next = new();
 
         foreach (var parent in agenda) {
           yield return parent;
@@ -379,7 +379,7 @@ namespace Gloson.Games.TicTacToe {
         if (!match.Success)
           return Mark.None;
 
-        return this['3' - match.Groups["file"].Value[0],  match.Groups["rank"].Value.ToUpper()[0] - 'A'];
+        return this['3' - match.Groups["file"].Value[0], match.Groups["rank"].Value.ToUpper()[0] - 'A'];
       }
     }
 
@@ -443,7 +443,7 @@ namespace Gloson.Games.TicTacToe {
           $"{(char)('a' + column)}{3 - line}"
         );
       }
-    } 
+    }
 
     /// <summary>
     /// Parent Positions
@@ -646,8 +646,8 @@ namespace Gloson.Games.TicTacToe {
       if (!match.Success)
         return GameOutcome.Illegal;
 
-      return MoveExpectation(position, 
-                             '3' - match.Groups["file"].Value[0], 
+      return MoveExpectation(position,
+                             '3' - match.Groups["file"].Value[0],
                              match.Groups["rank"].Value.ToUpper()[0] - 'A');
     }
 
@@ -730,7 +730,7 @@ namespace Gloson.Games.TicTacToe {
       if (position is null)
         yield break;
 
-      foreach (var move in position.AvailableMoves()) 
+      foreach (var move in position.AvailableMoves())
         if (MoveQuality(position, move.index) == 1)
           yield return move;
     }

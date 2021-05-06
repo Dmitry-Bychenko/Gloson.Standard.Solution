@@ -29,7 +29,7 @@ namespace Gloson.Linq {
       else if (addToBatch is null)
         throw new ArgumentNullException(nameof(addToBatch));
 
-      List<T> batch = new List<T>();
+      List<T> batch = new();
 
       foreach (T item in source) {
         if (batch.Count > 0 && !addToBatch(batch, item)) {

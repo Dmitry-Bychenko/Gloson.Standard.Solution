@@ -38,7 +38,7 @@ namespace Gloson.Data {
 
     private static String s_ConnectionString = "";
 
-    private static readonly object s_SyncObj = new Object();
+    private static readonly object s_SyncObj = new();
 
     #endregion Private Data
 
@@ -141,12 +141,10 @@ namespace Gloson.Data {
       lock (s_SyncObj) {
         CoreClearAll();
 
-        ServiceDescriptor descriptor = new ServiceDescriptor(
+        ServiceDescriptor descriptor = new(
           typeof(IDbConnection),
           (provider) => {
             IDbConnection result = Activator.CreateInstance(connectionType, connectionString) as IDbConnection;
-
-            //result.Open();
 
             return result;
           },
@@ -175,7 +173,7 @@ namespace Gloson.Data {
       lock (s_SyncObj) {
         CoreClearAll();
 
-        ServiceDescriptor descriptor = new ServiceDescriptor(
+        ServiceDescriptor descriptor = new(
           typeof(IDbConnection),
           (provider) => {
             IDbConnection result = Activator.CreateInstance(connectionType) as IDbConnection;

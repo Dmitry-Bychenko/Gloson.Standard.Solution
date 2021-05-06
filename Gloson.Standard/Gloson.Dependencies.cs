@@ -35,7 +35,7 @@ namespace Gloson {
           SecurityProtocolType.Tls12;
       }
 
-      HttpClient httpClient = new HttpClient();
+      HttpClient httpClient = new();
 
       RegisterInstance(typeof(HttpClient), httpClient);
     }
@@ -112,7 +112,7 @@ namespace Gloson {
       if (serviceType is null)
         Services.RemoveAll(serviceType);
       else {
-        ServiceDescriptor descriptor = new ServiceDescriptor(
+        ServiceDescriptor descriptor = new(
           serviceType,
           implementationType,
           ServiceLifetime.Transient);
@@ -133,7 +133,7 @@ namespace Gloson {
       if (serviceType is null)
         Services.RemoveAll(serviceType);
       else {
-        ServiceDescriptor descriptor = new ServiceDescriptor(
+        ServiceDescriptor descriptor = new(
           serviceType,
           implementationType,
           ServiceLifetime.Transient);

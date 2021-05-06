@@ -37,7 +37,7 @@ namespace Gloson {
       m_Random = new ThreadLocal<Random>(() => {
         int seed;
 
-        using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider()) {
+        using (RNGCryptoServiceProvider provider = new()) {
           byte[] seedData = new byte[sizeof(int)];
 
           provider.GetBytes(seedData);

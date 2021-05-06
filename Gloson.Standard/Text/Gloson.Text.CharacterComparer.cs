@@ -121,22 +121,22 @@ namespace Gloson.Text {
     /// <summary>
     /// Ordinal character comparer
     /// </summary>
-    public static OrdinalComparer Ordinal => new OrdinalComparer();
+    public static OrdinalComparer Ordinal => new();
 
     /// <summary>
     /// Ordinal Ignore Case character comparer
     /// </summary>
-    public static OrdinalIgnoreCaseComparer OrdinalIgnoreCase => new OrdinalIgnoreCaseComparer();
+    public static OrdinalIgnoreCaseComparer OrdinalIgnoreCase => new();
 
     /// <summary>
     /// Current Culture Comparison
     /// </summary>
-    public static CurrentCultureComparer CurrentCulture => new CurrentCultureComparer();
+    public static CurrentCultureComparer CurrentCulture => new();
 
     /// <summary>
     /// Current Culture Ignore Case Comparison
     /// </summary>
-    public static CurrentCultureIgnoreCaseComparer CurrentCultureIgnoreCase => new CurrentCultureIgnoreCaseComparer();
+    public static CurrentCultureIgnoreCaseComparer CurrentCultureIgnoreCase => new();
 
     #endregion Public
   }

@@ -18,7 +18,7 @@ namespace Gloson.Games.Linguistics {
   public sealed class CrosswordCell {
     #region Private Data
 
-    private readonly List<CrosswordLine> m_Lines = new List<CrosswordLine>();
+    private readonly List<CrosswordLine> m_Lines = new();
 
     #endregion Private Data
 
@@ -106,7 +106,7 @@ namespace Gloson.Games.Linguistics {
   public sealed class CrosswordLine {
     #region Private Data
 
-    private readonly List<CrosswordCell> m_Cells = new List<CrosswordCell>();
+    private readonly List<CrosswordCell> m_Cells = new();
 
     #endregion Private Data
 
@@ -306,7 +306,7 @@ namespace Gloson.Games.Linguistics {
 
     private List<CrosswordCell> m_Cells;
 
-    private readonly List<CrosswordLine> m_Lines = new List<CrosswordLine>();
+    private readonly List<CrosswordLine> m_Lines = new();
 
     #endregion Private Data
 
@@ -443,7 +443,7 @@ namespace Gloson.Games.Linguistics {
     /// </summary>
 
     public Crossword Clone() {
-      Crossword result = new Crossword();
+      Crossword result = new();
 
       result.m_Cells = m_Cells
         .Select(c => new CrosswordCell(result, c.Y, c.X, c.Letter))
@@ -516,14 +516,14 @@ namespace Gloson.Games.Linguistics {
       var dict = m_Cells
         .ToDictionary(c => (y: c.Y, x: c.X), c => c);
 
-      StringBuilder result = new StringBuilder(maxY - minY + 3);
+      StringBuilder result = new(maxY - minY + 3);
 
       result.Append(new string(fill, maxX - minX + 3));
 
       for (int y = minY; y <= maxY; ++y) {
         result.AppendLine();
 
-        StringBuilder sb = new StringBuilder(new string(fill, maxX - minX + 3));
+        StringBuilder sb = new(new string(fill, maxX - minX + 3));
 
         for (int x = minX; x <= maxX; ++x)
           if (dict.TryGetValue((y, x), out var cell))

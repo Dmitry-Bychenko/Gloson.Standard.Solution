@@ -24,7 +24,7 @@ namespace Gloson.Consoles {
       if (mask == '\0')
         return Console.ReadLine();
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       int position = Console.CursorLeft;
       int was = 0;

@@ -19,12 +19,12 @@ namespace Gloson.Biology {
 
     #region Private Data
 
-    private static readonly List<AminoAcid> s_Items = new List<AminoAcid>();
+    private static readonly List<AminoAcid> s_Items = new();
 
     private static readonly Dictionary<char, AminoAcid> s_DictOneLetter =
-      new Dictionary<char, AminoAcid>(CharacterComparer.OrdinalIgnoreCase);
+      new(CharacterComparer.OrdinalIgnoreCase);
 
-    private static readonly Dictionary<string, AminoAcid> s_DictThreeLetter = new Dictionary<string, AminoAcid>();
+    private static readonly Dictionary<string, AminoAcid> s_DictThreeLetter = new();
 
     #endregion Private Data
 

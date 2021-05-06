@@ -118,7 +118,7 @@ namespace Gloson.Linq {
       else if (seeds.Length <= 0)
         throw new ArgumentException("Seends can't be empty", nameof(seeds));
 
-      Queue<T> queue = new Queue<T>();
+      Queue<T> queue = new();
 
       foreach (T item in seeds) {
         queue.Enqueue(item);

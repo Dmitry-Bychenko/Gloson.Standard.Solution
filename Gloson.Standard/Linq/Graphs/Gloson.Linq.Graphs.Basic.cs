@@ -33,7 +33,7 @@ namespace Gloson.Linq.Graphs {
       collision ??= (rec => rec.newEdge);
       edgeFilter ??= (rec => true);
 
-      Dictionary<V, Dictionary<V, E>> result = new Dictionary<V, Dictionary<V, E>>(vertexComparer);
+      Dictionary<V, Dictionary<V, E>> result = new(vertexComparer);
 
       foreach (T item in source) {
         var edge = edgeMap(item);

@@ -22,7 +22,7 @@ namespace Gloson.Text {
       if (string.IsNullOrEmpty(value))
         return value;
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
       int count = 0;
       char current = '\0';
 

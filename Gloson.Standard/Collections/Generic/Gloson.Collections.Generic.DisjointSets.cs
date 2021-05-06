@@ -256,7 +256,7 @@ namespace Gloson.Collections.Generic {
     /// To String (debug) 
     /// </summary>
     public override string ToString() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       int length = (m_Items.Count - 1).ToString().Length;
 

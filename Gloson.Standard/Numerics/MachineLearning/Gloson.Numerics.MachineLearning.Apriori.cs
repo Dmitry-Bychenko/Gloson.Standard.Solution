@@ -361,8 +361,7 @@ namespace Gloson.Numerics.MachineLearning {
         .Where(item => item.support >= minSupport)
         .ToList();
 
-      List<List<(HashSet<T> subset, double support)>> frequent =
-        new List<List<(HashSet<T> subset, double support)>>() { list };
+      List<List<(HashSet<T> subset, double support)>> frequent = new() { list };
 
       while (true) {
         var prior = frequent[^1];
@@ -376,13 +375,13 @@ namespace Gloson.Numerics.MachineLearning {
         if (maxSubsetSize > 0 && prior.Count >= maxSubsetSize)
           break;
 
-        List<(HashSet<T> subset, double support)> next = new List<(HashSet<T> subset, double support)>();
+        List<(HashSet<T> subset, double support)> next = new();
 
         frequent.Add(next);
 
         for (int i = 0; i < prior.Count; ++i) {
           for (int j = i + 1; j < prior.Count; ++j) {
-            HashSet<T> hs = new HashSet<T>(prior[i].subset, comparer);
+            HashSet<T> hs = new(prior[i].subset, comparer);
 
             hs.UnionWith(prior[j].subset);
 
@@ -445,8 +444,8 @@ namespace Gloson.Numerics.MachineLearning {
 
         foreach (var subset in pair.Value) {
           for (int i = 1; i < subset.subset.Count; ++i) {
-            HashSet<T> left = new HashSet<T>(subset.subset.Take(i), comparer);
-            HashSet<T> right = new HashSet<T>(subset.subset.Skip(i), comparer);
+            HashSet<T> left = new(subset.subset.Take(i), comparer);
+            HashSet<T> right = new(subset.subset.Skip(i), comparer);
 
             double leftAndRightSupport = subset.support;
             double leftSupport = Support(left);

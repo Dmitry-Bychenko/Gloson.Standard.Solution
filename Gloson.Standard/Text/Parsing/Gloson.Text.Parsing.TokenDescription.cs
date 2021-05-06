@@ -92,7 +92,7 @@ namespace Gloson.Text.Parsing {
       /// <summary>
       /// Empty match
       /// </summary>
-      public static readonly TokenDescriptionMatch EmptyMatch = new TokenDescriptionMatch(null, -1, -1, TokenMatchKind.None);
+      public static readonly TokenDescriptionMatch EmptyMatch = new(null, -1, -1, TokenMatchKind.None);
 
       /// <summary>
       /// Description
@@ -308,7 +308,7 @@ namespace Gloson.Text.Parsing {
                                           TokenDescriptionOptions options = TokenDescriptionOptions.None,
                                           TokenClassification classification = TokenClassification.Unknown) {
       bool caseSensitive = !((options & TokenDescriptionOptions.IgnoreCase) == TokenDescriptionOptions.IgnoreCase);
-      TokenKeyWords keyWords = new TokenKeyWords(caseSensitive, words);
+      TokenKeyWords keyWords = new(caseSensitive, words);
 
       return new TokenDescriptionKeyWords(keyWords, priority) {
         Classification = classification

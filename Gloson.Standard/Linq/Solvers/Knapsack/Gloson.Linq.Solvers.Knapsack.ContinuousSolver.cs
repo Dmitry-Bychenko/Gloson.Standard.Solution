@@ -25,11 +25,11 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       #region Private Data
 
-      private readonly List<T> m_Items = new List<T>();
+      private readonly List<T> m_Items = new();
 
-      private readonly List<int> m_Indexes = new List<int>();
+      private readonly List<int> m_Indexes = new();
 
-      private readonly List<double> m_Parts = new List<double>();
+      private readonly List<double> m_Parts = new();
 
       #endregion Private Data
 
@@ -160,7 +160,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
         .ThenByDescending(item => item.value / item.weight)
         .ToList();
 
-      KnapsackContinuousSolution<T> solution = new KnapsackContinuousSolution<T>(capacity);
+      KnapsackContinuousSolution<T> solution = new(capacity);
 
       for (int i = 0; i < data.Count; ++i) {
         var item = data[i];

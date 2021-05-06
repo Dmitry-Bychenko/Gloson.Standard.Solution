@@ -28,7 +28,7 @@ namespace Gloson.Diagnostics {
       if (process is null)
         throw new ArgumentNullException(nameof(process));
 
-      TaskCompletionSource<int> source = new TaskCompletionSource<int>();
+      TaskCompletionSource<int> source = new();
 
       process.EnableRaisingEvents = true;
 

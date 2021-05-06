@@ -154,9 +154,9 @@ namespace Gloson.Linq.Graphs {
       else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
-      HashSet<T> proceeded = new HashSet<T>();
+      HashSet<T> proceeded = new();
 
-      Queue<IEnumerable<Vertex<T>>> queue = new Queue<IEnumerable<Vertex<T>>>();
+      Queue<IEnumerable<Vertex<T>>> queue = new();
 
       queue.Enqueue(source.Select(item => new Vertex<T>(item)));
 
@@ -186,9 +186,9 @@ namespace Gloson.Linq.Graphs {
       else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
-      HashSet<T> proceeded = new HashSet<T>();
+      HashSet<T> proceeded = new();
 
-      Stack<IEnumerable<Vertex<T>>> stack = new Stack<IEnumerable<Vertex<T>>>();
+      Stack<IEnumerable<Vertex<T>>> stack = new();
 
       stack.Push(source.Select(item => new Vertex<T>(item)));
 

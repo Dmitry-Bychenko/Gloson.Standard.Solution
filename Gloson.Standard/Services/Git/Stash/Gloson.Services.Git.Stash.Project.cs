@@ -23,7 +23,7 @@ namespace Gloson.Services.Git.Stash {
     #region Algorithm
 
     private List<StashRepository> CoreLoadRepositories() {
-      List<StashRepository> result = new List<StashRepository>();
+      List<StashRepository> result = new();
 
       foreach (var json in Storage.Query($"projects/{Key}/repos"))
         result.Add(new StashRepository(this, json));

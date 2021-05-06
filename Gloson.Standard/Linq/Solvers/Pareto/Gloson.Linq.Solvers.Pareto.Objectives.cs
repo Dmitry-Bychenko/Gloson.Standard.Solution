@@ -19,10 +19,9 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     private readonly List<ObjectiveDescription<T>> m_ObjectiveDescriptions;
 
-    private readonly List<ObjectiveItem<T>> m_Items = new List<ObjectiveItem<T>>();
+    private readonly List<ObjectiveItem<T>> m_Items = new();
 
-    private readonly Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers =
-      new Dictionary<int, IReadOnlyList<ObjectiveItem<T>>>();
+    private readonly Dictionary<int, IReadOnlyList<ObjectiveItem<T>>> m_Frontiers = new();
 
     #endregion Private Data
 
@@ -54,15 +53,15 @@ namespace Gloson.Linq.Solvers.Pareto {
         }
 
       // frontiers
-      HashSet<ObjectiveItem<T>> agenda = new HashSet<ObjectiveItem<T>>(m_Items);
-      HashSet<ObjectiveItem<T>> skips = new HashSet<ObjectiveItem<T>>();
+      HashSet<ObjectiveItem<T>> agenda = new(m_Items);
+      HashSet<ObjectiveItem<T>> skips = new();
 
       int level = 0;
 
       while (agenda.Any()) {
         level += 1;
 
-        List<ObjectiveItem<T>> exclude = new List<ObjectiveItem<T>>(m_Items.Count);
+        List<ObjectiveItem<T>> exclude = new(m_Items.Count);
 
         foreach (var item in agenda)
           if (item.WorseThan.All(x => skips.Contains(x))) {
@@ -99,7 +98,7 @@ namespace Gloson.Linq.Solvers.Pareto {
         if (solution is null)
           continue;
 
-        ObjectiveItem<T> item = new ObjectiveItem<T>(this, solution);
+        ObjectiveItem<T> item = new(this, solution);
 
         m_Items.Add(item);
       }
@@ -134,7 +133,7 @@ namespace Gloson.Linq.Solvers.Pareto {
       if (generation == 0)
         return this;
 
-      ParetoGeneticsSolver<T> solver = new ParetoGeneticsSolver<T>(this, breed, comparer);
+      ParetoGeneticsSolver<T> solver = new(this, breed, comparer);
 
       for (int i = 1; i <= generation; ++i)
         solver = solver.Next();
@@ -224,11 +223,11 @@ namespace Gloson.Linq.Solvers.Pareto {
 
     #region Private Data
 
-    private readonly Dictionary<ObjectiveDescription<T>, double> m_Cached = new Dictionary<ObjectiveDescription<T>, double>();
+    private readonly Dictionary<ObjectiveDescription<T>, double> m_Cached = new();
 
-    internal List<ObjectiveItem<T>> m_BetterThan = new List<ObjectiveItem<T>>();
+    internal List<ObjectiveItem<T>> m_BetterThan = new();
 
-    internal List<ObjectiveItem<T>> m_WorseThan = new List<ObjectiveItem<T>>();
+    internal List<ObjectiveItem<T>> m_WorseThan = new();
 
     internal int m_FrontierLevel = -1;
     private double m_CrowdingDistance = double.NaN;

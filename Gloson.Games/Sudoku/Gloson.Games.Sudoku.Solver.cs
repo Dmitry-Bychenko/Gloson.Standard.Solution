@@ -89,7 +89,7 @@ namespace Gloson.Games.Sudoku {
 
     // Remove solved
     private static void CoreRemoveSolved(List<int>[] data) {
-      List<int> solved = new List<int>();
+      List<int> solved = new();
 
       for (int i = 0; i < data.Length; ++i)
         if (data[i].Count == 1)
@@ -105,7 +105,7 @@ namespace Gloson.Games.Sudoku {
 
     // Set solved
     private static void CoreSetSolved(List<int>[] data) {
-      Dictionary<int, int> dict = new Dictionary<int, int>();
+      Dictionary<int, int> dict = new();
 
       for (int i = 0; i < data.Length; ++i)
         for (int k = 0; k < data[i].Count; ++k) {
@@ -324,7 +324,7 @@ namespace Gloson.Games.Sudoku {
       if (!IsCorrect)
         return new SudokuData();
 
-      SudokuData result = new SudokuData();
+      SudokuData result = new();
 
       for (int i = 0; i < 9; ++i)
         for (int j = 0; j < 9; ++j)
@@ -356,7 +356,7 @@ namespace Gloson.Games.Sudoku {
     /// To string
     /// </summary>
     public override String ToString() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       for (int i = 0; i < 9; ++i) {
         if (sb.Length > 0)
@@ -389,7 +389,7 @@ namespace Gloson.Games.Sudoku {
     /// Clone
     /// </summary>
     public SudokuSolver Clone() {
-      SudokuSolver result = new SudokuSolver(m_Problem);
+      SudokuSolver result = new(m_Problem);
 
       result.CoreAssign(this);
 

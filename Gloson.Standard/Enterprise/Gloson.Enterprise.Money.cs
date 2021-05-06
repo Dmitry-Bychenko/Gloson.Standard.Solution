@@ -59,7 +59,7 @@ namespace Gloson.Enterprise {
     /// <summary>
     /// Unary -
     /// </summary>
-    public static Money operator -(Money value) => new Money(-value.Value, value.Currency);
+    public static Money operator -(Money value) => new(-value.Value, value.Currency);
 
     /// <summary>
     /// Binary +

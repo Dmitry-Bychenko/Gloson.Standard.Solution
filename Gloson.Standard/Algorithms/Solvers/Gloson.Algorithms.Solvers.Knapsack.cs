@@ -19,7 +19,7 @@ namespace Gloson.Algorithms.Solvers {
     private readonly List<(int weight, int value)> m_Items;
 
     // Indexes
-    private readonly List<int> m_Indexes = new List<int>();
+    private readonly List<int> m_Indexes = new();
 
     #endregion Private Data
 

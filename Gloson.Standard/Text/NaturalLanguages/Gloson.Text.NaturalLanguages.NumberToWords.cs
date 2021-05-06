@@ -37,14 +37,14 @@ namespace Gloson.Text.NaturalLanguages {
     private class DefaultNumberToWords : INumberToWords {
       #region Private Data
 
-      private static readonly List<(long value, string name)> s_Names = new List<(long value, string name)> {
-        ( 1_000_000_000_000_000_000, "quintillion" ),
-        (     1_000_000_000_000_000, "quadrillion" ),
-        (         1_000_000_000_000, "trillion"    ),
-        (             1_000_000_000, "billion"     ),
-        (                 1_000_000, "million"     ),
-        (                     1_000, "thousand"    ),
-        (                         1, ""            ),
+      private static readonly List<(long value, string name)> s_Names = new() {
+        (1_000_000_000_000_000_000, "quintillion"),
+        (1_000_000_000_000_000, "quadrillion"),
+        (1_000_000_000_000, "trillion"),
+        (1_000_000_000, "billion"),
+        (1_000_000, "million"),
+        (1_000, "thousand"),
+        (1, ""),
       };
 
       private static readonly string[] s_digits = new string[] {
@@ -64,7 +64,7 @@ namespace Gloson.Text.NaturalLanguages {
         if (value <= 0)
           return "";
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
 
         long h = value / 100;
 
@@ -115,7 +115,7 @@ namespace Gloson.Text.NaturalLanguages {
         if (0 == value)
           return "zero";
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
 
         if (value < 0)
           sb.Append("minus");

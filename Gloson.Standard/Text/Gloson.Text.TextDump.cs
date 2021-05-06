@@ -16,7 +16,7 @@ namespace Gloson.Text {
   public static class TextDump {
     #region Private Data
 
-    private static readonly Dictionary<char, string> s_KnownCharacters = new Dictionary<char, string>() {
+    private static readonly Dictionary<char, string> s_KnownCharacters = new() {
       { '\0', "\\0" },
       { '\r', "\\r" },
       { '\n', "\\n" },
@@ -75,7 +75,7 @@ namespace Gloson.Text {
       if (value is null)
         return "[null]";
 
-      StringBuilder sb = new StringBuilder(value.Length + 256);
+      StringBuilder sb = new(value.Length + 256);
 
       sb.Append('"');
 

@@ -20,8 +20,8 @@ namespace Gloson.Linq.Graphs {
       Func<T, HashSet<T>> next,
       HashSet<T> exclude) {
 
-      HashSet<T> result = new HashSet<T>() { };
-      Queue<T> agenda = new Queue<T>();
+      HashSet<T> result = new() { };
+      Queue<T> agenda = new();
 
       agenda.Enqueue(start);
 
@@ -69,7 +69,7 @@ namespace Gloson.Linq.Graphs {
         }
       }
 
-      HashSet<T> completed = new HashSet<T>();
+      HashSet<T> completed = new();
 
       foreach (T node in graph.Keys) {
         if (completed.Contains(node))
@@ -107,8 +107,7 @@ namespace Gloson.Linq.Graphs {
       else if (children is null)
         throw new ArgumentNullException(nameof(children));
 
-      Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph =
-        new Dictionary<N, (HashSet<N> to, HashSet<N> from)>();
+      Dictionary<N, (HashSet<N> to, HashSet<N> from)> graph = new();
 
       foreach (T record in source) {
         N node = vertex(record);
@@ -127,7 +126,7 @@ namespace Gloson.Linq.Graphs {
         }
       }
 
-      HashSet<N> completed = new HashSet<N>();
+      HashSet<N> completed = new();
 
       foreach (N node in graph.Keys) {
         if (completed.Contains(node))

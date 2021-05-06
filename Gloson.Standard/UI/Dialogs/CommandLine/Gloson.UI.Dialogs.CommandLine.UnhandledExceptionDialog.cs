@@ -26,7 +26,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
       if (e is null)
         return "";
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.AppendLine($"Type:    {e.GetType().Name}");
       sb.AppendLine($"Message: {ToTable(e.Message, 9)}");
@@ -46,7 +46,7 @@ namespace Gloson.UI.Dialogs.CommandLine {
       if (error is null)
         return;
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.AppendLine($"Unhandled    {error.GetType().Name} exception occurred");
       sb.AppendLine($"Message:     {ToTable(error.Message, 13)}");

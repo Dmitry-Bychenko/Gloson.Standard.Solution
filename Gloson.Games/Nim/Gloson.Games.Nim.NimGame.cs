@@ -16,7 +16,7 @@ namespace Gloson.Games.Nim {
   public sealed class NimGame : IEquatable<NimGame> {
     #region Private Data
 
-    private readonly List<long> m_Heaps = new List<long>();
+    private readonly List<long> m_Heaps = new();
 
     private readonly long m_Max;
     private readonly int m_ArgMax;
@@ -117,7 +117,7 @@ namespace Gloson.Games.Nim {
         .OfType<Match>()
         .Select(match => match.Value);
 
-      List<long> list = new List<long>();
+      List<long> list = new();
 
       foreach (string line in lines) {
         if (!long.TryParse(line, out long v))
@@ -154,7 +154,7 @@ namespace Gloson.Games.Nim {
     /// Advice (best move)
     /// </summary>
     public static (int heap, long count, bool win) Advice(IEnumerable<long> heaps) {
-      NimGame nim = new NimGame(heaps);
+      NimGame nim = new(heaps);
 
       return (nim.BestMove.heap, nim.BestMove.count, nim.IsWin);
     }

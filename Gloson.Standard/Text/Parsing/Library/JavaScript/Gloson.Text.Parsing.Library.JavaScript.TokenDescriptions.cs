@@ -105,7 +105,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
     #region Private Data
 
     // Hard keywords
-    private static readonly TokenKeyWords s_Hard = new TokenKeyWords(new string[] {
+    private static readonly TokenKeyWords s_Hard = new(new string[] {
       "abstract", "arguments", "await", "boolean", "break", "byte", "case", "catch", "char", "class",
       "const", "continue", "debugger", "default", "delete", "do", "double", "else", "enum", "eval",
       "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if",
@@ -133,7 +133,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
     private static readonly TokenDescription s_RegexStandard = new RegexTokenDescription();
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       HardKeyword,
       Integer,
@@ -304,9 +304,9 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
 
       String num = "";
 
-      StringBuilder hsb = new StringBuilder();
+      StringBuilder hsb = new();
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];
@@ -395,7 +395,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
       else if (value[0] != '/' && value[^1] != '/')
         return value;
 
-      StringBuilder sb = new StringBuilder(value.Length);
+      StringBuilder sb = new(value.Length);
 
       for (int i = 1; i < value.Length - 1; ++i) {
         char ch = value[i];

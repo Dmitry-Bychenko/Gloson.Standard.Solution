@@ -70,7 +70,7 @@ namespace Gloson.Xml.Linq {
       if (document is null)
         throw new ArgumentNullException(nameof(document));
 
-      StringBuilder Sb = new StringBuilder();
+      StringBuilder Sb = new();
 
       if (document.Declaration is not null)
         Sb.Append(document.Declaration.ToString());

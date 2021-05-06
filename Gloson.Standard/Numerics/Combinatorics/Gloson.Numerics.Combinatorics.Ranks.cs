@@ -28,7 +28,7 @@ namespace Gloson.Numerics.Combinatorics {
 
       int n = value.Length;
 
-      HashSet<int> usedDigits = new HashSet<int>();
+      HashSet<int> usedDigits = new();
 
       BigInteger rank = 0;
 
@@ -80,7 +80,7 @@ namespace Gloson.Numerics.Combinatorics {
       }
 
       int[] permutation = new int[size];
-      List<int> usedDigits = new List<int>(size);
+      List<int> usedDigits = new(size);
 
       for (int i = 0; i < size; ++i)
         usedDigits.Add(0);

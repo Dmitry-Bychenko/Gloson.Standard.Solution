@@ -63,7 +63,7 @@ namespace Gloson.Services.Git.Stash {
 
         using (WebResponse response = request.GetResponse())
         using (Stream stream = response.GetResponseStream())
-        using (StreamReader reader = new StreamReader(stream)) {
+        using (StreamReader reader = new(stream)) {
           root = JsonValue.Parse(reader.ReadToEnd());
         }
 
@@ -82,7 +82,7 @@ namespace Gloson.Services.Git.Stash {
     }
 
     private List<StashProject> CoreLoadProjects() {
-      List<StashProject> result = new List<StashProject>();
+      List<StashProject> result = new();
 
       foreach (var json in CoreQuery("projects"))
         result.Add(new StashProject(this, json));
@@ -118,7 +118,7 @@ namespace Gloson.Services.Git.Stash {
     /// Nexign
     /// </summary>
     public static StashStorage Nexign(string password) {
-      LoginPasswordServer connection = new LoginPasswordServer(
+      LoginPasswordServer connection = new(
           Environment.UserName,
           password,
         $@"https://{Environment.UserName}@stash.billing.ru"

@@ -46,9 +46,9 @@ namespace Gloson.Text {
       if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      List<string> items = new List<string>();
+      List<string> items = new();
       bool inQuotation = false;
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       foreach (var line in lines) {
         if (line is null)
@@ -120,7 +120,7 @@ namespace Gloson.Text {
       if (stream is null)
         throw new ArgumentNullException(nameof(stream));
 
-      using StreamReader reader = new StreamReader(stream, encoding, true, 8192, true);
+      using StreamReader reader = new(stream, encoding, true, 8192, true);
 
       return ParseCsv(reader, delimiter, quotation);
     }

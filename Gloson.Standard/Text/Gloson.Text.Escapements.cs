@@ -25,7 +25,7 @@ namespace Gloson {
       if (string.IsNullOrEmpty(value))
         return value;
 
-      StringBuilder sb = new StringBuilder(2 * value.Length);
+      StringBuilder sb = new(2 * value.Length);
 
       foreach (char c in value) {
         if (c == escapement)
@@ -49,7 +49,7 @@ namespace Gloson {
       if (string.IsNullOrEmpty(value))
         return value;
 
-      StringBuilder sb = new StringBuilder(2 * value.Length);
+      StringBuilder sb = new(2 * value.Length);
 
       foreach (char c in value) {
         if (needBeDuplicated is not null && needBeDuplicated.Contains(c))

@@ -19,9 +19,9 @@ namespace Gloson.Numerics.Matrices {
 
     #region Private Data
 
-    private readonly List<double> m_A = new List<double>();
-    private readonly List<double> m_B = new List<double>();
-    private readonly List<double> m_C = new List<double>();
+    private readonly List<double> m_A = new();
+    private readonly List<double> m_B = new();
+    private readonly List<double> m_C = new();
 
     double[] m_Bs;
 
@@ -254,7 +254,7 @@ namespace Gloson.Numerics.Matrices {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(value.m_A.Select(x => -x));
       result.m_B.AddRange(value.m_B.Select(x => -x));
@@ -270,7 +270,7 @@ namespace Gloson.Numerics.Matrices {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(value.m_A.Select(x => x * coefficient));
       result.m_B.AddRange(value.m_B.Select(x => x * coefficient));
@@ -286,7 +286,7 @@ namespace Gloson.Numerics.Matrices {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(value.m_A.Select(x => x / coefficient));
       result.m_B.AddRange(value.m_B.Select(x => x / coefficient));
@@ -302,7 +302,7 @@ namespace Gloson.Numerics.Matrices {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(value.m_A.Select(x => x * coefficient));
       result.m_B.AddRange(value.m_B.Select(x => x * coefficient));
@@ -322,7 +322,7 @@ namespace Gloson.Numerics.Matrices {
       else if (left.Count != right.Count)
         throw new ArgumentOutOfRangeException(nameof(right));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(left.m_A.Zip(right.m_A, (l, r) => l + r));
       result.m_B.AddRange(left.m_B.Zip(right.m_B, (l, r) => l + r));
@@ -342,7 +342,7 @@ namespace Gloson.Numerics.Matrices {
       else if (left.Count != right.Count)
         throw new ArgumentOutOfRangeException(nameof(right));
 
-      TriDiagonalMatrix result = new TriDiagonalMatrix();
+      TriDiagonalMatrix result = new();
 
       result.m_A.AddRange(left.m_A.Zip(right.m_A, (l, r) => l - r));
       result.m_B.AddRange(left.m_B.Zip(right.m_B, (l, r) => l - r));

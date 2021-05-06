@@ -15,8 +15,8 @@ namespace Gloson.Numerics.Interpolation {
   public abstract class BaseSpline {
     #region Private Data
 
-    protected readonly List<double> m_X = new List<double>();
-    protected readonly List<double> m_Y = new List<double>();
+    protected readonly List<double> m_X = new();
+    protected readonly List<double> m_Y = new();
 
     #endregion Private Data
 

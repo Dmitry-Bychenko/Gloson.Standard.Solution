@@ -130,7 +130,7 @@ namespace Gloson.Linq {
       m_InsertIndex = (m_InsertIndex + 1) % m_Buffer.Capacity;
 
       if (changed is not null) {
-        SlidingWindowChangedEventArgs<T> args = new SlidingWindowChangedEventArgs<T>(
+        SlidingWindowChangedEventArgs<T> args = new(
           this,
           new Optional<T>(Current),
           currentPrevious,
@@ -157,14 +157,14 @@ namespace Gloson.Linq {
         ? new Optional<T>(Current)
         : new Optional<T>();
 
-      Optional<T> itemRemoved = new Optional<T>(this[-BeforeCount]);
+      Optional<T> itemRemoved = new(this[-BeforeCount]);
 
       m_Deleted += 1;
 
       EventHandler<SlidingWindowChangedEventArgs<T>> changed = Changed;
 
       if (changed is not null) {
-        SlidingWindowChangedEventArgs<T> args = new SlidingWindowChangedEventArgs<T>(
+        SlidingWindowChangedEventArgs<T> args = new(
           this,
           new Optional<T>(Current),
           currentPrevious,
@@ -361,7 +361,7 @@ namespace Gloson.Linq {
       if (IsCompleted)
         return $"Before: {BeforeCount}; After: {AfterCount}";
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.Append($"Before: { BeforeCount}");
 
@@ -432,7 +432,7 @@ namespace Gloson.Linq {
       else if (afterCapacity < 0)
         throw new ArgumentOutOfRangeException(nameof(afterCapacity));
 
-      SlidingWindow<T> window = new SlidingWindow<T>(beforeCapacity, afterCapacity);
+      SlidingWindow<T> window = new(beforeCapacity, afterCapacity);
 
       if (changed is not null)
         window.Changed += changed;

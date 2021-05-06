@@ -61,8 +61,8 @@ namespace Gloson.Linq {
 
       // Ordered, not counted
       if (orderMatters) {
-        HashSet<T> leftHs = new HashSet<T>();
-        HashSet<T> rightHs = new HashSet<T>();
+        HashSet<T> leftHs = new();
+        HashSet<T> rightHs = new();
 
         using var enLeft = left.GetEnumerator();
         using var enRight = right.GetEnumerator();
@@ -93,8 +93,8 @@ namespace Gloson.Linq {
 
       // Not ordered, not counted
       if (!orderMatters && !countMatters) {
-        HashSet<T> leftHs = new HashSet<T>(left, comparer);
-        HashSet<T> rightHs = new HashSet<T>(right, comparer);
+        HashSet<T> leftHs = new(left, comparer);
+        HashSet<T> rightHs = new(right, comparer);
 
         if (leftHs.Count != rightHs.Count)
           return false;
@@ -116,7 +116,7 @@ namespace Gloson.Linq {
           return false;
       }
 
-      Dictionary<T, int> leftCounts = new Dictionary<T, int>(comparer);
+      Dictionary<T, int> leftCounts = new(comparer);
 
       foreach (var item in left)
         if (leftCounts.TryGetValue(item, out int count))

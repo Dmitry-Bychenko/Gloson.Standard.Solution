@@ -70,7 +70,7 @@ namespace Gloson.Globalization {
     /// <summary>
     /// Temporal Invariant Culture
     /// </summary>
-    public static TemporalCultureInfo InvariantCulture() => new TemporalCultureInfo(CultureInfo.InvariantCulture);
+    public static TemporalCultureInfo InvariantCulture() => new(CultureInfo.InvariantCulture);
 
     #endregion Create
 

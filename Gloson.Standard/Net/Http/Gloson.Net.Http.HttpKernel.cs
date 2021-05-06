@@ -144,7 +144,7 @@ namespace Gloson.Net.Http {
 
       using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
 
-      JsonDocumentOptions options = new JsonDocumentOptions() {
+      JsonDocumentOptions options = new() {
         CommentHandling = JsonCommentHandling.Skip,
         AllowTrailingCommas = true
       };
@@ -171,7 +171,7 @@ namespace Gloson.Net.Http {
 
       using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
 
-      using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
+      using StreamReader reader = new(stream, encoding, true, -1, true);
 
       for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine()) {
         token.ThrowIfCancellationRequested();
@@ -221,7 +221,7 @@ namespace Gloson.Net.Http {
 
       using Stream stream = await Client.GetStreamAsync(address, token).ConfigureAwait(false);
 
-      using StreamReader reader = new StreamReader(stream, encoding, true, -1, true);
+      using StreamReader reader = new(stream, encoding, true, -1, true);
 
       IEnumerable<string> Lines() {
         for (string line = reader.ReadLine(); line is not null; line = reader.ReadLine()) {

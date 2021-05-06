@@ -127,9 +127,9 @@ namespace Gloson.Text.Parsing {
     #region Private data
 
     // Location comparer
-    private static readonly TokenComparer s_LocationComparer = new TokenComparer();
+    private static readonly TokenComparer s_LocationComparer = new();
 
-    private static readonly EssenceEqualityComparer s_EssenceComparer = new EssenceEqualityComparer();
+    private static readonly EssenceEqualityComparer s_EssenceComparer = new();
 
     #endregion Private data 
 

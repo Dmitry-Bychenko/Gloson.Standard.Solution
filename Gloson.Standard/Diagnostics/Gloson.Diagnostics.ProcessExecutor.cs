@@ -232,7 +232,7 @@ namespace Gloson.Diagnostics {
     /// To Report
     /// </summary>
     public string ToReport() {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       sb.Append($"Run:       {ProcessPath}");
 
@@ -456,7 +456,7 @@ namespace Gloson.Diagnostics {
 
       encoding ??= Encoding.UTF8;
 
-      ProcessStartInfo info = new ProcessStartInfo() {
+      ProcessStartInfo info = new() {
         UseShellExecute = false,
         CreateNoWindow = true,
         WindowStyle = ProcessWindowStyle.Hidden,
@@ -468,14 +468,14 @@ namespace Gloson.Diagnostics {
         StandardOutputEncoding = encoding,
       };
 
-      using Process process = new Process() {
+      using Process process = new() {
         StartInfo = info,
       };
 
       process.Start();
 
-      StringBuilder sbOut = new StringBuilder();
-      StringBuilder sbErr = new StringBuilder();
+      StringBuilder sbOut = new();
+      StringBuilder sbErr = new();
 
       process.OutputDataReceived += (sender, e) => {
         if (e.Data is not null) {
@@ -518,9 +518,9 @@ namespace Gloson.Diagnostics {
 
       encoding ??= Encoding.UTF8;
 
-      TaskCompletionSource<ProcessExecutionResult> cs = new TaskCompletionSource<ProcessExecutionResult>();
+      TaskCompletionSource<ProcessExecutionResult> cs = new();
 
-      ProcessStartInfo info = new ProcessStartInfo() {
+      ProcessStartInfo info = new() {
         UseShellExecute = false,
         CreateNoWindow = true,
         WindowStyle = ProcessWindowStyle.Hidden,
@@ -532,12 +532,12 @@ namespace Gloson.Diagnostics {
         StandardOutputEncoding = encoding,
       };
 
-      StringBuilder sbOut = new StringBuilder();
-      StringBuilder sbErr = new StringBuilder();
+      StringBuilder sbOut = new();
+      StringBuilder sbErr = new();
 
       token.ThrowIfCancellationRequested();
 
-      Process process = new Process() {
+      Process process = new() {
         StartInfo = info,
         EnableRaisingEvents = true
       };
@@ -618,7 +618,7 @@ namespace Gloson.Diagnostics {
       if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
-      ProcessStartInfo info = new ProcessStartInfo() {
+      ProcessStartInfo info = new() {
         UseShellExecute = false,
         CreateNoWindow = true,
         WindowStyle = ProcessWindowStyle.Hidden,
@@ -626,7 +626,7 @@ namespace Gloson.Diagnostics {
         FileName = processPath,
       };
 
-      using Process process = new Process() {
+      using Process process = new() {
         StartInfo = info
       };
 
@@ -651,7 +651,7 @@ namespace Gloson.Diagnostics {
       if (processPath is null)
         throw new ArgumentNullException(nameof(processPath));
 
-      ProcessStartInfo info = new ProcessStartInfo() {
+      ProcessStartInfo info = new() {
         UseShellExecute = false,
         CreateNoWindow = true,
         WindowStyle = ProcessWindowStyle.Hidden,
@@ -659,9 +659,9 @@ namespace Gloson.Diagnostics {
         FileName = processPath,
       };
 
-      TaskCompletionSource<int> cs = new TaskCompletionSource<int>();
+      TaskCompletionSource<int> cs = new();
 
-      Process process = new Process();
+      Process process = new();
 
       process.Exited += (s, e) => {
         try {

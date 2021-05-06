@@ -19,13 +19,11 @@ namespace Gloson.Globalization {
 
     #region Private
 
-    private static readonly Dictionary<int, CurrencyInfo> s_NumberDictionary
-      = new Dictionary<int, CurrencyInfo>();
+    private static readonly Dictionary<int, CurrencyInfo> s_NumberDictionary = new();
 
-    private static readonly Dictionary<string, CurrencyInfo> s_CodeDictionary
-      = new Dictionary<string, CurrencyInfo>(StringComparer.OrdinalIgnoreCase);
+    private static readonly Dictionary<string, CurrencyInfo> s_CodeDictionary = new(StringComparer.OrdinalIgnoreCase);
 
-    private static readonly List<CurrencyInfo> s_Items = new List<CurrencyInfo>();
+    private static readonly List<CurrencyInfo> s_Items = new();
 
     #endregion Private
 

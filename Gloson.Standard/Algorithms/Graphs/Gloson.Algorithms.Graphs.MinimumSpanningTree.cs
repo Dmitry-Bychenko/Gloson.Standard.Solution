@@ -47,7 +47,7 @@ namespace Gloson.Algorithms.Graphs {
         .Where(edge => !nodeComparer.Equals(edge.from, edge.to))
         .OrderBy(edge => edge.length, edgeComparer);
 
-      DisjointSets<N> vertice = new DisjointSets<N>(nodeComparer);
+      DisjointSets<N> vertice = new(nodeComparer);
 
       foreach (var edge in edges)
         if (vertice.TryAddPair(edge.from, edge.to, out int _index))

@@ -161,8 +161,7 @@ namespace Gloson.Algorithms.Solvers {
 
       T[] items = source.ToArray();
 
-      Dictionary<int, (T value, long total, bool taken, long weight)> cache =
-        new Dictionary<int, (T value, long total, bool taken, long weight)>();
+      Dictionary<int, (T value, long total, bool taken, long weight)> cache = new();
 
       long value = CoreSolve(items, 0, weight, cache);
 

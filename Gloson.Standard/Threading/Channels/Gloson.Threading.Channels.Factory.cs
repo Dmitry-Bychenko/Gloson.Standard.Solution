@@ -47,7 +47,7 @@ namespace Gloson.Threading.Channels {
       Channel<T> channel;
 
       if (bufferSize > 0) {
-        BoundedChannelOptions options = new BoundedChannelOptions(bufferSize) {
+        BoundedChannelOptions options = new(bufferSize) {
           FullMode = BoundedChannelFullMode.Wait
         };
 
@@ -117,7 +117,7 @@ namespace Gloson.Threading.Channels {
       Channel<T> channel;
 
       if (bufferSize > 0) {
-        BoundedChannelOptions options = new BoundedChannelOptions(bufferSize) {
+        BoundedChannelOptions options = new(bufferSize) {
           FullMode = BoundedChannelFullMode.Wait
         };
 

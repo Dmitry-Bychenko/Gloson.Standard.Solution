@@ -273,7 +273,7 @@ namespace Gloson.Numerics {
       if (m_Items.Count <= 0)
         return "0";
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       for (int i = m_Items.Count - 1; i >= 0; --i) {
         double v = m_Items[i];
@@ -320,7 +320,7 @@ namespace Gloson.Numerics {
         return Zero;
       }
 
-      List<double> quotinent = new List<double>();
+      List<double> quotinent = new();
       List<double> rem = m_Items.ToList();
 
       for (int i = 0; i <= Count - value.Count; ++i) {
@@ -350,7 +350,7 @@ namespace Gloson.Numerics {
       else if (count >= Count)
         return Zero;
 
-      List<double> list = new List<double>(m_Items.Count - count);
+      List<double> list = new(m_Items.Count - count);
 
       double coef = Gloson.Numerics.SpecialFunctions.GammaFunctions.Factorial(count);
 
@@ -397,7 +397,7 @@ namespace Gloson.Numerics {
     /// </summary>
     /// <param name="C">Integrating constant</param>
     public Polynom Integral(double c) {
-      List<double> coefs = new List<double>(m_Items.Count + 1) { c };
+      List<double> coefs = new(m_Items.Count + 1) { c };
 
       for (int i = 0; i < m_Items.Count; ++i)
         coefs.Add(m_Items[i] / (i + 1));
@@ -481,7 +481,7 @@ namespace Gloson.Numerics {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      List<double> result = new List<double>(Math.Max(left.Count, right.Count));
+      List<double> result = new(Math.Max(left.Count, right.Count));
 
       for (int i = 0; i < result.Count; ++i)
         result.Add(left[i] + right[i]);
@@ -498,7 +498,7 @@ namespace Gloson.Numerics {
       else if (right is null)
         throw new ArgumentNullException(nameof(right));
 
-      List<double> result = new List<double>(Math.Max(left.Count, right.Count));
+      List<double> result = new(Math.Max(left.Count, right.Count));
 
       for (int i = 0; i < result.Count; ++i)
         result.Add(left[i] - right[i]);
@@ -548,7 +548,7 @@ namespace Gloson.Numerics {
       if (left.Count <= 0 || right.Count <= 0)
         return Zero;
 
-      List<double> list = new List<double>(left.Count + right.Count + 1);
+      List<double> list = new(left.Count + right.Count + 1);
 
       for (int power = 0; power <= left.Count + right.Count; ++power) {
         double s = 0;

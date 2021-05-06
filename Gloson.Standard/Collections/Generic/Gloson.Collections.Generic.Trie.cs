@@ -31,7 +31,7 @@ namespace Gloson.Collections.Generic {
         Occurrences = 0;
 
         if (m_Items.Count > 0) {
-          List<Node> children = new List<Node>(m_Items.Values);
+          List<Node> children = new(m_Items.Values);
 
           foreach (Node node in children)
             node.Remove();
@@ -107,7 +107,7 @@ namespace Gloson.Collections.Generic {
           if (Parent is null)
             yield break;
 
-          Stack<T> result = new Stack<T>();
+          Stack<T> result = new();
 
           for (Node current = this; !current.IsRoot; current = current.Parent)
             result.Push(current.Value);
@@ -199,10 +199,10 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     public IEnumerable<Node> Nodes {
       get {
-        List<Node> agenda = new List<Node>() { Root };
+        List<Node> agenda = new() { Root };
 
         while (agenda.Count > 0) {
-          List<Node> next = new List<Node>();
+          List<Node> next = new();
 
           foreach (Node node in agenda) {
             yield return node;
@@ -274,7 +274,7 @@ namespace Gloson.Collections.Generic {
 
       Node current = Root;
 
-      List<Node> nodes = new List<Node>() { current };
+      List<Node> nodes = new() { current };
 
       foreach (T value in sequence) {
         if (!current.Items.TryGetValue(value, out var next))

@@ -24,7 +24,7 @@ namespace Gloson.Numerics {
 
       int[] indexes = new int[divs.Length];
 
-      List<BigInteger> result = new List<BigInteger>();
+      List<BigInteger> result = new();
 
       do {
         BigInteger value = 1;
@@ -429,7 +429,7 @@ namespace Gloson.Numerics {
       List<BigInteger> ps = fi.DistinctPrimeDivisors().ToList();
       ps.Add(1);
 
-      HashSet<BigInteger> hs = new HashSet<BigInteger>();
+      HashSet<BigInteger> hs = new();
 
       for (BigInteger g = 1; g < value; ++g) {
         if (g.Gcd(value) != 1)
@@ -496,7 +496,7 @@ namespace Gloson.Numerics {
       List<BigInteger> ps = fi.DistinctPrimeDivisors().ToList();
       ps.Add(1);
 
-      HashSet<BigInteger> hs = new HashSet<BigInteger>();
+      HashSet<BigInteger> hs = new();
 
       hs.Clear();
 

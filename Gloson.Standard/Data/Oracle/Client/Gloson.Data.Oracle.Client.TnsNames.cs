@@ -20,7 +20,7 @@ namespace Gloson.Data.Oracle.Client {
     private string m_Name;
 
     // Items
-    private readonly List<TnsNames> m_Items = new List<TnsNames>();
+    private readonly List<TnsNames> m_Items = new();
 
     #endregion Private Data
 
@@ -46,13 +46,13 @@ namespace Gloson.Data.Oracle.Client {
       if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      TnsNames root = new TnsNames("", null);
+      TnsNames root = new("", null);
 
-      Stack<TnsNames> current = new Stack<TnsNames>();
+      Stack<TnsNames> current = new();
 
       current.Push(root);
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       int bracketCount = 0;
       bool inQuot = false;
@@ -80,7 +80,7 @@ namespace Gloson.Data.Oracle.Client {
             inValue = false;
             inName = true;
 
-            TnsNames child = new TnsNames("", current.Peek());
+            TnsNames child = new("", current.Peek());
 
             current.Push(child);
           }
@@ -95,7 +95,7 @@ namespace Gloson.Data.Oracle.Client {
                   current.Pop();
               }
 
-              TnsNames child = new TnsNames(sb.ToString(), current.Peek());
+              TnsNames child = new(sb.ToString(), current.Peek());
               current.Push(child);
             }
 
@@ -230,7 +230,7 @@ namespace Gloson.Data.Oracle.Client {
           yield return $"{Name}";
         else if (Items.Count == 1 && Items[0].Items.Count == 0) {
           int shift = level * 2 - 2;
-          string pad = new string(' ', shift);
+          string pad = new(' ', shift);
 
           yield return $"{pad}({Name} = {Items[0].Name})";
         }
@@ -241,7 +241,7 @@ namespace Gloson.Data.Oracle.Client {
         }
         else {
           int shift = level * 2 - 2;
-          string pad = new string(' ', shift);
+          string pad = new(' ', shift);
 
           if (level <= 1)
             yield return $"{pad}{Name} = ";

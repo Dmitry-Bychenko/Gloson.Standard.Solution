@@ -25,16 +25,16 @@ namespace Gloson.Games.Nim {
 
     #region Private Data
 
-    private readonly Dictionary<List<int>, bool> m_Outcomes = new Dictionary<List<int>, bool>(new SequenceComparer());
+    private readonly Dictionary<List<int>, bool> m_Outcomes = new(new SequenceComparer());
 
     #endregion Private Data
 
     #region Algorithm
 
     private IEnumerable<List<int>> CoreNext(List<int> current) {
-      HashSet<List<int>> completed = new HashSet<List<int>>(new SequenceComparer());
+      HashSet<List<int>> completed = new(new SequenceComparer());
 
-      HashSet<int> chunks = new HashSet<int>();
+      HashSet<int> chunks = new();
 
       for (int i = 0; i < current.Count; ++i) {
         int number = current[i];
@@ -136,7 +136,7 @@ namespace Gloson.Games.Nim {
       if (position is null)
         throw new ArgumentNullException(nameof(position));
 
-      List<int> source = new List<int>();
+      List<int> source = new();
 
       foreach (int item in position) {
         if (item < 0)
@@ -156,7 +156,7 @@ namespace Gloson.Games.Nim {
       if (position is null)
         throw new ArgumentNullException(nameof(position));
 
-      List<int> source = new List<int>();
+      List<int> source = new();
 
       foreach (int item in position) {
         if (item < 0)
@@ -177,7 +177,7 @@ namespace Gloson.Games.Nim {
       if (position is null)
         throw new ArgumentNullException(nameof(position));
 
-      List<int> source = new List<int>();
+      List<int> source = new();
 
       foreach (int item in position) {
         if (item < 0)

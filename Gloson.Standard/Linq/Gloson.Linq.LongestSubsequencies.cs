@@ -132,7 +132,7 @@ namespace Gloson.Linq {
           else
             data[i][j] = Math.Max(data[i - 1][j], data[i][j - 1]);
 
-      List<T> result = new List<T>();
+      List<T> result = new();
 
       for (int y = left.Length, x = right.Length, v = data[y][x]; x > 0 && y > 0 && v > 0;) {
         int dd = data[y - 1][x - 1];

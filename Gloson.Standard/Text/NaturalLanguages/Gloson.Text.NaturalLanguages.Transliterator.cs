@@ -177,7 +177,7 @@ namespace Gloson.Text.NaturalLanguages {
 
       value = value.Normalize(NormalizationForm.FormC);
 
-      StringBuilder sb = new StringBuilder(value.Length * 4);
+      StringBuilder sb = new(value.Length * 4);
 
       int maxLength = SubstitutionLength;
 
@@ -270,7 +270,7 @@ namespace Gloson.Text.NaturalLanguages {
   public class StandardTransliterator : BaseTransliterator {
     #region Private Data
 
-    private readonly Dictionary<string, string> m_Correspondence = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string> m_Correspondence = new(StringComparer.OrdinalIgnoreCase);
 
     #endregion Private Data
 

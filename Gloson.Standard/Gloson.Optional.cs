@@ -123,7 +123,7 @@ namespace Gloson {
     /// <summary>
     /// From value
     /// </summary>
-    public static implicit operator Optional<T>(T value) => new Optional<T>(value);
+    public static implicit operator Optional<T>(T value) => new(value);
 
     #endregion Operators
 

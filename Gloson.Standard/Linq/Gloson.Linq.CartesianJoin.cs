@@ -54,7 +54,7 @@ namespace Gloson.Linq {
 
       IEnumerable<Right> source = right;
 
-      List<Right> list = new List<Right>();
+      List<Right> list = new();
 
       foreach (Left leftItem in left) {
         foreach (Right rightItem in source) {

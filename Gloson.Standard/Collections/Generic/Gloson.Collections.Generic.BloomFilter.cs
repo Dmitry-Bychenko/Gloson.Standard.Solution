@@ -125,7 +125,7 @@ namespace Gloson.Collections.Generic {
       if (!StructuralEquals(other))
         throw new ArgumentException("Filters are not structural equal to one another", nameof(other));
 
-      BloomFilter<T> result = new BloomFilter<T>(Size, m_Hashes);
+      BloomFilter<T> result = new(Size, m_Hashes);
 
       for (int i = 0; i < result.m_Bits.Length; ++i)
         result.m_Bits[i] = m_Bits[i] | other.m_Bits[i];
@@ -143,7 +143,7 @@ namespace Gloson.Collections.Generic {
       if (!StructuralEquals(other))
         throw new ArgumentException("Filters are not structural equal to one another", nameof(other));
 
-      BloomFilter<T> result = new BloomFilter<T>(Size, m_Hashes);
+      BloomFilter<T> result = new(Size, m_Hashes);
 
       for (int i = 0; i < result.m_Bits.Length; ++i)
         result.m_Bits[i] = m_Bits[i] & other.m_Bits[i];

@@ -38,7 +38,7 @@ namespace Gloson.Ini {
       if (m_Records.Comparer == Comparer)
         return;
 
-      Dictionary<string, IniDocumentRecord> dict = new Dictionary<string, IniDocumentRecord>(Comparer);
+      Dictionary<string, IniDocumentRecord> dict = new(Comparer);
 
       foreach (var record in m_Records) {
         if (dict.TryGetValue(record.Key, out var old))
@@ -157,22 +157,22 @@ namespace Gloson.Ini {
     /// <summary>
     /// Add
     /// </summary>
-    public IniDocumentRecord AddRecord((string, object) record) => new IniDocumentRecord(this, record.Item1, record.Item2);
+    public IniDocumentRecord AddRecord((string, object) record) => new(this, record.Item1, record.Item2);
 
     /// <summary>
     /// Add
     /// </summary>
-    public IniDocumentRecord AddRecord(string name, object value) => new IniDocumentRecord(this, name, value);
+    public IniDocumentRecord AddRecord(string name, object value) => new(this, name, value);
 
     /// <summary>
     /// Add
     /// </summary>
-    public IniDocumentRecord AddRecord(KeyValuePair<string, object> pair) => new IniDocumentRecord(this, pair.Key, pair.Value);
+    public IniDocumentRecord AddRecord(KeyValuePair<string, object> pair) => new(this, pair.Key, pair.Value);
 
     /// <summary>
     /// Add
     /// </summary>
-    public IniDocumentRecord AddRecord(string name) => new IniDocumentRecord(this, name, null);
+    public IniDocumentRecord AddRecord(string name) => new(this, name, null);
 
     /// <summary>
     /// Add
@@ -689,10 +689,10 @@ namespace Gloson.Ini {
     /// Load from Lines
     /// </summary>
     public static IniDocument Load(IEnumerable<string> lines, StringComparer comparer) {
-      IniDocument result = new IniDocument(comparer);
+      IniDocument result = new(comparer);
 
       IniDocumentSection section = null;
-      List<string> comments = new List<string>();
+      List<string> comments = new();
 
       int index = 0;
 

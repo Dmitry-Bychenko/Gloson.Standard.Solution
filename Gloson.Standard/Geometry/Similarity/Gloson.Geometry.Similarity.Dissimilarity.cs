@@ -73,8 +73,8 @@ namespace Gloson.Geometry.Similarity {
       else if (left is null)
         throw new ArgumentNullException(nameof(left));
 
-      List<bool> listLeft = new List<bool>();
-      List<bool> listRight = new List<bool>();
+      List<bool> listLeft = new();
+      List<bool> listRight = new();
 
       using var enLeft = left.GetEnumerator();
       using var enRight = right.GetEnumerator();

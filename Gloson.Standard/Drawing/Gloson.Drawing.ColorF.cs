@@ -119,7 +119,7 @@ namespace Gloson.Drawing {
     /// <summary>
     /// From Color
     /// </summary>
-    public static implicit operator ColorF(Color color) => new ColorF(color);
+    public static implicit operator ColorF(Color color) => new(color);
 
     #endregion Cast
 

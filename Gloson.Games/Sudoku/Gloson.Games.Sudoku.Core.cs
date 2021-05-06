@@ -108,7 +108,7 @@ namespace Gloson.Games.Sudoku {
     /// </summary>
     public Boolean IsValid {
       get {
-        HashSet<int> hs = new HashSet<int>();
+        HashSet<int> hs = new();
 
         // Lines
         for (int i = 0; i < LineCount; ++i) {
@@ -185,7 +185,7 @@ namespace Gloson.Games.Sudoku {
     /// </summary>
     public Boolean CanBeSolved {
       get {
-        SudokuSolver solver = new SudokuSolver(this);
+        SudokuSolver solver = new(this);
 
         solver.Solve();
 
@@ -197,7 +197,7 @@ namespace Gloson.Games.Sudoku {
     /// Solve
     /// </summary>
     public SudokuData Solve() {
-      SudokuSolver solver = new SudokuSolver(this);
+      SudokuSolver solver = new(this);
 
       return solver.Solve();
     }
@@ -206,7 +206,7 @@ namespace Gloson.Games.Sudoku {
     /// To string
     /// </summary>
     public override String ToString() {
-      StringBuilder Sb = new StringBuilder();
+      StringBuilder Sb = new();
 
       if (!String.IsNullOrEmpty(m_Title))
         Sb.Append(m_Title);
@@ -274,9 +274,9 @@ namespace Gloson.Games.Sudoku {
       if (lines.Count < 9)
         throw new ArgumentException("Wrong format of a Sudoku puzzle.", nameof(value));
 
-      SudokuData result = new SudokuData();
+      SudokuData result = new();
 
-      StringBuilder Sb = new StringBuilder();
+      StringBuilder Sb = new();
 
       for (int i = 0; i < lines.Count - 9; ++i) {
         if (Sb.Length > 0)
@@ -323,7 +323,7 @@ namespace Gloson.Games.Sudoku {
     /// Clone
     /// </summary>
     public SudokuData Clone() {
-      SudokuData result = new SudokuData() {
+      SudokuData result = new() {
         m_Title = this.m_Title
       };
 

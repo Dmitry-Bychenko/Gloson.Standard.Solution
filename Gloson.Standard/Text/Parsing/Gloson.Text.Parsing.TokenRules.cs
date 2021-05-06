@@ -64,7 +64,7 @@ namespace Gloson.Text.Parsing {
     #region Private Data
 
     // Items
-    private readonly List<TokenDescription> m_Items = new List<TokenDescription>();
+    private readonly List<TokenDescription> m_Items = new();
     // Is updated
     private bool m_Updated = false;
 
@@ -120,7 +120,7 @@ namespace Gloson.Text.Parsing {
 
           // Let's combine start and stop into entire
           TokenDescription.TokenDescriptionMatch matchEntire =
-            new TokenDescription.TokenDescriptionMatch(match.Description, match.From, matchStop.To, TokenMatchKind.Entire);
+            new(match.Description, match.From, matchStop.To, TokenMatchKind.Entire);
 
           return matchEntire;
         }

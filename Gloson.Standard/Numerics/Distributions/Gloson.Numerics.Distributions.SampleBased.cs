@@ -20,7 +20,7 @@ namespace Gloson.Numerics.Distributions {
     private double m_Sx3 = 0;
     private double m_Sx4 = 0;
 
-    private readonly List<double> m_RawSample = new List<double>();
+    private readonly List<double> m_RawSample = new();
 
     private List<int> m_Histogram;
 

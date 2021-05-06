@@ -21,7 +21,7 @@ namespace Gloson.Games.Life {
 
     #region Private Data
 
-    private readonly HashSet<(int y, int x)> m_Cells = new HashSet<(int y, int x)>();
+    private readonly HashSet<(int y, int x)> m_Cells = new();
 
     #endregion Private Data
 
@@ -57,7 +57,7 @@ namespace Gloson.Games.Life {
         return new HashSet<(int y, int x)>();
 
       // Candidates to birth
-      HashSet<(int y, int x)> vicinity = new HashSet<(int y, int x)>();
+      HashSet<(int y, int x)> vicinity = new();
 
       foreach (var (y, x) in cells) {
         vicinity.Add((y - 1, x - 1));
@@ -72,7 +72,7 @@ namespace Gloson.Games.Life {
         vicinity.Add((y + 1, x + 1));
       }
 
-      HashSet<(int y, int x)> result = new HashSet<(int y, int x)>();
+      HashSet<(int y, int x)> result = new();
 
       foreach (var item in vicinity) {
         if (cells.Contains(item))
@@ -102,7 +102,7 @@ namespace Gloson.Games.Life {
       if (cells.Count == 0)
         return new Queue<(int y, int x)>();
 
-      Queue<(int y, int x)> result = new Queue<(int y, int x)>();
+      Queue<(int y, int x)> result = new();
 
       foreach (var item in cells) {
         int s = 0;
@@ -218,7 +218,7 @@ namespace Gloson.Games.Life {
       int minX = m_Cells.Min(p => p.x);
       int maxX = m_Cells.Max(p => p.x);
 
-      StringBuilder sb = new StringBuilder((maxY - minY + 1) * (maxX - minX + 3));
+      StringBuilder sb = new((maxY - minY + 1) * (maxX - minX + 3));
 
       for (int y = maxY; y >= minY; --y) {
         if (sb.Length > 0)
@@ -335,10 +335,9 @@ namespace Gloson.Games.Life {
     /// <summary>
     /// Clone
     /// </summary>
-    public LifeGeneration Clone() =>
-      new LifeGeneration(m_Cells) {
-        Generation = this.Generation
-      };
+    public LifeGeneration Clone() => new(m_Cells) {
+      Generation = this.Generation
+    };
 
     /// <summary>
     /// Clone

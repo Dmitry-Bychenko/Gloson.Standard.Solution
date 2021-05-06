@@ -30,7 +30,7 @@ namespace Gloson.Collections {
         Occurrences = 0;
 
         if (m_Items.Count > 0) {
-          List<Node> children = new List<Node>(m_Items.Values);
+          List<Node> children = new(m_Items.Values);
 
           foreach (Node node in children)
             node.Remove();
@@ -111,7 +111,7 @@ namespace Gloson.Collections {
           if (Parent is null)
             return "";
 
-          List<char> letters = new List<char>();
+          List<char> letters = new();
 
           for (Node current = this; !current.IsRoot; current = current.Parent)
             letters.Add(current.Value);
@@ -188,7 +188,7 @@ namespace Gloson.Collections {
       if (value is null)
         throw new ArgumentNullException(nameof(value));
 
-      StringTrie result = new StringTrie(comparer);
+      StringTrie result = new(comparer);
 
       for (int start = 0; start < value.Length; ++start) {
         Node current = result.Root;
@@ -236,10 +236,10 @@ namespace Gloson.Collections {
     /// </summary>
     public IEnumerable<Node> Nodes {
       get {
-        List<Node> agenda = new List<Node>() { Root };
+        List<Node> agenda = new() { Root };
 
         while (agenda.Count > 0) {
-          List<Node> next = new List<Node>();
+          List<Node> next = new();
 
           foreach (Node node in agenda) {
             yield return node;
@@ -311,7 +311,7 @@ namespace Gloson.Collections {
 
       Node current = Root;
 
-      List<Node> nodes = new List<Node>() { current };
+      List<Node> nodes = new() { current };
 
       foreach (char value in sequence) {
         if (!current.Items.TryGetValue(value, out var next))

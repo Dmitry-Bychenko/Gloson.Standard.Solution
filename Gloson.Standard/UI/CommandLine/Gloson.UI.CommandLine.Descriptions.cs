@@ -338,7 +338,7 @@ namespace Gloson.UI.CommandLine {
         EventHandler<ValidationEventArgs<CommandLineArgumentDescription>> custom = Validate;
 
         if (custom is not null) {
-          ValidationEventArgs<CommandLineArgumentDescription> args = new ValidationEventArgs<CommandLineArgumentDescription>(this);
+          ValidationEventArgs<CommandLineArgumentDescription> args = new(this);
 
           custom.Invoke(this, args);
 
@@ -416,7 +416,7 @@ namespace Gloson.UI.CommandLine {
     #region Private Data 
 
     // Items
-    private readonly List<CommandLineArgumentDescription> m_Items = new List<CommandLineArgumentDescription>();
+    private readonly List<CommandLineArgumentDescription> m_Items = new();
 
     private CommandLineDescriptorsOptions m_Options;
 

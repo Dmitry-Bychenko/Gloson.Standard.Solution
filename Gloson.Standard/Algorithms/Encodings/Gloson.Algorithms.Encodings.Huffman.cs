@@ -73,7 +73,7 @@ namespace Gloson.Algorithms.Encodings {
     #region Algorithm
 
     private static HuffmanNode<T> BuildHuffmanTree<T>(IEnumerable<T> source, Func<T, double> weight) {
-      MinHeap<HuffmanNode<T>> heap = new MinHeap<HuffmanNode<T>>();
+      MinHeap<HuffmanNode<T>> heap = new();
 
       int index = 0;
 
@@ -87,7 +87,7 @@ namespace Gloson.Algorithms.Encodings {
         HuffmanNode<T> min1 = heap.Pop();
         HuffmanNode<T> min2 = heap.Pop();
 
-        HuffmanNode<T> combined = new HuffmanNode<T>(min1, min2);
+        HuffmanNode<T> combined = new(min1, min2);
 
         heap.Add(combined);
       }
@@ -105,7 +105,7 @@ namespace Gloson.Algorithms.Encodings {
         yield break;
       }
 
-      Queue<HuffmanNode<T>> agenda = new Queue<HuffmanNode<T>>();
+      Queue<HuffmanNode<T>> agenda = new();
 
       agenda.Enqueue(root);
 

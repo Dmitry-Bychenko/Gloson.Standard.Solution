@@ -70,7 +70,7 @@ namespace Gloson.Numerics.Matrices {
     /// </summary>
     /// <param name="size">Size</param>
     public static Matrix Union(int size) {
-      Matrix result = new Matrix(size);
+      Matrix result = new(size);
 
       for (int i = result.LineCount - 1; i >= 0; --i)
         result.m_Items[i][i] = 1;
@@ -82,7 +82,7 @@ namespace Gloson.Numerics.Matrices {
     /// Zero matrix
     /// </summary>
     /// <param name="size">Size</param>
-    public static Matrix Zero(int size) => new Matrix(size);
+    public static Matrix Zero(int size) => new(size);
 
     /// <summary>
     /// Create Matrix
@@ -99,7 +99,7 @@ namespace Gloson.Numerics.Matrices {
       else if (createItem is null)
         throw new ArgumentNullException(nameof(createItem));
 
-      Matrix result = new Matrix(lines, columns);
+      Matrix result = new(lines, columns);
 
       for (int r = 0; r < lines; ++r)
         for (int c = 0; c < columns; ++c)
@@ -145,7 +145,7 @@ namespace Gloson.Numerics.Matrices {
       if (func is null)
         throw new ArgumentNullException(nameof(func));
 
-      Matrix result = new Matrix(LineCount, ColumnCount);
+      Matrix result = new(LineCount, ColumnCount);
 
       for (int r = 0; r < m_Items.Length; ++r)
         for (int c = 0; c < m_Items[r].Length; ++c)
@@ -163,7 +163,7 @@ namespace Gloson.Numerics.Matrices {
       if (func is null)
         throw new ArgumentNullException(nameof(func));
 
-      Matrix result = new Matrix(LineCount, ColumnCount);
+      Matrix result = new(LineCount, ColumnCount);
 
       for (int r = 0; r < m_Items.Length; ++r)
         for (int c = 0; c < m_Items[r].Length; ++c)
@@ -181,7 +181,7 @@ namespace Gloson.Numerics.Matrices {
       if (func is null)
         throw new ArgumentNullException(nameof(func));
 
-      Matrix result = new Matrix(LineCount, ColumnCount);
+      Matrix result = new(LineCount, ColumnCount);
 
       for (int r = 0; r < m_Items.Length; ++r)
         for (int c = 0; c < m_Items[r].Length; ++c)
@@ -268,7 +268,7 @@ namespace Gloson.Numerics.Matrices {
     /// Transpose
     /// </summary>
     public Matrix Transpose() {
-      Matrix result = new Matrix(ColumnCount, LineCount);
+      Matrix result = new(ColumnCount, LineCount);
 
       for (int r = result.m_Items.Length - 1; r >= 0; --r)
         for (int c = result.m_Items[0].Length - 1; c >= 0; --c)
@@ -347,7 +347,7 @@ namespace Gloson.Numerics.Matrices {
     /// Cholesky Decomposition
     /// </summary>
     /// <seealso cref="https://en.wikipedia.org/wiki/Cholesky_decomposition"/>
-    public Matrix Cholesky() => new Matrix(MatrixLowLevel.Cholesky(m_Items));
+    public Matrix Cholesky() => new(MatrixLowLevel.Cholesky(m_Items));
 
     /// <summary>
     /// Householder factors (QR-decomposition)
@@ -494,7 +494,7 @@ namespace Gloson.Numerics.Matrices {
       else if (left.ColumnCount != right.ColumnCount)
         throw new ArgumentException($"Right matrix must have {left.ColumnCount} columns, actual {right.ColumnCount}", nameof(right));
 
-      Matrix result = new Matrix(left.LineCount, left.LineCount);
+      Matrix result = new(left.LineCount, left.LineCount);
 
       for (int r = right.LineCount - 1; r >= 0; --r)
         for (int c = right.ColumnCount - 1; c >= 0; --c)
@@ -517,7 +517,7 @@ namespace Gloson.Numerics.Matrices {
       else if (left.ColumnCount != right.ColumnCount)
         throw new ArgumentException($"Right matrix must have {left.ColumnCount} columns, actual {right.ColumnCount}", nameof(right));
 
-      Matrix result = new Matrix(left.LineCount, left.LineCount);
+      Matrix result = new(left.LineCount, left.LineCount);
 
       for (int r = right.LineCount - 1; r >= 0; --r)
         for (int c = right.ColumnCount - 1; c >= 0; --c)
@@ -538,7 +538,7 @@ namespace Gloson.Numerics.Matrices {
       if (left.ColumnCount != right.LineCount)
         throw new ArgumentException($"Right matrix must have {left.ColumnCount} liness, actual {right.LineCount}", nameof(right));
 
-      Matrix result = new Matrix(left.LineCount, right.ColumnCount);
+      Matrix result = new(left.LineCount, right.ColumnCount);
 
       for (int r = result.m_Items.Length - 1; r >= 0; --r)
         for (int c = result.m_Items[0].Length - 1; c >= 0; --c) {

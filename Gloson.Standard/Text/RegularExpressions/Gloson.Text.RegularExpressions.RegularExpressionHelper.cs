@@ -34,7 +34,7 @@ namespace Gloson.Text.RegularExpressions {
   public static class RegexHelper {
     #region Private Data
 
-    private static readonly HashSet<char> s_ExtraSymbols = new HashSet<char>() { '-', ']' };
+    private static readonly HashSet<char> s_ExtraSymbols = new() { '-', ']' };
 
     #endregion Private Data
 

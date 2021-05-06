@@ -136,10 +136,10 @@ namespace Gloson.Collections.Generic {
     #region Algorithm
 
     private (Dictionary<List<T>, Node> direct, Dictionary<Node, List<T>> reverse) CoreBuildDictionaries() {
-      Dictionary<List<T>, Node> direct = new Dictionary<List<T>, Node>(new SequenceEqualityComparer<T>(Comparer));
-      Dictionary<Node, List<T>> reverse = new Dictionary<Node, List<T>>();
+      Dictionary<List<T>, Node> direct = new(new SequenceEqualityComparer<T>(Comparer));
+      Dictionary<Node, List<T>> reverse = new();
 
-      Queue<(Node node, List<T> pattern)> agenda = new Queue<(Node node, List<T> pattern)>();
+      Queue<(Node node, List<T> pattern)> agenda = new();
 
       agenda.Enqueue((m_Root, new List<T>()));
 
@@ -150,7 +150,7 @@ namespace Gloson.Collections.Generic {
         reverse.Add(node, pattern);
 
         foreach (var pair in node.Edges) {
-          List<T> list = new List<T>(pattern) { pair.Key };
+          List<T> list = new(pattern) { pair.Key };
 
           agenda.Enqueue((pair.Value, list));
         }
@@ -160,7 +160,7 @@ namespace Gloson.Collections.Generic {
     }
 
     private HashSet<Node> CoreBuildNodes() {
-      HashSet<Node> result = new HashSet<Node>() { m_Root };
+      HashSet<Node> result = new() { m_Root };
 
       foreach (var pattern in Patterns) {
         Node node = m_Root;
@@ -184,7 +184,7 @@ namespace Gloson.Collections.Generic {
       (direct, reverse) = CoreBuildDictionaries();
 
       foreach (Node node in nodes) {
-        LinkedList<T> sequence = new LinkedList<T>(reverse[node]);
+        LinkedList<T> sequence = new(reverse[node]);
 
         while (sequence.Count > 0) {
           sequence.RemoveFirst();

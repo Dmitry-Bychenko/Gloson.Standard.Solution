@@ -17,9 +17,9 @@ namespace Gloson.Games.Rubik {
   public class RubikCube<T> : IEquatable<RubikCube<T>> {
     #region Private Data
 
-    private static readonly List<char> s_Faces = new List<char>() { 'U', 'F', 'R', 'B', 'L', 'D' };
+    private static readonly List<char> s_Faces = new() { 'U', 'F', 'R', 'B', 'L', 'D' };
 
-    private readonly Dictionary<char, T[]> m_Items = new Dictionary<char, T[]>(CharacterComparer.OrdinalIgnoreCase) {
+    private readonly Dictionary<char, T[]> m_Items = new(CharacterComparer.OrdinalIgnoreCase) {
       { 'B', new T[9] },
       { 'D', new T[9] },
       { 'F', new T[9] },
@@ -96,7 +96,7 @@ namespace Gloson.Games.Rubik {
     /// Clone (shallow copy)
     /// </summary>
     public RubikCube<T> Clone() {
-      RubikCube<T> result = new RubikCube<T>();
+      RubikCube<T> result = new();
 
       foreach (var pair in m_Items)
         for (int i = 0; i < pair.Value.Length; ++i)
@@ -109,7 +109,7 @@ namespace Gloson.Games.Rubik {
     /// Debug cube
     /// </summary>
     public static RubikCube<string> DebugCube() {
-      RubikCube<string> result = new RubikCube<string>();
+      RubikCube<string> result = new();
 
       foreach (char face in result.Faces)
         for (int i = 0; i < 9; ++i)
@@ -247,7 +247,7 @@ namespace Gloson.Games.Rubik {
         .Cast<Match>()
         .Select(m => (face: m.Groups["face"].Value, count: m.Groups["count"].Value));
 
-      List<(char face, int count)> rotates = new List<(char face, int count)>();
+      List<(char face, int count)> rotates = new();
 
       foreach (var comm in comms) {
         char face = char.ToUpperInvariant(comm.face[0]);
@@ -287,7 +287,7 @@ namespace Gloson.Games.Rubik {
     /// To String
     /// </summary>
     public override string ToString() {
-      Dictionary<char, string> faces = new Dictionary<char, string>() {
+      Dictionary<char, string> faces = new() {
         { 'U', "Up" },
         { 'F', "Facade" },
         { 'R', "Right" },
@@ -296,7 +296,7 @@ namespace Gloson.Games.Rubik {
         { 'D', "Down" }
       };
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       foreach (var pair in faces) {
         if (sb.Length > 0) {
@@ -335,7 +335,7 @@ namespace Gloson.Games.Rubik {
       shift = Math.Max(shift, Line("l7l4l1").Length);
       shift = Math.Max(shift, Line("l8l5l2").Length);
 
-      string pad = new string(' ', shift + 1);
+      string pad = new(' ', shift + 1);
 
       return string.Join(Environment.NewLine,
         pad + Line("b8b7b6"),

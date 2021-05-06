@@ -43,18 +43,18 @@ namespace Gloson.Linq {
 
     #region Algorithm
     private static List<List<T>> TopologicalList<T>(IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
-      List<List<T>> result = new List<List<T>>();
+      List<List<T>> result = new();
 
-      HashSet<T> completed = new HashSet<T>();
+      HashSet<T> completed = new();
 
-      Dictionary<T, List<T>> cache = new Dictionary<T, List<T>>();
+      Dictionary<T, List<T>> cache = new();
 
-      Queue<T> agenda = new Queue<T>(source);
+      Queue<T> agenda = new(source);
 
       for (int level = 0; agenda.Count > 0; ++level) {
-        List<T> currentLevel = new List<T>();
+        List<T> currentLevel = new();
 
-        Queue<T> nextAgenda = new Queue<T>();
+        Queue<T> nextAgenda = new();
 
         for (int i = agenda.Count - 1; i >= 0; --i) {
           T item = agenda.Dequeue();

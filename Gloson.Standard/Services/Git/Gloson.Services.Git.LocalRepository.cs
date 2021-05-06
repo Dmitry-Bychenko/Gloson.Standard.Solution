@@ -77,7 +77,7 @@ namespace Gloson.Services.Git {
       if (!IsRepository(path))
         throw new ArgumentException($"Provided path {path} is not a valid Git Local Repository", nameof(path));
 
-      GitLocalRepository repo = new GitLocalRepository(path);
+      GitLocalRepository repo = new(path);
 
       return repo;
     }

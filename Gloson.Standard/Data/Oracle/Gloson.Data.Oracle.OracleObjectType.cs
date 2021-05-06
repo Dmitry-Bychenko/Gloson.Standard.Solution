@@ -17,13 +17,11 @@ namespace Gloson.Data.Oracle {
 
     #region Private Data
 
-    private static readonly Dictionary<int, OracleObjectType> s_FromId
-      = new Dictionary<int, OracleObjectType>();
+    private static readonly Dictionary<int, OracleObjectType> s_FromId = new();
 
-    private static readonly Dictionary<string, OracleObjectType> s_FromName
-      = new Dictionary<string, OracleObjectType>(StringComparer.OrdinalIgnoreCase);
+    private static readonly Dictionary<string, OracleObjectType> s_FromName = new(StringComparer.OrdinalIgnoreCase);
 
-    private static readonly List<OracleObjectType> s_Items = new List<OracleObjectType>();
+    private static readonly List<OracleObjectType> s_Items = new();
 
     #endregion Private Data
 

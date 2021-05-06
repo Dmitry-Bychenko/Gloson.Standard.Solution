@@ -17,7 +17,7 @@ namespace Gloson.Services.Git.Stash {
   public sealed class StashBranch {
     #region Private Data
 
-    private static readonly Regex s_VersionRegex = new Regex(@"[0-9]+(\.[0-9]+)+");
+    private static readonly Regex s_VersionRegex = new(@"[0-9]+(\.[0-9]+)+");
 
     #endregion Private Data
 

@@ -32,7 +32,7 @@ namespace Gloson.Text.Parsing {
     // Is case sensitive
     private readonly bool m_IsCaseSensitive;
     // KeyWords
-    private readonly List<string> m_Items = new List<string>();
+    private readonly List<string> m_Items = new();
 
     #endregion Private Data
 
@@ -50,7 +50,7 @@ namespace Gloson.Text.Parsing {
       m_IsIdentifierLetter = identifier ?? IsStandardIdentifier;
       m_IsCaseSensitive = isCaseSensitive;
 
-      HashSet<string> hs = new HashSet<string>(isCaseSensitive ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase);
+      HashSet<string> hs = new(isCaseSensitive ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase);
 
       foreach (var line in keyWords) {
         if (string.IsNullOrWhiteSpace(line))
@@ -266,7 +266,7 @@ namespace Gloson.Text.Parsing {
       else if (m_Items.Count != other.m_Items.Count)
         return false;
 
-      HashSet<string> hs = new HashSet<string>(
+      HashSet<string> hs = new(
         m_Items,
         m_IsCaseSensitive ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase);
 

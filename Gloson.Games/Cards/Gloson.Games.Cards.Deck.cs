@@ -574,11 +574,23 @@ namespace Gloson.Games.Cards {
         return true;
       }
 
-      HashSet<char> suitsMarks = new HashSet<char>() {
-        'S', 'C', 'D', 'H',
-        's', 'c', 'd', 'h',
-        '♣', '♦', '♥', '♠',
-        '♤', '♡', '♢', '♧'
+      HashSet<char> suitsMarks = new() {
+        'S',
+        'C',
+        'D',
+        'H',
+        's',
+        'c',
+        'd',
+        'h',
+        '♣',
+        '♦',
+        '♥',
+        '♠',
+        '♤',
+        '♡',
+        '♢',
+        '♧'
       };
 
       var suits = value
@@ -616,7 +628,7 @@ namespace Gloson.Games.Cards {
     /// <summary>
     /// Create Joker
     /// </summary>
-    public static Card CreateJoker() => new Card(0, CardSuit.None);
+    public static Card CreateJoker() => new(0, CardSuit.None);
 
     #endregion Create
 
@@ -716,7 +728,7 @@ namespace Gloson.Games.Cards {
   public sealed class CardHand : IList<Card>, IEquatable<CardHand> {
     #region Private Data
 
-    private readonly List<Card> m_Items = new List<Card>();
+    private readonly List<Card> m_Items = new();
 
     #endregion Private Data
 
@@ -802,7 +814,7 @@ namespace Gloson.Games.Cards {
           .Range(0, jokers)
           .Select(index => new Card(0, CardSuit.None)));
 
-      CardHand result = new CardHand(true);
+      CardHand result = new(true);
 
       result.m_Items.AddRange(cards);
 
@@ -877,7 +889,7 @@ namespace Gloson.Games.Cards {
         CardSuit.Spades, CardSuit.Hearts, CardSuit.Diamonds, CardSuit.Clubs
       };
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       foreach (CardSuit suit in suits) {
         if (sb.Length > 0)
@@ -959,7 +971,7 @@ namespace Gloson.Games.Cards {
       if (length < 0 || length >= m_Items.Count)
         throw new ArgumentOutOfRangeException(nameof(length));
 
-      CardHand result = new CardHand(false);
+      CardHand result = new(false);
 
       for (int i = 0; i < length; ++i)
         result.m_Items.Add(m_Items[i]);

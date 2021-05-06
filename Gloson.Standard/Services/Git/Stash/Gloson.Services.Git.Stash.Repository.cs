@@ -23,7 +23,7 @@ namespace Gloson.Services.Git.Stash {
     #region Algorithm
 
     private List<StashBranch> CoreCreateBranches() {
-      List<StashBranch> result = new List<StashBranch>();
+      List<StashBranch> result = new();
 
       foreach (var json in Storage.Query($"projects/{Project.Key}/repos/{Slug}/branches"))
         result.Add(new StashBranch(this, json));

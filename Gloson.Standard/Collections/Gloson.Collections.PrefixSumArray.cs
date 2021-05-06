@@ -16,7 +16,7 @@ namespace Gloson.Collections {
   public sealed class PrefixSumArray : IReadOnlyList<long>, IEquatable<PrefixSumArray> {
     #region Private Data
 
-    private readonly List<long> m_Sums = new List<long>();
+    private readonly List<long> m_Sums = new();
 
     #endregion Private Data
 

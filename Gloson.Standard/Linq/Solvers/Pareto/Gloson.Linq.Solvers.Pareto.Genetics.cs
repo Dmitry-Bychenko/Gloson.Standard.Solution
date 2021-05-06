@@ -115,7 +115,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public ParetoGeneticsSolver<T> Next() {
       var list = BestFit();
 
-      List<T> offsprings = new List<T>();
+      List<T> offsprings = new();
 
       offsprings.AddRange(list); // All parents
 
@@ -196,7 +196,7 @@ namespace Gloson.Linq.Solvers.Pareto {
                                                                  IEnumerable<ObjectiveDescription<T>> objectives,
                                                                  Func<T, T, T> breed,
                                                                  IComparer<ObjectiveItem<T>> comparer) =>
-      new ParetoGeneticsSolver<T>(source, objectives, breed, comparer);
+      new(source, objectives, breed, comparer);
 
     /// <summary>
     /// To Pareto Solver
@@ -204,7 +204,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     public static ParetoGeneticsSolver<T> ToParetoSolver<T>(this IEnumerable<T> source,
                                                                  IEnumerable<ObjectiveDescription<T>> objectives,
                                                                  Func<T, T, T> breed) =>
-      new ParetoGeneticsSolver<T>(source, objectives, breed);
+      new(source, objectives, breed);
 
     #endregion Public
   }

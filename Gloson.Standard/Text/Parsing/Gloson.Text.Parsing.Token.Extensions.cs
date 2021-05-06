@@ -70,7 +70,7 @@ namespace Gloson.Text.Parsing {
       else if (pattern.Any(func => func is null))
         throw new ArgumentException("null is not allowed as a pattern's item.", nameof(pattern));
 
-      Queue<T> queue = new Queue<T>(pattern.Length + 1);
+      Queue<T> queue = new(pattern.Length + 1);
 
       foreach (T item in source) {
         queue.Enqueue(item);
@@ -113,7 +113,7 @@ namespace Gloson.Text.Parsing {
         .ThenBy(token => token.StopColumn)
         .GroupBy(token => token.StartLine);
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
       int currentLine = 0;
       bool first = true;
 

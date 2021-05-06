@@ -33,7 +33,7 @@ namespace Gloson.Linq {
         throw new ArgumentNullException(nameof(comparer),
           $"{typeof(T).Name} doesn't provide default IEqualityComparer<{typeof(T).Name}>");
 
-      HashSet<T> hs = new HashSet<T>(source, comparer);
+      HashSet<T> hs = new(source, comparer);
 
       hs.SymmetricExceptWith(other);
 

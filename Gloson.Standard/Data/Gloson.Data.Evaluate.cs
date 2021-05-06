@@ -21,7 +21,7 @@ namespace Gloson.Data {
       if (formula is null)
         throw new ArgumentNullException(nameof(formula));
 
-      using DataTable table = new DataTable();
+      using DataTable table = new();
 
       return (T)(Convert.ChangeType(table.Compute(formula, null), typeof(T)));
     }
@@ -31,7 +31,7 @@ namespace Gloson.Data {
     /// </summary>
     public static T RunWithVariables<T>(string formula,
                                         params (string name, object value)[] variables) {
-      using DataTable table = new DataTable();
+      using DataTable table = new();
 
       foreach (var (n, v) in variables)
         table.Columns.Add(n, v is null ? typeof(object) : v.GetType());

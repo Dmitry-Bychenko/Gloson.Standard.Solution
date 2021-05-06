@@ -15,14 +15,14 @@ namespace Gloson.Text {
   public static class NumberFormatsConverter {
     #region Private Data
 
-    private static readonly Dictionary<char, int> s_Romans = new Dictionary<char, int>() {
+    private static readonly Dictionary<char, int> s_Romans = new() {
       { 'M', 1000 },
-      { 'D',  500 },
-      { 'C',  100 },
-      { 'L',   50 },
-      { 'X',   10 },
-      { 'V',    5 },
-      { 'I',    1 },
+      { 'D', 500 },
+      { 'C', 100 },
+      { 'L', 50 },
+      { 'X', 10 },
+      { 'V', 5 },
+      { 'I', 1 },
     };
 
     #endregion Private Data
@@ -38,7 +38,7 @@ namespace Gloson.Text {
       if (value <= 0 || value >= 5000)
         return false;
 
-      StringBuilder sb = new StringBuilder(32);
+      StringBuilder sb = new(32);
 
       if (value >= 1000)
         sb.Append(new string('M', value / 1000));

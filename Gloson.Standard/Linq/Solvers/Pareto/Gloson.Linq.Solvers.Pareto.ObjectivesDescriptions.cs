@@ -188,7 +188,7 @@ namespace Gloson.Linq.Solvers.Pareto {
     /// From tuple
     /// </summary>
     public static implicit operator ObjectiveDescription<T>((string, ObjectiveGoal, Func<T, double>) value) =>
-      new ObjectiveDescription<T>(value);
+      new(value);
 
     #endregion Operators
 

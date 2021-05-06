@@ -51,8 +51,7 @@ namespace Gloson.Data {
     #region Private
 
     // Items
-    private readonly Dictionary<string, string> m_Items =
-      new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string> m_Items = new(StringComparer.OrdinalIgnoreCase);
 
     #endregion Private
 

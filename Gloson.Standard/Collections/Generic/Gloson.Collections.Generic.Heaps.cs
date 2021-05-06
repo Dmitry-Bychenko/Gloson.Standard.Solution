@@ -37,6 +37,44 @@ namespace Gloson.Collections.Generic {
 
     #region Algorithm
 
+    private void Heapify(int n, int i, int sign) {
+      int largest = i; // Initialize largest as root 
+      int l = 2 * i + 1; // left = 2*i + 1 
+      int r = 2 * i + 2; // right = 2*i + 2 
+
+      // If left child is larger than root 
+      if (l < n && Comparer.Compare(m_Items[l], m_Items[largest]) * sign > 0)
+        largest = l;
+
+      // If right child is larger than largest so far 
+      if (r < n && Comparer.Compare(m_Items[r], m_Items[largest]) * sign > 0)
+        largest = r;
+
+      // If largest is not root 
+      if (largest != i) {
+        T swap = m_Items[i];
+        m_Items[i] = m_Items[largest];
+        m_Items[largest] = swap;
+
+        // Recursively heapify the affected sub-tree 
+        Heapify(n, largest, sign);
+      }
+    }
+
+    // Function to build a Max-Heap from the Array 
+    private void BuildHeap(int sign) {
+      int n = m_Items.Count;
+
+      // Index of last non-leaf node 
+      int startIdx = (n / 2) - 1;
+
+      // Perform reverse level order traversal 
+      // from last non-leaf node and heapify 
+      // each node 
+      for (int i = startIdx; i >= 0; i--)
+        Heapify(n, i, sign);
+    }
+
     /// <summary>
     /// Heapify Move Down
     /// </summary>
@@ -85,6 +123,19 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     protected BaseHeap()
       : this(null, -1) {
+    }
+
+    protected BaseHeap(IEnumerable<T> source, IComparer<T> comparer, int sign) {
+      if (source is null)
+        throw new ArgumentNullException(nameof(source));
+
+      comparer ??= Comparer<T>.Default;
+
+      Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer), $"No comparer provided when {typeof(T).Name} doesn't provide default one");
+
+      m_Items = new List<T>(source);
+
+      BuildHeap(sign);
     }
 
     #endregion Create
@@ -417,6 +468,16 @@ namespace Gloson.Collections.Generic {
       : base(null, -1) {
     }
 
+    /// <summary>
+    /// Standard constructor 
+    /// </summary>
+    public MinHeap(IEnumerable<T> source, IComparer<T> comparer) : base(source, comparer, -1) { }
+
+    /// <summary>
+    /// Standard constructor 
+    /// </summary>
+    public MinHeap(IEnumerable<T> source) : base(source, null, -1) { }
+
     #endregion Create
   }
 
@@ -530,24 +591,34 @@ namespace Gloson.Collections.Generic {
     /// </summary>
     /// <param name="comparer">Comparer (null for default)</param>
     /// <param name="capacity">Expected capacity (-1 for default)</param>
-    public MaxHeap(IComparer<T> comparer, int capacity) : base(comparer, capacity) {}
+    public MaxHeap(IComparer<T> comparer, int capacity) : base(comparer, capacity) { }
 
     /// <summary>
     /// Standard constructor
     /// </summary>
     /// <param name="comparer">Comparer (null for default)</param>
-    public MaxHeap(IComparer<T> comparer) : base(comparer, -1) {}
+    public MaxHeap(IComparer<T> comparer) : base(comparer, -1) { }
 
     /// <summary>
     /// Standard constructor
     /// </summary>
     /// <param name="capacity">Expected capacity (-1 for default)</param>
-    public MaxHeap(int capacity) : base(null, capacity) {}
+    public MaxHeap(int capacity) : base(null, capacity) { }
 
     /// <summary>
     /// Standard constructor
     /// </summary>
-    public MaxHeap() : base(null, -1) {}
+    public MaxHeap() : base(null, -1) { }
+
+    /// <summary>
+    /// Standard constructor 
+    /// </summary>
+    public MaxHeap(IEnumerable<T> source, IComparer<T> comparer) : base(source, comparer, 1) { }
+
+    /// <summary>
+    /// Standard constructor 
+    /// </summary>
+    public MaxHeap(IEnumerable<T> source) : base(source, null, 1) { }
 
     #endregion Create
   }

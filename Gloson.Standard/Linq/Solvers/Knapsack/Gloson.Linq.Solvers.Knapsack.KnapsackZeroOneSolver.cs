@@ -24,8 +24,8 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       #region Private Data
 
-      private readonly List<int> m_Indexes = new List<int>();
-      private readonly List<T> m_Items = new List<T>();
+      private readonly List<int> m_Indexes = new();
+      private readonly List<T> m_Items = new();
 
       #endregion Private Data
 
@@ -286,9 +286,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
 
       // Cache (memoization) :
 
-      Dictionary<Tuple<int, double>,
-                 Tuple<double, bool>> cache =
-        new Dictionary<Tuple<int, double>, Tuple<double, bool>>();
+      Dictionary<Tuple<int, double>, Tuple<double, bool>> cache = new();
 
       double solver(int i, double w) {
         if (i < 0 || w < 0)
@@ -347,7 +345,7 @@ namespace Gloson.Linq.Solvers.Knapsack {
       int index = data.Count - 1;
       double bestWeight = capacity;
 
-      List<int> sequence = new List<int>();
+      List<int> sequence = new();
 
       while (index >= 0) {
         if (cache.TryGetValue(Tuple.Create(index, bestWeight), out var step)) {

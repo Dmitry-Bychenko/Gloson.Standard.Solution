@@ -17,10 +17,9 @@ namespace Gloson.IO {
   public sealed class ByteOrderMark : IEquatable<ByteOrderMark> {
     #region Create
 
-    private static readonly List<ByteOrderMark> s_Items = new List<ByteOrderMark>();
+    private static readonly List<ByteOrderMark> s_Items = new();
 
-    private static readonly Dictionary<string, ByteOrderMark> s_ByName =
-      new Dictionary<string, ByteOrderMark>(StringComparer.OrdinalIgnoreCase);
+    private static readonly Dictionary<string, ByteOrderMark> s_ByName = new(StringComparer.OrdinalIgnoreCase);
 
     #endregion Create
 
@@ -182,7 +181,7 @@ namespace Gloson.IO {
 
         int size = MaxSequenceLength();
 
-        List<byte> list = new List<byte>(size);
+        List<byte> list = new(size);
 
         while (list.Count < size) {
           int v = stream.ReadByte();

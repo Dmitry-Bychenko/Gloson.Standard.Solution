@@ -25,7 +25,7 @@ namespace Gloson.Text {
     #region Algorithm
 
     private static List<string> ToChunks(string value) {
-      List<string> result = new List<string>();
+      List<string> result = new();
 
       StringBuilder sb = null;
 
@@ -158,7 +158,7 @@ namespace Gloson.Text {
     #region Algorithm
 
     private static List<string> ToChunks(string value) {
-      List<string> result = new List<string>();
+      List<string> result = new();
 
       StringBuilder sb = null;
 

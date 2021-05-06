@@ -27,7 +27,7 @@ namespace Gloson.Linq {
       else if (columns is null)
         throw new ArgumentNullException(nameof(columns));
 
-      DataTable result = new DataTable();
+      DataTable result = new();
 
       for (int i = 0; i < columns.Length; ++i)
         result.Columns.Add(columns[i].Item1 ?? $"Column #{i + 1}", columns[i].Item2 ?? typeof(object));

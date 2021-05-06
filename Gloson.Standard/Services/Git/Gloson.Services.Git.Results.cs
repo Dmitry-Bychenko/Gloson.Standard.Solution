@@ -37,7 +37,7 @@ namespace Gloson.Services.Git {
   public sealed class GitResult : IEquatable<GitResult>, ISerializable {
     #region Private Data
 
-    private static readonly GitResult s_GitNotFound = new GitResult(
+    private static readonly GitResult s_GitNotFound = new(
       "",
       Environment.OSVersion.Platform == PlatformID.Win32NT
         ? @"Git not found. Ensure path in the registry [HKEY_LOCAL_MACHINE\Software\GitForWindows] [InstallPath] is in %PATH%" :

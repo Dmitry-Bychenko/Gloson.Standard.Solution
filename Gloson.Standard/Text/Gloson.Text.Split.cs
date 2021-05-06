@@ -271,7 +271,7 @@ namespace Gloson.Text {
       if (string.IsNullOrEmpty(source))
         yield break;
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
       bool inQuotation = false;
 
       for (int i = 0; i < source.Length; ++i) {

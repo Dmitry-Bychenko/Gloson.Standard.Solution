@@ -89,8 +89,8 @@ namespace Gloson.Collections.Generic {
           return Enumerable.SequenceEqual(left, right, ItemComparer);
 
         // Ordered, not counted
-        HashSet<T> leftHs = new HashSet<T>();
-        HashSet<T> rightHs = new HashSet<T>();
+        HashSet<T> leftHs = new();
+        HashSet<T> rightHs = new();
 
         using var enLeft = left.GetEnumerator();
         using var enRight = right.GetEnumerator();
@@ -131,7 +131,7 @@ namespace Gloson.Collections.Generic {
               return false;
           }
 
-          Dictionary<T, int> leftCounts = new Dictionary<T, int>(ItemComparer);
+          Dictionary<T, int> leftCounts = new(ItemComparer);
 
           foreach (var item in left)
             if (leftCounts.TryGetValue(item, out int count))
@@ -153,8 +153,8 @@ namespace Gloson.Collections.Generic {
         }
         else {
           // Not ordered, not counted
-          HashSet<T> leftHs = new HashSet<T>(left, ItemComparer);
-          HashSet<T> rightHs = new HashSet<T>(right, ItemComparer);
+          HashSet<T> leftHs = new(left, ItemComparer);
+          HashSet<T> rightHs = new(right, ItemComparer);
 
           if (leftHs.Count != rightHs.Count)
             return false;

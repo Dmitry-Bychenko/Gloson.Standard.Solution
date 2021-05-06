@@ -123,7 +123,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Private Data
 
     // Keywords
-    private static readonly TokenKeyWords s_KeyWords = new TokenKeyWords(false, new string[] {
+    private static readonly TokenKeyWords s_KeyWords = new(false, new string[] {
       "and", "array", "as", "asm", "at", "automated", "begin", "case", "class", "const",
       "constructor", "destructor", "dispinterface", "div", "do", "downto", "else", "end",
       "except", "exports", "file", "finalization", "finally", "for", "function", "goto",
@@ -162,7 +162,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Algorithm
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       Keyword,
       Integer,
@@ -306,7 +306,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
 
       string v = null;
 
-      StringBuilder sb = new StringBuilder();
+      StringBuilder sb = new();
 
       for (int i = 0; i < value.Length;) {
         char ch = value[i];
@@ -401,7 +401,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Private Data
 
     // Keywords
-    private static readonly TokenKeyWords s_KeyWords = new TokenKeyWords(false, new string[] {
+    private static readonly TokenKeyWords s_KeyWords = new(false, new string[] {
       "end", "object", "item", "inherited", "inline", "="});
 
     // Hard keyword
@@ -427,7 +427,7 @@ namespace Gloson.Text.Parsing.Library.Delphi {
     #region Algorithm
 
     // Rules
-    private static readonly TokenDescriptionRules s_Rules = new TokenDescriptionRules() {
+    private static readonly TokenDescriptionRules s_Rules = new() {
       Default,
       Keyword,
       Integer,

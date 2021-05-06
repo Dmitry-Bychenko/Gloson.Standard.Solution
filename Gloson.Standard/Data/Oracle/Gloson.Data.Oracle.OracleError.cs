@@ -24,7 +24,7 @@ namespace Gloson.Data.Oracle {
     #region Algorithm
 
     private static readonly Regex s_Regex =
-      new Regex(@"^\s*(?<name>[\w\*\d]+)\s*\-\s*(?<number>[0-9]{1,5})\s*:\s*(?<message>.*)$");
+      new(@"^\s*(?<name>[\w\*\d]+)\s*\-\s*(?<number>[0-9]{1,5})\s*:\s*(?<message>.*)$");
 
     #endregion Algorithm
 

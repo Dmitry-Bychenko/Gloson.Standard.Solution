@@ -314,9 +314,9 @@ namespace Gloson.Ini {
       if (lines is null)
         throw new ArgumentNullException(nameof(lines));
 
-      NameValueDocument result = new NameValueDocument(comparer, commentKind);
+      NameValueDocument result = new(comparer, commentKind);
 
-      List<string> comments = new List<string>();
+      List<string> comments = new();
 
       int index = 0;
 

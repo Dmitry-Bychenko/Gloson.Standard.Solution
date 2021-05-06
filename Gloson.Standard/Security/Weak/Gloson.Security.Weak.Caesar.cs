@@ -27,7 +27,7 @@ namespace Gloson.Security.Weak {
       else if (ranges is null || ranges.Length == 0)
         return source;
 
-      StringBuilder sb = new StringBuilder(source.Length);
+      StringBuilder sb = new(source.Length);
 
       foreach (char c in source) {
         int index = -1;

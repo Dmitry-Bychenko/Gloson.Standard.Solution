@@ -17,8 +17,7 @@ namespace Gloson.Data.Oracle {
   public sealed class OracleEnvironment {
     #region Private Data
 
-    private readonly Dictionary<string, string> m_Cached =
-      new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, string> m_Cached = new(StringComparer.OrdinalIgnoreCase);
 
     private Version m_Version = null;
 
@@ -122,7 +121,7 @@ namespace Gloson.Data.Oracle {
     /// <summary>
     /// Region
     /// </summary>
-    public RegionInfo Region => new RegionInfo(Query("LANG"));
+    public RegionInfo Region => new(Query("LANG"));
 
     /// <summary>
     /// Version
