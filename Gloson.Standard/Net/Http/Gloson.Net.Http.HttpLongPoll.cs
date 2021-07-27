@@ -72,7 +72,7 @@ namespace Gloson.Net.Http {
     public static async IAsyncEnumerable<string> ReadLinesAsync(string address,
                                                                 [EnumeratorCancellation]
                                                                 CancellationToken token = default) {
-      await foreach (var item in ReadLinesAsync(address, "", HttpMethod.Get).ConfigureAwait(false))
+      await foreach (var item in ReadLinesAsync(address, "", HttpMethod.Get, token).ConfigureAwait(false))
         yield return item;
     }
 
