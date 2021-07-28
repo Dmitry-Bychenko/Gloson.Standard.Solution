@@ -156,7 +156,7 @@ namespace Gloson.Threading.Tasks {
         if (CurrentIndex <= 0)
           return $"Started {Count} tasks";
         else
-          return $"{CurrentIndex} from {Count} ({Current})";
+          return $"{CurrentIndex} from {Count}, {Math.Round(100.0 * CurrentIndex / Count)}% ({Current})";
       }
     }
 
