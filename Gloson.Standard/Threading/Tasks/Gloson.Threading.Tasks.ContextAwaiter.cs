@@ -88,7 +88,7 @@ namespace Gloson.Threading.Tasks {
     /// From Context
     /// </summary>
     /// <param name="context"></param>
-    public static implicit operator ContextAwaiter(SynchronizationContext context) =>  new (context);
+    public static implicit operator ContextAwaiter(SynchronizationContext context) => new(context);
 
     #endregion Operators
   }

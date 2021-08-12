@@ -16,7 +16,7 @@ namespace Gloson.Threading.Tasks {
 
     private readonly Action<TaskProgress<T>> m_Action;
 
-    private readonly Stopwatch m_Stopwatch = new ();
+    private readonly Stopwatch m_Stopwatch = new();
 
     #endregion Private Data
 

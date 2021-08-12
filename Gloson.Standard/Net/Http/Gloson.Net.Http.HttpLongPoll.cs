@@ -24,8 +24,8 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Long Poll Read Lines
     /// </summary>
-    public static async IAsyncEnumerable<string> ReadLinesAsync(string address, 
-                                                                string query, 
+    public static async IAsyncEnumerable<string> ReadLinesAsync(string address,
+                                                                string query,
                                                                 HttpMethod method,
                                                                 [EnumeratorCancellation]
                                                                 CancellationToken token = default) {
@@ -58,8 +58,8 @@ namespace Gloson.Net.Http {
     /// <summary>
     /// Long Poll Read Lines
     /// </summary>
-    public static async IAsyncEnumerable<string> ReadLinesAsync(string address, 
-                                                                string query, 
+    public static async IAsyncEnumerable<string> ReadLinesAsync(string address,
+                                                                string query,
                                                                 [EnumeratorCancellation]
                                                                 CancellationToken token = default) {
       await foreach (var item in ReadLinesAsync(address, query, HttpMethod.Post, token).ConfigureAwait(false))

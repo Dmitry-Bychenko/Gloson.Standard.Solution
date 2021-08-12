@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace Gloson.Astronomy {
 
+  // ModuleInitializerAttribute
+
   //-------------------------------------------------------------------------------------------------------------------
   //
   /// <summary>
