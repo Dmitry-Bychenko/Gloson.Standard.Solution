@@ -85,7 +85,7 @@ namespace Gloson.Services.Atlassian {
     /// <summary>
     /// Create Query
     /// </summary>
-    public BitBucketQuery CreateQuery() => new (this);
+    public BitBucketQuery CreateQuery() => new(this);
 
     /// <summary>
     /// Login
