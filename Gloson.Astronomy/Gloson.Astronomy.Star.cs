@@ -1,7 +1,12 @@
-﻿using Gloson.Net.Http;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Gloson.Astronomy {
 
@@ -12,14 +17,14 @@ namespace Gloson.Astronomy {
   /// <summary>
   /// Star
   /// </summary>
-  // 
+  //
   // https://github.com/astronexus/HYG-Database/blob/master/hygdata_v3.csv
   // https://raw.githubusercontent.com/astronexus/HYG-Database/master/hygdata_v3.csv
   // https://github.com/astronexus/HYG-Database
   //
   //-------------------------------------------------------------------------------------------------------------------
 
-  public class Star {
+  public sealed class Star {
     #region Constants
 
     private const string Address = @"https://raw.githubusercontent.com/astronexus/HYG-Database/master/hygdata_v3.csv";
@@ -28,92 +33,159 @@ namespace Gloson.Astronomy {
 
     #region Private Data
 
-    private static List<Star> s_Catalog;
+    private static Task<IReadOnlyList<Star>> s_MainTask;
+
+    private static List<Star> s_Catalog = new();
+
+    private static HttpClient s_Http;
+
+    private static CookieContainer s_CookieContainer;
 
     #endregion Private Data
 
     #region Algorithm
 
-    private static void CoreLoad() {
+    [ModuleInitializer]
+    internal static void CoreModuleLoad() {
+      s_MainTask = CoreLoad();
+    }
+
+    private static void CoreCreateClient() {
+      try {
+        ServicePointManager.SecurityProtocol =
+          SecurityProtocolType.Tls |
+          SecurityProtocolType.Tls11 |
+          SecurityProtocolType.Tls12;
+      }
+      catch (NotSupportedException) {
+        ;
+      }
+
+      s_CookieContainer = new CookieContainer();
+
+      var handler = new HttpClientHandler() {
+        CookieContainer = s_CookieContainer,
+        Credentials = CredentialCache.DefaultCredentials,
+      };
+
+      s_Http = new HttpClient(handler);
+    }
+
+    private static async Task<IReadOnlyList<Star>> CoreLoad() {
       s_Catalog = new List<Star>();
 
-      foreach (string[] record in HttpData.ReadCsv(Address).Skip(1))
-        s_Catalog.Add(new Star(record));
+      using var req = new HttpRequestMessage {
+        Method = HttpMethod.Get,
+        RequestUri = new Uri(Address),
+        Headers = {
+          { HttpRequestHeader.Accept.ToString(), "text/csv" },
+        },
+        Content = new StringContent("", Encoding.UTF8, "text/csv")
+      };
+
+      var response = await s_Http
+        .SendAsync(req)
+        .ConfigureAwait(false);
+
+      using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+
+      var reader = new StreamReader(stream);
+
+      await Task.Run(() => {
+        bool firstTime = true;
+
+        while (true) {
+          string line = reader.ReadLine();
+
+          if (line is null)
+            break;
+
+          if (string.IsNullOrWhiteSpace(line))
+            continue;
+
+          if (firstTime) {
+            firstTime = false;
+
+            continue;
+          }
+
+          string[] array = line.Split(',');
+
+          s_Catalog.Add(new Star(array));
+        }
+      });
+
+      return s_Catalog;
     }
 
-    private static double Parse(string value) {
-      if (string.IsNullOrWhiteSpace(value))
-        return double.NaN;
-
-      return double.Parse(value, CultureInfo.InvariantCulture);
-    }
+    private static double Parse(string value) => string.IsNullOrWhiteSpace(value)
+      ? double.NaN
+      : double.Parse(value, CultureInfo.InvariantCulture);
 
     #endregion Algorithm
 
     #region Create
 
     static Star() {
-      CoreLoad();
+      CoreCreateClient();
     }
 
-    // Standard Constructor
-    private Star(string[] record) {
-      Id = record[0];
+    private Star(string[] items) {
+      Id = items[0];
 
-      HipparcosId = record[1] ?? "";
-      HenryDraperId = record[2] ?? "";
-      HarvardRevisedId = record[3] ?? "";
-      GlieseId = record[4] ?? "";
-      BayerFlamsteed = record[5] ?? "";
-      Name = record[6] ?? "";
+      HipparcosId = items[1] ?? "";
+      HenryDraperId = items[2] ?? "";
+      HarvardRevisedId = items[3] ?? "";
+      GlieseId = items[4] ?? "";
+      BayerFlamsteed = items[5] ?? "";
+      Name = items[6] ?? "";
 
-      RightAscension = Parse(record[7]);
-      Declination = Parse(record[8]);
+      RightAscension = Parse(items[7]);
+      Declination = Parse(items[8]);
 
-      Distance = Parse(record[9]);
+      Distance = Parse(items[9]);
 
-      ProperMotionAscension = Parse(record[10]);
-      ProperMotionDeclination = Parse(record[11]);
+      ProperMotionAscension = Parse(items[10]);
+      ProperMotionDeclination = Parse(items[11]);
 
-      RadialVelocity = Parse(record[12]);
-      Magnitude = Parse(record[13]);
-      MagnitudeAbsolute = Parse(record[14]);
+      RadialVelocity = Parse(items[12]);
+      Magnitude = Parse(items[13]);
+      MagnitudeAbsolute = Parse(items[14]);
 
-      Spectral = record[15].Trim();
+      Spectral = items[15].Trim();
 
-      ColorIndex = Parse(record[16]);
+      ColorIndex = Parse(items[16]);
 
-      X = Parse(record[17]);
-      Y = Parse(record[18]);
-      Z = Parse(record[19]);
+      X = Parse(items[17]);
+      Y = Parse(items[18]);
+      Z = Parse(items[19]);
 
-      VelocityX = Parse(record[20]);
-      VelocityY = Parse(record[21]);
-      VelocityZ = Parse(record[22]);
+      VelocityX = Parse(items[20]);
+      VelocityY = Parse(items[21]);
+      VelocityZ = Parse(items[22]);
 
-      RadiansRA = Parse(record[23]);
-      RadiansDec = Parse(record[24]);
-      RadiansVelocityRA = Parse(record[25]);
-      RadiansVelocityDec = Parse(record[26]);
+      RadiansRA = Parse(items[23]);
+      RadiansDec = Parse(items[24]);
+      RadiansVelocityRA = Parse(items[25]);
+      RadiansVelocityDec = Parse(items[26]);
 
-      Bayer = record[27].Trim();
-      Flamsteed = record[28].Trim();
+      Bayer = items[27].Trim();
+      Flamsteed = items[28].Trim();
 
-      if (Constellation.TryParse(record[29].Trim(), out var con))
-        Constellation = con;
-      else
-        Constellation = Constellation.Unknown;
+      Constellation = Constellation.TryParse(items[29].Trim(), out var con)
+        ? con
+        : Constellation.Unknown;
 
-      Companion = record[30].Trim();
-      CompanionPrimary = record[31].Trim();
-      CompanionBase = record[32].Trim();
+      Companion = items[30].Trim();
+      CompanionPrimary = items[31].Trim();
+      CompanionBase = items[32].Trim();
 
-      Luminosity = Parse(record[33]);
+      Luminosity = Parse(items[33]);
 
-      VariableDesignation = record[34].Trim();
+      VariableDesignation = items[34].Trim();
 
-      VariableMin = Parse(record[35]);
-      VariableMax = Parse(record[36]);
+      VariableMin = Parse(items[35]);
+      VariableMax = Parse(items[36]);
     }
 
     #endregion Create
@@ -121,9 +193,18 @@ namespace Gloson.Astronomy {
     #region Public
 
     /// <summary>
-    /// Ctalog
+    /// Catalog
     /// </summary>
-    public static IReadOnlyList<Star> Catalog => s_Catalog;
+    public static async Task<IReadOnlyList<Star>> Catalog() {
+      await s_MainTask;
+
+      return s_Catalog;
+    }
+
+    /// <summary>
+    /// Stars
+    /// </summary>
+    public static Task<IReadOnlyList<Star>> Stars => CoreLoad();
 
     /// <summary>
     /// Id
@@ -327,4 +408,5 @@ namespace Gloson.Astronomy {
 
     #endregion Public
   }
+
 }
