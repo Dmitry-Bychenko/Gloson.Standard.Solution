@@ -110,7 +110,7 @@ namespace Gloson.Services.Atlassian {
     public JiraConnection(string login, string password, string server) {
       Login = login ?? throw new ArgumentNullException(nameof(login));
       Password = password ?? throw new ArgumentNullException(nameof(password));
-      Server = server ?? throw new ArgumentNullException(nameof(server));
+      Server = server?.TrimEnd(' ', '/') ?? throw new ArgumentNullException(nameof(server));
 
       CoreCreateClient();
     }
