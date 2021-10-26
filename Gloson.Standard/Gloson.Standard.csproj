@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution.git</RepositoryUrl>
     <UserSecretsId>3105a925-cc1f-49c2-8551-a0715980bca8</UserSecretsId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0.6</Version>
+    <Version>1.0.0.7</Version>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Gloson.png</PackageIcon>
