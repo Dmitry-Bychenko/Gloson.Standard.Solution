@@ -126,6 +126,9 @@ namespace Gloson.Services.Atlassian {
   public sealed class BitBucketQuery {
     #region Create
 
+    /// <summary>
+    /// Standard Constructor
+    /// </summary>
     public BitBucketQuery(BitBucketConnection connection) {
       Connection = connection ?? throw new ArgumentNullException(nameof(connection));
     }

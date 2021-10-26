@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Gloson.Services.Atlassian {
@@ -363,7 +364,8 @@ namespace Gloson.Services.Atlassian {
                                                             HttpMethod method,
                                                             int pageSize,
                                                             [EnumeratorCancellation]
-                                                                CancellationToken token) {
+                                                             CancellationToken token) {
+      //TODO: implement via Channel
       if (string.IsNullOrEmpty(address))
         throw new ArgumentNullException(nameof(address));
 

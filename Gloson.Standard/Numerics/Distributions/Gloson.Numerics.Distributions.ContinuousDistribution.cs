@@ -141,9 +141,7 @@ namespace Gloson.Numerics.Distributions {
       else if (x < 0 || x > 1)
         throw new ArgumentOutOfRangeException(nameof(x));
 
-      Func<double, double> cdf = Cdf;
-
-      return cdf.Inverse(double.MinValue, double.MaxValue)(x);
+      return Operators.Solve((v) => Cdf(v) - x, double.MinValue, double.MaxValue);
     }
 
     /// <summary>

@@ -330,7 +330,7 @@ namespace Gloson.Numerics.Matrices {
     /// <summary>
     /// Linear Solutions
     /// </summary>
-    public double[] LinearSoution {
+    public double[] LinearSolution {
       get {
         if (m_LinearSolutions is null)
           m_LinearSolutions = MatrixLowLevel.Solve(m_Items);
