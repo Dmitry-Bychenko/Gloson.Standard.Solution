@@ -17,9 +17,9 @@ namespace Gloson.Numerics.Calculus {
       if (double.IsNaN(value))
         throw new ArgumentException("Argument must not be NaN", nameof(value));
       else if (double.IsNegativeInfinity(value))
-        return double.MinValue;
+        return -1e200; // double.MinValue;
       else if (double.IsPositiveInfinity(value))
-        return double.MaxValue;
+        return +1e200; // double.MaxValue;
       else
         return value;
     }
