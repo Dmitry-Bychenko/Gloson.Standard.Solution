@@ -15,9 +15,13 @@
     <UserSecretsId>3105a925-cc1f-49c2-8551-a0715980bca8</UserSecretsId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0.7</Version>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Dmitry-Bychenko/Gloson.Standard.Solution</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Gloson.png</PackageIcon>
+    <AnalysisLevel>5.0</AnalysisLevel>
+    <PackageReleaseNotes>Cumulative changes for 4 months</PackageReleaseNotes>
+    <PackageTags></PackageTags>
+    <Copyright>Copyright (c) 2021 by Dmitry Bychenko</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
