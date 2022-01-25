@@ -22,12 +22,19 @@ namespace Gloson {
     public static long Gcd(this long left, long right) {
       int shift;
 
+      int sign = (left < 0 && right > 0 || left > 0 && right < 0)
+        ? -1
+        : +1;
+
       // GCD(0,v) == v; GCD(u,0) == u, GCD(0,0) == 0 
       if (left == 0)
         return right;
 
       if (right == 0)
         return left;
+
+      left = Math.Abs(left);
+      right = Math.Abs(right);
 
       // Let shift := lg K, where K is the greatest power of 2 dividing both u and v. 
       for (shift = 0; ((left | right) & 1) == 0; ++shift) {
@@ -61,7 +68,7 @@ namespace Gloson {
       } while (right != 0);
 
       // restore common factors of 2 
-      return left << shift;
+      return sign * (left << shift);
     }
 
     /// <summary>
