@@ -42,6 +42,7 @@ namespace Gloson.Linq {
     #endregion Internal classes
 
     #region Algorithm
+
     private static List<List<T>> TopologicalList<T>(IEnumerable<T> source, Func<T, IEnumerable<T>> required) {
       List<List<T>> result = new();
 
