@@ -52,9 +52,8 @@ namespace Gloson.Collections.Generic {
 
       // If largest is not root 
       if (largest != i) {
-        T swap = m_Items[i];
-        m_Items[i] = m_Items[largest];
-        m_Items[largest] = swap;
+        (m_Items[i], m_Items[largest]) = (m_Items[largest], m_Items[i]);
+
 
         // Recursively heapify the affected sub-tree 
         Heapify(n, largest, sign);
@@ -362,11 +361,8 @@ namespace Gloson.Collections.Generic {
 
       // Just right index - compare with left and stop 
       if (rightIndex >= m_Items.Count) {
-        if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) > 0) {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[leftIndex];
-          m_Items[leftIndex] = h;
-        }
+        if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) > 0)
+          (m_Items[index], m_Items[leftIndex]) = (m_Items[leftIndex], m_Items[index]);
 
         return;
       }
@@ -374,24 +370,18 @@ namespace Gloson.Collections.Generic {
       // Both indice exist
       if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) > 0) {
         if (Comparer.Compare(m_Items[leftIndex], m_Items[rightIndex]) > 0) {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[rightIndex];
-          m_Items[rightIndex] = h;
+          (m_Items[index], m_Items[rightIndex]) = (m_Items[rightIndex], m_Items[index]);
 
           MoveDown(rightIndex);
         }
         else {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[leftIndex];
-          m_Items[leftIndex] = h;
+          (m_Items[index], m_Items[leftIndex]) = (m_Items[leftIndex], m_Items[index]);
 
           MoveDown(leftIndex);
         }
       }
       else if (Comparer.Compare(m_Items[index], m_Items[rightIndex]) > 0) {
-        T h = m_Items[index];
-        m_Items[index] = m_Items[rightIndex];
-        m_Items[rightIndex] = h;
+        (m_Items[index], m_Items[rightIndex]) = (m_Items[rightIndex], m_Items[index]);
 
         MoveDown(rightIndex);
       }
@@ -413,21 +403,12 @@ namespace Gloson.Collections.Generic {
       int nextIndex = index % 2 == 0 ? index - 1 : index + 1;
 
       // No next index: swap top and current only
-      if (nextIndex >= m_Items.Count) {
-        T h = m_Items[topIndex];
-        m_Items[topIndex] = m_Items[index];
-        m_Items[index] = h;
-      }
-      else if (Comparer.Compare(m_Items[nextIndex], m_Items[index]) < 0) {
-        T h = m_Items[nextIndex];
-        m_Items[topIndex] = m_Items[nextIndex];
-        m_Items[nextIndex] = h;
-      }
-      else {
-        T h = m_Items[topIndex];
-        m_Items[topIndex] = m_Items[index];
-        m_Items[index] = h;
-      }
+      if (nextIndex >= m_Items.Count)
+        (m_Items[topIndex], m_Items[index]) = (m_Items[index], m_Items[topIndex]);
+      else if (Comparer.Compare(m_Items[nextIndex], m_Items[index]) < 0)
+        (m_Items[nextIndex], m_Items[topIndex]) = (m_Items[topIndex], m_Items[nextIndex]);
+      else
+        (m_Items[topIndex], m_Items[index]) = (m_Items[index], m_Items[topIndex]);
 
       MoveUp(topIndex);
     }
@@ -512,11 +493,8 @@ namespace Gloson.Collections.Generic {
 
       // Just right index - compare with left and stop 
       if (rightIndex >= m_Items.Count) {
-        if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) < 0) {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[leftIndex];
-          m_Items[leftIndex] = h;
-        }
+        if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) < 0)
+          (m_Items[index], m_Items[leftIndex]) = (m_Items[leftIndex], m_Items[index]);
 
         return;
       }
@@ -524,24 +502,18 @@ namespace Gloson.Collections.Generic {
       // Both indice exist
       if (Comparer.Compare(m_Items[index], m_Items[leftIndex]) < 0) {
         if (Comparer.Compare(m_Items[leftIndex], m_Items[rightIndex]) < 0) {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[rightIndex];
-          m_Items[rightIndex] = h;
+          (m_Items[index], m_Items[rightIndex]) = (m_Items[rightIndex], m_Items[index]);
 
           MoveDown(rightIndex);
         }
         else {
-          T h = m_Items[index];
-          m_Items[index] = m_Items[leftIndex];
-          m_Items[leftIndex] = h;
+          (m_Items[index], m_Items[leftIndex]) = (m_Items[leftIndex], m_Items[index]);
 
           MoveDown(leftIndex);
         }
       }
       else if (Comparer.Compare(m_Items[index], m_Items[rightIndex]) < 0) {
-        T h = m_Items[index];
-        m_Items[index] = m_Items[rightIndex];
-        m_Items[rightIndex] = h;
+        (m_Items[index], m_Items[rightIndex]) = (m_Items[rightIndex], m_Items[index]);
 
         MoveDown(rightIndex);
       }
@@ -563,21 +535,12 @@ namespace Gloson.Collections.Generic {
       int nextIndex = index % 2 == 0 ? index - 1 : index + 1;
 
       // No next index: swap top and current only
-      if (nextIndex >= m_Items.Count) {
-        T h = m_Items[topIndex];
-        m_Items[topIndex] = m_Items[index];
-        m_Items[index] = h;
-      }
-      else if (Comparer.Compare(m_Items[nextIndex], m_Items[index]) > 0) {
-        T h = m_Items[nextIndex];
-        m_Items[topIndex] = m_Items[nextIndex];
-        m_Items[nextIndex] = h;
-      }
-      else {
-        T h = m_Items[topIndex];
-        m_Items[topIndex] = m_Items[index];
-        m_Items[index] = h;
-      }
+      if (nextIndex >= m_Items.Count)
+        (m_Items[topIndex], m_Items[index]) = (m_Items[index], m_Items[topIndex]);
+      else if (Comparer.Compare(m_Items[nextIndex], m_Items[index]) > 0)
+        (m_Items[nextIndex], m_Items[topIndex]) = (m_Items[topIndex], m_Items[nextIndex]);
+      else
+        (m_Items[topIndex], m_Items[index]) = (m_Items[index], m_Items[topIndex]);
 
       MoveUp(topIndex);
     }

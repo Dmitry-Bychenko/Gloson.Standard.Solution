@@ -32,8 +32,8 @@ namespace Gloson.Linq {
                                                            Func<T, X> mapX,
                                                            bool ascendingY = true,
                                                            bool ascendingX = true,
-                                                           IComparer<Y>? comparerY = null,
-                                                           IComparer<X>? comparerX = null) {
+                                                           IComparer<Y> comparerY = null,
+                                                           IComparer<X> comparerX = null) {
       if (source is null)
         throw new ArgumentNullException(nameof(source));
       if (mapY is null)
@@ -41,8 +41,8 @@ namespace Gloson.Linq {
       if (mapX is null)
         throw new ArgumentNullException(nameof(mapX));
 
-      comparerY = comparerY ?? Comparer<Y>.Default ?? throw new ArgumentNullException(nameof(comparerY));
-      comparerX = comparerX ?? Comparer<X>.Default ?? throw new ArgumentNullException(nameof(comparerX));
+      comparerY ??= Comparer<Y>.Default ?? throw new ArgumentNullException(nameof(comparerY));
+      comparerX ??= Comparer<X>.Default ?? throw new ArgumentNullException(nameof(comparerX));
 
       IEnumerable<T> data = ascendingX
         ? ascendingY
@@ -54,8 +54,8 @@ namespace Gloson.Linq {
 
       bool first = true;
 
-      Y? lastY = default;
-      X? lastX = default;
+      Y lastY = default;
+      X lastX = default;
 
       foreach (var item in data) {
         if (first) {

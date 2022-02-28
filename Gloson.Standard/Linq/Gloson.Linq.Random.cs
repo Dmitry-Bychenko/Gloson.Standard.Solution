@@ -48,15 +48,46 @@ namespace Gloson.Linq {
     /// <summary>
     /// Shuffle items
     /// </summary>
-    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source) {
-      return Shuffle(source, null);
-    }
+    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source) =>
+      Shuffle(source, null);
 
     /// <summary>
     /// Shuffle items
     /// </summary>
-    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, int seed) {
-      return Shuffle(source, new Random(seed));
+    public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, int seed) =>
+      Shuffle(source, new Random(seed));
+
+    /// <summary>
+    /// Reservoir Sampling
+    /// </summary>
+    public static T[] ReservoirSampling<T>(IEnumerable<T> source, int size, Random generator = null) {
+      if (source is null)
+        throw new ArgumentNullException(nameof(source));
+      if (size < 0)
+        throw new ArgumentOutOfRangeException(nameof(size));
+
+      if (generator is null)
+        generator = new Random();
+
+      T[] result = new T[size];
+
+      if (size == 0)
+        return result;
+
+      int index = 0;
+
+      foreach (T item in source) {
+        if (index < result.Length)
+          result[index++] = item;
+        else {
+          int j = generator.Next(index++);
+
+          if (j < result.Length)
+            result[j] = item;
+        }
+      }
+
+      return result;
     }
 
     /// <summary>
@@ -66,7 +97,7 @@ namespace Gloson.Linq {
     /// <param name="generator">random generator (null fro default one)</param>
     /// <param name="weights">weighs, the last one is computed</param>
     /// <returns></returns>
-    public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, Random generator, params Double[] weights) {
+    public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, Random generator, params double[] weights) {
       if (source is null)
         throw new ArgumentNullException(nameof(source));
       else if (weights is null)
@@ -116,9 +147,8 @@ namespace Gloson.Linq {
     /// <param name="source">source sequence</param>
     /// <param name="weights">weighs, the last one is computed</param>
     /// <returns></returns>
-    public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, params Double[] weights) {
-      return Extract(source, null, weights);
-    }
+    public static IEnumerable<T>[] Extract<T>(this IEnumerable<T> source, params double[] weights) =>
+      Extract(source, null, weights);
 
     #endregion Public
   }

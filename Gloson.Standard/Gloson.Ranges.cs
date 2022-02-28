@@ -100,7 +100,7 @@ namespace Gloson {
     /// Get Enumerator
     /// </summary>
     /// <param name="range">Range to get enumerator from</param>
-    public static RangeEnumerator GetEnumerator(this Range range) => new (range);
+    public static RangeEnumerator GetEnumerator(this Range range) => new(range);
 
     /// <summary>
     /// As Enumerable
