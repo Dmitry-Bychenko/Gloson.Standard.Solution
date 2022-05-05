@@ -343,9 +343,7 @@ namespace Gloson.Collections.Generic {
       // Just right index - compare with left and stop 
       if (rightIndex >= m_Items.Count) {
         if (Comparer.Compare(m_Items[index].Value, m_Items[leftIndex].Value) < 0) {
-          MasterHeapNode<T> h = m_Items[index];
-          m_Items[index] = m_Items[leftIndex];
-          m_Items[leftIndex] = h;
+          (m_Items[index], m_Items[leftIndex]) = (m_Items[leftIndex], m_Items[index]);
 
           m_Items[index].Index = index;
           m_Items[leftIndex].Index = leftIndex;
@@ -357,9 +355,7 @@ namespace Gloson.Collections.Generic {
       // Both indice exist
       if (Comparer.Compare(m_Items[index].Value, m_Items[leftIndex].Value) < 0) {
         if (Comparer.Compare(m_Items[leftIndex].Value, m_Items[rightIndex].Value) < 0) {
-          MasterHeapNode<T> h = m_Items[index];
-          m_Items[index] = m_Items[rightIndex];
-          m_Items[rightIndex] = h;
+          (m_Items[index], m_Items[rightIndex]) = (m_Items[rightIndex], m_Items[index]);
 
           m_Items[index].Index = index;
           m_Items[rightIndex].Index = rightIndex;
