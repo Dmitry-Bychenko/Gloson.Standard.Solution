@@ -35,7 +35,7 @@ namespace Gloson.Services.Git.Repository {
 
       FileName = Path.Combine(Repo.Location, record[(p + 1)..]);
 
-      string[] items = record.Substring(0, p).Split(' ');
+      string[] items = record[0..p].Split(' ');
 
       if (items.Length >= 4) {
         Tag = items[0];

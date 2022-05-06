@@ -85,15 +85,15 @@ namespace Gloson {
       int p = value.IndexOf('-');
 
       if (p >= 0) {
-        main = value.Substring(0, p);
+        main = value[0..p];
 
         value = value[(p + 1)..];
 
         p = value.IndexOf('+');
 
         if (p >= 0) {
-          pre = value.Substring(0, p);
-          build = value.Substring(0, p + 1);
+          pre = value[0..p];
+          build = value[0..(p + 1)];
         }
         else
           pre = value;

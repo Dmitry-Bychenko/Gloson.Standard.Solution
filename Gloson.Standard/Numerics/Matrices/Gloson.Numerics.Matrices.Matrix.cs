@@ -695,7 +695,7 @@ namespace Gloson.Numerics.Matrices {
         : "\t";
 
       if (p > 0)
-        format = format.Substring(0, p);
+        format = format[0..p];
 
       return string.Join(Environment.NewLine, m_Items
         .Select(line => string.Join(delimiter, line.Select(item => item.ToString(format, formatProvider)))));

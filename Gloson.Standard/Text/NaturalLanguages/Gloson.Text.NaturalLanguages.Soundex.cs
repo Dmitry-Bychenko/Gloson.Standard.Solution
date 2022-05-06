@@ -121,7 +121,7 @@ namespace Gloson.Text.NaturalLanguages {
         : sb.ToString().PadRight(size, '0');
 
       return result.Length > size && trim
-        ? result.Substring(0, size)
+        ? result[0..size]
         : result;
     }
 

@@ -855,9 +855,7 @@ namespace Gloson.Numerics {
       while (den != 0) {
         yield return BigInteger.DivRem(num, den, out num);
 
-        BigInteger h = num;
-        num = den;
-        den = h;
+        (num, den) = (den, num);
       }
     }
 

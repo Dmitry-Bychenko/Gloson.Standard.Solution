@@ -62,7 +62,7 @@ namespace Gloson.Ini {
         if (p < 0)
           return false;
 
-        result = new NameValueRecord(value.Substring(0, p).Trim(), value[(p + 1)..].Trim());
+        result = new NameValueRecord(value[0..p].Trim(), value[(p + 1)..].Trim());
         return true;
       }
 
@@ -95,7 +95,7 @@ namespace Gloson.Ini {
         }
 
         if (!inQuot && value[i] == '=') {
-          string name = value.Substring(0, i).Trim();
+          string name = value[0..i].Trim();
 
           if (name.StartsWith("\"")) {
             if (!name.TryQuotationRemove(out name))

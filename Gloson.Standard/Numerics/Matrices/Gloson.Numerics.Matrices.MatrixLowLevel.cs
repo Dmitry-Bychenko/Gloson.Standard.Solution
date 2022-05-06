@@ -265,9 +265,7 @@ namespace Gloson.Numerics.Matrices {
               m[i] = newLine;
               m[j] = line;
 
-              Double[] h = inverted[i];
-              inverted[i] = inverted[j];
-              inverted[j] = h;
+              (inverted[i], inverted[j]) = (inverted[j], inverted[i]);
 
               result = -result;  // < -1 each time!
 

@@ -102,7 +102,7 @@ namespace Gloson.Text.Parsing {
               current.StopColumn = match.To;
 
               sb.AppendLine();
-              sb.Append(lineOfSource.Substring(0, match.To));
+              sb.Append(lineOfSource[0..match.To]);
               //sb.Append(match.Extract(lineOfSource));
 
               current.Text = sb.ToString();

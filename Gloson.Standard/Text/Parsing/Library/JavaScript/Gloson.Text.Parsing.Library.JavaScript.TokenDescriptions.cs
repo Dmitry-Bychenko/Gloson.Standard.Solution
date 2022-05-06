@@ -358,7 +358,7 @@ namespace Gloson.Text.Parsing.Library.JavaScript {
           num = hsb.ToString();
 
           if (num.Length == 3 && string.Compare(num, "377", StringComparison.Ordinal) > 0)
-            num = num.Substring(0, 2);
+            num = num[0..2];
 
           if (num.Length > 0)
             sb.Append((char)(Convert.ToInt32(num, 8)));

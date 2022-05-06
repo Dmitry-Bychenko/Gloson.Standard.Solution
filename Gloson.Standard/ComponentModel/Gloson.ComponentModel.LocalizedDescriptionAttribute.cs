@@ -60,7 +60,7 @@ namespace Gloson.ComponentModel {
         if (p <= 0)
           return "";
 
-        return Address.Substring(0, p);
+        return Address[0..p];
       }
     }
 
@@ -101,7 +101,7 @@ namespace Gloson.ComponentModel {
         if (p <= 0)
           return "";
 
-        return st.Substring(0, p);
+        return st[0..p];
       }
     }
 

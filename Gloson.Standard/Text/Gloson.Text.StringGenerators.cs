@@ -25,7 +25,7 @@ namespace Gloson.Text {
         yield return "";
 
       for (int i = 1; i < value.Length; ++i)
-        yield return value.Substring(0, i);
+        yield return value[0..i];
     }
 
     /// <summary>

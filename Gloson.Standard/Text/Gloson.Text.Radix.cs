@@ -272,7 +272,7 @@ namespace Gloson.Text {
           return false;
         }
 
-        mantissa = value.Substring(0, value.Length - match.Length);
+        mantissa = value[0..(value.Length - match.Length)];
 
         if (IsValid(mantissa, radix))
           return true;

@@ -56,12 +56,9 @@ namespace Gloson {
         // then set v = v - u (which is even). For bignums, the
         // swapping is just pointer movement, and the subtraction
         // can be done in-place. 
-        if (left > right) {
-          long t = right;
-          right = left;
-          left = t;
-        }
-
+        if (left > right) 
+          (right, left) = (left, right);
+        
         // Here v >= u.
         right -= left;
 
@@ -179,11 +176,8 @@ namespace Gloson {
         // then set v = v - u (which is even). For bignums, the
         // swapping is just pointer movement, and the subtraction
         // can be done in-place. 
-        if (left > right) {
-          int t = right;
-          right = left;
-          left = t;
-        }
+        if (left > right)
+          (left, right) = (right, left);
 
         // Here v >= u.
         right -= left;

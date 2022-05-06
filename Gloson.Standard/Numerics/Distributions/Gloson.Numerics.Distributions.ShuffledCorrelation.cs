@@ -47,9 +47,7 @@ namespace Gloson.Numerics.Distributions {
                   + m_X[i].value * m_Items[j]
                   + m_X[j].value * m_Items[i];
 
-      double h = m_Items[i];
-      m_Items[i] = m_Items[j];
-      m_Items[j] = h;
+      (m_Items[i], m_Items[j]) = (m_Items[j], m_Items[i]);
 
       return ComputeR();
     }

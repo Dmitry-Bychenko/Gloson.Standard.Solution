@@ -48,7 +48,7 @@ namespace Gloson.Diagnostics {
                        int column = -1) {
       FileName = fileName?.Trim() ?? "";
       Description = description?.Trim() ?? "";
-      ErrorCategory = (errorCategory ?? "").Trim().PadRight(3, '_').Substring(0, 3).ToUpperInvariant();
+      ErrorCategory = (errorCategory ?? "").Trim().PadRight(3, '_')[0..3].ToUpperInvariant();
       ErrorCode = errorCode < 0 ? 0 : errorCode;
       Severity = severity;
       Priority = priority;

@@ -75,7 +75,7 @@ namespace Gloson.Resources {
 
       int index = address.IndexOf('@');
 
-      string name = (index < 0 ? address : address.Substring(0, index - 1)).Trim();
+      string name = (index < 0 ? address : address[0..(index - 1)]).Trim();
       string baseName = (index < 0 ? "" : address[(index + 1)..]).Trim();
 
       foreach (ResourceManager manager in Resources(assembly)) {
