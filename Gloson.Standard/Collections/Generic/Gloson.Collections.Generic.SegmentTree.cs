@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Gloson.Collections.Generic {
@@ -90,7 +92,7 @@ namespace Gloson.Collections.Generic {
     /// <param name="operation">Operation to use</param>
     /// <param name="none">None (default) item</param>
     /// <exception cref="ArgumentNullException">When either items or operation are null</exception>
-    public SegmentTree(T[] items, Func<T, T, T> operation, T none = default!) {
+    public SegmentTree(IEnumerable<T> items, Func<T, T, T> operation, T none = default!) {
       if (items is null)
         throw new ArgumentNullException(nameof(items));
 
@@ -159,7 +161,217 @@ namespace Gloson.Collections.Generic {
       return CoreQuery(0, Count - 1, left, right, 0);
     }
 
+    /// <summary>
+    /// Query [left..right] interval
+    /// </summary>
+    /// <param name="range">Range</param>
+    /// <returns>Function on the interval</returns>
+    /// <exception cref="ArgumentOutOfRangeException">when either left or right are out of [0..Count - 1] range</exception>
+    public T Query(Range range) {
+      int left = range.Start.IsFromEnd ? Count - range.Start.Value : range.Start.Value;
+      int right = range.End.IsFromEnd ? Count - range.End.Value - 1 : range.End.Value - 1;
+
+      return Query(left, right);
+    }
+
     #endregion Public
+  }
+
+  //-------------------------------------------------------------------------------------------------------------------
+  //
+  /// <summary>
+  /// Segment Tree
+  /// </summary>
+  /// <typeparam name="T">Item type</typeparam>
+  //
+  //-------------------------------------------------------------------------------------------------------------------
+
+  public sealed class MasterSegmentTree<T> : IReadOnlyList<T> {
+    #region Private Data
+
+    private readonly T[] m_Array;
+
+    private readonly T[] m_Items;
+
+    #endregion Private Data
+
+    #region Algorithm
+
+    private static int GetNextPowerOfTwo(int n) {
+      int m = n,
+      cnt = 0;
+
+      if (n > 0 && (n & (n - 1)) == 0)
+        return n;
+
+      while (m != 0) {
+        m >>= 1;
+        cnt++;
+      }
+
+      return 1 << cnt;
+    }
+
+    private T[] CoreBuildSegmentTree(T[] segmentTree, T[] input, int l, int r, int pos) {
+      if (l == r)
+        segmentTree[pos] = input[l];
+      else {
+        int mid = l + (r - l) / 2;
+
+        CoreBuildSegmentTree(segmentTree, input, l, mid, pos * 2 + 1);
+        CoreBuildSegmentTree(segmentTree, input, mid + 1, r, pos * 2 + 2);
+
+        segmentTree[pos] = Operation(segmentTree[pos * 2 + 1], segmentTree[pos * 2 + 2]);
+      }
+
+      return segmentTree;
+    }
+
+    private T[] CoreUpdateSegmentTree(T[] segmentTree, int i, T val, int l, int r, int pos) {
+      if (i < l || r < i)
+        return segmentTree;
+      else if (l == r)
+        segmentTree[pos] = val;
+      else {
+        int mid = l + (r - l) / 2;
+
+        CoreUpdateSegmentTree(segmentTree, i, val, l, mid, pos * 2 + 1);
+        CoreUpdateSegmentTree(segmentTree, i, val, mid + 1, r, pos * 2 + 2);
+
+        segmentTree[pos] = Operation(segmentTree[pos * 2 + 1], segmentTree[pos * 2 + 2]);
+      }
+
+      return segmentTree;
+    }
+
+    private T CoreQuery(int l, int r, int queryL, int queryR, int pos) {
+      if (queryL <= l && r <= queryR)
+        return m_Array[pos];
+      else if (queryL > r || queryR < l)
+        return None;
+
+      int mid = l + (r - l) / 2;
+
+      return Operation(CoreQuery(l, mid, queryL, queryR, pos * 2 + 1), CoreQuery(mid + 1, r, queryL, queryR, pos * 2 + 2));
+    }
+
+    #endregion Algorithm
+
+    #region Create
+
+    /// <summary>
+    /// Standard constructor
+    /// </summary>
+    /// <param name="items">Items</param>
+    /// <param name="operation">Operation to use</param>
+    /// <param name="none">None (default) item</param>
+    /// <exception cref="ArgumentNullException">When either items or operation are null</exception>
+    public MasterSegmentTree(IEnumerable<T> items, Func<T, T, T> operation, T none = default!) {
+      if (items is null)
+        throw new ArgumentNullException(nameof(items));
+
+      Operation = operation ?? throw new ArgumentNullException(nameof(operation));
+
+      m_Items = items.ToArray();
+
+      None = none;
+
+      var empty = Enumerable
+        .Repeat(None, GetNextPowerOfTwo(Count) * 2 - 1)
+        .ToArray();
+
+      m_Array = CoreBuildSegmentTree(empty, m_Items, 0, Count - 1, 0);
+    }
+
+    #endregion Create
+
+    #region Public
+
+    /// <summary>
+    /// Empty element
+    /// </summary>
+    public T None { get; }
+
+    /// <summary>
+    /// Number of items in the initial collection
+    /// </summary>
+    public int Count => m_Items.Length;
+
+    /// <summary>
+    /// Items
+    /// </summary>
+    /// <param name="index">Index</param>
+    /// <returns>Value</returns>
+    /// <exception cref="ArgumentOutOfRangeException">When index is out of range</exception>
+    public T this[int index] {
+      get {
+        if (index < 0 || index >= Count)
+          throw new ArgumentOutOfRangeException(nameof(index));
+
+        return m_Items[index];
+      }
+      set {
+        if (index < 0 || index >= Count)
+          throw new ArgumentOutOfRangeException(nameof(index));
+
+        m_Items[index] = value;
+
+        CoreUpdateSegmentTree(m_Array, index, value, 0, Count - 1, 0);
+      }
+    }
+
+    /// <summary>
+    /// Operation
+    /// </summary>
+    public Func<T, T, T> Operation { get; }
+
+    /// <summary>
+    /// Query [left..right] interval
+    /// </summary>
+    /// <param name="left">Left Border</param>
+    /// <param name="right">Right Border</param>
+    /// <returns>Function on the interval</returns>
+    /// <exception cref="ArgumentOutOfRangeException">when either left or right are out of [0..Count - 1] range</exception>
+    public T Query(int left, int right) {
+      if (left < 0 || left >= Count)
+        throw new ArgumentOutOfRangeException(nameof(left));
+      if (right < 0 || right >= Count)
+        throw new ArgumentOutOfRangeException(nameof(right));
+
+      if (left > right)
+        (left, right) = (right, left);
+
+      return CoreQuery(0, Count - 1, left, right, 0);
+    }
+
+    /// <summary>
+    /// Query [left..right] interval
+    /// </summary>
+    /// <param name="range">Range</param>
+    /// <returns>Function on the interval</returns>
+    /// <exception cref="ArgumentOutOfRangeException">when either left or right are out of [0..Count - 1] range</exception>
+    public T Query(Range range) {
+      int left = range.Start.IsFromEnd ? Count - range.Start.Value : range.Start.Value;
+      int right = range.End.IsFromEnd ? Count - range.End.Value - 1 : range.End.Value - 1;
+
+      return Query(left, right);
+    }
+
+    #endregion Public
+
+    #region IReadOnlyList<T>
+
+    /// <summary>
+    /// Typed Enumerator
+    /// </summary>
+    public IEnumerator<T> GetEnumerator() => m_Items.Cast<T>().GetEnumerator();
+
+    /// <summary>
+    /// Typeless Enumerator
+    /// </summary>
+    IEnumerator IEnumerable.GetEnumerator() => m_Items.GetEnumerator();
+
+    #endregion IReadOnlyList<T>
   }
 
 }
