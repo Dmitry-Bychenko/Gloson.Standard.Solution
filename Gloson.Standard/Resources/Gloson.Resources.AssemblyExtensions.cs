@@ -80,7 +80,7 @@ namespace Gloson.Resources {
 
       foreach (ResourceManager manager in Resources(assembly)) {
         if (string.IsNullOrWhiteSpace(baseName) || comparer.Equals(baseName, manager.BaseName)) {
-          foreach (var pair in manager.EnumerateResources()) {
+          foreach (var pair in manager.EnumerateResources(culture)) {
             if (comparer.Equals(name, pair.Key))
               yield return pair.Value;
           }
