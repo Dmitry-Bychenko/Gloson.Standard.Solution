@@ -363,7 +363,7 @@ namespace Gloson.Linq {
 
       StringBuilder sb = new();
 
-      sb.Append($"Before: { BeforeCount}");
+      sb.Append($"Before: {BeforeCount}");
 
       if (BeforeCount < BeforeCapacity)
         sb.Append("(expected: { BeforeCapacity})");
@@ -373,7 +373,7 @@ namespace Gloson.Linq {
       sb.Append($"After: {AfterCount}");
 
       if (AfterCount < BeforeCapacity)
-        sb.Append($"(expected: { BeforeCapacity})");
+        sb.Append($"(expected: {BeforeCapacity})");
 
       return sb.ToString();
     }

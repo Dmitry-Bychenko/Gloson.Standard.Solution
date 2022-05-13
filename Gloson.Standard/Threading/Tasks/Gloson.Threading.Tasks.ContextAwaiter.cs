@@ -73,7 +73,7 @@ namespace Gloson.Threading.Tasks {
     /// </summary>
 //#pragma warning disable CA1822 // Can't be static for to be a correct Awaiter
     public void GetResult() { }
-//#pragma warning restore CA1822 // Can't be static for to be a correct Awaiter
+    //#pragma warning restore CA1822 // Can't be static for to be a correct Awaiter
 
     /// <summary>
     /// Awaiter
