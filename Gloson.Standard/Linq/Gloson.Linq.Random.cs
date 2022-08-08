@@ -91,6 +91,28 @@ namespace Gloson.Linq {
     }
 
     /// <summary>
+    /// Random element from sequence (reservoire sampling)
+    /// </summary>
+    public static T RandomElement<T>(this IEnumerable<T> source, Random random) {
+      if (source is null)
+        throw new ArgumentNullException(nameof(source));
+
+      if (random is null)
+        random = new Random();
+
+      T result = default(T);
+      int count = 0;
+
+      foreach (var item in source)
+        if (random.Next(++count) == 0)
+          result = item;
+
+      return count > 0
+        ? result
+        : throw new ArgumentException("Empty sequence doesn't have random element", nameof(source));
+    }
+
+    /// <summary>
     /// Extract sub sequences (e.g. training, cv and test) from the main one
     /// </summary>
     /// <param name="source">source sequence</param>
