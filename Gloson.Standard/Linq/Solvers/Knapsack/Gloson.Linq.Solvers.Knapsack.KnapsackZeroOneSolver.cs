@@ -5,457 +5,457 @@ using System.Linq;
 
 namespace Gloson.Linq.Solvers.Knapsack {
 
-  //-------------------------------------------------------------------------------------------------------------------
-  //
-  /// <summary>
-  /// Knapsack Solver
-  /// </summary>
-  //
-  //-------------------------------------------------------------------------------------------------------------------
-
-  public static partial class KnapsackSolver {
-    #region Inner Classes
-
+    //-------------------------------------------------------------------------------------------------------------------
+    //
     /// <summary>
-    /// Knapsack Zero Or One Solution
+    /// Knapsack Solver
     /// </summary>
-    public sealed class KnapsackZeroOneSolution<T>
-      : IReadOnlyList<T> {
+    //
+    //-------------------------------------------------------------------------------------------------------------------
 
-      #region Private Data
+    public static partial class KnapsackSolver {
+        #region Inner Classes
 
-      private readonly List<int> m_Indexes = new();
-      private readonly List<T> m_Items = new();
+        /// <summary>
+        /// Knapsack Zero Or One Solution
+        /// </summary>
+        public sealed class KnapsackZeroOneSolution<T>
+          : IReadOnlyList<T> {
 
-      #endregion Private Data
+            #region Private Data
 
-      #region Algorithm
+            private readonly List<int> m_Indexes = new();
+            private readonly List<T> m_Items = new();
 
-      internal KnapsackZeroOneSolution<T> AddExtra(double value,
-                                                   double weight,
-                                                   IEnumerable<int> indexes,
-                                                   IEnumerable<T> items) {
+            #endregion Private Data
 
-        Value += value;
-        Weight -= weight;
+            #region Algorithm
 
-        foreach (int index in indexes)
-          m_Indexes.Add(index);
+            internal KnapsackZeroOneSolution<T> AddExtra(double value,
+                                                         double weight,
+                                                         IEnumerable<int> indexes,
+                                                         IEnumerable<T> items) {
 
-        foreach (T item in items)
-          m_Items.Add(item);
+                Value += value;
+                Weight -= weight;
 
-        return this;
-      }
+                foreach (int index in indexes)
+                    m_Indexes.Add(index);
 
-      #endregion Algorithm
+                foreach (T item in items)
+                    m_Items.Add(item);
 
-      #region Create 
+                return this;
+            }
 
-      internal KnapsackZeroOneSolution(
-        double capacity,
-        double value,
-        double weight,
-        IEnumerable<int> indexes,
-        IEnumerable<T> items) {
+            #endregion Algorithm
 
-        Value = value;
-        Weight = weight;
-        Capacity = capacity;
+            #region Create 
 
-        m_Indexes = indexes.ToList();
-        m_Items = items.ToList();
-      }
+            internal KnapsackZeroOneSolution(
+              double capacity,
+              double value,
+              double weight,
+              IEnumerable<int> indexes,
+              IEnumerable<T> items) {
 
-      internal KnapsackZeroOneSolution(double capacity) {
-        Capacity = capacity;
-        Value = 0.0;
-        Weight = 0.0;
+                Value = value;
+                Weight = weight;
+                Capacity = capacity;
 
-        m_Indexes = new List<int>();
-        m_Items = new List<T>();
-      }
+                m_Indexes = indexes.ToList();
+                m_Items = items.ToList();
+            }
 
-      #endregion Create
+            internal KnapsackZeroOneSolution(double capacity) {
+                Capacity = capacity;
+                Value = 0.0;
+                Weight = 0.0;
 
-      #region Public
+                m_Indexes = new List<int>();
+                m_Items = new List<T>();
+            }
 
-      /// <summary>
-      /// Total Value of the solution
-      /// </summary>
-      public double Value { get; private set; }
+            #endregion Create
 
-      /// <summary>
-      /// Total Weight of the solution
-      /// </summary>
-      public double Weight { get; private set; }
+            #region Public
 
-      /// <summary>
-      /// Initial knapsack Capacity
-      /// </summary>
-      public double Capacity { get; }
+            /// <summary>
+            /// Total Value of the solution
+            /// </summary>
+            public double Value { get; private set; }
 
-      /// <summary>
-      /// Indexes of the original items to select
-      /// </summary>
-      public IReadOnlyList<int> Indexes => m_Indexes;
+            /// <summary>
+            /// Total Weight of the solution
+            /// </summary>
+            public double Weight { get; private set; }
 
-      /// <summary>
-      /// Selected items
-      /// </summary>
-      public IReadOnlyList<T> Items => m_Items;
+            /// <summary>
+            /// Initial knapsack Capacity
+            /// </summary>
+            public double Capacity { get; }
 
-      /// <summary>
-      /// Debug Information
-      /// </summary>
-      public override string ToString() {
-        if (Items.Count <= 0)
-          return $"Capacity {Capacity} : Empty Solution";
+            /// <summary>
+            /// Indexes of the original items to select
+            /// </summary>
+            public IReadOnlyList<int> Indexes => m_Indexes;
 
-        return $"Capacity {Capacity} : {Items.Count} items with {Value} value and {Weight} weight ([{string.Join(", ", Indexes)}] indexes).";
-      }
+            /// <summary>
+            /// Selected items
+            /// </summary>
+            public IReadOnlyList<T> Items => m_Items;
 
-      #endregion Public
+            /// <summary>
+            /// Debug Information
+            /// </summary>
+            public override string ToString() {
+                if (Items.Count <= 0)
+                    return $"Capacity {Capacity} : Empty Solution";
 
-      #region IReadOnlyList<T>
+                return $"Capacity {Capacity} : {Items.Count} items with {Value} value and {Weight} weight ([{string.Join(", ", Indexes)}] indexes).";
+            }
 
-      /// <summary>
-      /// Count
-      /// </summary>
-      public int Count => Items.Count;
+            #endregion Public
 
-      /// <summary>
-      /// Indexer
-      /// </summary>
-      public T this[int index] => Items[index];
+            #region IReadOnlyList<T>
 
-      /// <summary>
-      /// Enumerator
-      /// </summary>
-      public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+            /// <summary>
+            /// Count
+            /// </summary>
+            public int Count => Items.Count;
 
-      /// <summary>
-      /// Enumerator
-      /// </summary>
-      IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
+            /// <summary>
+            /// Indexer
+            /// </summary>
+            public T this[int index] => Items[index];
 
-      #endregion IReadOnlyList<T>
+            /// <summary>
+            /// Enumerator
+            /// </summary>
+            public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+
+            /// <summary>
+            /// Enumerator
+            /// </summary>
+            IEnumerator IEnumerable.GetEnumerator() => Items.GetEnumerator();
+
+            #endregion IReadOnlyList<T>
+        }
+
+        #endregion Inner Classes
+
+        #region Public
+
+        /// <summary>
+        /// Knapsack Zero Or One Solution
+        /// </summary>
+        /// <param name="source">Possible items to take</param>
+        /// <param name="capacity">Knapsack capacity</param>
+        /// <param name="weight">Item's weight</param>
+        /// <param name="value">Item's value</param>
+        /// <returns></returns>
+        public static KnapsackZeroOneSolution<T> KnapsackSolveForZeroOne<T>(
+          this IEnumerable<T> source,
+               double capacity,
+               Func<T, double> weight,
+               Func<T, double> value) {
+
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+            else if (weight is null)
+                throw new ArgumentNullException(nameof(weight));
+            else if (value is null)
+                throw new ArgumentNullException(nameof(value));
+
+            double initialCapacity = capacity;
+
+            // --- /Now ---
+
+
+            // All Data Available
+            var allData = source
+              .Select((item, idx) => (
+                 item,
+                 weight: weight(item),
+                 value: value(item),
+                 index: idx))
+              .ToList();
+
+            var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
+
+            if (counterExample.weight < 0 && counterExample.value < 0)
+                throw new ArgumentException(
+                  $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
+                    nameof(source));
+
+            var alwaysTakeData = allData
+              .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
+              .ToList();
+
+            double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
+            double extraValue = alwaysTakeData.Sum(item => item.value);
+
+            capacity += extraCapacity;
+
+            var data = allData
+              .Where(item => item.weight <= capacity)
+              .Where(item => item.value > 0 && item.weight >= 0)
+              //.OrderBy(item => item.value >= 0)
+              //.OrderBy(item => item.weight >= 0)
+              //.OrderByDescending(item => item.weight)
+              .OrderByDescending(item => item.value / item.weight / item.weight)
+              .ToList();
+
+            // --- /Now ---
+
+
+
+            // --- Before ---
+
+            /*
+
+            var data = source
+              .Select((item, idx) => (
+                 item   : item, 
+                 weight : weight(item), 
+                 value  : value(item),
+                 index  : idx))
+              .Where(item => item.weight <= capacity)
+              .Where(item => item.value > 0 || item.weight < 0)
+              .OrderBy(item => item.weight >= 0)
+              .ThenByDescending(item => item.weight)
+              .ToList();
+
+            */
+
+            // --- /Before ---
+
+            // Specal Cases :
+
+            // Empty :
+
+            if (data.Count <= 0)
+                return new KnapsackZeroOneSolution<T>(initialCapacity)
+                  .AddExtra(
+                   extraValue,
+                   extraCapacity,
+                   alwaysTakeData.Select(item => item.index),
+                   alwaysTakeData.Select(item => item.item))
+
+
+               ;
+
+            // All :
+
+            double maxCapacity = data
+              .Where(item => item.value > 0)
+              .Sum(item => item.weight);
+
+            if (capacity >= maxCapacity) {
+                var positives = data
+                  .Where(item => item.value > 0)
+                  .ToArray();
+
+                return new KnapsackZeroOneSolution<T>(
+                  initialCapacity,
+                  positives.Sum(item => item.value),
+                  positives.Sum(item => item.weight),
+                  positives.Select(item => item.index),
+                  positives.Select(item => item.item)
+                )
+                  .AddExtra(
+                   extraValue,
+                   extraCapacity,
+                   alwaysTakeData.Select(item => item.index),
+                   alwaysTakeData.Select(item => item.item));
+
+                ;
+            }
+
+            // General case :
+
+            double[] takeAll = new double[data.Count];
+
+            for (int i = data.Count - 1; i >= 0; --i) {
+                double prior = i >= data.Count - 1
+                  ? 0.0
+                  : takeAll[i + 1];
+
+                takeAll[i] = data[i].weight + prior; // !!!
+            }
+
+            // Cache (memoization) :
+
+            Dictionary<Tuple<int, double>, Tuple<double, bool>> cache = new();
+
+            double solver(int i, double w) {
+                if (i < 0 || w < 0)
+                    return 0.0;
+
+                double result;
+
+                if (cache.TryGetValue(Tuple.Create(i, w), out var cachedResult))
+                    return cachedResult.Item1;
+
+                if (data[i].weight > w) {
+                    // Skip :
+                    return solver(i - 1, w);
+                }
+                else if (w <= takeAll[i]) {
+                    // Take :
+                    result = solver(i - 1, w - data[i].weight) + data[i].value;
+
+                    cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
+
+                    return result;
+                }
+                else if (data[i].weight <= takeAll[i]) { // //else if (data[i].weight <= takeAll[i])
+                                                         // Take :
+                    result = solver(i - 1, w - data[i].weight) + data[i].value;
+
+                    cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
+
+                    return result;
+                }
+
+                // General Case : 
+                var skip = solver(i - 1, w);
+                var take = solver(i - 1, w - data[i].weight) + data[i].value;
+
+                if (skip > take) {
+                    result = skip;
+
+                    cache.Add(Tuple.Create(i, w), Tuple.Create(result, false));
+                }
+                else {
+                    result = take;
+
+                    cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
+                }
+
+                return result;
+            };
+
+            // Entire task solving :
+
+            double solution = solver(data.Count - 1, capacity);
+
+            // Solved, backtrack : 
+
+            int index = data.Count - 1;
+            double bestWeight = capacity;
+
+            List<int> sequence = new();
+
+            while (index >= 0) {
+                if (cache.TryGetValue(Tuple.Create(index, bestWeight), out var step)) {
+                    if (step.Item2) {
+                        sequence.Add(index);
+                        double ww = data[index].weight;
+
+                        bestWeight -= ww;
+                    }
+
+                    index -= 1;
+                }
+                else
+                    index -= 1;
+            }
+
+            sequence.Sort();
+
+            return new KnapsackZeroOneSolution<T>(
+              initialCapacity,
+              solution,
+              sequence.Sum(i => data[i].weight),
+              sequence.Select(i => data[i].index),
+              sequence.Select(i => data[i].item)
+            )
+
+            .AddExtra(
+               extraValue,
+               extraCapacity,
+               alwaysTakeData.Select(item => item.index),
+               alwaysTakeData.Select(item => item.item));
+            ;
+        }
+
+        /// <summary>
+        /// Knapsack Zero Or One Greedy Approximate Solution
+        /// </summary>
+        /// <param name="source">Possible items to take</param>
+        /// <param name="capacity">Knapsack capacity</param>
+        /// <param name="weight">Item's weight</param>
+        /// <param name="value">Item's value</param>
+        /// <returns></returns>
+        public static KnapsackZeroOneSolution<T> KnapsackGreedySolveForZeroOne<T>(
+          this IEnumerable<T> source,
+               double capacity,
+               Func<T, double> weight,
+               Func<T, double> value) {
+
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+            else if (weight is null)
+                throw new ArgumentNullException(nameof(weight));
+            else if (value is null)
+                throw new ArgumentNullException(nameof(value));
+
+            double initialCapacity = capacity;
+
+            var allData = source
+              .Select((item, idx) => (
+                 item,
+                 weight: weight(item),
+                 value: value(item),
+                 index: idx))
+              .ToList();
+
+            var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
+
+            if (counterExample.weight < 0 && counterExample.value < 0)
+                throw new ArgumentException(
+                  $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
+                    nameof(source));
+
+            var alwaysTakeData = allData
+              .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
+              .ToList();
+
+            double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
+            double extraValue = alwaysTakeData.Sum(item => item.value);
+
+            capacity += extraCapacity;
+
+            var data = allData
+              .Where(item => item.weight <= capacity)
+              .Where(item => item.value > 0 && item.weight > 0)
+              .OrderByDescending(item => item.value / item.weight >= 0)
+              //.OrderByDescending(item => item.weight)
+              .ToList();
+
+            double totalWeight = -extraCapacity;
+            double soultion = extraValue;
+
+            foreach (var item in data) {
+                if (item.weight > capacity)
+                    continue;
+
+                soultion += item.value;
+                capacity -= item.weight;
+                totalWeight += item.weight;
+
+                alwaysTakeData.Add(item);
+            }
+
+            return new KnapsackZeroOneSolution<T>(
+              initialCapacity,
+              soultion,
+              totalWeight,
+              alwaysTakeData.Select(item => item.index),
+              alwaysTakeData.Select(item => item.item));
+        }
+
+        #endregion Public
     }
-
-    #endregion Inner Classes
-
-    #region Public
-
-    /// <summary>
-    /// Knapsack Zero Or One Solution
-    /// </summary>
-    /// <param name="source">Possible items to take</param>
-    /// <param name="capacity">Knapsack capacity</param>
-    /// <param name="weight">Item's weight</param>
-    /// <param name="value">Item's value</param>
-    /// <returns></returns>
-    public static KnapsackZeroOneSolution<T> KnapsackSolveForZeroOne<T>(
-      this IEnumerable<T> source,
-           double capacity,
-           Func<T, double> weight,
-           Func<T, double> value) {
-
-      if (source is null)
-        throw new ArgumentNullException(nameof(source));
-      else if (weight is null)
-        throw new ArgumentNullException(nameof(weight));
-      else if (value is null)
-        throw new ArgumentNullException(nameof(value));
-
-      double initialCapacity = capacity;
-
-      // --- /Now ---
-
-
-      // All Data Available
-      var allData = source
-        .Select((item, idx) => (
-           item,
-           weight: weight(item),
-           value: value(item),
-           index: idx))
-        .ToList();
-
-      var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
-
-      if (counterExample.weight < 0 && counterExample.value < 0)
-        throw new ArgumentException(
-          $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
-            nameof(source));
-
-      var alwaysTakeData = allData
-        .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
-        .ToList();
-
-      double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
-      double extraValue = alwaysTakeData.Sum(item => item.value);
-
-      capacity += extraCapacity;
-
-      var data = allData
-        .Where(item => item.weight <= capacity)
-        .Where(item => item.value > 0 && item.weight >= 0)
-        //.OrderBy(item => item.value >= 0)
-        //.OrderBy(item => item.weight >= 0)
-        //.OrderByDescending(item => item.weight)
-        .OrderByDescending(item => item.value / item.weight / item.weight)
-        .ToList();
-
-      // --- /Now ---
-
-
-
-      // --- Before ---
-
-      /*
-     
-      var data = source
-        .Select((item, idx) => (
-           item   : item, 
-           weight : weight(item), 
-           value  : value(item),
-           index  : idx))
-        .Where(item => item.weight <= capacity)
-        .Where(item => item.value > 0 || item.weight < 0)
-        .OrderBy(item => item.weight >= 0)
-        .ThenByDescending(item => item.weight)
-        .ToList();
-
-      */
-
-      // --- /Before ---
-
-      // Specal Cases :
-
-      // Empty :
-
-      if (data.Count <= 0)
-        return new KnapsackZeroOneSolution<T>(initialCapacity)
-          .AddExtra(
-           extraValue,
-           extraCapacity,
-           alwaysTakeData.Select(item => item.index),
-           alwaysTakeData.Select(item => item.item))
-
-
-       ;
-
-      // All :
-
-      double maxCapacity = data
-        .Where(item => item.value > 0)
-        .Sum(item => item.weight);
-
-      if (capacity >= maxCapacity) {
-        var positives = data
-          .Where(item => item.value > 0)
-          .ToArray();
-
-        return new KnapsackZeroOneSolution<T>(
-          initialCapacity,
-          positives.Sum(item => item.value),
-          positives.Sum(item => item.weight),
-          positives.Select(item => item.index),
-          positives.Select(item => item.item)
-        )
-          .AddExtra(
-           extraValue,
-           extraCapacity,
-           alwaysTakeData.Select(item => item.index),
-           alwaysTakeData.Select(item => item.item));
-
-        ;
-      }
-
-      // General case :
-
-      double[] takeAll = new double[data.Count];
-
-      for (int i = data.Count - 1; i >= 0; --i) {
-        double prior = i >= data.Count - 1
-          ? 0.0
-          : takeAll[i + 1];
-
-        takeAll[i] = data[i].weight + prior; // !!!
-      }
-
-      // Cache (memoization) :
-
-      Dictionary<Tuple<int, double>, Tuple<double, bool>> cache = new();
-
-      double solver(int i, double w) {
-        if (i < 0 || w < 0)
-          return 0.0;
-
-        double result;
-
-        if (cache.TryGetValue(Tuple.Create(i, w), out var cachedResult))
-          return cachedResult.Item1;
-
-        if (data[i].weight > w) {
-          // Skip :
-          return solver(i - 1, w);
-        }
-        else if (w <= takeAll[i]) {
-          // Take :
-          result = solver(i - 1, w - data[i].weight) + data[i].value;
-
-          cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
-
-          return result;
-        }
-        else if (data[i].weight <= takeAll[i]) { // //else if (data[i].weight <= takeAll[i])
-          // Take :
-          result = solver(i - 1, w - data[i].weight) + data[i].value;
-
-          cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
-
-          return result;
-        }
-
-        // General Case : 
-        var skip = solver(i - 1, w);
-        var take = solver(i - 1, w - data[i].weight) + data[i].value;
-
-        if (skip > take) {
-          result = skip;
-
-          cache.Add(Tuple.Create(i, w), Tuple.Create(result, false));
-        }
-        else {
-          result = take;
-
-          cache.Add(Tuple.Create(i, w), Tuple.Create(result, true));
-        }
-
-        return result;
-      };
-
-      // Entire task solving :
-
-      double solution = solver(data.Count - 1, capacity);
-
-      // Solved, backtrack : 
-
-      int index = data.Count - 1;
-      double bestWeight = capacity;
-
-      List<int> sequence = new();
-
-      while (index >= 0) {
-        if (cache.TryGetValue(Tuple.Create(index, bestWeight), out var step)) {
-          if (step.Item2) {
-            sequence.Add(index);
-            double ww = data[index].weight;
-
-            bestWeight -= ww;
-          }
-
-          index -= 1;
-        }
-        else
-          index -= 1;
-      }
-
-      sequence.Sort();
-
-      return new KnapsackZeroOneSolution<T>(
-        initialCapacity,
-        solution,
-        sequence.Sum(i => data[i].weight),
-        sequence.Select(i => data[i].index),
-        sequence.Select(i => data[i].item)
-      )
-
-      .AddExtra(
-         extraValue,
-         extraCapacity,
-         alwaysTakeData.Select(item => item.index),
-         alwaysTakeData.Select(item => item.item));
-      ;
-    }
-
-    /// <summary>
-    /// Knapsack Zero Or One Greedy Approximate Solution
-    /// </summary>
-    /// <param name="source">Possible items to take</param>
-    /// <param name="capacity">Knapsack capacity</param>
-    /// <param name="weight">Item's weight</param>
-    /// <param name="value">Item's value</param>
-    /// <returns></returns>
-    public static KnapsackZeroOneSolution<T> KnapsackGreedySolveForZeroOne<T>(
-      this IEnumerable<T> source,
-           double capacity,
-           Func<T, double> weight,
-           Func<T, double> value) {
-
-      if (source is null)
-        throw new ArgumentNullException(nameof(source));
-      else if (weight is null)
-        throw new ArgumentNullException(nameof(weight));
-      else if (value is null)
-        throw new ArgumentNullException(nameof(value));
-
-      double initialCapacity = capacity;
-
-      var allData = source
-        .Select((item, idx) => (
-           item,
-           weight: weight(item),
-           value: value(item),
-           index: idx))
-        .ToList();
-
-      var counterExample = allData.FirstOrDefault(item => item.weight < 0 && item.value < 0);
-
-      if (counterExample.weight < 0 && counterExample.value < 0)
-        throw new ArgumentException(
-          $"Double negative weight = {counterExample.weight} and value = {counterExample.value} is not allowed {counterExample.item}",
-            nameof(source));
-
-      var alwaysTakeData = allData
-        .Where(item => item.weight < 0 || (item.weight == 0 && item.value > 0))
-        .ToList();
-
-      double extraCapacity = -alwaysTakeData.Sum(item => item.weight);
-      double extraValue = alwaysTakeData.Sum(item => item.value);
-
-      capacity += extraCapacity;
-
-      var data = allData
-        .Where(item => item.weight <= capacity)
-        .Where(item => item.value > 0 && item.weight > 0)
-        .OrderByDescending(item => item.value / item.weight >= 0)
-        //.OrderByDescending(item => item.weight)
-        .ToList();
-
-      double totalWeight = -extraCapacity;
-      double soultion = extraValue;
-
-      foreach (var item in data) {
-        if (item.weight > capacity)
-          continue;
-
-        soultion += item.value;
-        capacity -= item.weight;
-        totalWeight += item.weight;
-
-        alwaysTakeData.Add(item);
-      }
-
-      return new KnapsackZeroOneSolution<T>(
-        initialCapacity,
-        soultion,
-        totalWeight,
-        alwaysTakeData.Select(item => item.index),
-        alwaysTakeData.Select(item => item.item));
-    }
-
-    #endregion Public
-  }
 }

@@ -297,8 +297,7 @@ namespace Gloson.UI.CommandLine {
     /// </summary>
     public Regex RegularExpression {
       get {
-        if (m_RegularExpression is null)
-          m_RegularExpression = CreateRegularExpression();
+        m_RegularExpression ??= CreateRegularExpression();
 
         return m_RegularExpression;
       }

@@ -21,7 +21,7 @@
     <AnalysisLevel>5.0</AnalysisLevel>
     <PackageReleaseNotes>Cumulative changes for 4 months</PackageReleaseNotes>
     <PackageTags></PackageTags>
-    <Copyright>Copyright (c) 2021 by Dmitry Bychenko</Copyright>
+    <Copyright>Copyright (c) 2021-2022 by Dmitry Bychenko</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
